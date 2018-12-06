@@ -29,7 +29,7 @@ class App extends React.Component<any, AppState> {
       >
         {this.state.threadDumps.length
           ? "Uploaded and parsed \\o/"
-          : <div className="dropzone-inner">Drop files here or click to load and parse.</div>
+          : <div className="dropzone-inner">Drag and drop, or click to load files.</div>
         }
       </Dropzone>
     )
