@@ -22,15 +22,27 @@ class App extends React.Component<any, AppState> {
   render() {
     return (
       <Dropzone
-        className="dropzone"
         onDrop={this.state.parser.parseFiles}
         accept=".txt"
         multiple={true}
       >
-        {this.state.threadDumps.length
-          ? "Uploaded and parsed \\o/"
-          : <div className="dropzone-inner">Drag and drop, or click to load files.</div>
-        }
+        {({ getRootProps, getInputProps, isDragActive }) => {
+          if (this.state.threadDumps.length === 0)
+            return (
+              <div className="dropzone" {...getRootProps()}>
+                <input {...getInputProps()} />
+                {
+                  isDragActive ?
+                    <p>Drop files here...</p> :
+                    <p>Try dropping some files here, or click to select files to upload.</p>
+                }
+              </div>
+            )
+          else
+            return (
+              <div>Uploaded!</div>
+            )
+        }}
       </Dropzone>
     )
   }
