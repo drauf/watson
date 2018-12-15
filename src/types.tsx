@@ -1,9 +1,9 @@
 export class ThreadDump {
     date!: Date | null;
-    loadAverages!: LoadAverages;
+    loadAverages!: LoadAverages | null;
     memoryUsage!: MemoryUsage;
-    threads!: Array<Thread>;
-    locks!: Array<Lock>;
+    threads: Array<Thread> = [];
+    locks: Array<Lock> = [];
 }
 
 
@@ -26,18 +26,18 @@ export class Thread {
     name!: string;
     status!: ThreadStatus;
     cpuUsage!: number;
-    runningFor!: Date;
+    runningFor!: string;
     lockWaitingFor!: Lock;
-    locksHeld!: Array<Lock>;
-    classicalLocksHeld!: Array<Lock>;
+    locksHeld: Array<Lock> = [];
+    classicalLocksHeld: Array<Lock> =[];
     meaningfulLinesnumber!: number;
-    stackTrace!: Array<string>;
+    stackTrace: Array<string> = [];
 }
 
 export class Lock {
     id!: string;
     className!: string;
-    owner!: Thread;
+    owner: Thread | null = null;
     waiting: Array<Thread> = [];
 }
 
@@ -60,10 +60,7 @@ export enum ThreadStatus {
     NEW,
     RUNNABLE,
     BLOCKED,
-    BLOCKED_ON_OBJECT,
     WAITING,
-    WAITING_ON_OBJECT,
     TIMED_WAITING,
-    TIMED_WAITING_ON_OBJECT,
-    TIMED_WAITING_SLEEPING
+    UNKNOWN
 }
