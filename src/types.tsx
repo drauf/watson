@@ -25,7 +25,7 @@ export class Thread {
     id!: number;
     name!: string;
     status!: ThreadStatus;
-    cpuUsage!: number;
+    cpuUsage: number = 0.0;
     runningFor!: string;
     lockWaitingFor!: Lock;
     locksHeld: Array<Lock> = [];

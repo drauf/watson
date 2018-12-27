@@ -134,11 +134,11 @@ export class Parser {
   }
 
   findThreadWithId(threadDump: ThreadDump, id: number): Thread | null {
-    threadDump.threads.forEach(thread => {
+    for (const thread of threadDump.threads) {
       if (thread.id === id) {
         return thread;
       }
-    })
+    }
     return null;
   }
 }
