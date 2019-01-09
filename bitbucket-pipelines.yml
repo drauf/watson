@@ -1,0 +1,14 @@
+image: node:alpine
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - yarncustom
+        script:
+          - yarn
+          - yarn lint
+          - yarn test
+definitions:
+  caches:
+    yarncustom: /usr/local/share/.cache/yarn/
