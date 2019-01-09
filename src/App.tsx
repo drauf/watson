@@ -1,25 +1,26 @@
 import * as React from 'react';
 import Dropzone from 'react-dropzone';
+import FullPageDropzone from './FullPageDropzone';
+import Layout from './Layout';
 import { Parser } from './parser/Parser';
-import { ThreadDump } from './types';
+import { ThreadDump } from './types/ThreadDump';
 
 interface AppState {
-  threadDumps: ThreadDump[],
-  parser: Parser
+  threadDumps: ThreadDump[];
+  parser: Parser;
 }
 
 class App extends React.Component<any, AppState> {
-  state: AppState = {
-    threadDumps: [],
-    parser: new Parser(this.handleFilesParsed.bind(this))
+  public state: AppState = {
+    parser: new Parser(this.handleFilesParsed.bind(this)),
+    threadDumps: []
   };
 
-  handleFilesParsed(threadDumps: ThreadDump[]) {
-    this.setState({ threadDumps: threadDumps });
-    console.log(threadDumps);
+  public handleFilesParsed(threadDumps: ThreadDump[]) {
+    this.setState({ threadDumps });
   }
 
-  render() {
+  public render() {
     return (
       <Dropzone
         onDrop={this.state.parser.parseFiles}
@@ -27,21 +28,14 @@ class App extends React.Component<any, AppState> {
         multiple={true}
       >
         {({ getRootProps, getInputProps, isDragActive }) => {
-          if (this.state.threadDumps.length === 0)
+          if (this.state.threadDumps.length === 0) {
             return (
-              <div className="dropzone" {...getRootProps()}>
-                <input {...getInputProps()} />
-                {
-                  isDragActive ?
-                    <p>Drop files here...</p> :
-                    <p>Try dropping some files here, or click to select files to upload.</p>
-                }
-              </div>
+              <FullPageDropzone getRootProps={getRootProps} getInputProps={getInputProps} isDragActive={isDragActive} />
             )
-          else
-            return (
-              <div>Uploaded!</div>
-            )
+          }
+          return (
+            <Layout />
+          )
         }}
       </Dropzone>
     )
