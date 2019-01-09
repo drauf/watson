@@ -2,8 +2,8 @@ import * as React from 'react';
 import Dropzone from 'react-dropzone';
 import FullPageDropzone from './FullPageDropzone';
 import Layout from './Layout';
-import { Parser } from './parser/Parser';
-import { ThreadDump } from './types/ThreadDump';
+import Parser from './parser/Parser';
+import ThreadDump from './types/ThreadDump';
 
 interface AppState {
   threadDumps: ThreadDump[];

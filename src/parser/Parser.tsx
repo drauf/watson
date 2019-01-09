@@ -1,12 +1,12 @@
-import { CpuUsage } from '../types/CpuUsage';
-import { Thread } from '../types/Thread';
-import { ThreadDump } from '../types/ThreadDump';
-import { parseCpuUsage, ParseCpuUsageCallback } from './parseCpuUsage';
-import { parseThreadDump, ParseThreadDumpCallback } from './parseThreadDump';
+import CpuUsage from '../types/CpuUsage';
+import Thread from '../types/Thread';
+import ThreadDump from '../types/ThreadDump';
+import CpuUsageParser, { ParseCpuUsageCallback } from './CpuUsageParser';
+import ThreadDumpParser, { ParseThreadDumpCallback } from './ThreadDumpParser';
 
 const MAX_TIME_DIFFERENCE_ALLOWED: number = 10000;
 
-export class Parser {
+export default class Parser {
   private cpuUsages: CpuUsage[] = [];
   private threadDumps: ThreadDump[] = [];
   private cpuUsagesToParse: number = 0;
@@ -47,7 +47,7 @@ export class Parser {
 
       reader.onload = ((cpuUsage: File, callback: ParseCpuUsageCallback) => {
         return function (this: FileReader) {
-          parseCpuUsage(cpuUsage, this, callback);
+          CpuUsageParser.parseCpuUsage(cpuUsage, this, callback);
         }
       })(file, this.onParsedCpuUsage);
 
@@ -67,7 +67,7 @@ export class Parser {
 
       reader.onload = ((threadDump: File, callback: ParseThreadDumpCallback) => {
         return function (this: FileReader) {
-          parseThreadDump(threadDump, this, callback);
+          ThreadDumpParser.parseThreadDump(threadDump, this, callback);
         }
       })(file, this.onParsedThreadDump);
 
