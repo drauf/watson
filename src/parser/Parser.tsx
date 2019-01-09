@@ -1,21 +1,23 @@
-import { ThreadDump, CpuUsage, Thread } from '../types';
-import { parseThreadDump, ParseThreadDumpCallback } from './parseThreadDump';
+import { CpuUsage } from '../types/CpuUsage';
+import { Thread } from '../types/Thread';
+import { ThreadDump } from '../types/ThreadDump';
 import { parseCpuUsage, ParseCpuUsageCallback } from './parseCpuUsage';
+import { parseThreadDump, ParseThreadDumpCallback } from './parseThreadDump';
 
 const MAX_TIME_DIFFERENCE_ALLOWED: number = 10000;
 
 export class Parser {
-  cpuUsages: CpuUsage[] = [];
-  threadDumps: ThreadDump[] = [];
-  cpuUsagesToParse: number = 0;
-  threadDumpsToParse: number = 0;
-  onFilesParsed: (threadDumps: ThreadDump[]) => void;
+  private cpuUsages: CpuUsage[] = [];
+  private threadDumps: ThreadDump[] = [];
+  private cpuUsagesToParse: number = 0;
+  private threadDumpsToParse: number = 0;
+  private onFilesParsed: (threadDumps: ThreadDump[]) => void;
 
   constructor(onFilesParsed: (threadDumps: ThreadDump[]) => void) {
     this.onFilesParsed = onFilesParsed;
   }
 
-  parseFiles = (accepted: File[]) => {
+  public parseFiles = (accepted: File[]) => {
     const cpuUsageFiles: File[] = [];
     const threadDumpFiles: File[] = [];
     this.groupFiles(accepted, cpuUsageFiles, threadDumpFiles);
@@ -29,7 +31,7 @@ export class Parser {
     this.parseThreadDumps(threadDumpFiles);
   }
 
-  groupFiles(files: File[], cpuUsageFiles: File[], threadDumpFiles: File[]) {
+  private groupFiles(files: File[], cpuUsageFiles: File[], threadDumpFiles: File[]) {
     for (const file of files) {
       if (file.name.includes("cpu")) {
         cpuUsageFiles.push(file);
@@ -39,13 +41,13 @@ export class Parser {
     }
   }
 
-  parseCpuUsages(files: File[]) {
+  private parseCpuUsages(files: File[]) {
     for (const file of files) {
       const reader = new FileReader();
 
-      reader.onload = ((file: File, callback: ParseCpuUsageCallback) => {
+      reader.onload = ((cpuUsage: File, callback: ParseCpuUsageCallback) => {
         return function (this: FileReader) {
-          parseCpuUsage(file, this, callback);
+          parseCpuUsage(cpuUsage, this, callback);
         }
       })(file, this.onParsedCpuUsage);
 
@@ -53,19 +55,19 @@ export class Parser {
     }
   }
 
-  onParsedCpuUsage = (cpuUsage: CpuUsage) => {
+  private onParsedCpuUsage = (cpuUsage: CpuUsage) => {
     this.cpuUsages.push(cpuUsage);
     this.cpuUsagesToParse = this.cpuUsagesToParse - 1;
     this.checkCompletion();
   }
 
-  parseThreadDumps(files: File[]) {
+  private parseThreadDumps(files: File[]) {
     for (const file of files) {
       const reader = new FileReader();
 
-      reader.onload = ((file: File, callback: ParseThreadDumpCallback) => {
+      reader.onload = ((threadDump: File, callback: ParseThreadDumpCallback) => {
         return function (this: FileReader) {
-          parseThreadDump(file, this, callback);
+          parseThreadDump(threadDump, this, callback);
         }
       })(file, this.onParsedThreadDump);
 
@@ -73,20 +75,20 @@ export class Parser {
     }
   }
 
-  onParsedThreadDump = (threadDump: ThreadDump) => {
+  private onParsedThreadDump = (threadDump: ThreadDump) => {
     this.threadDumps.push(threadDump);
     this.threadDumpsToParse = this.threadDumpsToParse - 1;
     this.checkCompletion();
   }
 
-  checkCompletion() {
+  private checkCompletion() {
     if (!this.cpuUsagesToParse && !this.threadDumpsToParse) {
       this.groupCpuUsagesWithThreadDumps();
       this.onFilesParsed(this.threadDumps);
     }
   }
 
-  groupCpuUsagesWithThreadDumps() {
+  private groupCpuUsagesWithThreadDumps() {
     this.cpuUsages
       .filter(cpuUsage => cpuUsage.date)
       .forEach(cpuUsage => {
@@ -95,15 +97,15 @@ export class Parser {
       });
   }
 
-  findCorrespondingThreadDump(cpuUsage: CpuUsage): ThreadDump {
+  private findCorrespondingThreadDump(cpuUsage: CpuUsage): ThreadDump {
     let closest: ThreadDump | null = null;
     let smallestDiff: number = MAX_TIME_DIFFERENCE_ALLOWED;
-    let cpuUsageDate = cpuUsage.date as Date;
+    const cpuUsageDate = cpuUsage.date as Date;
 
     this.threadDumps
       .filter(threadDump => threadDump.date)
       .forEach(threadDump => {
-        let diff = Math.abs((threadDump.date as Date).valueOf() - cpuUsageDate.valueOf());
+        const diff = Math.abs((threadDump.date as Date).valueOf() - cpuUsageDate.valueOf());
 
         if (diff < smallestDiff) {
           smallestDiff = diff;
@@ -119,7 +121,7 @@ export class Parser {
     return closest;
   }
 
-  groupCpuUsageWithThreadDump(threadDump: ThreadDump, cpuUsage: CpuUsage): void {
+  private groupCpuUsageWithThreadDump(threadDump: ThreadDump, cpuUsage: CpuUsage): void {
     threadDump.loadAverages = cpuUsage.loadAverages;
     threadDump.memoryUsage = cpuUsage.memoryUsage;
 
@@ -133,7 +135,7 @@ export class Parser {
     });
   }
 
-  findThreadWithId(threadDump: ThreadDump, id: number): Thread | null {
+  private findThreadWithId(threadDump: ThreadDump, id: number): Thread | null {
     for (const thread of threadDump.threads) {
       if (thread.id === id) {
         return thread;

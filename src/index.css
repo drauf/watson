@@ -29,11 +29,18 @@ body {
   justify-content: center;
 }
 
-.dropzone p {
+#root div {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  align-items: top;
+}
+
+.dropzone h3 {
   font-size: 20px;
   font-weight: 500;
   letter-spacing: -0.008em;
-
   width: 600px;
   height: 200px;
   line-height: 200px;
@@ -42,4 +49,30 @@ body {
   background: #fff;
   border-radius: 5px;
   border: 2px dashed #0052CC;
+}
+
+.nav {
+  background: hotpink;
+  width: 320px;
+  flex: 0 320px;
+  -ms-flex: 0 320px;
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  -ms-box-flex: 0;
+  box-flex: 0;
+  transition: all 4s ease;
+}
+
+.hidden {
+  left: -320px;
+}
+
+.content {
+  background: aliceblue;
+  flex: 1;
+  -ms-flex: 1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-box-flex: 1;
+  box-flex: 1;
 }
