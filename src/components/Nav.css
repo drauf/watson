@@ -1,9 +1,25 @@
 .nav {
+  font-size: 0;
   width: 0;
   background: #f4f5f7;
   transition: all 1s ease;
 }
 
 .nav-open {
-  width: 320px;
+  font-size: 14px;
+  width: 300px;
+}
+
+.brand {
+  font-size: 35px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 40px;
+  padding: 12px 40px 0;
+
+  transition-delay: 0.3s;
+  visibility: visible;
+}
+.brand-hidden {
+  visibility: hidden;
 }
