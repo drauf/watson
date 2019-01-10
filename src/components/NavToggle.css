@@ -1,0 +1,9 @@
+.nav-toggle {
+  width: 10px;
+  background: #fff;
+}
+
+.nav-toggle:hover {
+  background: linear-gradient(90deg, #0052CC 50%, #fff 50%);
+  cursor: pointer;
+}
