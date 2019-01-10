@@ -1,9 +1,44 @@
 .nav-toggle {
   width: 10px;
   background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
+/* vertical line */
 .nav-toggle:hover {
-  background: linear-gradient(90deg, #0052CC 50%, #fff 50%);
+  background: linear-gradient(90deg, #0052CC 30%, #fff 30%);
   cursor: pointer;
+}
+
+/* arrow */
+.nav-toggle:before,
+.nav-toggle:after {
+  background: #0052CC;
+  content: '';
+  height: 3px;
+  position: absolute;
+  width: 9px;
+}
+
+/* top part of the arrow */
+.nav-toggle:before {
+  transform: translate(1px, 1px) rotate(55deg);
+  transform-origin: right;
+}
+.open.nav-toggle:after {
+  transform: translate(5px, 1px) rotate(-55deg);
+  transform-origin: left;
+}
+
+/* bottom part of the arrow  */
+.nav-toggle:after {
+  transform: translateX(1px) rotate(-55deg);
+  transform-origin: right;
+}
+.open.nav-toggle:before {
+  transform: translateX(5px) rotate(55deg);
+  transform-origin: left;
 }
