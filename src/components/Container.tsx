@@ -1,15 +1,15 @@
 import * as React from 'react';
+import './Container.css';
 import Content from './Content';
-import './Layout.css';
 import Nav from './Nav';
 import NavToggle from './NavToggle';
 
-interface LayoutState {
+interface ContainerState {
   navigationOpen: boolean;
 }
 
-class Layout extends React.Component<any, LayoutState> {
-  public state: LayoutState = {
+class Container extends React.Component<any, ContainerState> {
+  public state: ContainerState = {
     navigationOpen: true
   };
 
@@ -21,11 +21,11 @@ class Layout extends React.Component<any, LayoutState> {
     return (
       <div className="container">
         <Nav open={this.state.navigationOpen} />
-        <NavToggle onClick={this.toggleNavigation} />
+        <NavToggle open={this.state.navigationOpen} onClick={this.toggleNavigation} />
         <Content />
       </div>
     )
   }
 }
 
-export default Layout;
+export default Container;

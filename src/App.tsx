@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
-import Layout from './components/Layout';
+import Container from './components/Container';
 import Parser from './parser/Parser';
 import ThreadDump from './types/ThreadDump';
 
@@ -24,7 +24,7 @@ class App extends React.Component<any, AppState> {
     if (this.state.threadDumps.length === 0) {
       return <FullPageDropzone onDrop={this.state.parser.parseFiles} />
     }
-    return <Layout />
+    return <Container />
   }
 }
 

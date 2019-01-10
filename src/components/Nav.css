@@ -1,7 +1,7 @@
 .nav {
   width: 0;
   background: #f4f5f7;
-  transition: all 0.8s;
+  transition: all 1s ease;
 }
 
 .nav-open {
