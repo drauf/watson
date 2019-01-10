@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Dropzone from 'react-dropzone';
-import FullPageDropzone from './FullPageDropzone';
-import Layout from './Layout';
+import './App.css';
+import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
+import Layout from './components/Layout';
 import Parser from './parser/Parser';
 import ThreadDump from './types/ThreadDump';
 
@@ -21,24 +21,10 @@ class App extends React.Component<any, AppState> {
   }
 
   public render() {
-    return (
-      <Dropzone
-        onDrop={this.state.parser.parseFiles}
-        accept=".txt"
-        multiple={true}
-      >
-        {({ getRootProps, getInputProps, isDragActive }) => {
-          if (this.state.threadDumps.length === 0) {
-            return (
-              <FullPageDropzone getRootProps={getRootProps} getInputProps={getInputProps} isDragActive={isDragActive} />
-            )
-          }
-          return (
-            <Layout />
-          )
-        }}
-      </Dropzone>
-    )
+    if (this.state.threadDumps.length === 0) {
+      return <FullPageDropzone onDrop={this.state.parser.parseFiles} />
+    }
+    return <Layout />
   }
 }
 

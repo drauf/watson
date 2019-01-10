@@ -4,75 +4,29 @@ html, body {
 
 body {
   margin: 0;
-  color: #172B4D;
-  background: #f4f5f7;
+  background: #fff;
+  color: #6B778C;
   font-size: 14px;
   font-weight: 400;
-  letter-spacing: -0.006em;
+  letter-spacing: -0.005em;
   line-height: 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root, .dropzone {
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+h3 {
+  color: #172B4D;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 28px;
 }
 
-#root div {
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  align-items: top;
-}
-
-.dropzone h3 {
+h4 {
+  color: #172B4D;
   font-size: 20px;
   font-weight: 500;
   letter-spacing: -0.008em;
-  width: 600px;
-  height: 200px;
-  line-height: 200px;
-  text-align: center;
-
-  background: #fff;
-  border-radius: 5px;
-  border: 2px dashed #0052CC;
-}
-
-.nav {
-  background: hotpink;
-  width: 320px;
-  flex: 0 320px;
-  -ms-flex: 0 320px;
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  -ms-box-flex: 0;
-  box-flex: 0;
-  transition: all 4s ease;
-}
-
-.hidden {
-  left: -320px;
-}
-
-.content {
-  background: aliceblue;
-  flex: 1;
-  -ms-flex: 1;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -ms-box-flex: 1;
-  box-flex: 1;
+  line-height: 24px;
 }

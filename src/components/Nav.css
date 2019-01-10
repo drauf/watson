@@ -1,0 +1,9 @@
+.nav {
+  width: 0;
+  background: #f4f5f7;
+  transition: all 0.8s;
+}
+
+.nav-open {
+  width: 320px;
+}
