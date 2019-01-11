@@ -23,3 +23,17 @@
 .brand-hidden {
   visibility: hidden;
 }
+
+.nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+.nav li {
+  height: 36px;
+  line-height: 36px;
+  padding-left: 40px;
+}
+.nav li:hover {
+  cursor: pointer;
+  background: #EBECF0;
+}
