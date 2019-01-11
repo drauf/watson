@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
-import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
 import Container from './components/Container';
+import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
 import Parser from './parser/Parser';
 import ThreadDump from './types/ThreadDump';
 
