@@ -8,10 +8,6 @@ interface NavProps {
 }
 
 class Nav extends React.Component<NavProps, any> {
-  constructor(props: NavProps) {
-    super(props)
-  }
-
   public onClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const element: HTMLLIElement = event.target as HTMLLIElement
     this.props.selectPage(element.value as Page)
