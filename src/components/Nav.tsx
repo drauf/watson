@@ -1,33 +1,48 @@
 import * as React from 'react';
+import { Page } from './Container';
 import './Nav.css';
 
 interface NavProps {
   open: boolean;
+  selectPage: (page: Page) => void;
 }
 
-const Nav: React.SFC<NavProps> = ({ open }) => (
-  <div className={open ? "nav nav-open" : "nav"}>
-    <p className={open ? "brand" : "brand brand-hidden"}>
-      Watson
-    </p>
-    <ul>
-      <li>Summary</li>
-    </ul>
-    <ul>
-      <li>CPU Consumers</li>
-      <li>Thread Statuses</li>
-      <li>Stuck Threads</li>
-      <li>Similar Stack Traces</li>
-    </ul>
-    <ul>
-      <li>Threads Overview</li>
-      <li>Monitors</li>
-    </ul>
-    <ul>
-      <li>Flame Graph</li>
-      <li>Advanced Mode</li>
-    </ul>
-  </div >
-)
+class Nav extends React.Component<NavProps, any> {
+  constructor(props: NavProps) {
+    super(props)
+  }
+
+  public onClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    const element: HTMLLIElement = event.target as HTMLLIElement
+    this.props.selectPage(element.value as Page)
+  }
+
+  public render() {
+    return (
+      <div className={this.props.open ? "nav nav-open" : "nav"}>
+        <p className={this.props.open ? "brand" : "brand brand-hidden"}>
+          Watson
+        </p>
+        <ul>
+          <li onClick={this.onClick} value="0">Summary</li>
+        </ul>
+        <ul>
+          <li onClick={this.onClick} value="1">CPU Consumers</li>
+          <li onClick={this.onClick} value="2">Thread Statuses</li>
+          <li onClick={this.onClick} value="3">Stuck Threads</li>
+          <li onClick={this.onClick} value="4">Similar Stack Traces</li>
+        </ul>
+        <ul>
+          <li onClick={this.onClick} value="5">Threads Overview</li>
+          <li onClick={this.onClick} value="6">Monitors</li>
+        </ul>
+        <ul>
+          <li onClick={this.onClick} value="7">Flame Graph</li>
+          <li onClick={this.onClick} value="8">Advanced Mode</li>
+        </ul>
+      </div >
+    )
+  }
+}
 
 export default Nav;
