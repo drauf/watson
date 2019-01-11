@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ThreadDump from '../types/ThreadDump';
 import './Container.css';
 import Content from './Content';
 import Nav from './Nav';
@@ -16,12 +17,16 @@ export enum Page {
   AdvancedMode
 }
 
+interface ContainerProps {
+  threadDumps: ThreadDump[];
+}
+
 interface ContainerState {
   navigationOpen: boolean;
   selectedPage: Page;
 }
 
-class Container extends React.Component<any, ContainerState> {
+class Container extends React.Component<ContainerProps, ContainerState> {
   public state: ContainerState = {
     navigationOpen: true,
     selectedPage: Page.Summary
@@ -37,10 +42,10 @@ class Container extends React.Component<any, ContainerState> {
 
   public render() {
     return (
-      <div className="container">
+      <div className={this.state.navigationOpen ? "container open" : "container"}>
         <Nav open={this.state.navigationOpen} selectPage={this.selectPage} />
         <NavToggle open={this.state.navigationOpen} onClick={this.toggleNavigation} />
-        <Content selectedPage={this.state.selectedPage} />
+        <Content selectedPage={this.state.selectedPage} threadDumps={this.props.threadDumps} />
       </div>
     )
   }

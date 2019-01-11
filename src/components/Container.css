@@ -1,7 +1,14 @@
 .container {
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: grid;
-  grid-template-columns: auto 10px 100%;
+  grid-template-columns: 1fr 10px 9999fr;
   grid-template-rows: auto;
   justify-items: start;
+  transition-delay: 1s;
+}
+
+.open {
+  grid-template-columns: 300px 10px auto;
+  transition-delay: 1s;
 }

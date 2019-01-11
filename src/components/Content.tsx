@@ -1,33 +1,55 @@
 import * as React from 'react';
+import ThreadDump from '../types/ThreadDump';
 import { Page } from './Container';
+import './Content.css';
+import Summary from './Summary/Summary';
 
 interface ContentProps {
   selectedPage: Page;
+  threadDumps: ThreadDump[];
 }
 
-const Content: React.SFC<ContentProps> = ({ selectedPage }) => {
+const Content: React.SFC<ContentProps> = ({ selectedPage, threadDumps }) => {
+  let inside;
+
   switch (selectedPage) {
     case Page.Summary:
-      return <p>Summary</p>
+      inside = <Summary threadDumps={threadDumps} />
+      break
     case Page.CpuConsumers:
-      return <p>CpuConsumers</p>
+      inside = <p>CpuConsumers</p>
+      break
     case Page.ThreadStatuses:
-      return <p>ThreadStatuses</p>
+      inside = <p>ThreadStatuses</p>
+      break
     case Page.StuckThreads:
-      return <p>StuckThreads</p>
+      inside = <p>StuckThreads</p>
+      break
     case Page.SimilarStackTraces:
-      return <p>SimilarStackTraces</p>
+      inside = <p>SimilarStackTraces</p>
+      break
     case Page.ThreadsOverview:
-      return <p>ThreadsOverview</p>
+      inside = <p>ThreadsOverview</p>
+      break
     case Page.Monitors:
-      return <p>Monitors</p>
+      inside = <p>Monitors</p>
+      break
     case Page.FlameGraph:
-      return <p>FlameGraph</p>
+      inside = <p>FlameGraph</p>
+      break
     case Page.AdvancedMode:
-      return <p>AdvancedMode</p>
+      inside = <p>AdvancedMode</p>
+      break
     default:
-      return <p>Oops! Something went wrong!</p>
+      inside = <p>Oops! Something went wrong!</p>
+      break
   }
+
+  return (
+    <div className="content">
+      {inside}
+    </div>
+  )
 }
 
 export default Content;

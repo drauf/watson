@@ -24,7 +24,7 @@ class App extends React.Component<any, AppState> {
     if (this.state.threadDumps.length === 0) {
       return <FullPageDropzone onDrop={this.state.parser.parseFiles} />
     }
-    return <Container />
+    return <Container threadDumps={this.state.threadDumps} />
   }
 }
 
