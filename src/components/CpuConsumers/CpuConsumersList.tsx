@@ -5,13 +5,14 @@ import './CpuConsumersList.css';
 
 interface CpuConsumersListProps {
   limit: number;
+  dumpsNumber: number;
   consumers: CpuConsumer[];
 }
 
-const CpuConsumersList: React.SFC<CpuConsumersListProps> = ({ limit, consumers }) => (
+const CpuConsumersList: React.SFC<CpuConsumersListProps> = ({ limit, dumpsNumber, consumers }) => (
   <ul className="consumers-list">
     {consumers.slice(0, limit).map((consumer, index) => (
-      <CpuConsumerItem index={index} consumer={consumer} />
+      <CpuConsumerItem key={index} dumpsNumber={dumpsNumber} consumer={consumer} />
     ))}
   </ul>
 )

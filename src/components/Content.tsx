@@ -4,6 +4,7 @@ import { Page } from './Container';
 import './Content.css';
 import CpuConsumers from './CpuConsumers/CpuConsumers';
 import Summary from './Summary/Summary';
+import ThreadsOverview from './ThreadsOverview/ThreadsOverview';
 
 interface ContentProps {
   selectedPage: Page;
@@ -11,46 +12,28 @@ interface ContentProps {
 }
 
 const Content: React.SFC<ContentProps> = ({ selectedPage, threadDumps }) => {
-  let inside;
-
   switch (selectedPage) {
     case Page.Summary:
-      inside = <Summary threadDumps={threadDumps} />
-      break
+      return <Summary threadDumps={threadDumps} />
     case Page.CpuConsumers:
-      inside = <CpuConsumers threadDumps={threadDumps} />
-      break
+      return <CpuConsumers threadDumps={threadDumps} />
     case Page.ThreadStatuses:
-      inside = <p>ThreadStatuses</p>
-      break
+      return <p>ThreadStatuses</p>
     case Page.StuckThreads:
-      inside = <p>StuckThreads</p>
-      break
+      return <p>StuckThreads</p>
     case Page.SimilarStackTraces:
-      inside = <p>SimilarStackTraces</p>
-      break
+      return <p>SimilarStackTraces</p>
     case Page.ThreadsOverview:
-      inside = <p>ThreadsOverview</p>
-      break
+      return <ThreadsOverview threadDumps={threadDumps} />
     case Page.Monitors:
-      inside = <p>Monitors</p>
-      break
+      return <p>Monitors</p>
     case Page.FlameGraph:
-      inside = <p>FlameGraph</p>
-      break
+      return <p>FlameGraph</p>
     case Page.AdvancedMode:
-      inside = <p>AdvancedMode</p>
-      break
+      return <p>AdvancedMode</p>
     default:
-      inside = <p>Oops! Something went wrong!</p>
-      break
+      return <p>Oops! Something went wrong!</p>
   }
-
-  return (
-    <div className="content">
-      {inside}
-    </div>
-  )
 }
 
 export default Content;
