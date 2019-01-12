@@ -47,7 +47,7 @@ export default class ThreadDumpParser {
     threadDump.threads.push(ThreadDumpParser.currentThread);
 
     ThreadDumpParser.currentThread.name = matchOne(header, NAME_PATTERN).trim();
-    ThreadDumpParser.currentThread.id = parseInt(matchOne(header, NID_PATTERN), 10);
+    ThreadDumpParser.currentThread.id = parseInt(matchOne(header, NID_PATTERN), 16);
   }
 
   private static parseStackLine(line: string, threadDump: ThreadDump): void {
