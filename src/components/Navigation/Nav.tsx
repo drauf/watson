@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Page } from './Container';
+import { Page } from '../Container';
 import './Nav.css';
 
 interface NavProps {

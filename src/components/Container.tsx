@@ -2,8 +2,8 @@ import * as React from 'react';
 import ThreadDump from '../types/ThreadDump';
 import './Container.css';
 import Content from './Content';
-import Nav from './Nav';
-import NavToggle from './NavToggle';
+import Nav from './Navigation/Nav';
+import NavToggle from './Navigation/NavToggle';
 
 export enum Page {
   Summary,
