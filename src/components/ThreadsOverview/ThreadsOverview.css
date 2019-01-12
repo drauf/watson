@@ -1,0 +1,71 @@
+.threads-overview-content {
+  width: auto;
+  margin: 0 1px;
+}
+
+.thread-overview-legend {
+  top: 0;
+  position: fixed;
+  height: 52px;
+  width: 100%;
+  background: #fff;
+}
+.thread-overview-legend table {
+  margin: 0 auto;
+  width: 60%;
+}
+.thread-overview-legend td {
+  height: 16px;
+  width: 12%;
+  color: #6B778C;
+  background: #fff;
+  text-align: center;
+  border: 4px solid white;
+}
+
+.threads-overview-table {
+  padding-left: 4px;
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  flex-grow: 2;
+}
+
+.threads-overview-details {
+  background: #fff;
+  height: 120px;
+  width: 100%;
+  bottom: 0;
+  position: fixed;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+td {
+  overflow: hidden;
+  white-space: nowrap;
+  color: #fff;
+  background: #DFE1E6;
+  border: 1px solid #fff;
+}
+td.new {
+  background: #00B8D9;
+}
+td.runnable {
+  background: #36B37E;
+}
+td.blocked {
+  background: #FF5630;
+}
+td.waiting {
+  background: #6554C0;
+}
+td.timed-waiting {
+  background: #FFAB00;
+}
+td.unknown {
+  background: #00B8D9;
+}

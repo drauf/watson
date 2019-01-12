@@ -10,12 +10,12 @@ interface SummaryProps {
 }
 
 const Summary: React.SFC<SummaryProps> = ({ threadDumps }) => (
-  <>
+  <div className="content">
     <LoadAveragesChart threadDumps={threadDumps} />
     <CurrentCpuUsageChart threadDumps={threadDumps} />
     <MemoryUsageChart threadDumps={threadDumps} />
     <SwapUsageChart threadDumps={threadDumps} />
-  </>
+  </div>
 )
 
 export default Summary;

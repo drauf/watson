@@ -1,10 +1,10 @@
 enum ThreadStatus {
-  NEW,
-  RUNNABLE,
-  BLOCKED,
-  WAITING,
-  TIMED_WAITING,
-  UNKNOWN
+  NEW = 'new',
+  RUNNABLE = 'runnable',
+  BLOCKED = 'blocked',
+  WAITING = 'waiting',
+  TIMED_WAITING = 'timed-waiting',
+  UNKNOWN = 'unknown'
 }
 
 export default ThreadStatus;
