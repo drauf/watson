@@ -1,6 +1,8 @@
 import * as React from 'react';
 import ThreadDump from '../../types/ThreadDump';
 import LoadAveragesChart from './LoadAveragesChart';
+import MemoryUsageChart from './MemoryUsage';
+import SwapUsageChart from './SwapUsageChart';
 
 interface SummaryProps {
   threadDumps: ThreadDump[];
@@ -9,8 +11,9 @@ interface SummaryProps {
 const Summary: React.SFC<SummaryProps> = ({ threadDumps }) => (
   <>
     <LoadAveragesChart threadDumps={threadDumps} />
-    <p>memory usage</p>
-    <p>in the future: current CPU usage - user, system (others?)</p>
+    <p>current CPU usage - user, system, others (?)</p>
+    <MemoryUsageChart threadDumps={threadDumps} />
+    <SwapUsageChart threadDumps={threadDumps} />
   </>
 )
 
