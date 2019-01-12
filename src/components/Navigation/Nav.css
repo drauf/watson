@@ -9,6 +9,11 @@
   width: 300px;
 }
 
+.nav-content {
+  width: 0;
+  position: fixed;
+}
+
 .brand {
   font-size: 35px;
   font-weight: 500;
@@ -35,6 +40,7 @@
   transition: all 1s ease;
 }
 .nav-open li {
+  width: 260px;
   font-size: 14px;
   padding-left: 40px;
   transition: all 1s ease;
