@@ -32,7 +32,7 @@
   transform: translate(1px, 1px) rotate(55deg);
   transform-origin: right;
 }
-.open.nav-arrow:after {
+.open .nav-arrow:after {
   transform: translate(5px, 1px) rotate(-55deg);
   transform-origin: left;
 }
@@ -42,7 +42,7 @@
   transform: translateX(1px) rotate(-55deg);
   transform-origin: right;
 }
-.open.nav-arrow:before {
+.open .nav-arrow:before {
   transform: translateX(5px) rotate(55deg);
   transform-origin: left;
 }
