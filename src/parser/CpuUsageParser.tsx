@@ -1,4 +1,5 @@
 import CpuUsage from '../types/CpuUsage';
+import CurrentCpuUsage from '../types/CurrentCpuUsage';
 import LoadAverages from '../types/LoadAverage';
 import MemoryUsage from '../types/MemoryUsage';
 import ThreadCpuUsage from '../types/ThreadCpuUsage';
@@ -6,6 +7,8 @@ import { getDateFromFilename, matchMultipleGroups, matchMultipleTimes, matchOne 
 
 const FILENAME_DATE_PATTERN: RegExp = /\.(\d*)\.txt$/;
 const LOAD_AVERAGES_PATTERN: RegExp = / load average: ([0-9\.]+), ([0-9\.]+), ([0-9\.]+)/;
+const USER_CPU_PATTERN: RegExp = /([0-9\.]+)%us/;
+const SYSTEM_CPU_PATTERN: RegExp = /([0-9\.]+)%sy/;
 const TOTAL_MEMORY_PATTERN: RegExp = /([0-9\.]+)k?[ +]total/;
 const USED_MEMORY_PATTERN: RegExp = /([0-9\.]+)k? used/;
 const FREE_MEMORY_PATTERN: RegExp = /([0-9\.]+)k? free/;
@@ -28,7 +31,7 @@ export default class CpuUsageParser {
     lines.shift();
 
     // Cpu(s): 11.4%us,  0.5%sy,  0.0%ni, 87.9%id,  0.0%wa,  0.0%hi,  0.1%si,  0.0%st
-    lines.shift();
+    cpuUsage.currentCpuUsage = CpuUsageParser.parseCurrentCpuUsage(lines.shift());
 
     // Mem:  65846052k total, 57542808k used,  8303244k free,  1200960k buffers
     // Swap:  2097148k total,        0k used,  2097148k free, 23876776k cached
@@ -58,6 +61,15 @@ export default class CpuUsageParser {
     loadAverages.fiveMinutes = parseFloat(matches[1]);
     loadAverages.fifteenMinutes = parseFloat(matches[2]);
     return loadAverages;
+  }
+
+  private static parseCurrentCpuUsage(line: string | undefined): CurrentCpuUsage {
+    const currentCpuUsage: CurrentCpuUsage = new CurrentCpuUsage();
+
+    currentCpuUsage.userTime = parseInt(matchOne(line, USER_CPU_PATTERN), 10);
+    currentCpuUsage.systemTime = parseInt(matchOne(line, SYSTEM_CPU_PATTERN), 10);
+
+    return currentCpuUsage;
   }
 
   private static parseMemoryUsage(line1: string | undefined, line2: string | undefined): MemoryUsage {
