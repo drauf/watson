@@ -1,0 +1,19 @@
+.cpu-consumers-settings {
+  margin: 0;
+  padding: 0;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cpu-consumers-settings input {
+  margin-left: 18px;
+  margin-right: 6px;
+}
+
+.cpu-consumers-limit input {
+  margin-left: 50px;
+  width: 40px;
+}
