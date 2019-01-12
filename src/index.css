@@ -31,3 +31,13 @@ h4 {
   letter-spacing: -0.008em;
   line-height: 24px;
 }
+
+h6 {
+  color: #172B4D;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+  line-height: 16px;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
