@@ -7,7 +7,7 @@ interface NavProps {
   selectPage: (page: Page) => void;
 }
 
-class Nav extends React.Component<NavProps, any> {
+export default class Nav extends React.Component<NavProps, any> {
   public onClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const element: HTMLLIElement = event.target as HTMLLIElement
     this.props.selectPage(element.value as Page)
@@ -40,5 +40,3 @@ class Nav extends React.Component<NavProps, any> {
     )
   }
 }
-
-export default Nav;

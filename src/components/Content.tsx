@@ -2,6 +2,7 @@ import * as React from 'react';
 import ThreadDump from '../types/ThreadDump';
 import { Page } from './Container';
 import './Content.css';
+import CpuConsumers from './CpuConsumers/CpuConsumers';
 import Summary from './Summary/Summary';
 
 interface ContentProps {
@@ -17,7 +18,7 @@ const Content: React.SFC<ContentProps> = ({ selectedPage, threadDumps }) => {
       inside = <Summary threadDumps={threadDumps} />
       break
     case Page.CpuConsumers:
-      inside = <p>CpuConsumers</p>
+      inside = <CpuConsumers threadDumps={threadDumps} />
       break
     case Page.ThreadStatuses:
       inside = <p>ThreadStatuses</p>
