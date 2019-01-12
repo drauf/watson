@@ -1,10 +1,13 @@
 .nav-toggle {
   width: 10px;
   background: #fff;
+  height: 100%;
+}
+.nav-arrow {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
 }
 
 /* vertical line */
@@ -14,31 +17,32 @@
 }
 
 /* arrow */
-.nav-toggle:before,
-.nav-toggle:after {
+.nav-arrow:before,
+.nav-arrow:after {
+  height: 100vh;
   background: #0052CC;
   content: '';
   height: 3px;
-  position: absolute;
+  position: fixed;
   width: 9px;
 }
 
 /* top part of the arrow */
-.nav-toggle:before {
+.nav-arrow:before {
   transform: translate(1px, 1px) rotate(55deg);
   transform-origin: right;
 }
-.open.nav-toggle:after {
+.open.nav-arrow:after {
   transform: translate(5px, 1px) rotate(-55deg);
   transform-origin: left;
 }
 
 /* bottom part of the arrow  */
-.nav-toggle:after {
+.nav-arrow:after {
   transform: translateX(1px) rotate(-55deg);
   transform-origin: right;
 }
-.open.nav-toggle:before {
+.open.nav-arrow:before {
   transform: translateX(5px) rotate(55deg);
   transform-origin: left;
 }
