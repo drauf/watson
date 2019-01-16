@@ -33,13 +33,13 @@ export default class CpuConsumers extends React.Component<CpuConsumersProps, Cpu
     this.calculateConsumers(this.state.mode);
   }
 
-  public handleModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  public handleModeChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const mode: CpuConsumersMode = parseInt(event.target.value, 10);
     this.setState({ mode });
     this.calculateConsumers(mode);
   }
 
-  public handleLimitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  public handleLimitChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const limit: number = parseInt(event.target.value, 10);
     this.setState({ limit });
   }

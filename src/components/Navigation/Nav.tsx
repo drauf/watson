@@ -8,7 +8,7 @@ type NavProps = {
 }
 
 export default class Nav extends React.Component<NavProps, any> {
-  public onClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+  public onClick: React.MouseEventHandler<HTMLLIElement> = (event) => {
     const element: HTMLLIElement = event.target as HTMLLIElement
     this.props.selectPage(element.value as Page)
   }
