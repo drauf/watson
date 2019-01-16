@@ -5,8 +5,8 @@ import './CpuConsumersSettings.css';
 type CpuConsumersSettingsProps = {
   mode: CpuConsumersMode;
   limit: number;
-  onModeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onLimitChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onModeChange: React.ChangeEventHandler<HTMLInputElement>;
+  onLimitChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> = ({ mode, limit, onModeChange, onLimitChange }) => (
