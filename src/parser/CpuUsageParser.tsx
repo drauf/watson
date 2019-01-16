@@ -66,8 +66,8 @@ export default class CpuUsageParser {
   private static parseCurrentCpuUsage(line?: string): CurrentCpuUsage {
     const currentCpuUsage: CurrentCpuUsage = new CurrentCpuUsage();
 
-    currentCpuUsage.userTime = parseInt(matchOne(USER_CPU_PATTERN, line), 10);
-    currentCpuUsage.systemTime = parseInt(matchOne(SYSTEM_CPU_PATTERN, line), 10);
+    currentCpuUsage.userTime = parseFloat(matchOne(USER_CPU_PATTERN, line));
+    currentCpuUsage.systemTime = parseFloat(matchOne(SYSTEM_CPU_PATTERN, line));
 
     return currentCpuUsage;
   }
