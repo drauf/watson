@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadOverviewItem from './ThreadOverviewItem';
 
