@@ -1,26 +1,27 @@
 {
   "compilerOptions": {
-    "target": "es2018",
     "allowJs": true,
-    "skipLibCheck": false,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
     "jsx": "preserve",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "moduleResolution": "node"
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "strict": true,
+    "target": "es2018",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
   "include": [
     "src"
-  ],
-  "removeComments": true
+  ]
 }
