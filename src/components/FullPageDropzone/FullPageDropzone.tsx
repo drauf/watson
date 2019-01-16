@@ -2,8 +2,8 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 
 type FullPageDropzoneProps = {
-  onDrop: (files: File[]) => void
-}
+  onDrop: (files: File[]) => void;
+};
 
 const FullPageDropzone: React.SFC<FullPageDropzoneProps> = ({ onDrop }) => (
   <Dropzone accept=".txt" multiple={true} onDrop={onDrop}>
@@ -18,6 +18,6 @@ const FullPageDropzone: React.SFC<FullPageDropzoneProps> = ({ onDrop }) => (
       </div>
     )}
   </Dropzone>
-)
+);
 
 export default FullPageDropzone;

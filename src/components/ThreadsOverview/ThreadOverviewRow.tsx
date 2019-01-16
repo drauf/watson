@@ -5,7 +5,7 @@ import ThreadOverviewItem from './ThreadOverviewItem';
 type ThreadOverviewRowProps = {
   total: number;
   threads: Map<number, Thread>;
-}
+};
 
 const ThreadOverviewRow: React.SFC<ThreadOverviewRowProps> = ({ total, threads }) => {
   const threadsPadded = [];
@@ -17,7 +17,7 @@ const ThreadOverviewRow: React.SFC<ThreadOverviewRowProps> = ({ total, threads }
     <tr>
       {threadsPadded.map((thread, i) => <ThreadOverviewItem key={i} thread={thread} />)}
     </tr>
-  )
-}
+  );
+};
 
 export default ThreadOverviewRow;

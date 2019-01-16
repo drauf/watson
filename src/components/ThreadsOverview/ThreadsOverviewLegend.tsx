@@ -24,6 +24,6 @@ const ThreadsOverviewLegend: React.SFC = () => (
       </tbody>
     </table>
   </div>
-)
+);
 
 export default ThreadsOverviewLegend;

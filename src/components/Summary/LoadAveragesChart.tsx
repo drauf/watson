@@ -1,23 +1,25 @@
 import React from 'react';
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
+} from 'recharts';
 import ThreadDump from '../../types/ThreadDump';
 
 type LoadAveragesChartProps = {
   threadDumps: ThreadDump[];
-}
+};
 
 const LoadAveragesChart: React.SFC<LoadAveragesChartProps> = ({ threadDumps }) => {
   const data: object[] = [];
-  threadDumps.map(threadDump => {
+  threadDumps.map((threadDump) => {
     if (threadDump.loadAverages) {
       data.push({
         fifteenMinutes: threadDump.loadAverages.fifteenMinutes,
         fiveMinutes: threadDump.loadAverages.fiveMinutes,
         name: threadDump.date ? threadDump.date.toLocaleString() : null,
-        oneMinute: threadDump.loadAverages.oneMinute
-      })
+        oneMinute: threadDump.loadAverages.oneMinute,
+      });
     }
-  })
+  });
 
   return (
     <>
@@ -35,7 +37,7 @@ const LoadAveragesChart: React.SFC<LoadAveragesChartProps> = ({ threadDumps }) =
         </LineChart>
       </ResponsiveContainer>
     </>
-  )
-}
+  );
+};
 
 export default LoadAveragesChart;

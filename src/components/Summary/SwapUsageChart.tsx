@@ -1,22 +1,24 @@
 import React from 'react';
-import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis,
+} from 'recharts';
 import ThreadDump from '../../types/ThreadDump';
 
 type SwapUsageChartProps = {
   threadDumps: ThreadDump[];
-}
+};
 
 const SwapUsageChart: React.SFC<SwapUsageChartProps> = ({ threadDumps }) => {
   const data: object[] = [];
-  threadDumps.map(threadDump => {
+  threadDumps.map((threadDump) => {
     if (threadDump.memoryUsage) {
       data.push({
         name: threadDump.date ? threadDump.date.toLocaleString() : null,
         swapFree: (threadDump.memoryUsage.swapFree / 1000000).toFixed(2),
-        swapUsed: (threadDump.memoryUsage.swapUsed / 1000000).toFixed(2)
-      })
+        swapUsed: (threadDump.memoryUsage.swapUsed / 1000000).toFixed(2),
+      });
     }
-  })
+  });
 
   return (
     <>
@@ -33,7 +35,7 @@ const SwapUsageChart: React.SFC<SwapUsageChartProps> = ({ threadDumps }) => {
         </AreaChart>
       </ResponsiveContainer>
     </>
-  )
-}
+  );
+};
 
 export default SwapUsageChart;

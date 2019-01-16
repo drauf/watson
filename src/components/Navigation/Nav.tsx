@@ -5,40 +5,33 @@ import './Nav.css';
 type NavProps = {
   open: boolean;
   selectPage: (page: Page) => void;
-}
+};
 
 export default class Nav extends React.Component<NavProps, any> {
-  public onClick: React.MouseEventHandler<HTMLLIElement> = (event) => {
-    const element: HTMLLIElement = event.target as HTMLLIElement
-    this.props.selectPage(element.value as Page)
+  public onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
+    this.props.selectPage(page as Page);
   }
 
   public render() {
     return (
-      <div className={this.props.open ? "nav nav-open" : "nav"}>
+      <div className={this.props.open ? 'nav nav-open' : 'nav'}>
         <div className="nav-content">
-          <p className={this.props.open ? "brand" : "brand brand-hidden"}>
+          <p className={this.props.open ? 'brand' : 'brand brand-hidden'}>
             Watson
           </p>
           <ul>
-            <li onClick={this.onClick} value="0">Summary</li>
-          </ul>
-          <ul>
-            <li onClick={this.onClick} value="1">CPU Consumers</li>
-            <li onClick={this.onClick} value="2">Thread Statuses</li>
-            <li onClick={this.onClick} value="3">Stuck Threads</li>
-            <li onClick={this.onClick} value="4">Similar Stack Traces</li>
-          </ul>
-          <ul>
-            <li onClick={this.onClick} value="5">Threads Overview</li>
-            <li onClick={this.onClick} value="6">Monitors</li>
-          </ul>
-          <ul>
-            <li onClick={this.onClick} value="7">Flame Graph</li>
-            <li onClick={this.onClick} value="8">Advanced Mode</li>
+            <li onClick={this.onClick(Page.Summary)}>Summary</li>
+            <li onClick={this.onClick(Page.CpuConsumers)}>CPU Consumers</li>
+            <li onClick={this.onClick(Page.ThreadStatuses)}>Thread Statuses</li>
+            <li onClick={this.onClick(Page.StuckThreads)}>Stuck Threads</li>
+            <li onClick={this.onClick(Page.SimilarStackTraces)}>Similar Stack Traces</li>
+            <li onClick={this.onClick(Page.ThreadsOverview)}>Threads Overview</li>
+            <li onClick={this.onClick(Page.Monitors)}>Monitors</li>
+            <li onClick={this.onClick(Page.FlameGraph)}>Flame Graph</li>
+            <li onClick={this.onClick(Page.AdvancedMode)}>Advanced Mode</li>
           </ul>
         </div>
       </div >
-    )
+    );
   }
 }

@@ -3,7 +3,9 @@ import CurrentCpuUsage from '../types/CurrentCpuUsage';
 import LoadAverages from '../types/LoadAverage';
 import MemoryUsage from '../types/MemoryUsage';
 import ThreadCpuUsage from '../types/ThreadCpuUsage';
-import { getDateFromFilename, matchMultipleGroups, matchMultipleTimes, matchOne } from './RegExpUtils';
+import {
+  getDateFromFilename, matchMultipleGroups, matchMultipleTimes, matchOne,
+} from './RegExpUtils';
 
 const FILENAME_DATE_PATTERN: RegExp = /\.(\d*)\.txt$/;
 const LOAD_AVERAGES_PATTERN: RegExp = / load average: ([0-9\.]+), ([0-9\.]+), ([0-9\.]+)/;

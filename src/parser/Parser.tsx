@@ -33,7 +33,7 @@ export default class Parser {
 
   private groupFiles(files: File[], cpuUsageFiles: File[], threadDumpFiles: File[]) {
     for (const file of files) {
-      if (file.name.includes("cpu")) {
+      if (file.name.includes('cpu')) {
         cpuUsageFiles.push(file);
       } else {
         threadDumpFiles.push(file);
@@ -48,7 +48,7 @@ export default class Parser {
       reader.onload = ((cpuUsage: File, callback: ParseCpuUsageCallback) => {
         return function (this: FileReader) {
           CpuUsageParser.parseCpuUsage(cpuUsage, this, callback);
-        }
+        };
       })(file, this.onParsedCpuUsage);
 
       reader.readAsText(file);
@@ -68,7 +68,7 @@ export default class Parser {
       reader.onload = ((threadDump: File, callback: ParseThreadDumpCallback) => {
         return function (this: FileReader) {
           ThreadDumpParser.parseThreadDump(threadDump, this, callback);
-        }
+        };
       })(file, this.onParsedThreadDump);
 
       reader.readAsText(file);
@@ -91,7 +91,7 @@ export default class Parser {
   private groupCpuUsagesWithThreadDumps() {
     this.cpuUsages
       .filter(cpuUsage => cpuUsage.date)
-      .forEach(cpuUsage => {
+      .forEach((cpuUsage) => {
         const threadDump: ThreadDump = this.findCorrespondingThreadDump(cpuUsage);
         this.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
       });
@@ -104,7 +104,7 @@ export default class Parser {
 
     this.threadDumps
       .filter(threadDump => threadDump.date)
-      .forEach(threadDump => {
+      .forEach((threadDump) => {
         const diff = Math.abs((threadDump.date as Date).valueOf() - cpuUsageDate.valueOf());
 
         if (diff < smallestDiff) {
@@ -126,7 +126,7 @@ export default class Parser {
     threadDump.currentCpuUsage = cpuUsage.currentCpuUsage;
     threadDump.memoryUsage = cpuUsage.memoryUsage;
 
-    cpuUsage.threadCpuUsages.forEach(cpu => {
+    cpuUsage.threadCpuUsages.forEach((cpu) => {
       const thread = this.findThreadWithId(threadDump, cpu.id);
 
       if (thread) {

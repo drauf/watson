@@ -9,33 +9,32 @@ import CpuConsumersSettings from './CpuConsumersSettings';
 export enum CpuConsumersMode {
   Mean,
   Median,
-  Max
+  Max,
 }
 
 type CpuConsumersProps = {
   threadDumps: ThreadDump[];
-}
+};
 
 type CpuConsumersState = {
   mode: CpuConsumersMode;
   limit: number;
   consumers: CpuConsumer[];
-}
+};
 
 export default class CpuConsumers extends React.Component<CpuConsumersProps, CpuConsumersState> {
   public state: CpuConsumersState = {
     consumers: [],
     limit: 40,
-    mode: CpuConsumersMode.Mean
+    mode: CpuConsumersMode.Mean,
   };
 
   public componentDidMount() {
     this.calculateConsumers(this.state.mode);
   }
 
-  public handleModeChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const mode: CpuConsumersMode = parseInt(event.target.value, 10);
-    this.setState({ mode });
+  public handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
+    this.setState({ mode: mode as CpuConsumersMode });
     this.calculateConsumers(mode);
   }
 
@@ -48,8 +47,8 @@ export default class CpuConsumers extends React.Component<CpuConsumersProps, Cpu
     const consumers: CpuConsumer[] = [];
     const threadsOverTime = ThreadDumpsUtils.getThreadsOverTime(this.props.threadDumps);
 
-    for (const [id, threads] of threadsOverTime) {
-      consumers.push(new CpuConsumer(this.calculateValueFromThreads(threads, mode), threads))
+    for (const [, threads] of threadsOverTime) {
+      consumers.push(new CpuConsumer(this.calculateValueFromThreads(threads, mode), threads));
     }
     consumers.sort((a, b) => b.calculatedValue - a.calculatedValue);
 
@@ -71,10 +70,10 @@ export default class CpuConsumers extends React.Component<CpuConsumersProps, Cpu
           consumers={this.state.consumers}
         />
       </div>
-    )
+    );
   }
 
-  private calculateValueFromThreads(threadsMap: Map<number, Thread>, mode: CpuConsumersMode): number {
+  private calculateValueFromThreads(threadsMap: Map<number, Thread>, mode: CpuConsumersMode) {
     const threads = Array.from(threadsMap.values());
 
     switch (mode) {
@@ -88,11 +87,11 @@ export default class CpuConsumers extends React.Component<CpuConsumersProps, Cpu
   }
 
   private reduceSum(sum: number, currentThread: Thread): number {
-    return sum + currentThread.cpuUsage
+    return sum + currentThread.cpuUsage;
   }
 
   private reduceMax(maxValue: number, currentThread: Thread): number {
-    return (currentThread.cpuUsage > maxValue) ? currentThread.cpuUsage : maxValue
+    return (currentThread.cpuUsage > maxValue) ? currentThread.cpuUsage : maxValue;
   }
 
   private calculateMedian(threads: Thread[]): number {

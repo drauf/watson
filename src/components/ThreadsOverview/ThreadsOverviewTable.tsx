@@ -5,7 +5,7 @@ import ThreadOverviewRow from './ThreadOverviewRow';
 
 type ThreadsOverviewProps = {
   threadDumps: ThreadDump[];
-}
+};
 
 const ThreadsOverview: React.SFC<ThreadsOverviewProps> = ({ threadDumps }) => {
   const threadOverTime = Array.from(ThreadDumpsUtils.getThreadsOverTime(threadDumps).values());
@@ -27,7 +27,7 @@ const ThreadsOverview: React.SFC<ThreadsOverviewProps> = ({ threadDumps }) => {
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
 export default ThreadsOverview;

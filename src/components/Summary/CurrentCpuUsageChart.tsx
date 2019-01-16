@@ -1,22 +1,24 @@
 import React from 'react';
-import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis,
+} from 'recharts';
 import ThreadDump from '../../types/ThreadDump';
 
 type CurrentCpuUsageChartProps = {
   threadDumps: ThreadDump[];
-}
+};
 
 const CurrentCpuUsageChart: React.SFC<CurrentCpuUsageChartProps> = ({ threadDumps }) => {
   const data: object[] = [];
-  threadDumps.map(threadDump => {
+  threadDumps.map((threadDump) => {
     if (threadDump.currentCpuUsage) {
       data.push({
         name: threadDump.date ? threadDump.date.toLocaleString() : null,
         systemTime: threadDump.currentCpuUsage.systemTime,
-        userTime: threadDump.currentCpuUsage.userTime
-      })
+        userTime: threadDump.currentCpuUsage.userTime,
+      });
     }
-  })
+  });
 
   return (
     <>
@@ -33,7 +35,7 @@ const CurrentCpuUsageChart: React.SFC<CurrentCpuUsageChartProps> = ({ threadDump
         </AreaChart>
       </ResponsiveContainer>
     </>
-  )
-}
+  );
+};
 
 export default CurrentCpuUsageChart;

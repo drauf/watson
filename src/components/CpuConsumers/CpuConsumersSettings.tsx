@@ -5,61 +5,50 @@ import './CpuConsumersSettings.css';
 type CpuConsumersSettingsProps = {
   mode: CpuConsumersMode;
   limit: number;
-  onModeChange: React.ChangeEventHandler<HTMLInputElement>;
+  onModeChange: (mode: number) => React.ChangeEventHandler<HTMLInputElement>;
   onLimitChange: React.ChangeEventHandler<HTMLInputElement>;
-}
+};
 
-const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> = ({ mode, limit, onModeChange, onLimitChange }) => (
-  <div className="cpu-consumers-settings">
-    <div className="cpu-consumers-mode">
-      <b>CPU usage calculation mode:</b>
-      <label>
-        <input
-          type="radio"
-          name="mode"
-          value="0"
-          checked={mode === CpuConsumersMode.Mean}
-          onChange={onModeChange}
-        />
-        Mean
+const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> =
+  ({ mode, limit, onModeChange, onLimitChange }) => (
+    <div className="cpu-consumers-settings">
+      <div className="cpu-consumers-mode">
+        <b>CPU usage calculation mode:</b>
+        <label>
+          <input type="radio" name="mode"
+            checked={mode === CpuConsumersMode.Mean}
+            onChange={onModeChange(CpuConsumersMode.Mean)}
+          />
+          Mean
       </label>
 
-      <label>
-        <input
-          type="radio"
-          name="mode"
-          value="1"
-          checked={mode === CpuConsumersMode.Median}
-          onChange={onModeChange}
-        />
-        Median
+        <label>
+          <input type="radio" name="mode"
+            checked={mode === CpuConsumersMode.Median}
+            onChange={onModeChange(CpuConsumersMode.Median)}
+          />
+          Median
       </label>
 
-      <label>
-        <input
-          type="radio"
-          name="mode"
-          value="2"
-          checked={mode === CpuConsumersMode.Max}
-          onChange={onModeChange}
-        />
-        Max
+        <label>
+          <input type="radio" name="mode"
+            checked={mode === CpuConsumersMode.Max}
+            onChange={onModeChange(CpuConsumersMode.Max)}
+          />
+          Max
       </label>
+      </div>
+
+      <div className="cpu-consumers-limit">
+        <label>
+          <input type="number" name="threadsLimit" min="0" max="10000"
+            value={limit}
+            onChange={onLimitChange}
+          />
+          <b><i>#</i> of threads to show</b>
+        </label>
+      </div>
     </div>
-
-    <div className="cpu-consumers-limit">
-      <label>
-        <input
-          type="number"
-          name="threadsLimit"
-          value={limit}
-          min="0"
-          onChange={onLimitChange}
-        />
-        <b><i>#</i> of threads to show</b>
-      </label>
-    </div>
-  </div>
-)
+  );
 
 export default CpuConsumersSettings;

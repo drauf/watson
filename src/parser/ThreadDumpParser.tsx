@@ -1,8 +1,8 @@
-import Lock from "../types/Lock";
-import Thread from "../types/Thread";
-import ThreadDump from "../types/ThreadDump";
-import ThreadStatus from "../types/ThreadStatus";
-import { getDateFromFilename, matchMultipleGroups, matchOne } from "./RegExpUtils";
+import Lock from '../types/Lock';
+import Thread from '../types/Thread';
+import ThreadDump from '../types/ThreadDump';
+import ThreadStatus from '../types/ThreadStatus';
+import { getDateFromFilename, matchMultipleGroups, matchOne } from './RegExpUtils';
 
 const THREAD_HEADER_PREFIX: string = '"';
 
@@ -67,23 +67,24 @@ export default class ThreadDumpParser {
       return;
     }
 
-    const synchronizationStatus: string[] = matchMultipleGroups(SYNCHRONIZATION_STATUS_PATTERN, line);
+    const synchronizationStatus = matchMultipleGroups(SYNCHRONIZATION_STATUS_PATTERN, line);
     if (synchronizationStatus && synchronizationStatus.length === 3) {
       const state: string = synchronizationStatus[0];
       const lockId: string = synchronizationStatus[1];
       const className: string = synchronizationStatus[2];
 
       switch (state) {
-        case "waiting on":
-        case "parking to wait for":
-        case "waiting to lock":
+        case 'waiting on':
+        case 'parking to wait for':
+        case 'waiting to lock':
           let lock: Lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
           lock.waiting.push(ThreadDumpParser.currentThread);
           ThreadDumpParser.currentThread.lockWaitingFor = lock;
           return;
 
-        case "locked":
-          if (ThreadDumpParser.currentThread.lockWaitingFor && ThreadDumpParser.currentThread.lockWaitingFor.id === lockId) {
+        case 'locked':
+          if (ThreadDumpParser.currentThread.lockWaitingFor
+            && ThreadDumpParser.currentThread.lockWaitingFor.id === lockId) {
             // lock is released while waiting for the notification
             return;
           }
@@ -93,7 +94,7 @@ export default class ThreadDumpParser {
           ThreadDumpParser.currentThread.classicalLocksHeld.push(lock);
           return;
 
-        case "eliminated":
+        case 'eliminated':
           // redundant lock that has been removed in the bytecode - we don't care about those
           return;
 
@@ -132,7 +133,7 @@ export default class ThreadDumpParser {
     threads
       .filter(thread => !thread.lockWaitingFor)
       .filter(thread => validStatuses.includes(thread.status))
-      .forEach(thread => {
+      .forEach((thread) => {
         const lock: Lock = thread.classicalLocksHeld[0];
         lock.owner = null;
         lock.waiting.push(thread);
@@ -140,7 +141,7 @@ export default class ThreadDumpParser {
         thread.lockWaitingFor = lock;
         thread.locksHeld.splice(thread.locksHeld.indexOf(lock), 1);
         thread.classicalLocksHeld.splice(thread.classicalLocksHeld.indexOf(lock), 1);
-      })
+      });
   }
 
   private static stringToThreadStatus(status: string): ThreadStatus {
@@ -150,13 +151,13 @@ export default class ThreadDumpParser {
       return threadStatus;
     }
 
-    if (status.startsWith("BLOCKED")) {
+    if (status.startsWith('BLOCKED')) {
       return ThreadStatus.BLOCKED;
     }
-    if (status.startsWith("WAITING")) {
+    if (status.startsWith('WAITING')) {
       return ThreadStatus.WAITING;
     }
-    if (status.startsWith("TIME_WAITING")) {
+    if (status.startsWith('TIME_WAITING')) {
       return ThreadStatus.TIMED_WAITING;
     }
 

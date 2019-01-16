@@ -4,17 +4,17 @@ import ThreadStatus from '../../types/ThreadStatus';
 
 type ThreadOverviewItemProps = {
   thread?: Thread;
-}
+};
 
 const ThreadOverviewItem: React.SFC<ThreadOverviewItemProps> = ({ thread }) => {
   if (!thread) {
-    return <td className="empty" />
+    return <td className="empty" />;
   }
 
   const className = thread.status ? thread.status.toString() : ThreadStatus.UNKNOWN.toString();
   return (
     <td className={className}>{thread.name}</td>
-  )
-}
+  );
+};
 
 export default ThreadOverviewItem;

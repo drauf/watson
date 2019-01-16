@@ -1,4 +1,5 @@
 .consumers-list {
   list-style-type: none;
   padding: 0;
+  white-space: pre;
 }
