@@ -1,7 +1,7 @@
 import React from 'react';
 import CpuConsumer from './CpuConsumer';
 
-interface CpuConsumerItemProps {
+type CpuConsumerItemProps = {
   dumpsNumber: number;
   consumer: CpuConsumer;
 }

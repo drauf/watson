@@ -2,7 +2,7 @@ import React from 'react';
 import { CpuConsumersMode } from './CpuConsumers';
 import './CpuConsumersSettings.css';
 
-interface CpuConsumersSettingsProps {
+type CpuConsumersSettingsProps = {
   mode: CpuConsumersMode;
   limit: number;
   onModeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

@@ -6,7 +6,7 @@ import CpuConsumers from './CpuConsumers/CpuConsumers';
 import Summary from './Summary/Summary';
 import ThreadsOverview from './ThreadsOverview/ThreadsOverview';
 
-interface ContentProps {
+type ContentProps = {
   selectedPage: Page;
   threadDumps: ThreadDump[];
 }

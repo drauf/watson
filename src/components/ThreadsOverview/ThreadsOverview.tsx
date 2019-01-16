@@ -1,11 +1,10 @@
 import React from 'react';
-import ThreadDumpsUtils from '../../common/ThreadDumpsUtils';
 import ThreadDump from '../../types/ThreadDump';
 import './ThreadsOverview.css';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import ThreadsOverviewTable from './ThreadsOverviewTable';
 
-interface ThreadsOverviewProps {
+type ThreadsOverviewProps = {
   threadDumps: ThreadDump[];
 }
 

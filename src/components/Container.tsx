@@ -17,11 +17,11 @@ export enum Page {
   AdvancedMode
 }
 
-interface ContainerProps {
+type ContainerProps = {
   threadDumps: ThreadDump[];
 }
 
-interface ContainerState {
+type ContainerState = {
   navigationOpen: boolean;
   selectedPage: Page;
 }

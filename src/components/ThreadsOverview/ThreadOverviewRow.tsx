@@ -2,7 +2,7 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadOverviewItem from './ThreadOverviewItem';
 
-interface ThreadOverviewRowProps {
+type ThreadOverviewRowProps = {
   total: number;
   threads: Map<number, Thread>;
 }

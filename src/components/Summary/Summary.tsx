@@ -5,7 +5,7 @@ import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsage';
 import SwapUsageChart from './SwapUsageChart';
 
-interface SummaryProps {
+type SummaryProps = {
   threadDumps: ThreadDump[];
 }
 

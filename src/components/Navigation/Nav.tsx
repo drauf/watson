@@ -2,7 +2,7 @@ import React from 'react';
 import { Page } from '../Container';
 import './Nav.css';
 
-interface NavProps {
+type NavProps = {
   open: boolean;
   selectPage: (page: Page) => void;
 }

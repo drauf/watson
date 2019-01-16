@@ -1,7 +1,7 @@
 import React from 'react';
 import './NavToggle.css';
 
-interface NavToggleProps {
+type NavToggleProps = {
   open: boolean;
   onClick: () => void;
 }

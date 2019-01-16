@@ -3,7 +3,7 @@ import ThreadDumpsUtils from '../../common/ThreadDumpsUtils';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadOverviewRow from './ThreadOverviewRow';
 
-interface ThreadsOverviewProps {
+type ThreadsOverviewProps = {
   threadDumps: ThreadDump[];
 }
 
