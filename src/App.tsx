@@ -5,7 +5,7 @@ import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
 import Parser from './parser/Parser';
 import ThreadDump from './types/ThreadDump';
 
-interface AppState {
+type AppState = {
   threadDumps: ThreadDump[];
   parser: Parser;
 }

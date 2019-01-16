@@ -2,7 +2,7 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 
-interface ThreadOverviewItemProps {
+type ThreadOverviewItemProps = {
   thread: Thread | undefined;
 }
 

@@ -12,11 +12,11 @@ export enum CpuConsumersMode {
   Max
 }
 
-interface CpuConsumersProps {
+type CpuConsumersProps = {
   threadDumps: ThreadDump[];
 }
 
-interface CpuConsumersState {
+type CpuConsumersState = {
   mode: CpuConsumersMode;
   limit: number;
   consumers: CpuConsumer[];

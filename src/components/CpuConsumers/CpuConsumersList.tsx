@@ -3,7 +3,7 @@ import CpuConsumer from './CpuConsumer';
 import CpuConsumerItem from './CpuConsumerItem';
 import './CpuConsumersList.css';
 
-interface CpuConsumersListProps {
+type CpuConsumersListProps = {
   limit: number;
   dumpsNumber: number;
   consumers: CpuConsumer[];

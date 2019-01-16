@@ -2,7 +2,7 @@ import React from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import ThreadDump from '../../types/ThreadDump';
 
-interface LoadAveragesChartProps {
+type LoadAveragesChartProps = {
   threadDumps: ThreadDump[];
 }
 
