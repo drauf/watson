@@ -8,12 +8,12 @@ import ThreadDump from './types/ThreadDump';
 type AppState = {
   threadDumps: ThreadDump[];
   parser: Parser;
-}
+};
 
-class App extends React.Component<any, AppState> {
+export default class App extends React.Component<any, AppState> {
   public state: AppState = {
     parser: new Parser(this.handleFilesParsed.bind(this)),
-    threadDumps: []
+    threadDumps: [],
   };
 
   public handleFilesParsed(threadDumps: ThreadDump[]) {
@@ -22,10 +22,8 @@ class App extends React.Component<any, AppState> {
 
   public render() {
     if (this.state.threadDumps.length === 0) {
-      return <FullPageDropzone onDrop={this.state.parser.parseFiles} />
+      return <FullPageDropzone onDrop={this.state.parser.parseFiles} />;
     }
-    return <Container threadDumps={this.state.threadDumps} />
+    return <Container threadDumps={this.state.threadDumps} />;
   }
 }
-
-export default App;

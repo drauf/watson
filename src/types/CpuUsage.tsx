@@ -1,7 +1,7 @@
-import CurrentCpuUsage from "./CurrentCpuUsage";
-import LoadAverages from "./LoadAverage";
-import MemoryUsage from "./MemoryUsage";
-import ThreadCpuUsage from "./ThreadCpuUsage";
+import CurrentCpuUsage from './CurrentCpuUsage';
+import LoadAverages from './LoadAverage';
+import MemoryUsage from './MemoryUsage';
+import ThreadCpuUsage from './ThreadCpuUsage';
 
 export default class CpuUsage {
   public date!: Date | null;

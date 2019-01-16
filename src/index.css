@@ -41,3 +41,7 @@ h6 {
   margin-top: 16px;
   margin-bottom: 0;
 }
+
+.monospaced {
+  font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", "Ubuntu Mono", Menlo, Courier, monospace;
+}

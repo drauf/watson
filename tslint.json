@@ -2,18 +2,14 @@
   "defaultSeverity": "error",
   "extends": [
     "tslint:latest",
-    "tslint-config-airbnb",
     "tslint-react",
-    "tslint-config-prettier"
+    "tslint-config-prettier",
+    "tslint-config-airbnb"
   ],
   "jsRules": {},
   "rules": {
     "no-increment-decrement": false,
     "import-name": false,
-    "interface-name": [
-      true,
-      "never-prefix"
-    ],
     "interface-over-type-literal": false,
     "no-console": [
       true,

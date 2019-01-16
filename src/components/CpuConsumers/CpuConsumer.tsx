@@ -1,4 +1,4 @@
-import Thread from "../../types/Thread";
+import Thread from '../../types/Thread';
 
 export default class CpuConsumer {
   public calculatedValue: number;

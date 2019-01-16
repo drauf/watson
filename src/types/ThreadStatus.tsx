@@ -4,7 +4,7 @@ enum ThreadStatus {
   BLOCKED = 'blocked',
   WAITING = 'waiting',
   TIMED_WAITING = 'timed-waiting',
-  UNKNOWN = 'unknown'
+  UNKNOWN = 'unknown',
 }
 
 export default ThreadStatus;

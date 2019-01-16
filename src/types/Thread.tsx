@@ -1,5 +1,5 @@
-import Lock from "./Lock";
-import ThreadStatus from "./ThreadStatus";
+import Lock from './Lock';
+import ThreadStatus from './ThreadStatus';
 
 export default class Thread {
   public id!: number;

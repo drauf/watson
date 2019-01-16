@@ -6,7 +6,7 @@ import ThreadsOverviewTable from './ThreadsOverviewTable';
 
 type ThreadsOverviewProps = {
   threadDumps: ThreadDump[];
-}
+};
 
 const ThreadsOverview: React.SFC<ThreadsOverviewProps> = ({ threadDumps }) => {
   return (
@@ -14,7 +14,7 @@ const ThreadsOverview: React.SFC<ThreadsOverviewProps> = ({ threadDumps }) => {
       <ThreadsOverviewLegend />
       <ThreadsOverviewTable threadDumps={threadDumps} />
     </div>
-  )
-}
+  );
+};
 
 export default ThreadsOverview;
