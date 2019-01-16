@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import ThreadDumpsUtils from '../../common/ThreadDumpsUtils';
 import ThreadDump from '../../types/ThreadDump';
 import './ThreadsOverview.css';

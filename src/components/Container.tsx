@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import ThreadDump from '../types/ThreadDump';
 import './Container.css';
 import Content from './Content';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumerItem from './CpuConsumerItem';
 import './CpuConsumersList.css';
