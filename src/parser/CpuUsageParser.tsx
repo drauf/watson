@@ -20,7 +20,7 @@ export default class CpuUsageParser {
 
   public static parseCpuUsage(file: File, reader: FileReader, callback: ParseCpuUsageCallback) {
     const cpuUsage: CpuUsage = new CpuUsage();
-    cpuUsage.date = getDateFromFilename(file.name, FILENAME_DATE_PATTERN);
+    cpuUsage.date = getDateFromFilename(FILENAME_DATE_PATTERN, file.name);
 
     const lines: string[] = (reader.result as string).split('\n');
 
@@ -48,8 +48,8 @@ export default class CpuUsageParser {
     callback(cpuUsage);
   }
 
-  private static parseLoadAverages(line: string | undefined): LoadAverages | null {
-    const matches: string[] = matchMultipleGroups(line, LOAD_AVERAGES_PATTERN);
+  private static parseLoadAverages(line?: string): LoadAverages | null {
+    const matches: string[] = matchMultipleGroups(LOAD_AVERAGES_PATTERN, line);
 
     if (matches.length !== 3) {
       console.error(`Unable to parse load averages from line: ${line}`);
@@ -63,25 +63,25 @@ export default class CpuUsageParser {
     return loadAverages;
   }
 
-  private static parseCurrentCpuUsage(line: string | undefined): CurrentCpuUsage {
+  private static parseCurrentCpuUsage(line?: string): CurrentCpuUsage {
     const currentCpuUsage: CurrentCpuUsage = new CurrentCpuUsage();
 
-    currentCpuUsage.userTime = parseInt(matchOne(line, USER_CPU_PATTERN), 10);
-    currentCpuUsage.systemTime = parseInt(matchOne(line, SYSTEM_CPU_PATTERN), 10);
+    currentCpuUsage.userTime = parseInt(matchOne(USER_CPU_PATTERN, line), 10);
+    currentCpuUsage.systemTime = parseInt(matchOne(SYSTEM_CPU_PATTERN, line), 10);
 
     return currentCpuUsage;
   }
 
-  private static parseMemoryUsage(line1: string | undefined, line2: string | undefined): MemoryUsage {
+  private static parseMemoryUsage(line1?: string, line2?: string): MemoryUsage {
     const memoryUsage: MemoryUsage = new MemoryUsage();
 
-    memoryUsage.memoryTotal = parseInt(matchOne(line1, TOTAL_MEMORY_PATTERN), 10);
-    memoryUsage.memoryUsed = parseInt(matchOne(line1, USED_MEMORY_PATTERN), 10);
-    memoryUsage.memoryFree = parseInt(matchOne(line1, FREE_MEMORY_PATTERN), 10);
+    memoryUsage.memoryTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line1), 10);
+    memoryUsage.memoryUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line1), 10);
+    memoryUsage.memoryFree = parseInt(matchOne(FREE_MEMORY_PATTERN, line1), 10);
 
-    memoryUsage.swapTotal = parseInt(matchOne(line2, TOTAL_MEMORY_PATTERN), 10);
-    memoryUsage.swapUsed = parseInt(matchOne(line2, USED_MEMORY_PATTERN), 10);
-    memoryUsage.swapFree = parseInt(matchOne(line2, FREE_MEMORY_PATTERN), 10);
+    memoryUsage.swapTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line2), 10);
+    memoryUsage.swapUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line2), 10);
+    memoryUsage.swapFree = parseInt(matchOne(FREE_MEMORY_PATTERN, line2), 10);
 
     return memoryUsage;
   }
@@ -93,7 +93,7 @@ export default class CpuUsageParser {
       const line: string = lines[i];
       if (!line) continue;
 
-      const columns: string[] = matchMultipleTimes(line, COLUMN_MATCHER);
+      const columns: string[] = matchMultipleTimes(COLUMN_MATCHER, line);
       if (columns.length < 11) {
         console.error(`Unable to parse thread cpu usage info from line: ${line}`);
         continue;

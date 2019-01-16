@@ -23,7 +23,7 @@ export default class ThreadDumpParser {
 
   public static parseThreadDump(file: File, reader: FileReader, callback: ParseThreadDumpCallback) {
     const threadDump: ThreadDump = new ThreadDump();
-    threadDump.date = getDateFromFilename(file.name, FILENAME_DATE_PATTERN);
+    threadDump.date = getDateFromFilename(FILENAME_DATE_PATTERN, file.name);
 
     const lines: string[] = (reader.result as string).split('\n');
     lines.forEach(line => ThreadDumpParser.parseLine(line, threadDump));
@@ -46,8 +46,8 @@ export default class ThreadDumpParser {
     ThreadDumpParser.currentThread = new Thread();
     threadDump.threads.push(ThreadDumpParser.currentThread);
 
-    ThreadDumpParser.currentThread.name = matchOne(header, NAME_PATTERN).trim();
-    ThreadDumpParser.currentThread.id = parseInt(matchOne(header, NID_PATTERN), 16);
+    ThreadDumpParser.currentThread.name = matchOne(NAME_PATTERN, header).trim();
+    ThreadDumpParser.currentThread.id = parseInt(matchOne(NID_PATTERN, header), 16);
   }
 
   private static parseStackLine(line: string, threadDump: ThreadDump): void {
@@ -55,19 +55,19 @@ export default class ThreadDumpParser {
       return;
     }
 
-    const frame: string = matchOne(line, FRAME_PATTERN);
+    const frame: string = matchOne(FRAME_PATTERN, line);
     if (frame) {
       ThreadDumpParser.currentThread.stackTrace.push(frame);
       return;
     }
 
-    const threadState: string = matchOne(line, THREAD_STATE_PATTERN);
+    const threadState: string = matchOne(THREAD_STATE_PATTERN, line);
     if (threadState) {
       ThreadDumpParser.currentThread.status = ThreadDumpParser.stringToThreadStatus(threadState);
       return;
     }
 
-    const synchronizationStatus: string[] = matchMultipleGroups(line, SYNCHRONIZATION_STATUS_PATTERN);
+    const synchronizationStatus: string[] = matchMultipleGroups(SYNCHRONIZATION_STATUS_PATTERN, line);
     if (synchronizationStatus && synchronizationStatus.length === 3) {
       const state: string = synchronizationStatus[0];
       const lockId: string = synchronizationStatus[1];
@@ -103,7 +103,7 @@ export default class ThreadDumpParser {
       }
     }
 
-    const lockHeld: string[] = matchMultipleGroups(line, HELD_LOCK_PATTERN);
+    const lockHeld: string[] = matchMultipleGroups(HELD_LOCK_PATTERN, line);
     if (lockHeld && lockHeld.length === 2) {
       const lockId: string = lockHeld[0];
       const className: string = lockHeld[1];
@@ -115,9 +115,9 @@ export default class ThreadDumpParser {
     }
 
     // ignore those lines, as they provide no useful data
-    if (matchOne(line, LOCKED_OWNABLE_SYNCHRONIZERS_PATTERN)
-      || matchOne(line, NONE_HELD_PATTERN)
-      || matchOne(line, JNI_REFERENCES_PATTERN)) {
+    if (matchOne(LOCKED_OWNABLE_SYNCHRONIZERS_PATTERN, line)
+      || matchOne(NONE_HELD_PATTERN, line)
+      || matchOne(JNI_REFERENCES_PATTERN, line)) {
       return;
     }
 
@@ -146,7 +146,7 @@ export default class ThreadDumpParser {
   private static stringToThreadStatus(status: string): ThreadStatus {
     const key = status as keyof typeof ThreadStatus;
     const threadStatus = ThreadStatus[key];
-    if (threadStatus !== undefined) {
+    if (threadStatus) {
       return threadStatus;
     }
 
