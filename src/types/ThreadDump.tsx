@@ -7,7 +7,7 @@ import Thread from "./Thread";
 export default class ThreadDump {
   public date!: Date | null;
   public loadAverages!: LoadAverages | null;
-  public currentCpuUsage: CurrentCpuUsage | undefined;
+  public currentCpuUsage?: CurrentCpuUsage;
   public memoryUsage!: MemoryUsage;
   public threads: Thread[] = [];
   public locks: Lock[] = [];

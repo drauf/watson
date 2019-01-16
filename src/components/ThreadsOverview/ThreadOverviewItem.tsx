@@ -3,7 +3,7 @@ import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 
 type ThreadOverviewItemProps = {
-  thread: Thread | undefined;
+  thread?: Thread;
 }
 
 const ThreadOverviewItem: React.SFC<ThreadOverviewItemProps> = ({ thread }) => {
