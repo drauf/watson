@@ -10,6 +10,6 @@ export default class Thread {
   public lockWaitingFor!: Lock;
   public locksHeld: Lock[] = [];
   public classicalLocksHeld: Lock[] = [];
-  public meaningfulLinesnumber!: number;
+  public meaningfulLinesNumber!: number;
   public stackTrace: string[] = [];
 }
