@@ -10,7 +10,7 @@ type AppState = {
   parser: Parser;
 };
 
-export default class App extends React.Component<any, AppState> {
+export default class App extends React.PureComponent<any, AppState> {
   public state: AppState = {
     parser: new Parser(this.handleFilesParsed.bind(this)),
     threadDumps: [],
