@@ -13,8 +13,12 @@ const ThreadOverviewRow: React.SFC<ThreadOverviewRowProps> = ({ total, threads }
     threadsPadded[i] = threads.get(i);
   }
 
+  const firstThread = threadsPadded.find(thread => thread !== undefined);
+  const threadName = firstThread ? firstThread.name : '';
+
   return (
     <tr>
+      <td className="name" title={threadName}>{threadName}</td>
       {threadsPadded.map((thread, i) => <ThreadOverviewItem key={i} thread={thread} />)}
     </tr>
   );

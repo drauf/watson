@@ -18,7 +18,7 @@ const ThreadsOverviewLegend: React.SFC = () => (
           <td>runnable</td>
           <td>blocked</td>
           <td>waiting</td>
-          <td>timed-waiting</td>
+          <td>timed waiting</td>
           <td>unknown</td>
         </tr>
       </tbody>
