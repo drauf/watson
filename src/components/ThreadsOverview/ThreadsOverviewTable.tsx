@@ -15,6 +15,7 @@ const ThreadsOverview: React.SFC<ThreadsOverviewProps> = ({ threadDumps }) => {
       <table>
         <thead>
           <tr>
+            <th />
             {threadDumps.map((threadDump, index) => (
               <th key={index}>{threadDump.date ? threadDump.date.toLocaleTimeString() : null}</th>
             ))}

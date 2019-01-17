@@ -13,7 +13,7 @@ const ThreadOverviewItem: React.SFC<ThreadOverviewItemProps> = ({ thread }) => {
 
   const className = thread.status ? thread.status.toString() : ThreadStatus.UNKNOWN.toString();
   return (
-    <td className={className}>{thread.name}</td>
+    <td className={className} title={thread.stackTrace[0]}>{thread.stackTrace[0]}</td>
   );
 };
 

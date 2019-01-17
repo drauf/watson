@@ -48,8 +48,14 @@ td {
   overflow: hidden;
   white-space: nowrap;
   color: #fff;
-  background: #DFE1E6;
   border: 1px solid #fff;
+}
+td.name {
+  color: #6B778C;
+  font-weight: 700;
+}
+td.empty {
+  background: #DFE1E6;
 }
 td.new {
   background: #00B8D9;
