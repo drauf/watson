@@ -26,7 +26,8 @@ type ContainerState = {
   selectedPage: Page;
 };
 
-export default class Container extends React.Component<ContainerProps, ContainerState> {
+export default class Container extends React.PureComponent<ContainerProps, ContainerState> {
+
   public state: ContainerState = {
     navigationOpen: true,
     selectedPage: Page.Summary,

@@ -7,7 +7,8 @@ type NavProps = {
   selectPage: (page: Page) => void;
 };
 
-export default class Nav extends React.Component<NavProps, any> {
+export default class Nav extends React.PureComponent<NavProps> {
+
   public onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
     this.props.selectPage(page as Page);
   }

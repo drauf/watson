@@ -22,7 +22,9 @@ type CpuConsumersState = {
   consumers: CpuConsumer[];
 };
 
-export default class CpuConsumers extends React.Component<CpuConsumersProps, CpuConsumersState> {
+export default class CpuConsumers
+  extends React.PureComponent<CpuConsumersProps, CpuConsumersState> {
+
   public state: CpuConsumersState = {
     consumers: [],
     limit: 40,
