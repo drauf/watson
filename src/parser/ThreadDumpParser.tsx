@@ -135,6 +135,10 @@ export default class ThreadDumpParser {
       .filter(thread => validStatuses.includes(thread.status))
       .forEach((thread) => {
         const lock: Lock = thread.classicalLocksHeld[0];
+        if (!lock) {
+          // this can happen if thread is TIMED_WAITING due to Thread.sleep()
+          return;
+        }
         lock.owner = null;
         lock.waiting.push(thread);
 
@@ -157,7 +161,7 @@ export default class ThreadDumpParser {
     if (status.startsWith('WAITING')) {
       return ThreadStatus.WAITING;
     }
-    if (status.startsWith('TIME_WAITING')) {
+    if (status.startsWith('TIMED_WAITING')) {
       return ThreadStatus.TIMED_WAITING;
     }
 
