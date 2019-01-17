@@ -8,13 +8,11 @@ type ThreadsOverviewProps = {
   threadDumps: ThreadDump[];
 };
 
-const ThreadsOverview: React.SFC<ThreadsOverviewProps> = ({ threadDumps }) => {
-  return (
-    <div className="threads-overview-content">
-      <ThreadsOverviewLegend />
-      <ThreadsOverviewTable threadDumps={threadDumps} />
-    </div>
-  );
-};
+const ThreadsOverview: React.SFC<ThreadsOverviewProps> = ({ threadDumps }) => (
+  < div className="threads-overview-content" >
+    <ThreadsOverviewLegend />
+    <ThreadsOverviewTable threadDumps={threadDumps} />
+  </div >
+);
 
 export default ThreadsOverview;

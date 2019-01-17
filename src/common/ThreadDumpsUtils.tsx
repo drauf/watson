@@ -2,6 +2,7 @@ import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
 
 export default class ThreadDumpsUtils {
+
   public static getThreadsOverTime(threadDumps: ThreadDump[]): Map<number, Map<number, Thread>> {
     const threadsOverTime = new Map();
 
