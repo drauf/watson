@@ -5,6 +5,7 @@ import './Nav.css';
 type NavProps = {
   open: boolean;
   selectPage: (page: Page) => void;
+  clearThreadDumps: () => void;
 };
 
 export default class Nav extends React.PureComponent<NavProps> {
@@ -21,8 +22,11 @@ export default class Nav extends React.PureComponent<NavProps> {
           <p className={this.props.open ? 'brand' : 'brand brand-hidden'}>
             Watson
           </p>
+
           <ul>
             <li onClick={this.onClick(Page.Summary)}>Summary</li>
+          </ul>
+          <ul>
             <li onClick={this.onClick(Page.CpuConsumers)}>CPU Consumers</li>
             {/* <li onClick={this.onClick(Page.ThreadStatuses)}>Thread Statuses</li> */}
             {/* <li onClick={this.onClick(Page.StuckThreads)}>Stuck Threads</li> */}
@@ -31,6 +35,10 @@ export default class Nav extends React.PureComponent<NavProps> {
             {/* <li onClick={this.onClick(Page.Monitors)}>Monitors</li> */}
             {/* <li onClick={this.onClick(Page.FlameGraph)}>Flame Graph</li> */}
             {/* <li onClick={this.onClick(Page.AdvancedMode)}>Advanced Mode</li> */}
+          </ul>
+
+          <ul>
+            <li onClick={this.props.clearThreadDumps}>Load another thread dump</li>
           </ul>
         </div>
       </div >
