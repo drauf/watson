@@ -10,6 +10,7 @@ type NavProps = {
 export default class Nav extends React.PureComponent<NavProps> {
 
   public onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
+    window.scrollTo(0, 0);
     this.props.selectPage(page as Page);
   }
 
