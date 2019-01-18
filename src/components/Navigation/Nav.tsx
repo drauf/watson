@@ -23,13 +23,13 @@ export default class Nav extends React.PureComponent<NavProps> {
           <ul>
             <li onClick={this.onClick(Page.Summary)}>Summary</li>
             <li onClick={this.onClick(Page.CpuConsumers)}>CPU Consumers</li>
-            <li onClick={this.onClick(Page.ThreadStatuses)}>Thread Statuses</li>
-            <li onClick={this.onClick(Page.StuckThreads)}>Stuck Threads</li>
-            <li onClick={this.onClick(Page.SimilarStackTraces)}>Similar Stack Traces</li>
+            {/* <li onClick={this.onClick(Page.ThreadStatuses)}>Thread Statuses</li> */}
+            {/* <li onClick={this.onClick(Page.StuckThreads)}>Stuck Threads</li> */}
+            {/* <li onClick={this.onClick(Page.SimilarStackTraces)}>Similar Stack Traces</li> */}
             <li onClick={this.onClick(Page.ThreadsOverview)}>Threads Overview</li>
-            <li onClick={this.onClick(Page.Monitors)}>Monitors</li>
-            <li onClick={this.onClick(Page.FlameGraph)}>Flame Graph</li>
-            <li onClick={this.onClick(Page.AdvancedMode)}>Advanced Mode</li>
+            {/* <li onClick={this.onClick(Page.Monitors)}>Monitors</li> */}
+            {/* <li onClick={this.onClick(Page.FlameGraph)}>Flame Graph</li> */}
+            {/* <li onClick={this.onClick(Page.AdvancedMode)}>Advanced Mode</li> */}
           </ul>
         </div>
       </div >
