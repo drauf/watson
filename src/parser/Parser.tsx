@@ -84,6 +84,7 @@ export default class Parser {
   private checkCompletion() {
     if (!this.cpuUsagesToParse && !this.threadDumpsToParse) {
       this.groupCpuUsagesWithThreadDumps();
+      this.sortThreadDumps();
       this.onFilesParsed(this.threadDumps);
     }
   }
@@ -95,6 +96,21 @@ export default class Parser {
         const threadDump: ThreadDump = this.findCorrespondingThreadDump(cpuUsage);
         this.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
       });
+  }
+
+  private sortThreadDumps() {
+    this.threadDumps.sort((t1, t2) => {
+      if (t1.date === t2.date) {
+        return 0;
+      }
+      if (!t1.date) {
+        return -1;
+      }
+      if (!t2.date) {
+        return 1;
+      }
+      return t1.date.valueOf() - t2.date.valueOf();
+    });
   }
 
   private findCorrespondingThreadDump(cpuUsage: CpuUsage): ThreadDump {
