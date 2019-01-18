@@ -11,7 +11,7 @@ const ThreadsOverviewLegend: React.SFC = () => (
         <td className="timed-waiting" />
         <td className="unknown" />
         <td />
-        <td className="highlighted" />
+        <td className="matching" />
       </tr>
       <tr>
         <td>runnable</td>
@@ -20,7 +20,7 @@ const ThreadsOverviewLegend: React.SFC = () => (
         <td>timed waiting</td>
         <td>new or unknown</td>
         <td />
-        <td>contains filtered stack</td>
+        <td>matching filter</td>
       </tr>
     </tbody>
   </table>

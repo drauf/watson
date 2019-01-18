@@ -76,7 +76,7 @@ const filterByStack = (threadDumps: Array<Map<number, Thread>>, stackFilter: str
     for (const thread of threads) {
       for (const line of thread[1].stackTrace) {
         if (line.includes(stackFilter)) {
-          thread[1].highlighted = true;
+          thread[1].matchingFilter = true;
           filtered.push(threads);
           return;
         }

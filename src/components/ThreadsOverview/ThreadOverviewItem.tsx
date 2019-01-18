@@ -31,7 +31,7 @@ export default class ThreadOverviewItem
     }
 
     const className = (this.props.filtered)
-      ? thread.highlighted ? 'highlighted' : ''
+      ? thread.matchingFilter ? 'matching' : ''
       : thread.status ? thread.status.toString() : ThreadStatus.UNKNOWN.toString();
 
     return (
