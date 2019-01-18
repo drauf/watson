@@ -71,20 +71,20 @@ const filterByStack = (threadDumps: Array<Map<number, Thread>>, stackFilter: str
   }
 
   // tslint:disable-next-line:prefer-array-literal
-  const filtered: Array<Map<number, Thread>> = [];
+  const filtered: Set<Map<number, Thread>> = new Set();
   threadDumps.forEach((threads) => {
     threads.forEach((thread) => {
       for (const line of thread.stackTrace) {
         if (line.includes(stackFilter)) {
           thread.matchingFilter = true;
-          filtered.push(threads);
+          filtered.add(threads);
           return;
         }
       }
     });
   });
 
-  return filtered;
+  return Array.from(filtered);
 };
 
 export default ThreadsOverview;
