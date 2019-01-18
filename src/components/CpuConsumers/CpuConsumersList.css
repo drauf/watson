@@ -1,5 +1,8 @@
 .consumers-list {
-  list-style-type: none;
   padding: 0;
   white-space: pre;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
