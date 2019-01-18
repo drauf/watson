@@ -77,7 +77,7 @@ td.unknown {
   color: #172B4D;
   background: #00B8D9;
 }
-td.highlighted {
+td.matching {
   color: #FFF;
   background: #0052CC;
 }

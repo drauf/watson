@@ -12,5 +12,5 @@ export default class Thread {
   public classicalLocksHeld: Lock[] = [];
   public meaningfulLinesNumber!: number;
   public stackTrace: string[] = [];
-  public highlighted: boolean = false;
+  public matchingFilter: boolean = false;
 }
