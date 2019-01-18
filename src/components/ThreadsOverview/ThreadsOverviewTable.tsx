@@ -81,6 +81,7 @@ const filterByStack = (threadDumps: Array<Map<number, Thread>>, stackFilter: str
           return;
         }
       }
+      thread.matchingFilter = false;
     });
   });
 
