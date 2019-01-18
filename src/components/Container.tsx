@@ -19,6 +19,7 @@ export enum Page {
 
 type ContainerProps = {
   threadDumps: ThreadDump[];
+  clearThreadDumps: () => void;
 };
 
 type ContainerState = {
@@ -44,8 +45,14 @@ export default class Container extends React.PureComponent<ContainerProps, Conta
   public render() {
     return (
       <div className={this.state.navigationOpen ? 'container open' : 'container'}>
-        <Nav open={this.state.navigationOpen} selectPage={this.selectPage} />
+        <Nav
+          open={this.state.navigationOpen}
+          selectPage={this.selectPage}
+          clearThreadDumps={this.props.clearThreadDumps}
+        />
+
         <NavToggle open={this.state.navigationOpen} onClick={this.toggleNavigation} />
+
         <Content selectedPage={this.state.selectedPage} threadDumps={this.props.threadDumps} />
       </div>
     );

@@ -20,10 +20,16 @@ export default class App extends React.PureComponent<any, AppState> {
     this.setState({ threadDumps });
   }
 
+  public clearThreadDumps = () => {
+    this.setState({ threadDumps: [] });
+  }
+
   public render() {
     if (this.state.threadDumps.length === 0) {
       return <FullPageDropzone onDrop={this.state.parser.parseFiles} />;
     }
-    return <Container threadDumps={this.state.threadDumps} />;
+    return (
+      <Container threadDumps={this.state.threadDumps} clearThreadDumps={this.clearThreadDumps} />
+    );
   }
 }
