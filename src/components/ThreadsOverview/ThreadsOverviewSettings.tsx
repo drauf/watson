@@ -13,13 +13,13 @@ const ThreadsOverviewSettings: React.SFC<ThreadsOverviewSettingsProps> =
       <label>
         <input type="text" name="nameFilter" value={nameFilter} onChange={onNameFilterChange}
         />
-        <b>thread name filter</b>
+        <b>Thread name RegExp</b>
       </label>
 
       <label>
         <input type="text" name="stackFilter" value={stackFilter} onChange={onStackFilterChange}
         />
-        <b>stack trace filter</b>
+        <b>Stack trace RegExp</b>
       </label>
     </div >
   );

@@ -54,9 +54,16 @@ const filterByName = (threadDumps: Array<Map<number, Thread>>, nameFilter: strin
     return threadDumps;
   }
 
+  let regex: RegExp;
+  try {
+    regex = new RegExp(nameFilter, 'i');
+  } catch {
+    return [];
+  }
+
   return threadDumps.filter((threads) => {
     for (const thread of threads) {
-      if (thread[1].name.includes(nameFilter)) {
+      if (regex.test(thread[1].name)) {
         return true;
       }
     }
@@ -70,12 +77,19 @@ const filterByStack = (threadDumps: Array<Map<number, Thread>>, stackFilter: str
     return threadDumps;
   }
 
+  let regex: RegExp;
+  try {
+    regex = new RegExp(stackFilter, 'i');
+  } catch {
+    return [];
+  }
+
   // tslint:disable-next-line:prefer-array-literal
   const filtered: Set<Map<number, Thread>> = new Set();
   threadDumps.forEach((threads) => {
     threads.forEach((thread) => {
       for (const line of thread.stackTrace) {
-        if (line.includes(stackFilter)) {
+        if (regex.test(line)) {
           thread.matchingFilter = true;
           filtered.add(threads);
           return;
