@@ -3,6 +3,7 @@
   margin: 0 1px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -20,7 +21,6 @@
 
 .threads-overview-settings {
   width: 80%;
-  margin: auto;
   display: flex;
   align-items: center;
 }
