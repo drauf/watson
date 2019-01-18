@@ -5,9 +5,10 @@ import ThreadOverviewItem from './ThreadOverviewItem';
 type ThreadOverviewRowProps = {
   total: number;
   threads: Map<number, Thread>;
+  filtered: boolean;
 };
 
-const ThreadOverviewRow: React.SFC<ThreadOverviewRowProps> = ({ total, threads }) => {
+const ThreadOverviewRow: React.SFC<ThreadOverviewRowProps> = ({ total, threads, filtered }) => {
   const threadsPadded = [];
   for (let i = 0; i < total; i++) {
     threadsPadded[i] = threads.get(i);
@@ -19,7 +20,9 @@ const ThreadOverviewRow: React.SFC<ThreadOverviewRowProps> = ({ total, threads }
   return (
     <tr>
       <td className="name" title={threadName}>{threadName}</td>
-      {threadsPadded.map((thread, i) => <ThreadOverviewItem key={i} thread={thread} />)}
+      {threadsPadded.map((thread, i) => (
+        <ThreadOverviewItem key={i} thread={thread} filtered={filtered} />
+      ))}
     </tr>
   );
 };

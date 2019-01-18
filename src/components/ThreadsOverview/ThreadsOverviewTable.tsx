@@ -27,7 +27,11 @@ const ThreadsOverview: React.SFC<ThreadsOverviewProps>
         </thead>
         <tbody>
           {filteredDumps.map((threads, index) => (
-            <ThreadOverviewRow key={index} total={threadDumps.length} threads={threads} />
+            <ThreadOverviewRow key={index}
+              total={threadDumps.length}
+              threads={threads}
+              filtered={stackFilter.length > 0}
+            />
           ))}
         </tbody>
       </table>
@@ -66,16 +70,21 @@ const filterByStack = (threadDumps: Array<Map<number, Thread>>, stackFilter: str
     return threadDumps;
   }
 
-  return threadDumps.filter((threads) => {
+  // tslint:disable-next-line:prefer-array-literal
+  const filtered: Array<Map<number, Thread>> = [];
+  threadDumps.forEach((threads) => {
     for (const thread of threads) {
       for (const line of thread[1].stackTrace) {
         if (line.includes(stackFilter)) {
-          return true;
+          thread[1].highlighted = true;
+          filtered.push(threads);
+          return;
         }
       }
     }
-    return false;
   });
+
+  return filtered;
 };
 
 export default ThreadsOverview;
