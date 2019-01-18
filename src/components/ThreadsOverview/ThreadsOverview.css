@@ -9,7 +9,7 @@
 
 .thread-overview-legend {
   height: 52px;
-  width: 40%;
+  width: 80%;
   margin: 4px 0 14px;
   table-layout: fixed;
 }
@@ -42,11 +42,10 @@
 .threads-overview-table td {
   overflow: hidden;
   white-space: nowrap;
-  color: #F4F5F7;
+  color: #6B778C;
   cursor: pointer;
 }
 td.name {
-  color: #6B778C;
   font-weight: 700;
   cursor: default;
 }
@@ -55,22 +54,32 @@ td.empty {
   cursor: default;
 }
 td.new {
+  color: #172B4D;
   background: #00B8D9;
 }
 td.runnable {
+  color: #172B4D;
   background: #36B37E;
 }
 td.blocked {
+  color: #FFF;
   background: #FF5630;
 }
 td.waiting {
+  color: #FFF;
   background: #6554C0;
 }
 td.timed-waiting {
+  color: #172B4D;
   background: #FFAB00;
 }
 td.unknown {
+  color: #172B4D;
   background: #00B8D9;
+}
+td.highlighted {
+  color: #FFF;
+  background: #0052CC;
 }
 
 .threads-overview-details {

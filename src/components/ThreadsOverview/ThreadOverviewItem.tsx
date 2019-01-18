@@ -5,6 +5,7 @@ import ThreadDetails from '../ThreadDetails/ThreadDetails';
 
 type ThreadOverviewItemProps = {
   thread?: Thread;
+  filtered: boolean;
 };
 
 type ThreadOverviewItemState = {
@@ -29,7 +30,10 @@ export default class ThreadOverviewItem
       return <td className="empty" />;
     }
 
-    const className = thread.status ? thread.status.toString() : ThreadStatus.UNKNOWN.toString();
+    const className = (this.props.filtered)
+      ? thread.highlighted ? 'highlighted' : ''
+      : thread.status ? thread.status.toString() : ThreadStatus.UNKNOWN.toString();
+
     return (
       <>
         {this.state.showDetails && <ThreadDetails thread={thread} />}
