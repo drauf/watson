@@ -12,7 +12,7 @@ type ThreadsOverviewProps = {
 
 const ThreadsOverview: React.SFC<ThreadsOverviewProps>
   = ({ threadDumps, nameFilter, stackFilter }) => {
-    const threadOverTime = Array.from(ThreadDumpsUtils.getThreadsOverTime(threadDumps).values());
+    const threadOverTime = ThreadDumpsUtils.getThreadsOverTime(threadDumps);
     const filteredDumps = filterThreads(threadOverTime, nameFilter, stackFilter);
 
     return (
@@ -39,7 +39,6 @@ const ThreadsOverview: React.SFC<ThreadsOverviewProps>
   };
 
 const filterThreads =
-  // tslint:disable-next-line:prefer-array-literal
   (threadDumps: Array<Map<number, Thread>>, nameFilter: string, stackFilter: string) => {
 
     let filtered = threadDumps;
@@ -48,7 +47,6 @@ const filterThreads =
     return filtered;
   };
 
-// tslint:disable-next-line:prefer-array-literal
 const filterByName = (threadDumps: Array<Map<number, Thread>>, nameFilter: string) => {
   if (!nameFilter) {
     return threadDumps;
@@ -71,7 +69,6 @@ const filterByName = (threadDumps: Array<Map<number, Thread>>, nameFilter: strin
   });
 };
 
-// tslint:disable-next-line:prefer-array-literal
 const filterByStack = (threadDumps: Array<Map<number, Thread>>, stackFilter: string) => {
   if (!stackFilter) {
     return threadDumps;
@@ -84,7 +81,6 @@ const filterByStack = (threadDumps: Array<Map<number, Thread>>, stackFilter: str
     return [];
   }
 
-  // tslint:disable-next-line:prefer-array-literal
   const filtered: Set<Map<number, Thread>> = new Set();
   threadDumps.forEach((threads) => {
     threads.forEach((thread) => {

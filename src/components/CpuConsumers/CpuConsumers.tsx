@@ -49,7 +49,7 @@ export default class CpuConsumers
     const consumers: CpuConsumer[] = [];
     const threadsOverTime = ThreadDumpsUtils.getThreadsOverTime(this.props.threadDumps);
 
-    for (const [, threads] of threadsOverTime) {
+    for (const threads of threadsOverTime) {
       consumers.push(new CpuConsumer(this.calculateValueFromThreads(threads, mode), threads));
     }
     consumers.sort((a, b) => b.calculatedValue - a.calculatedValue);
