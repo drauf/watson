@@ -1,5 +1,5 @@
 import React from 'react';
-import { CpuConsumersMode } from './CpuConsumers';
+import { CpuConsumersMode } from './CpuConsumersPage';
 import './CpuConsumersSettings.css';
 
 type CpuConsumersSettingsProps = {

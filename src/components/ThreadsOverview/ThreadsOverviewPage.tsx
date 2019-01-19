@@ -1,21 +1,21 @@
 import React from 'react';
 import ThreadDump from '../../types/ThreadDump';
-import './ThreadsOverview.css';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
+import './ThreadsOverviewPage.css';
 import ThreadsOverviewSettings from './ThreadsOverviewSettings';
 import ThreadsOverviewTable from './ThreadsOverviewTable';
 
-type ThreadsOverviewProps = {
+type ThreadsOverviewPageProps = {
   threadDumps: ThreadDump[];
 };
 
-type ThreadsOverviewState = {
+type ThreadsOverviewPageState = {
   nameFilter: string;
   stackFilter: string;
 };
 
-export default class ThreadsOverview
-  extends React.PureComponent<ThreadsOverviewProps, ThreadsOverviewState> {
+export default class ThreadsOverviewPage
+  extends React.PureComponent<ThreadsOverviewPageProps, ThreadsOverviewPageState> {
 
   public state = {
     nameFilter: '',

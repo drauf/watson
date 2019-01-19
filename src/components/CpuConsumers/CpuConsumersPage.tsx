@@ -12,20 +12,20 @@ export enum CpuConsumersMode {
   Max,
 }
 
-type CpuConsumersProps = {
+type CpuConsumersPageProps = {
   threadDumps: ThreadDump[];
 };
 
-type CpuConsumersState = {
+type CpuConsumersPageState = {
   mode: CpuConsumersMode;
   limit: number;
   consumers: CpuConsumer[];
 };
 
-export default class CpuConsumers
-  extends React.PureComponent<CpuConsumersProps, CpuConsumersState> {
+export default class CpuConsumersPage
+  extends React.PureComponent<CpuConsumersPageProps, CpuConsumersPageState> {
 
-  public state: CpuConsumersState = {
+  public state: CpuConsumersPageState = {
     consumers: [],
     limit: 40,
     mode: CpuConsumersMode.Mean,

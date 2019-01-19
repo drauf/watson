@@ -1,13 +1,13 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import './ThreadDetails.css';
+import './ThreadDetailsWindow.css';
 import WindowPortal from './WindowPortal';
 
-type ThreadDetailsProps = {
+type ThreadDetailsWindowProps = {
   thread: Thread;
 };
 
-const ThreadDetails: React.SFC<ThreadDetailsProps> = ({ thread }) => (
+const ThreadDetailsWindow: React.SFC<ThreadDetailsWindowProps> = ({ thread }) => (
   <WindowPortal windowTitle={thread.name} className="thread-details">
     <h3>{thread.name}</h3>
     <p>CPU usage: {thread.cpuUsage} | Status: {thread.status} | Running for: {thread.runningFor}</p>
@@ -17,4 +17,4 @@ const ThreadDetails: React.SFC<ThreadDetailsProps> = ({ thread }) => (
   </WindowPortal>
 );
 
-export default ThreadDetails;
+export default ThreadDetailsWindow;

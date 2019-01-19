@@ -1,5 +1,4 @@
 import React from 'react';
-import './ThreadsOverview.css';
 
 const ThreadsOverviewLegend: React.SFC = () => (
   <table className="thread-overview-legend">

@@ -2,9 +2,9 @@ import React from 'react';
 import ThreadDump from '../types/ThreadDump';
 import { Page } from './Container';
 import './Content.css';
-import CpuConsumers from './CpuConsumers/CpuConsumers';
-import Summary from './Summary/Summary';
-import ThreadsOverview from './ThreadsOverview/ThreadsOverview';
+import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
+import SummaryPage from './Summary/SummaryPage';
+import ThreadsOverviewPage from './ThreadsOverview/ThreadsOverviewPage';
 
 type ContentProps = {
   selectedPage: Page;
@@ -14,9 +14,9 @@ type ContentProps = {
 const Content: React.SFC<ContentProps> = ({ selectedPage, threadDumps }) => {
   switch (selectedPage) {
     case Page.Summary:
-      return <Summary threadDumps={threadDumps} />;
+      return <SummaryPage threadDumps={threadDumps} />;
     case Page.CpuConsumers:
-      return <CpuConsumers threadDumps={threadDumps} />;
+      return <CpuConsumersPage threadDumps={threadDumps} />;
     case Page.ThreadStatuses:
       return <p>ThreadStatuses</p>;
     case Page.StuckThreads:
@@ -24,7 +24,7 @@ const Content: React.SFC<ContentProps> = ({ selectedPage, threadDumps }) => {
     case Page.SimilarStackTraces:
       return <p>SimilarStackTraces</p>;
     case Page.ThreadsOverview:
-      return <ThreadsOverview threadDumps={threadDumps} />;
+      return <ThreadsOverviewPage threadDumps={threadDumps} />;
     case Page.Monitors:
       return <p>Monitors</p>;
     case Page.FlameGraph:

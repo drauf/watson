@@ -1,14 +1,14 @@
 import React from 'react';
 import { Page } from '../Container';
-import './Nav.css';
+import './Navigation.css';
 
-type NavProps = {
+type NavigationProps = {
   open: boolean;
   selectPage: (page: Page) => void;
   clearThreadDumps: () => void;
 };
 
-export default class Nav extends React.PureComponent<NavProps> {
+export default class Navigation extends React.PureComponent<NavigationProps> {
 
   public onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
     window.scrollTo(0, 0);

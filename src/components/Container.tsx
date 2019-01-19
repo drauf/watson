@@ -2,7 +2,7 @@ import React from 'react';
 import ThreadDump from '../types/ThreadDump';
 import './Container.css';
 import Content from './Content';
-import Nav from './Navigation/Nav';
+import Navigation from './Navigation/Navigation';
 import NavToggle from './Navigation/NavToggle';
 
 export enum Page {
@@ -45,7 +45,7 @@ export default class Container extends React.PureComponent<ContainerProps, Conta
   public render() {
     return (
       <div className={this.state.navigationOpen ? 'container open' : 'container'}>
-        <Nav
+        <Navigation
           open={this.state.navigationOpen}
           selectPage={this.selectPage}
           clearThreadDumps={this.props.clearThreadDumps}
