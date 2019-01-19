@@ -5,11 +5,11 @@ import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
 import SwapUsageChart from './SwapUsageChart';
 
-type SummaryProps = {
+type SummaryPageProps = {
   threadDumps: ThreadDump[];
 };
 
-const Summary: React.SFC<SummaryProps> = ({ threadDumps }) => (
+const SummaryPage: React.SFC<SummaryPageProps> = ({ threadDumps }) => (
   <div className="content">
     <LoadAveragesChart threadDumps={threadDumps} />
     <CurrentCpuUsageChart threadDumps={threadDumps} />
@@ -18,4 +18,4 @@ const Summary: React.SFC<SummaryProps> = ({ threadDumps }) => (
   </div>
 );
 
-export default Summary;
+export default SummaryPage;

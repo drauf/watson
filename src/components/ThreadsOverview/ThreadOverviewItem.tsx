@@ -1,7 +1,7 @@
 import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
-import ThreadDetails from '../ThreadDetails/ThreadDetails';
+import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
 type ThreadOverviewItemProps = {
   thread?: Thread;
@@ -36,7 +36,7 @@ export default class ThreadOverviewItem
 
     return (
       <>
-        {this.state.showDetails && <ThreadDetails thread={thread} />}
+        {this.state.showDetails && <ThreadDetailsWindow thread={thread} />}
         <td className={className} title={thread.stackTrace[0]} onClick={this.toggleDetails}>
           {thread.stackTrace[0]}
         </td>
