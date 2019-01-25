@@ -5,10 +5,11 @@ import WindowPortal from './WindowPortal';
 
 type ThreadDetailsWindowProps = {
   thread: Thread;
+  onUnload: () => void;
 };
 
-const ThreadDetailsWindow: React.SFC<ThreadDetailsWindowProps> = ({ thread }) => (
-  <WindowPortal windowTitle={thread.name} className="thread-details">
+const ThreadDetailsWindow: React.SFC<ThreadDetailsWindowProps> = ({ thread, onUnload }) => (
+  <WindowPortal windowTitle={thread.name} className="thread-details" onUnload={onUnload}>
     <h3>{thread.name}</h3>
     <p>CPU usage: {thread.cpuUsage} | Status: {thread.status} | Running for: {thread.runningFor}</p>
     <p>

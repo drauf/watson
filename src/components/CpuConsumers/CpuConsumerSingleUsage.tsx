@@ -21,6 +21,10 @@ export default class CpuConsumerSingleUsage
     this.setState(prevState => ({ showDetails: !prevState.showDetails }));
   }
 
+  public handleUnload = () => {
+    this.setState({ showDetails: false });
+  }
+
   public render() {
     const thread = this.props.thread;
 
@@ -34,7 +38,7 @@ export default class CpuConsumerSingleUsage
         <span className="cpu-usage" onClick={this.handleClick}>[{cpuUsage}]</span>
 
         {this.state.showDetails &&
-          <ThreadDetailsWindow thread={thread} />}
+          <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
       </>
     );
   }
