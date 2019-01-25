@@ -3,6 +3,7 @@ import ThreadDump from '../types/ThreadDump';
 import { Page } from './Container';
 import './Content.css';
 import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
+import MonitorsPage from './Monitors/MonitorsPage';
 import SummaryPage from './Summary/SummaryPage';
 import ThreadsOverviewPage from './ThreadsOverview/ThreadsOverviewPage';
 
@@ -26,7 +27,7 @@ const Content: React.SFC<ContentProps> = ({ selectedPage, threadDumps }) => {
     case Page.ThreadsOverview:
       return <ThreadsOverviewPage threadDumps={threadDumps} />;
     case Page.Monitors:
-      return <p>Monitors</p>;
+      return <MonitorsPage threadDumps={threadDumps} />;
     case Page.FlameGraph:
       return <p>FlameGraph</p>;
     case Page.AdvancedMode:
