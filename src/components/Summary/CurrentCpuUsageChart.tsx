@@ -30,8 +30,8 @@ const CurrentCpuUsageChart: React.SFC<CurrentCpuUsageChartProps> = ({ threadDump
           <CartesianGrid stroke="#EBECF0" strokeDasharray="5 5" />
           <Tooltip />
           <Legend />
-          <Area type="monotone" dataKey="systemTime" stackId="1" stroke="#DE350B" fill="#FF5630" />
-          <Area type="monotone" dataKey="userTime" stackId="1" stroke="#00A3BF" fill="#00B8D9" />
+          <Area name="system" dataKey="systemTime" stackId="1" stroke="#DE350B" fill="#DE350B" />
+          <Area name="user" dataKey="userTime" stackId="1" stroke="#00A3BF" fill="#00A3BF" />
         </AreaChart>
       </ResponsiveContainer>
     </>
