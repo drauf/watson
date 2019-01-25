@@ -6,7 +6,7 @@
 }
 
 .nav-open {
-  width: 300px;
+  width: 250px;
 }
 
 .nav-content {
@@ -41,7 +41,7 @@
   transition: all 1s ease;
 }
 .nav-open li {
-  width: 260px;
+  width: 210px;
   font-size: 14px;
   padding-left: 40px;
   transition: all 1s ease;
