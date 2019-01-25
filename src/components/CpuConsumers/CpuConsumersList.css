@@ -4,5 +4,12 @@
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.cpu-usage {
+  cursor: pointer;
+}
+.cpu-usage:hover {
+  color: #0052CC;
 }

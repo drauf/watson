@@ -27,7 +27,7 @@ export default class CpuConsumersPage
 
   public state: CpuConsumersPageState = {
     consumers: [],
-    limit: 40,
+    limit: 60,
     mode: CpuConsumersMode.Mean,
   };
 

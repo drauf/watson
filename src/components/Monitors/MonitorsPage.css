@@ -31,10 +31,10 @@
 }
 
 .expandable-details {
+  cursor: pointer;
   color: #172B4D;
 }
 .expandable-details:hover {
-  cursor: pointer;
   color: #0052CC;
 }
 

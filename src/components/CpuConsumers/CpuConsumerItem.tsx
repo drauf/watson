@@ -1,5 +1,7 @@
 import React from 'react';
+import Thread from '../../types/Thread';
 import CpuConsumer from './CpuConsumer';
+import CpuConsumerSingleUsage from './CpuConsumerSingleUsage';
 
 type CpuConsumerItemProps = {
   dumpsNumber: number;
@@ -11,16 +13,11 @@ const formatConsumerHeader = (value: number, threadName: string, runningFor: str
 );
 
 const CpuConsumerItem: React.SFC<CpuConsumerItemProps> = ({ dumpsNumber, consumer }) => {
-  const cpuUsages: string[] = [];
+  const threads: Array<Thread | undefined> = [];
   const threadInfo = consumer.threadOccurences.values().next().value;
 
   for (let i = 0; i < dumpsNumber; i++) {
-    const thread = consumer.threadOccurences.get(i);
-    if (thread) {
-      cpuUsages.push(`${thread.cpuUsage.toFixed(1).padStart(5)}%`);
-    } else {
-      cpuUsages.push('  --  ');
-    }
+    threads.push(consumer.threadOccurences.get(i));
   }
 
   return (
@@ -28,7 +25,9 @@ const CpuConsumerItem: React.SFC<CpuConsumerItemProps> = ({ dumpsNumber, consume
       <h6>
         {formatConsumerHeader(consumer.calculatedValue, threadInfo.name, threadInfo.runningFor)}
       </h6>
-      <span className="monospaced">[ {cpuUsages.join(' | ')} ]</span>
+      <span className="monospaced">
+        {threads.map((thread, index) => <CpuConsumerSingleUsage thread={thread} key={index} />)}
+      </span>
     </li>
   );
 };
