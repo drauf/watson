@@ -22,6 +22,10 @@ export default class MonitorOwner
     this.setState(prevState => ({ showOwner: !prevState.showOwner }));
   }
 
+  public handleUnload = () => {
+    this.setState({ showOwner: false });
+  }
+
   public render() {
     const monitor = this.props.monitor;
 
@@ -32,7 +36,7 @@ export default class MonitorOwner
           : <li>no owner</li>}
 
         {monitor.owner && this.state.showOwner &&
-          <ThreadDetailsWindow thread={monitor.owner} />}
+          <ThreadDetailsWindow thread={monitor.owner} onUnload={this.handleUnload} />}
       </>
     );
   }
