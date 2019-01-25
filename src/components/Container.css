@@ -9,6 +9,6 @@
 }
 
 .open {
-  grid-template-columns: 300px 10px auto;
+  grid-template-columns: 250px 10px auto;
   transition-delay: 1s;
 }
