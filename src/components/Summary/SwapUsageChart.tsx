@@ -30,8 +30,8 @@ const SwapUsageChart: React.SFC<SwapUsageChartProps> = ({ threadDumps }) => {
           <CartesianGrid stroke="#EBECF0" strokeDasharray="5 5" />
           <Tooltip />
           <Legend />
-          <Area type="monotone" dataKey="swapUsed" stackId="1" stroke="#DE350B" fill="#FF5630" />
-          <Area type="monotone" dataKey="swapFree" stackId="1" stroke="#5243AA" fill="#6554C0" />
+          <Area name="used" dataKey="swapUsed" stackId="1" stroke="#DE350B" fill="#DE350B" />
+          <Area name="free" dataKey="swapFree" stackId="1" stroke="#5243AA" fill="#5243AA" />
         </AreaChart>
       </ResponsiveContainer>
     </>

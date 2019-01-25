@@ -30,8 +30,8 @@ const MemoryUsageChart: React.SFC<MemoryUsageChartProps> = ({ threadDumps }) => 
           <CartesianGrid stroke="#EBECF0" strokeDasharray="5 5" />
           <Tooltip />
           <Legend />
-          <Area type="monotone" dataKey="memoryUsed" stackId="1" stroke="#00A3BF" fill="#00B8D9" />
-          <Area type="monotone" dataKey="memoryFree" stackId="1" stroke="#00875A" fill="#36B37E" />
+          <Area name="used" dataKey="memoryUsed" stackId="1" stroke="#00A3BF" fill="#00B8D9" />
+          <Area name="free" dataKey="memoryFree" stackId="1" stroke="#00875A" fill="#36B37E" />
         </AreaChart>
       </ResponsiveContainer>
     </>

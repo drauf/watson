@@ -12,9 +12,9 @@ type SummaryPageProps = {
 const SummaryPage: React.SFC<SummaryPageProps> = ({ threadDumps }) => (
   <div className="content">
     <LoadAveragesChart threadDumps={threadDumps} />
-    <CurrentCpuUsageChart threadDumps={threadDumps} />
     <MemoryUsageChart threadDumps={threadDumps} />
     <SwapUsageChart threadDumps={threadDumps} />
+    <CurrentCpuUsageChart threadDumps={threadDumps} />
   </div>
 );
 
