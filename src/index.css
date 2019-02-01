@@ -15,6 +15,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.monospaced {
+  font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", "Ubuntu Mono", Menlo, Courier, monospace;
+}
+
 h2 {
   color: #172B4D;
   font-size: 29px;
@@ -40,8 +44,4 @@ h6 {
   line-height: 16px;
   margin-top: 16px;
   margin-bottom: 0;
-}
-
-.monospaced {
-  font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", "Ubuntu Mono", Menlo, Courier, monospace;
 }

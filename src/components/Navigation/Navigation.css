@@ -5,12 +5,25 @@
   transition: all 1s ease;
 }
 
+.nav a {
+  color: #6B778C;
+  text-decoration: none;
+}
+
 .nav-open {
   width: 250px;
 }
 
 .nav-content {
   width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+}
+
+.nav-content-bottom {
+  bottom: 0;
   position: fixed;
 }
 
