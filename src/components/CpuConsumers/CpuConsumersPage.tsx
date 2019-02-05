@@ -25,6 +25,9 @@ type CpuConsumersPageState = {
 export default class CpuConsumersPage
   extends React.PureComponent<CpuConsumersPageProps, CpuConsumersPageState> {
 
+  // tslint:disable-next-line:max-line-length
+  private static MISSING_FILES_MESSAGE = 'To see the CPU Consumers you must upload at least one matching pair of threads and cpu_info files.';
+
   public state: CpuConsumersPageState = {
     consumers: [],
     limit: 60,
@@ -58,12 +61,8 @@ export default class CpuConsumersPage
   }
 
   public render() {
-    if (this.props.threadDumps.find(dump => dump.loadAverages !== null)) {
-      return (
-        <div className="content">
-          <h2>To see the CPU Consumers you must upload at least one cpu_info file.</h2>
-        </div>
-      );
+    if (!this.props.threadDumps.find(dump => !!dump.loadAverages && dump.threads.length > 0)) {
+      return <div className="content"><h2>{CpuConsumersPage.MISSING_FILES_MESSAGE}</h2></div>;
     }
 
     return (
