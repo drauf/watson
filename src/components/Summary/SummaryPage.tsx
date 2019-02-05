@@ -10,7 +10,7 @@ type SummaryPageProps = {
 };
 
 const SummaryPage: React.SFC<SummaryPageProps> = ({ threadDumps }) => {
-  if (threadDumps.find(dump => dump.loadAverages !== null)) {
+  if (!threadDumps.find(dump => !!dump.loadAverages)) {
     return (
       <div className="content">
         <h2>To see the Summary you must upload at least one cpu_info file.</h2>

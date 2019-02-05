@@ -31,6 +31,14 @@ export default class ThreadsOverviewPage
   }
 
   public render() {
+    if (!this.props.threadDumps.find(dump => dump.threads.length > 0)) {
+      return (
+        <div className="content">
+          <h2>To see the Threads Overview you must upload at least one file with thread dumps.</h2>
+        </div>
+      );
+    }
+
     return (
       <div className="threads-overview-content">
         <ThreadsOverviewLegend />

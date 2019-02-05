@@ -8,13 +8,24 @@ type CpuConsumerItemProps = {
   consumer: CpuConsumer;
 };
 
-const formatConsumerHeader = (value: number, threadName: string, runningFor: string): string => (
-  `${value.toFixed(2)}% - "${threadName}", running for ${runningFor}`
-);
+const formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => {
+  let threadName: string = '';
+  let runningFor: string = 'unknown';
+
+  for (const thread of threads) {
+    if (thread && thread.runningFor) {
+      threadName = thread.name;
+      runningFor = thread.runningFor;
+    }
+  }
+
+  return (
+    `${value.toFixed(2)}% - "${threadName}", running for ${runningFor}`
+  );
+};
 
 const CpuConsumerItem: React.SFC<CpuConsumerItemProps> = ({ dumpsNumber, consumer }) => {
   const threads: Array<Thread | undefined> = [];
-  const threadInfo = consumer.threadOccurences.values().next().value;
 
   for (let i = 0; i < dumpsNumber; i++) {
     threads.push(consumer.threadOccurences.get(i));
@@ -23,7 +34,7 @@ const CpuConsumerItem: React.SFC<CpuConsumerItemProps> = ({ dumpsNumber, consume
   return (
     <li>
       <h6>
-        {formatConsumerHeader(consumer.calculatedValue, threadInfo.name, threadInfo.runningFor)}
+        {formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurences.values())}
       </h6>
       <span className="monospaced">
         {threads.map((thread, index) => <CpuConsumerSingleUsage thread={thread} key={index} />)}
