@@ -58,6 +58,14 @@ export default class CpuConsumersPage
   }
 
   public render() {
+    if (this.props.threadDumps.find(dump => dump.loadAverages !== null)) {
+      return (
+        <div className="content">
+          <h2>To see the CPU Consumers you must upload at least one cpu_info file.</h2>
+        </div>
+      );
+    }
+
     return (
       <div className="content">
         <CpuConsumersSettings
