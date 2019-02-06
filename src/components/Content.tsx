@@ -18,22 +18,12 @@ const Content: React.SFC<ContentProps> = ({ selectedPage, threadDumps }) => {
       return <SummaryPage threadDumps={threadDumps} />;
     case Page.CpuConsumers:
       return <CpuConsumersPage threadDumps={threadDumps} />;
-    case Page.ThreadStatuses:
-      return <p>ThreadStatuses</p>;
-    case Page.StuckThreads:
-      return <p>StuckThreads</p>;
-    case Page.SimilarStackTraces:
-      return <p>SimilarStackTraces</p>;
     case Page.ThreadsOverview:
       return <ThreadsOverviewPage threadDumps={threadDumps} />;
     case Page.Monitors:
       return <MonitorsPage threadDumps={threadDumps} />;
-    case Page.FlameGraph:
-      return <p>FlameGraph</p>;
-    case Page.AdvancedMode:
-      return <p>AdvancedMode</p>;
     default:
-      return <p>Oops! Something went wrong!</p>;
+      return <h2>Oops! Something went wrong!</h2>;
   }
 };
 

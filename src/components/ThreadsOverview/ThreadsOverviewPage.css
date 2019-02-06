@@ -1,9 +1,6 @@
-.threads-overview-content {
-  width: auto;
-  margin: 0 1px;
+.threads-overview-page {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
 }
 
@@ -23,13 +20,10 @@
   width: 80%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .threads-overview-settings label {
-  flex-grow: 1;
-}
-.threads-overview-settings input {
-  width: 60%;
-  margin-right: 6px;
+  width: 440px;
 }
 
 .threads-overview-table {

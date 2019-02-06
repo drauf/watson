@@ -35,16 +35,14 @@ const getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {
 const MonitorsPage: React.SFC<MonitorsPageProps> = ({ threadDumps }) => {
   if (!threadDumps.find(dump => dump.threads.length > 0)) {
     return (
-      <div className="content">
-        <h2>To see the Monitors you must upload at least one file with thread dumps.</h2>
-      </div>
+      <h2>To see the Monitors you must upload at least one file with thread dumps.</h2>
     );
   }
 
   const monitors = getMonitorsOverTime(threadDumps);
 
   return (
-    <div className="monitors-content">
+    <div className="monitors-page">
       {monitors.map((monitor, index) => <MonitorOverTimeItem key={index} monitor={monitor} />)}
     </div>
   );

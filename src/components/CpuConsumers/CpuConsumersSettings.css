@@ -8,11 +8,11 @@
 }
 
 .cpu-consumers-settings input {
-  margin-left: 18px;
-  margin-right: 6px;
+  margin-left: 14px;
+  margin-right: 4px;
 }
 
 .cpu-consumers-limit input {
-  margin-left: 50px;
-  width: 40px;
+  margin-left: 40px;
+  width: 52px;
 }

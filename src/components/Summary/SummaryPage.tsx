@@ -3,6 +3,7 @@ import ThreadDump from '../../types/ThreadDump';
 import CurrentCpuUsageChart from './CurrentCpuUsageChart';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
+import './SummaryPage.css';
 import SwapUsageChart from './SwapUsageChart';
 
 type SummaryPageProps = {
@@ -12,14 +13,12 @@ type SummaryPageProps = {
 const SummaryPage: React.SFC<SummaryPageProps> = ({ threadDumps }) => {
   if (!threadDumps.find(dump => !!dump.loadAverages)) {
     return (
-      <div className="content">
-        <h2>To see the Summary you must upload at least one cpu_info file.</h2>
-      </div>
+      <h2>To see the Summary you must upload at least one cpu_info file.</h2>
     );
   }
 
   return (
-    <div className="content">
+    <div className="summary-page">
       <LoadAveragesChart threadDumps={threadDumps} />
       <MemoryUsageChart threadDumps={threadDumps} />
       <SwapUsageChart threadDumps={threadDumps} />
