@@ -10,17 +10,15 @@ type CpuConsumerItemProps = {
 
 const formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => {
   let threadName: string = '';
-  let runningFor: string = 'unknown';
 
   for (const thread of threads) {
-    if (thread && thread.runningFor) {
+    if (thread) {
       threadName = thread.name;
-      runningFor = thread.runningFor;
     }
   }
 
   return (
-    `${value.toFixed(2)}% - "${threadName}", running for ${runningFor}`
+    `${value.toFixed(2)}% - "${threadName}"`
   );
 };
 

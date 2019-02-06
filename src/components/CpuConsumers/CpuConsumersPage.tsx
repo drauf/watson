@@ -4,6 +4,7 @@ import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumersList from './CpuConsumersList';
+import './CpuConsumersPage.css';
 import CpuConsumersSettings from './CpuConsumersSettings';
 
 export enum CpuConsumersMode {
@@ -30,7 +31,7 @@ export default class CpuConsumersPage
 
   public state: CpuConsumersPageState = {
     consumers: [],
-    limit: 60,
+    limit: 100,
     mode: CpuConsumersMode.Mean,
   };
 
@@ -62,11 +63,11 @@ export default class CpuConsumersPage
 
   public render() {
     if (!this.props.threadDumps.find(dump => !!dump.loadAverages && dump.threads.length > 0)) {
-      return <div className="content"><h2>{CpuConsumersPage.MISSING_FILES_MESSAGE}</h2></div>;
+      return <h2>{CpuConsumersPage.MISSING_FILES_MESSAGE}</h2>;
     }
 
     return (
-      <div className="content">
+      <div className="cpu-consumers-page">
         <CpuConsumersSettings
           mode={this.state.mode}
           limit={this.state.limit}

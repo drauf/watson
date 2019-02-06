@@ -8,13 +8,8 @@ import NavToggle from './Navigation/NavToggle';
 export enum Page {
   Summary = 'summary',
   CpuConsumers = 'cpu-consumers',
-  ThreadStatuses = 'thread-statuses',
-  StuckThreads = 'stuck-threads',
-  SimilarStackTraces = 'similar-stacktraces',
   ThreadsOverview = 'threads-overview',
   Monitors = 'monitors',
-  FlameGraph = 'flame-graph',
-  AdvancedMode = 'advanced-mode',
 }
 
 type ContainerProps = {
@@ -53,8 +48,10 @@ export default class Container extends React.PureComponent<ContainerProps, Conta
 
         <NavToggle open={this.state.navigationOpen} onClick={this.toggleNavigation} />
 
-        <Content selectedPage={this.state.selectedPage} threadDumps={this.props.threadDumps} />
-      </div>
+        <div className="content">
+          <Content selectedPage={this.state.selectedPage} threadDumps={this.props.threadDumps} />
+        </div>
+      </div >
     );
   }
 }
