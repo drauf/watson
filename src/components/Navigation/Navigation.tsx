@@ -9,12 +9,11 @@ type NavigationProps = {
 };
 
 export default class Navigation extends React.PureComponent<NavigationProps> {
-
-  private sourceCodeLink: string = 'https://bitbucket.org/atlassian/watsonjs/';
-  // tslint:disable-next-line:max-line-length
-  private issueTrackerLink: string = 'https://ecosystem.atlassian.net/secure/RapidBoard.jspa?projectKey=WAT&rapidView=501&view=planning';
-  // tslint:disable-next-line:max-line-length
-  private documentationLink: string = 'https://hello.atlassian.net/wiki/spaces/~drauf/pages/390789227/Watson+your+astute+assistant';
+  // tslint:disable:max-line-length
+  public static sourceCodeLink: string = 'https://bitbucket.org/atlassian/watsonjs/';
+  public static issueTrackerLink: string = 'https://ecosystem.atlassian.net/secure/RapidBoard.jspa?projectKey=WAT&rapidView=501&view=planning';
+  public static documentationLink: string = 'https://hello.atlassian.net/wiki/spaces/~drauf/pages/390789227/Watson+your+astute+assistant';
+  // tslint:enable:max-line-length
 
   public onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
     window.scrollTo(0, 0);
@@ -34,13 +33,8 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
           </ul>
           <ul>
             <li onClick={this.onClick(Page.CpuConsumers)}>CPU Consumers</li>
-            {/* <li onClick={this.onClick(Page.ThreadStatuses)}>Thread Statuses</li> */}
-            {/* <li onClick={this.onClick(Page.StuckThreads)}>Stuck Threads</li> */}
-            {/* <li onClick={this.onClick(Page.SimilarStackTraces)}>Similar Stack Traces</li> */}
             <li onClick={this.onClick(Page.ThreadsOverview)}>Threads Overview</li>
             <li onClick={this.onClick(Page.Monitors)}>Monitors</li>
-            {/* <li onClick={this.onClick(Page.FlameGraph)}>Flame Graph</li> */}
-            {/* <li onClick={this.onClick(Page.AdvancedMode)}>Advanced Mode</li> */}
           </ul>
 
           <div className="nav-content-bottom">
@@ -49,9 +43,9 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
             </ul>
 
             <ul>
-              <a href={this.sourceCodeLink}><li>Source code</li></a>
-              <a href={this.issueTrackerLink}><li>Issue tracker</li></a>
-              <a href={this.documentationLink}><li>Documentation</li></a>
+              <a href={Navigation.sourceCodeLink}><li>Source code</li></a>
+              <a href={Navigation.issueTrackerLink}><li>Issue tracker</li></a>
+              <a href={Navigation.documentationLink}><li>Documentation</li></a>
             </ul>
           </div>
         </div>
