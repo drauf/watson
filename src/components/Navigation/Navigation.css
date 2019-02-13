@@ -5,11 +5,6 @@
   transition: all 1s ease;
 }
 
-.nav a {
-  color: #6B778C;
-  text-decoration: none;
-}
-
 .nav-open {
   width: 250px;
 }
@@ -62,5 +57,6 @@
 }
 .nav-open li:hover {
   cursor: pointer;
+  color: #0052CC;
   background: #EBECF0;
 }

@@ -1,23 +1,6 @@
-#root, .dropzone {
+#root {
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
-}
-
-.dropzone {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dropzone h4 {
-  width: 600px;
-  height: 200px;
-  line-height: 200px;
-  text-align: center;
-
-  background: #f4f5f7;
-  border-radius: 5px;
-  border: 2px dashed #0052CC;
 }

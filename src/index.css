@@ -46,6 +46,14 @@ h6 {
   margin-bottom: 0;
 }
 
+a {
+  color: #6B778C;
+  text-decoration: none;
+}
+a:hover {
+  color: #0052CC;
+}
+
 input {
   color: #172B4D;
   border: 1px solid #c1c7d0;
