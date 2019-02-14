@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ThreadsOverviewLegend: React.SFC = () => (
-  <table className="thread-overview-legend">
+  <table id="thread-overview-legend">
     <tbody>
       <tr>
         <td className="runnable" />

@@ -9,7 +9,7 @@ type ThreadsOverviewSettingsProps = {
 
 const ThreadsOverviewSettings: React.SFC<ThreadsOverviewSettingsProps> =
   ({ nameFilter, stackFilter, onNameFilterChange, onStackFilterChange }) => (
-    <div className="threads-overview-settings">
+    <div id="threads-overview-settings">
       <label>
         <input type="text" name="nameFilter" value={nameFilter} onChange={onNameFilterChange}
         />

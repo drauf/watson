@@ -42,7 +42,7 @@ const MonitorsPage: React.SFC<MonitorsPageProps> = ({ threadDumps }) => {
   const monitors = getMonitorsOverTime(threadDumps);
 
   return (
-    <div className="monitors-page">
+    <div id="monitors-page">
       {monitors.map((monitor, index) => <MonitorOverTimeItem key={index} monitor={monitor} />)}
     </div>
   );

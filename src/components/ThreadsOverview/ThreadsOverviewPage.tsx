@@ -38,7 +38,7 @@ export default class ThreadsOverviewPage
     }
 
     return (
-      <div className="threads-overview-page">
+      <div id="threads-overview-page">
         <ThreadsOverviewLegend />
         <ThreadsOverviewSettings
           nameFilter={this.state.nameFilter}

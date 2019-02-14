@@ -8,7 +8,7 @@ type NavToggleProps = {
 
 const NavToggle: React.SFC<NavToggleProps> = ({ open, onClick }) => (
   <div className={open ? 'nav-toggle open' : 'nav-toggle'} onClick={onClick}>
-    <div className="nav-arrow" />
+    <div id="nav-arrow" />
   </div>
 );
 

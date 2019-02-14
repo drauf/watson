@@ -18,7 +18,7 @@ const SummaryPage: React.SFC<SummaryPageProps> = ({ threadDumps }) => {
   }
 
   return (
-    <div className="summary-page">
+    <div id="summary-page">
       <LoadAveragesChart threadDumps={threadDumps} />
       <MemoryUsageChart threadDumps={threadDumps} />
       <SwapUsageChart threadDumps={threadDumps} />

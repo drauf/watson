@@ -1,7 +1,6 @@
 import React from 'react';
 import ThreadDump from '../types/ThreadDump';
 import { Page } from './Container';
-import './Content.css';
 import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
 import MonitorsPage from './Monitors/MonitorsPage';
 import SummaryPage from './Summary/SummaryPage';

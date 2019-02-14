@@ -10,7 +10,7 @@ type FullPageDropzoneProps = {
 const FullPageDropzone: React.SFC<FullPageDropzoneProps> = ({ onDrop }) => (
   <Dropzone accept=".txt" multiple={true} onDrop={onDrop}>
     {({ getRootProps, getInputProps, isDragActive }) => (
-      <div className="dropzone" {...getRootProps()}>
+      <div id="dropzone" {...getRootProps()}>
         <input {...getInputProps()} />
         {
           isDragActive ?
