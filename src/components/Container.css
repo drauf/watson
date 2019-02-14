@@ -1,14 +1,17 @@
-.container {
+#container {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 10px 9999fr;
   grid-template-rows: auto;
+  grid-template-columns: 1fr 10px 9999fr;
   justify-items: start;
-  transition-delay: 1s;
+  transition: all 0.8s linear;
 }
 
-.open {
-  grid-template-columns: 250px 10px auto;
-  transition-delay: 1s;
+#content {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }

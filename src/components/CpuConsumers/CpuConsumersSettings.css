@@ -1,4 +1,4 @@
-.cpu-consumers-settings {
+#cpu-consumers-settings {
   margin: 0;
   padding: 0;
   height: 60px;
@@ -7,12 +7,12 @@
   align-items: center;
 }
 
-.cpu-consumers-settings input {
+#cpu-consumers-mode input {
   margin-left: 14px;
   margin-right: 4px;
 }
 
-.cpu-consumers-limit input {
+#cpu-consumers-limit input {
   margin-left: 40px;
   width: 52px;
 }

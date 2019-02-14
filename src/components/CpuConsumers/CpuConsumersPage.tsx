@@ -67,7 +67,7 @@ export default class CpuConsumersPage
     }
 
     return (
-      <div className="cpu-consumers-page">
+      <div id="cpu-consumers-page">
         <CpuConsumersSettings
           mode={this.state.mode}
           limit={this.state.limit}

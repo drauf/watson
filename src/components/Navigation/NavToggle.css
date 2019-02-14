@@ -3,7 +3,7 @@
   background: #fff;
   height: 100%;
 }
-.nav-arrow {
+#nav-arrow {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,8 +17,8 @@
 }
 
 /* arrow */
-.nav-arrow:before,
-.nav-arrow:after {
+#nav-arrow:before,
+#nav-arrow:after {
   height: 100vh;
   background: #0052CC;
   content: '';
@@ -28,21 +28,21 @@
 }
 
 /* top part of the arrow */
-.nav-arrow:before {
+#nav-arrow:before {
   transform: translate(1px, 1px) rotate(55deg);
   transform-origin: right;
 }
-.open .nav-arrow:after {
+.open #nav-arrow:after {
   transform: translate(5px, 1px) rotate(-55deg);
   transform-origin: left;
 }
 
 /* bottom part of the arrow  */
-.nav-arrow:after {
+#nav-arrow:after {
   transform: translateX(1px) rotate(-55deg);
   transform-origin: right;
 }
-.open .nav-arrow:before {
+.open #nav-arrow:before {
   transform: translateX(5px) rotate(55deg);
   transform-origin: left;
 }

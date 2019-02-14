@@ -11,8 +11,8 @@ type CpuConsumersSettingsProps = {
 
 const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> =
   ({ mode, limit, onModeChange, onLimitChange }) => (
-    <div className="cpu-consumers-settings">
-      <div className="cpu-consumers-mode">
+    <div id="cpu-consumers-settings">
+      <div id="cpu-consumers-mode">
         <b>CPU usage calculation mode:</b>
         <label>
           <input type="radio" name="mode"
@@ -20,7 +20,7 @@ const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> =
             onChange={onModeChange(CpuConsumersMode.Mean)}
           />
           Mean
-      </label>
+        </label>
 
         <label>
           <input type="radio" name="mode"
@@ -28,7 +28,7 @@ const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> =
             onChange={onModeChange(CpuConsumersMode.Median)}
           />
           Median
-      </label>
+        </label>
 
         <label>
           <input type="radio" name="mode"
@@ -36,10 +36,10 @@ const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> =
             onChange={onModeChange(CpuConsumersMode.Max)}
           />
           Max
-      </label>
+        </label>
       </div>
 
-      <div className="cpu-consumers-limit">
+      <div id="cpu-consumers-limit">
         <label>
           <input type="number" name="threadsLimit" min="0" max="10000"
             value={limit}

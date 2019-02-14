@@ -10,7 +10,7 @@ type CpuConsumersListProps = {
 };
 
 const CpuConsumersList: React.SFC<CpuConsumersListProps> = ({ limit, dumpsNumber, consumers }) => (
-  <ul className="consumers-list">
+  <ul id="consumers-list">
     {consumers.slice(0, limit).map((consumer, index) => (
       <CpuConsumerItem key={index} dumpsNumber={dumpsNumber} consumer={consumer} />
     ))}

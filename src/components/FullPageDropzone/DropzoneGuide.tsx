@@ -20,7 +20,7 @@ const DropzoneGuide: React.SFC = () => (
     <span dangerouslySetInnerHTML={{ __html: line2 }} />
     <span dangerouslySetInnerHTML={{ __html: line3 }} />
 
-    <ul className="dropzone-links" onClick={stopPropagation}>
+    <ul id="dropzone-links" onClick={stopPropagation}>
       <a href={Navigation.sourceCodeLink}><li>Source code</li></a>
       <a href={Navigation.issueTrackerLink}><li>Issue tracker</li></a>
       <a href={Navigation.documentationLink}><li>Documentation</li></a>

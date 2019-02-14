@@ -4,7 +4,7 @@ import './Navigation.css';
 
 type NavigationProps = {
   open: boolean;
-  selectPage: (page: Page) => void;
+  onPageSelect: (page: Page) => void;
   clearThreadDumps: () => void;
 };
 
@@ -16,40 +16,37 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
   // tslint:enable:max-line-length
 
   public onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
-    window.scrollTo(0, 0);
-    this.props.selectPage(page as Page);
+    this.props.onPageSelect(page as Page);
   }
 
   public render() {
     return (
-      <div className={this.props.open ? 'nav nav-open' : 'nav'}>
-        <div className="nav-content">
-          <p className={this.props.open ? 'brand' : 'brand brand-hidden'}>
-            Watson
+      <nav className={this.props.open ? 'open' : ''}>
+        <p id={this.props.open ? 'brand-visible' : 'brand-hidden'}>
+          Watson
           </p>
 
+        <ul>
+          <li onClick={this.onClick(Page.Summary)}>Summary</li>
+        </ul>
+        <ul>
+          <li onClick={this.onClick(Page.CpuConsumers)}>CPU Consumers</li>
+          <li onClick={this.onClick(Page.ThreadsOverview)}>Threads Overview</li>
+          <li onClick={this.onClick(Page.Monitors)}>Monitors</li>
+        </ul>
+
+        <div id="nav-content-bottom">
           <ul>
-            <li onClick={this.onClick(Page.Summary)}>Summary</li>
-          </ul>
-          <ul>
-            <li onClick={this.onClick(Page.CpuConsumers)}>CPU Consumers</li>
-            <li onClick={this.onClick(Page.ThreadsOverview)}>Threads Overview</li>
-            <li onClick={this.onClick(Page.Monitors)}>Monitors</li>
+            <li onClick={this.props.clearThreadDumps}>Load another thread dump</li>
           </ul>
 
-          <div className="nav-content-bottom">
-            <ul>
-              <li onClick={this.props.clearThreadDumps}>Load another thread dump</li>
-            </ul>
-
-            <ul>
-              <a href={Navigation.sourceCodeLink}><li>Source code</li></a>
-              <a href={Navigation.issueTrackerLink}><li>Issue tracker</li></a>
-              <a href={Navigation.documentationLink}><li>Documentation</li></a>
-            </ul>
-          </div>
+          <ul>
+            <a href={Navigation.sourceCodeLink}><li>Source code</li></a>
+            <a href={Navigation.issueTrackerLink}><li>Issue tracker</li></a>
+            <a href={Navigation.documentationLink}><li>Documentation</li></a>
+          </ul>
         </div>
-      </div >
+      </nav>
     );
   }
 }
