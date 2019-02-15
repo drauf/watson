@@ -1,8 +1,6 @@
 #monitors-page {
   width: 90%;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
 }
 
 #monitors-settings {
@@ -12,8 +10,6 @@
 }
 
 .monitors-container {
-  width: 100%;
-  margin: 0 auto;
   display: flex;
 }
 .monitors-container div {
@@ -25,4 +21,5 @@
 }
 .monitors-container .left {
   width: 360px;
+  min-width: 360px;
 }

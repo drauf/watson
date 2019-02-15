@@ -40,7 +40,7 @@ export default class MonitorsPage
     return (
       <div id="monitors-page">
         <MonitorsSettings filter={this.state.filter} onFilterChange={this.changeFilter} />
-        {filtered.map((monitor, index) => <MonitorOverTimeItem key={index} monitor={monitor} />)}
+        {filtered.map(monitor => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />)}
       </div>
     );
   }

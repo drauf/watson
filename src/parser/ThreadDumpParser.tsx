@@ -43,11 +43,11 @@ export default class ThreadDumpParser {
   }
 
   private static parseThreadHeader(header: string, threadDump: ThreadDump): void {
-    ThreadDumpParser.currentThread = new Thread(threadDump.date);
-    threadDump.threads.push(ThreadDumpParser.currentThread);
+    const id = parseInt(matchOne(NID_PATTERN, header), 16);
+    const name = matchOne(NAME_PATTERN, header).trim();
 
-    ThreadDumpParser.currentThread.name = matchOne(NAME_PATTERN, header).trim();
-    ThreadDumpParser.currentThread.id = parseInt(matchOne(NID_PATTERN, header), 16);
+    ThreadDumpParser.currentThread = new Thread(id, name, threadDump.date);
+    threadDump.threads.push(ThreadDumpParser.currentThread);
   }
 
   private static parseStackLine(line: string, threadDump: ThreadDump): void {
