@@ -19,23 +19,3 @@
   line-height: 16px;
   margin-top: 8px;
 }
-
-.chevron {
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-  position: relative;
-  top: 2px;
-  color: #344563;
-  background: rgba(9,30,66,.08) url(/chevron.svg) no-repeat top left;
-  border-radius: 3.01px;
-  margin-right: 5px;
-  transition: background-color .1s ease-out;
-}
-.rotate {
-  transform: rotate(-90deg);
-}
-
-.clickable {
-  cursor: pointer;
-}
