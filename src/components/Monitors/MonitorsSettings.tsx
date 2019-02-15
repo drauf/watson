@@ -3,36 +3,33 @@ import { MonitorsFilter } from './MonitorsPage';
 
 type CpuConsumersSettingsProps = {
   filter: MonitorsFilter;
-  onFilterChange: (filter: number) => React.ChangeEventHandler<HTMLInputElement>;
+  onFilterChange: (filter: number) => React.MouseEventHandler<HTMLAnchorElement>;
 };
 
 const MonitorsSettings: React.SFC<CpuConsumersSettingsProps> =
   ({ filter, onFilterChange }) => (
     <div id="monitors-settings">
-      <b>Filter:</b>
-      <label className={filter === MonitorsFilter.None ? 'checked' : ''}>
-        <input type="radio" name="mode"
-          checked={filter === MonitorsFilter.None}
-          onChange={onFilterChange(MonitorsFilter.None)}
-        />
-        None
-      </label>
+      <div className="filters">
+        <b>Filter:</b>
 
-      <label className={filter === MonitorsFilter.WithOwner ? 'checked' : ''}>
-        <input type="radio" name="mode"
-          checked={filter === MonitorsFilter.WithOwner}
-          onChange={onFilterChange(MonitorsFilter.WithOwner)}
-        />
-        With Owner
-      </label>
+        <a
+          className={filter === MonitorsFilter.None ? 'checked' : ''}
+          onClick={onFilterChange(MonitorsFilter.None)}>
+          None
+        </a>
 
-      <label className={filter === MonitorsFilter.WithoutOwner ? 'checked' : ''}>
-        <input type="radio" name="mode"
-          checked={filter === MonitorsFilter.WithoutOwner}
-          onChange={onFilterChange(MonitorsFilter.WithoutOwner)}
-        />
-        Without Owner
-      </label>
+        <a
+          className={filter === MonitorsFilter.WithOwner ? 'checked' : ''}
+          onClick={onFilterChange(MonitorsFilter.WithOwner)}>
+          With Owner
+        </a>
+
+        <a
+          className={filter === MonitorsFilter.WithoutOwner ? 'checked' : ''}
+          onClick={onFilterChange(MonitorsFilter.WithoutOwner)}>
+          Without Owner
+        </a>
+      </div>
     </div>
   );
 
