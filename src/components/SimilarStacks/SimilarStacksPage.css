@@ -1,6 +1,12 @@
 #similar-stacks-page {
   width: 90%;
-  margin: 32px auto;
+  margin: 0 auto;
+}
+
+#similar-stacks-settings {
+  height: 80px;
+  display: flex;
+  align-items: center;
 }
 
 #similar-stacks-settings label {

@@ -97,3 +97,26 @@ input:focus {
 .clickable {
   cursor: pointer;
 }
+
+.filters a {
+  font-weight: 500;
+  margin-left: 8px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: #0052CC;
+}
+.filters a:hover {
+  border: 1px solid #C1C7D0;
+  color: #0065FF;
+  text-decoration: none;
+}
+.filters .checked {
+  color: #FFF;
+  background: #172B4D;
+}
+.filters .checked:hover {
+  border: 1px solid transparent;
+  color: #091E42;
+  background: #EBECF0;
+}

@@ -39,7 +39,7 @@ export default class CpuConsumersPage
     this.calculateConsumers(this.state.mode);
   }
 
-  public handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
+  public handleModeChange = (mode: number): React.MouseEventHandler<HTMLAnchorElement> => () => {
     this.setState({ mode: mode as CpuConsumersMode });
     this.calculateConsumers(mode);
   }

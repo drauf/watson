@@ -16,7 +16,7 @@ const SimilarStacksSettings: React.SFC<SimilarStacksSettingsProps> =
           value={linesToConsider}
           onChange={onSettingsChange}
         />
-        <b><i>#</i> of stack trace lines to compare</b>
+        <b>Stack trace lines to compare</b>
       </label>
 
       <label>
@@ -26,7 +26,7 @@ const SimilarStacksSettings: React.SFC<SimilarStacksSettingsProps> =
           value={minimalGroupSize}
           onChange={onSettingsChange}
         />
-        <b>Minimal size of the group to be shown</b>
+        <b>Minimal group size to show</b>
       </label>
     </div>
   );

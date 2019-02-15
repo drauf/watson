@@ -1,7 +1,6 @@
 import React from 'react';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumerItem from './CpuConsumerItem';
-import './CpuConsumersList.css';
 
 type CpuConsumersListProps = {
   limit: number;

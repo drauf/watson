@@ -45,7 +45,7 @@ export default class MonitorsPage
     );
   }
 
-  private changeFilter = (filter: number): React.ChangeEventHandler<HTMLInputElement> => () => {
+  private changeFilter = (filter: number): React.MouseEventHandler<HTMLAnchorElement> => () => {
     this.setState({ filter: filter as MonitorsFilter });
   }
 
