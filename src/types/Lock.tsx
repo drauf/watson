@@ -5,4 +5,8 @@ export default class Lock {
   public className!: string;
   public owner: Thread | null = null;
   public waiting: Thread[] = [];
+
+  public toString = (): string => {
+    return this.id;
+  }
 }

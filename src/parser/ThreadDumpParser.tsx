@@ -132,7 +132,7 @@ export default class ThreadDumpParser {
 
     threads
       .filter(thread => !thread.lockWaitingFor)
-      .filter(thread => validStatuses.includes(thread.status))
+      .filter(thread => thread.status !== undefined && validStatuses.includes(thread.status))
       .forEach((thread) => {
         const lock: Lock = thread.classicalLocksHeld[0];
         if (!lock) {

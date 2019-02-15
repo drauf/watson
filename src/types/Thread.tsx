@@ -5,7 +5,7 @@ export default class Thread {
   public id!: number;
   public name!: string;
   public date: Date | null;
-  public status!: ThreadStatus;
+  public status: ThreadStatus | undefined;
   public cpuUsage: number = 0.0;
   public runningFor!: string;
   public lockWaitingFor!: Lock;
