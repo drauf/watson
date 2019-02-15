@@ -1,14 +1,33 @@
 import React from 'react';
+import { SimilarStacksFilter } from './SimilarStacksPage';
 
 type SimilarStacksSettingsProps = {
+  filter: SimilarStacksFilter;
   linesToConsider: number;
   minimalGroupSize: number;
+  onFilterChange: (filter: number) => React.MouseEventHandler<HTMLAnchorElement>;
   onSettingsChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 const SimilarStacksSettings: React.SFC<SimilarStacksSettingsProps> =
-  ({ linesToConsider, minimalGroupSize, onSettingsChange }) => (
+  ({ filter, linesToConsider, minimalGroupSize, onFilterChange, onSettingsChange }) => (
     <div id="similar-stacks-settings">
+      <div className="filters">
+        <b>Filter:</b>
+
+        <a
+          className={filter === SimilarStacksFilter.HideQueues ? 'checked' : ''}
+          onClick={onFilterChange(SimilarStacksFilter.HideQueues)}>
+          Hide Queues
+        </a>
+
+        <a
+          className={filter === SimilarStacksFilter.All ? 'checked' : ''}
+          onClick={onFilterChange(SimilarStacksFilter.All)}>
+          Show All
+        </a>
+      </div>
+
       <label>
         <input
           type="number"

@@ -5,11 +5,17 @@ import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
 
+export enum SimilarStacksFilter {
+  HideQueues,
+  All,
+}
+
 type SimilarStacksPageProps = {
   threadDumps: ThreadDump[];
 };
 
 type SimilarStacksPageState = {
+  filter: SimilarStacksFilter;
   linesToConsider: number;
   minimalGroupSize: number;
 };
@@ -20,6 +26,7 @@ export default class SimilarStacksPage
   private static NO_THREAD_DUMPS_MESSGE = 'To see the Similar Stack Traces you must upload at least one file with thread dumps.';
 
   public state: SimilarStacksPageState = {
+    filter: SimilarStacksFilter.HideQueues,
     linesToConsider: 40,
     minimalGroupSize: 2,
   };
@@ -35,8 +42,10 @@ export default class SimilarStacksPage
     return (
       <div id="similar-stacks-page">
         <SimilarStacksSettings
+          filter={this.state.filter}
           linesToConsider={this.state.linesToConsider}
           minimalGroupSize={this.state.minimalGroupSize}
+          onFilterChange={this.changeFilter}
           onSettingsChange={this.handleSettingsChange} />
 
         {threadGroups.map((group, index) => (
@@ -46,6 +55,10 @@ export default class SimilarStacksPage
             minimalGroupSize={this.state.minimalGroupSize} />))}
       </div>
     );
+  }
+
+  private changeFilter = (filter: number): React.MouseEventHandler<HTMLAnchorElement> => () => {
+    this.setState({ filter: filter as SimilarStacksFilter });
   }
 
   private handleSettingsChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -61,6 +74,10 @@ export default class SimilarStacksPage
       threadDump.threads.forEach((thread) => {
         const stackTrace = this.getStackTrace(thread, linesToConsider);
 
+        if (!stackTrace) {
+          return;
+        }
+
         let similarStacks = grouped.get(stackTrace);
         if (!similarStacks) {
           similarStacks = [];
@@ -74,7 +91,11 @@ export default class SimilarStacksPage
     return Array.from(grouped.values()).sort((t1, t2) => t2.length - t1.length);
   }
 
-  private getStackTrace(thread: Thread, linesToConsider: number): string {
+  private getStackTrace(thread: Thread, linesToConsider: number): string | null {
+    if (this.state.filter === SimilarStacksFilter.HideQueues && thread.stackTrace.length < 17) {
+      return null;
+    }
+
     if (linesToConsider < 1) {
       return thread.stackTrace.toString();
     }
