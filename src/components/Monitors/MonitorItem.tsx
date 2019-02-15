@@ -23,19 +23,22 @@ export default class MonitorItem extends React.PureComponent<MonitorItemProps, M
 
   public render() {
     const monitor = this.props.monitor;
+    const className = monitor.className
+      ? monitor.className.substring(monitor.className.lastIndexOf('.') + 1)
+      : 'unknown class';
 
     return (
-      <>
-        <ul className="monitor-item monospaced" onClick={this.handleClick}>
-          <li>{monitor.date ? monitor.date.toLocaleTimeString() : 'unknown timestamp'}</li>
-          <li>{monitor.waiting.length} thread(s) waiting</li>
+      <div className="monitors-container">
+        <div className="left">
+          <b>{monitor.date ? monitor.date.toLocaleTimeString() : 'unknown timestamp'}</b>
+          <br />
+          {className}
+        </div>
+        <div>
           <MonitorOwner monitor={monitor} />
-          <li>{monitor.className ? `<${monitor.className}>` : 'unknown class'}</li>
-        </ul>
-
-        {this.state.expanded &&
-          <WaitingList waiting={monitor.waiting} />}
-      </>
+          <WaitingList waiting={monitor.waiting} />
+        </div>
+      </div>
     );
   }
 }
