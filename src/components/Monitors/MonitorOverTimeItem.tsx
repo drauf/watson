@@ -7,32 +7,33 @@ type MonitorOverTimeItemProps = {
 };
 
 type MonitorOverTimeItemState = {
-  expanded: boolean;
+  collapse: boolean;
 };
 
 export default class MonitorOverTimeItem
   extends React.PureComponent<MonitorOverTimeItemProps, MonitorOverTimeItemState> {
 
   public state: MonitorOverTimeItemState = {
-    expanded: false,
+    collapse: false,
   };
-
-  public handleClick = () => {
-    this.setState(prevState => ({ expanded: !prevState.expanded }));
-  }
 
   public render() {
     const monitor = this.props.monitor;
 
     return (
       <>
-        <h6 className="monitor-over-time-item" onClick={this.handleClick}>
+        <h6 className="clickable" onClick={this.toggleCollapse}>
+          <span className={this.state.collapse ? 'chevron rotate' : 'chevron'} />
           {monitor.waitingSum} thread(s) waiting for &lt;{monitor.id}&gt;
         </h6>
 
-        {this.state.expanded &&
+        {!this.state.collapse &&
           monitor.monitors.map((item, index) => <MonitorItem key={index} monitor={item} />)}
       </>
     );
+  }
+
+  private toggleCollapse = () => {
+    this.setState(prevState => ({ collapse: !prevState.collapse }));
   }
 }

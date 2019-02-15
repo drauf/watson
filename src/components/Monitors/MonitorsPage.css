@@ -5,15 +5,6 @@
   flex-direction: column;
 }
 
-.monitor-over-time-item {
-  cursor: pointer;
-  margin: 4px 0 2px;
-  padding: 8px 10px;
-}
-.monitor-over-time-item:hover {
-  background: #EBECF0;
-}
-
 .monitor-item {
   cursor: pointer;
   list-style: none;
