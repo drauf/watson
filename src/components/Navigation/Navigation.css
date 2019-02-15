@@ -48,7 +48,7 @@ nav.open li:hover {
 #nav-content-bottom {
   width: 0;
   bottom: 0;
-  position: fixed;
+  position: absolute;
 }
 #nav-content-bottom a:hover {
   text-decoration: none;

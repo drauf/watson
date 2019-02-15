@@ -23,7 +23,7 @@
   background: #0052CC;
   content: '';
   height: 3px;
-  position: fixed;
+  position: absolute;
   width: 9px;
 }
 
