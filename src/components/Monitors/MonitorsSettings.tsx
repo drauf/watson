@@ -13,9 +13,9 @@ const MonitorsSettings: React.SFC<CpuConsumersSettingsProps> =
         <b>Filter:</b>
 
         <a
-          className={filter === MonitorsFilter.None ? 'checked' : ''}
-          onClick={onFilterChange(MonitorsFilter.None)}>
-          None
+          className={filter === MonitorsFilter.All ? 'checked' : ''}
+          onClick={onFilterChange(MonitorsFilter.All)}>
+          All
         </a>
 
         <a
