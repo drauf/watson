@@ -13,7 +13,7 @@ export default class WindowPortal extends React.PureComponent<WindowPortalProps>
   private container: HTMLElement;
 
   private windowFeatures =
-    'width=1024,height=600,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
+    'width=960,height=530,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
 
   constructor(props: WindowPortalProps) {
     super(props);
