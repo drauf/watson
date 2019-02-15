@@ -16,7 +16,7 @@
 #consumers-list {
   padding: 0;
   white-space: pre;
-  list-style-type: none;
+  list-style: none;
 }
 #consumers-list h6 {
   margin-top: 4px;
