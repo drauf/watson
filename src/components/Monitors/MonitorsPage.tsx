@@ -7,7 +7,7 @@ import './MonitorsPage.css';
 import MonitorsSettings from './MonitorsSettings';
 
 export enum MonitorsFilter {
-  None,
+  All,
   WithOwner,
   WithoutOwner,
 }
@@ -24,7 +24,7 @@ export default class MonitorsPage
   extends React.PureComponent<MonitorsPageProps, MonitorsPageState> {
 
   public state: MonitorsPageState = {
-    filter: MonitorsFilter.None,
+    filter: MonitorsFilter.All,
   };
 
   public render() {
@@ -78,7 +78,7 @@ export default class MonitorsPage
         return monitors.filter(monitor => this.hasAnyOwner(monitor));
       case MonitorsFilter.WithoutOwner:
         return monitors.filter(monitor => !this.hasAnyOwner(monitor));
-      case MonitorsFilter.None:
+      case MonitorsFilter.All:
       default:
         return monitors;
     }
