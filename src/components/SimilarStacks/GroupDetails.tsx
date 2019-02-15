@@ -9,30 +9,36 @@ type SimilarStacksGroupProps = {
 };
 
 type SimilarStacksGroupState = {
-  collapseThreadsList: boolean;
+  expanded: boolean;
 };
 
 export default class GroupDetails
   extends React.PureComponent<SimilarStacksGroupProps, SimilarStacksGroupState> {
 
+  private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;
+
   public state: SimilarStacksGroupState = {
-    collapseThreadsList: true,
+    expanded: false,
   };
 
   public render() {
-    const sortedByName = this.props.threadGroup.sort((t1, t2) => t1.name.localeCompare(t2.name));
     const stackTrace = this.getStackTrace(this.props.threadGroup);
-    const threads = this.state.collapseThreadsList ? sortedByName.slice(0, 20) : sortedByName;
+    const sortedByName = this.props.threadGroup.sort((t1, t2) => t1.name.localeCompare(t2.name));
+    const collapsable = sortedByName.length - GroupDetails.THREADS_TO_SHOW_WHEN_COLLAPSED;
+    const threads = this.state.expanded
+      ? sortedByName
+      : sortedByName.slice(0, GroupDetails.THREADS_TO_SHOW_WHEN_COLLAPSED);
 
     return (
       <>
         <ul>
           {threads.map((thread, index) => <ThreadSummary key={index} thread={thread} />)}
-          {sortedByName.length > 20 &&
-            <li><a onClick={this.toggleCollapseThreadsList}>
-              {this.state.collapseThreadsList
-                ? `Expand threads list (${sortedByName.length - 20} more thread(s) to show)`
-                : `Collapse threads list (hide ${sortedByName.length - 20} thread(s))`}
+
+          {collapsable > 0 &&
+            <li><a onClick={this.toggleExpand}>
+              {this.state.expanded
+                ? `Collapse threads list (hide ${collapsable} thread(s))`
+                : `Expand threads list (${collapsable} more thread(s) to show)`}
             </a></li>}
         </ul>
         <StackTrace stackTrace={stackTrace} linesToConsider={this.props.linesToConsider} />
@@ -40,8 +46,8 @@ export default class GroupDetails
     );
   }
 
-  private toggleCollapseThreadsList = () => {
-    this.setState(prevState => ({ collapseThreadsList: !prevState.collapseThreadsList }));
+  private toggleExpand = () => {
+    this.setState(prevState => ({ expanded: !prevState.expanded }));
   }
 
   private getStackTrace = (threads: Thread[]): string[] => {

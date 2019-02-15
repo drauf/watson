@@ -5,31 +5,19 @@
   flex-direction: column;
 }
 
-.monitor-item {
-  cursor: pointer;
-  list-style: none;
-  margin: 0;
-  padding: 2px 10px;
+.monitors-container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
 }
-.monitor-item:hover {
-  background: #EBECF0;
+.monitors-container div {
+  padding: 5px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.monitors-container .left {
+  width: 360px;
 }
 
-.monitor-item  li {
-  display: inline-block;
-  margin: 0;
-  padding: 0 1%;
-}
-
-.expandable-details {
-  cursor: pointer;
-  color: #172B4D;
-}
-.expandable-details:hover {
-  color: #0052CC;
-}
-
-.waiting-list {
-  list-style: decimal;
-  margin: 4px 0 12px;
-}

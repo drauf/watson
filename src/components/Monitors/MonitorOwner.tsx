@@ -29,13 +29,18 @@ export default class MonitorOwner
   public render() {
     const monitor = this.props.monitor;
 
+    if (!monitor.owner) {
+      return null;
+    }
+
     return (
       <>
-        {monitor.owner
-          ? <li className="expandable-details" onClick={this.handleClick}>{monitor.owner.name}</li>
-          : <li>no owner</li>}
+        <b>Held by:</b>
+        <br />
+        <a className="expandable-details" onClick={this.handleClick}>{monitor.owner.name}</a>
+        <br />
 
-        {monitor.owner && this.state.showOwner &&
+        {this.state.showOwner &&
           <ThreadDetailsWindow thread={monitor.owner} onUnload={this.handleUnload} />}
       </>
     );

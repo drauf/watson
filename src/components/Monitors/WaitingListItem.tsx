@@ -30,7 +30,8 @@ export default class WaitingListItem
 
     return (
       <>
-        <li className="expandable-details" onClick={this.handleClick}>{thread.name}</li>
+        <a href="#" onClick={this.handleClick}>{thread.name}</a>
+        <br />
 
         {this.state.showDetails &&
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
