@@ -59,7 +59,7 @@ a:hover {
 input {
   color: #172B4D;
   border: 1px solid #c1c7d0;
-  border-radius: 3px;
+  border-radius: 3.01px;
   box-sizing: border-box;
   font-size: inherit;
   margin: 0;

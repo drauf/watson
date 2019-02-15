@@ -10,10 +10,8 @@
   text-overflow: ellipsis;
 }
 
-.cpu-usage {
-  cursor: pointer;
-}
 .cpu-usage:hover {
+  cursor: pointer;
   color: #0052CC;
   text-decoration: underline;
 }
