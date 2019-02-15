@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentState } from 'react';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
@@ -22,12 +22,9 @@ export default class ThreadsOverviewPage
     stackFilter: '',
   };
 
-  public handleNameFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ nameFilter: event.target.value });
-  }
-
-  public handleStackFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ stackFilter: event.target.value });
+  public handleSettingsChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const newState: ComponentState = { [event.target.name]: event.target.value };
+    this.setState(newState);
   }
 
   public render() {
@@ -43,8 +40,7 @@ export default class ThreadsOverviewPage
         <ThreadsOverviewSettings
           nameFilter={this.state.nameFilter}
           stackFilter={this.state.stackFilter}
-          onNameFilterChange={this.handleNameFilterChange}
-          onStackFilterChange={this.handleStackFilterChange}
+          onSettingsChange={this.handleSettingsChange}
         />
         <ThreadsOverviewTable
           threadDumps={this.props.threadDumps}

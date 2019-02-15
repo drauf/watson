@@ -8,6 +8,7 @@ import NavToggle from './Navigation/NavToggle';
 export enum Page {
   Summary = 'summary',
   CpuConsumers = 'cpu-consumers',
+  SimilarStacks = 'similar-stacks',
   ThreadsOverview = 'threads-overview',
   Monitors = 'monitors',
 }

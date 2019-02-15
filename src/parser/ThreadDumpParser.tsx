@@ -43,7 +43,7 @@ export default class ThreadDumpParser {
   }
 
   private static parseThreadHeader(header: string, threadDump: ThreadDump): void {
-    ThreadDumpParser.currentThread = new Thread();
+    ThreadDumpParser.currentThread = new Thread(threadDump.date);
     threadDump.threads.push(ThreadDumpParser.currentThread);
 
     ThreadDumpParser.currentThread.name = matchOne(NAME_PATTERN, header).trim();
