@@ -5,6 +5,31 @@
   flex-direction: column;
 }
 
+#monitors-settings label {
+  font-weight: 500;
+  margin-left: 8px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: #0052CC;
+}
+#monitors-settings label:hover {
+  border: 1px solid #C1C7D0;
+  color: #0065FF;
+}
+#monitors-settings .checked {
+  color: #FFF;
+  background: #172B4D;
+}
+#monitors-settings .checked:hover {
+  border: 1px solid transparent;
+  color: #091E42;
+  background: #EBECF0;
+}
+#monitors-settings input {
+  display: none;
+}
+
 .monitors-container {
   width: 100%;
   margin: 0 auto;
