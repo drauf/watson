@@ -1,0 +1,21 @@
+#similar-stacks-page {
+  width: 90%;
+  margin: 32px auto;
+}
+
+#similar-stacks-settings label {
+  margin-right: 3em;
+}
+
+#similar-stacks-page ul {
+  font-size: 13px;
+  line-height: 17px;
+  margin: 0;
+  list-style: none;
+}
+
+#similar-stacks-page ol {
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 8px;
+}

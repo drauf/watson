@@ -10,9 +10,9 @@ type NavigationProps = {
 
 export default class Navigation extends React.PureComponent<NavigationProps> {
   // tslint:disable:max-line-length
-  public static sourceCodeLink: string = 'https://bitbucket.org/atlassian/watsonjs/';
-  public static issueTrackerLink: string = 'https://ecosystem.atlassian.net/secure/RapidBoard.jspa?projectKey=WAT&rapidView=501&view=planning';
-  public static documentationLink: string = 'https://hello.atlassian.net/wiki/spaces/~drauf/pages/390789227/Watson+your+astute+assistant';
+  public static SOURCE_CODE_LINK: string = 'https://bitbucket.org/atlassian/watsonjs/';
+  public static ISSUE_TRACKER_LINK: string = 'https://ecosystem.atlassian.net/secure/RapidBoard.jspa?projectKey=WAT&rapidView=501&view=planning';
+  public static DOCUMENTATION_LINK: string = 'https://hello.atlassian.net/wiki/spaces/~drauf/pages/390789227/Watson+your+astute+assistant';
   // tslint:enable:max-line-length
 
   public onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
@@ -31,6 +31,7 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
         </ul>
         <ul>
           <li onClick={this.onClick(Page.CpuConsumers)}>CPU Consumers</li>
+          <li onClick={this.onClick(Page.SimilarStacks)}>Similar Stack Traces</li>
           <li onClick={this.onClick(Page.ThreadsOverview)}>Threads Overview</li>
           <li onClick={this.onClick(Page.Monitors)}>Monitors</li>
         </ul>
@@ -41,9 +42,9 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
           </ul>
 
           <ul>
-            <a href={Navigation.sourceCodeLink}><li>Source code</li></a>
-            <a href={Navigation.issueTrackerLink}><li>Issue tracker</li></a>
-            <a href={Navigation.documentationLink}><li>Documentation</li></a>
+            <a href={Navigation.SOURCE_CODE_LINK}><li>Source code</li></a>
+            <a href={Navigation.ISSUE_TRACKER_LINK}><li>Issue tracker</li></a>
+            <a href={Navigation.DOCUMENTATION_LINK}><li>Documentation</li></a>
           </ul>
         </div>
       </nav>

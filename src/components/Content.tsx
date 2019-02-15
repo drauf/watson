@@ -3,6 +3,7 @@ import ThreadDump from '../types/ThreadDump';
 import { Page } from './Container';
 import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
 import MonitorsPage from './Monitors/MonitorsPage';
+import SimilarStacksPage from './SimilarStacks/SimilarStacksPage';
 import SummaryPage from './Summary/SummaryPage';
 import ThreadsOverviewPage from './ThreadsOverview/ThreadsOverviewPage';
 
@@ -17,12 +18,14 @@ const Content: React.SFC<ContentProps> = ({ selectedPage, threadDumps }) => {
       return <SummaryPage threadDumps={threadDumps} />;
     case Page.CpuConsumers:
       return <CpuConsumersPage threadDumps={threadDumps} />;
+    case Page.SimilarStacks:
+      return <SimilarStacksPage threadDumps={threadDumps} />;
     case Page.ThreadsOverview:
       return <ThreadsOverviewPage threadDumps={threadDumps} />;
     case Page.Monitors:
       return <MonitorsPage threadDumps={threadDumps} />;
     default:
-      return <h2>Oops! Something went wrong!</h2>;
+      return <h2>Oops, something went wrong! There is no page called {selectedPage}.</h2>;
   }
 };
 

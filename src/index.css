@@ -47,11 +47,13 @@ h6 {
 }
 
 a {
-  color: #6B778C;
+  cursor: pointer;
+  color: #172B4D;
   text-decoration: none;
 }
 a:hover {
   color: #0052CC;
+  text-decoration: underline;
 }
 
 input {
@@ -68,6 +70,9 @@ input {
 input[type="number"], input[type="text"] {
   height: 2.14285714em;
   line-height: 1.4285714285714;
+}
+input[type="number"] {
+  width: 5em;
 }
 input:focus {
   border-color: #5897fb;

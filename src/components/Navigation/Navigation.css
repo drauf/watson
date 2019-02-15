@@ -1,16 +1,11 @@
 nav {
   width: 0;
-  background: #f4f5f7;
+  color: #172B4D;
+  background: #F4F5F7;
   transition: all 0.5s ease;
 }
 nav.open {
   width: 250px;
-}
-
-#nav-content-bottom {
-  width: 0;
-  bottom: 0;
-  position: fixed;
 }
 
 #brand-visible {
@@ -48,4 +43,13 @@ nav.open li:hover {
   cursor: pointer;
   color: #0052CC;
   background: #EBECF0;
+}
+
+#nav-content-bottom {
+  width: 0;
+  bottom: 0;
+  position: fixed;
+}
+#nav-content-bottom a:hover {
+  text-decoration: none;
 }
