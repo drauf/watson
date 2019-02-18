@@ -5,7 +5,8 @@ import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
 type ThreadOverviewItemProps = {
   thread?: Thread;
-  filtered: boolean;
+  isFiltered: boolean;
+  isMatchingFilter: boolean;
 };
 
 type ThreadOverviewItemState = {
@@ -34,8 +35,8 @@ export default class ThreadOverviewItem
       return <td className="empty" />;
     }
 
-    const className = (this.props.filtered)
-      ? thread.matchingFilter ? 'matching' : ''
+    const className = (this.props.isFiltered)
+      ? this.props.isMatchingFilter ? 'matching' : ''
       : thread.status ? thread.status.toString() : ThreadStatus.UNKNOWN.toString();
 
     return (
