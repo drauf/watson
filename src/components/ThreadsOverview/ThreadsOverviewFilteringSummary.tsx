@@ -17,7 +17,7 @@ const ThreadsOverviewFilteringSummary: React.SFC<ThreadsOverviewProps>
 
       return (
         <p id="matching-summary">
-          {matching} out of {total} ({percentage}%) visible threads matching the stack trace RegExp
+          {matching} out of {total} ({percentage}%) visible threads matching the stack trace filters
         </p>
       );
     }
@@ -28,7 +28,7 @@ const ThreadsOverviewFilteringSummary: React.SFC<ThreadsOverviewProps>
 
       return (
         <p id="matching-summary">
-          {matching} out of {threadsNumber} ({percentage}%) threads matching the thread name RegExp
+          {matching} out of {threadsNumber} ({percentage}%) threads matching the thread name filters
         </p>
       );
     }
