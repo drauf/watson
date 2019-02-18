@@ -1,5 +1,4 @@
 enum ThreadStatus {
-  NEW = 'new',
   RUNNABLE = 'runnable',
   BLOCKED = 'blocked',
   WAITING = 'waiting',

@@ -4,19 +4,8 @@
   align-items: center;
 }
 
-#thread-overview-legend {
-  height: 52px;
-  width: 90%;
-  margin: 4px 0 14px;
-  table-layout: fixed;
-}
-#thread-overview-legend td {
-  height: 16px;
-  color: #6B778C;
-  text-align: center;
-}
-
 #threads-overview-settings {
+  margin-top: 26px;
   width: 90%;
 }
 #threads-overview-settings label {
@@ -25,12 +14,20 @@
 
 #matching-summary {
   width: 90%;
+  height: 20px;
+}
+
+#thread-overview-legend {
+  height: 32px;
+  width: 90%;
+  table-layout: fixed;
+  text-align: center;
 }
 
 .threads-overview-table {
   width: 100%;
   padding-left: 4px;
-  margin: 34px 0 4px;
+  margin: 10px 0 4px;
   border-spacing: 2px;
   table-layout: fixed;
 }
@@ -49,33 +46,23 @@ td.empty {
   background: #FFF;
   cursor: default;
 }
-td.new {
-  color: #172B4D;
-  background: #00B8D9;
-}
 td.runnable {
-  color: #172B4D;
-  background: #36B37E;
+  background: #ABF5D1;
 }
 td.blocked {
-  color: #FFF;
-  background: #FF5630;
+  background: #FFBDAD;
 }
 td.waiting {
-  color: #FFF;
-  background: #6554C0;
+  background: #EAE6FF;
 }
 td.timed-waiting {
-  color: #172B4D;
-  background: #FFAB00;
+  background: #FFFAE6;
 }
 td.unknown {
-  color: #172B4D;
-  background: #00B8D9;
+  background: #FFF;
 }
 td.matching {
-  color: #FFF;
-  background: #0052CC;
+  background: #B3D4FF;
 }
 
 #threads-overview-details {
