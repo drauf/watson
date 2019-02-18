@@ -5,18 +5,37 @@
 }
 
 #threads-overview-settings {
-  margin-top: 25px;
+  margin-top: 22px;
+  line-height: 36px;
   width: 90%;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 #regexp-filters label {
   margin-left: 3em;
 }
+@media (max-width: 1666px) {
+  #regexp-filters label {
+    margin-left: 16px;
+  }
+  #regexp-filters input {
+    width: 116px;
+  }
+}
+@media (max-width: 1439px) {
+  #regexp-filters label {
+    margin-left: 0;
+    margin-right: 16px;
+  }
+  #regexp-filters input {
+    width: 100px;
+  }
+}
 
 #matching-summary {
   width: 90%;
-  height: 20px;
+  min-height: 20px;
 }
 
 #thread-overview-legend {
