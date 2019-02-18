@@ -6,7 +6,7 @@
 
 #thread-overview-legend {
   height: 52px;
-  width: 80%;
+  width: 90%;
   margin: 4px 0 14px;
   table-layout: fixed;
 }
@@ -17,13 +17,14 @@
 }
 
 #threads-overview-settings {
-  width: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 90%;
 }
 #threads-overview-settings label {
-  width: 440px;
+  margin-right: 3em;
+}
+
+#matching-summary {
+  width: 90%;
 }
 
 .threads-overview-table {
@@ -45,7 +46,7 @@ td.name {
   cursor: default;
 }
 td.empty {
-  background: #DFE1E6;
+  background: #FFF;
   cursor: default;
 }
 td.new {
