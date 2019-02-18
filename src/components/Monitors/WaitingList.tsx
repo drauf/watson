@@ -12,7 +12,7 @@ type WaitingListState = {
 
 export default class WaitingList extends React.PureComponent<WaitingListProps, WaitingListState> {
 
-  private static THREADS_TO_SHOW_WHEN_COLLAPSED = 10;
+  private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;
 
   public state: WaitingListState = {
     expanded: false,

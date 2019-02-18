@@ -6,8 +6,7 @@ import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
 
 export enum SimilarStacksFilter {
-  HideQueues,
-  All,
+  WithoutIdle,
 }
 
 type SimilarStacksPageProps = {
@@ -15,9 +14,9 @@ type SimilarStacksPageProps = {
 };
 
 type SimilarStacksPageState = {
-  filter: SimilarStacksFilter;
   linesToConsider: number;
   minimalGroupSize: number;
+  withoutIdle: boolean;
 };
 
 export default class SimilarStacksPage
@@ -26,9 +25,9 @@ export default class SimilarStacksPage
   private static NO_THREAD_DUMPS_MESSGE = 'To see the Similar Stack Traces you must upload at least one file with thread dumps.';
 
   public state: SimilarStacksPageState = {
-    filter: SimilarStacksFilter.HideQueues,
     linesToConsider: 40,
     minimalGroupSize: 2,
+    withoutIdle: true,
   };
 
   public render() {
@@ -42,9 +41,9 @@ export default class SimilarStacksPage
     return (
       <div id="similar-stacks-page">
         <SimilarStacksSettings
-          filter={this.state.filter}
           linesToConsider={this.state.linesToConsider}
           minimalGroupSize={this.state.minimalGroupSize}
+          withoutIdle={this.state.withoutIdle}
           onFilterChange={this.changeFilter}
           onSettingsChange={this.handleSettingsChange} />
 
@@ -58,7 +57,11 @@ export default class SimilarStacksPage
   }
 
   private changeFilter = (filter: number): React.MouseEventHandler<HTMLAnchorElement> => () => {
-    this.setState({ filter: filter as SimilarStacksFilter });
+    const selected = filter as SimilarStacksFilter;
+
+    if (selected === SimilarStacksFilter.WithoutIdle) {
+      this.setState(prevState => ({ withoutIdle: !prevState.withoutIdle }));
+    }
   }
 
   private handleSettingsChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -92,7 +95,8 @@ export default class SimilarStacksPage
   }
 
   private getStackTrace(thread: Thread, linesToConsider: number): string | null {
-    if (this.state.filter === SimilarStacksFilter.HideQueues && thread.stackTrace.length < 17) {
+    // we assume that threads with stacks shorter than 17 don't do anything useful
+    if (this.state.withoutIdle && thread.stackTrace.length < 17) {
       return null;
     }
 
