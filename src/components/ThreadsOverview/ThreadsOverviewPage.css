@@ -5,11 +5,13 @@
 }
 
 #threads-overview-settings {
-  margin-top: 26px;
+  margin-top: 25px;
   width: 90%;
+  display: flex;
+  align-items: center;
 }
-#threads-overview-settings label {
-  margin-right: 3em;
+#regexp-filters label {
+  margin-left: 3em;
 }
 
 #matching-summary {

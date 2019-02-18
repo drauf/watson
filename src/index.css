@@ -98,7 +98,7 @@ input:focus {
   cursor: pointer;
 }
 
-.filters a {
+.filters label {
   font-weight: 500;
   margin-left: 8px;
   padding: 7px 10px;
@@ -106,10 +106,13 @@ input:focus {
   border-radius: 3px;
   color: #0052CC;
 }
-.filters a:hover {
+.filters label:hover {
   border: 1px solid #C1C7D0;
   color: #0065FF;
   text-decoration: none;
+}
+.filters input {
+  display: none;
 }
 .filters .checked {
   color: #FFF;

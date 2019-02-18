@@ -1,16 +1,10 @@
-import React from 'react';
+import React, { ComponentState } from 'react';
 import ThreadDump from '../../types/ThreadDump';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeItem from './MonitorOverTimeItem';
 import './MonitorsPage.css';
 import MonitorsSettings from './MonitorsSettings';
-
-export enum MonitorsFilter {
-  WithOwner,
-  WithoutIdle,
-  WithoutOwner,
-}
 
 type MonitorsPageProps = {
   threadDumps: ThreadDump[];
@@ -47,24 +41,15 @@ export default class MonitorsPage
           withOwner={this.state.withOwner}
           withoutIdle={this.state.withoutIdle}
           withoutOwner={this.state.withoutOwner}
-          onFilterChange={this.changeFilter} />
+          onFilterChange={this.handleFilterChange} />
         {filtered.map(monitor => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />)}
       </div>
     );
   }
 
-  private changeFilter = (filter: number): React.MouseEventHandler<HTMLAnchorElement> => () => {
-    const selected = filter as MonitorsFilter;
-
-    if (selected === MonitorsFilter.WithoutIdle) {
-      this.setState(prevState => ({ withoutIdle: !prevState.withoutIdle }));
-    }
-    if (selected === MonitorsFilter.WithOwner) {
-      this.setState(prevState => ({ withOwner: !prevState.withOwner }));
-    }
-    if (selected === MonitorsFilter.WithoutOwner) {
-      this.setState(prevState => ({ withoutOwner: !prevState.withoutOwner }));
-    }
+  private handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const newState: ComponentState = { [event.target.name]: event.target.checked };
+    this.setState(newState);
   }
 
   private getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {

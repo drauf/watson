@@ -4,7 +4,7 @@ import { CpuConsumersMode } from './CpuConsumersPage';
 type CpuConsumersSettingsProps = {
   mode: CpuConsumersMode;
   limit: number;
-  onModeChange: (mode: number) => React.MouseEventHandler<HTMLAnchorElement>;
+  onModeChange: (mode: number) => React.ChangeEventHandler<HTMLInputElement>;
   onLimitChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
@@ -14,23 +14,32 @@ const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> =
       <div className="filters">
         <b>CPU usage calculation:</b>
 
-        <a
-          className={mode === CpuConsumersMode.Mean ? 'checked' : ''}
-          onClick={onModeChange(CpuConsumersMode.Mean)}>
+        <label className={mode === CpuConsumersMode.Mean ? 'checked' : ''}>
+          <input
+            type="checkbox"
+            checked={mode === CpuConsumersMode.Mean}
+            onChange={onModeChange(CpuConsumersMode.Mean)}
+          />
           Mean
-        </a>
+        </label>
 
-        <a
-          className={mode === CpuConsumersMode.Median ? 'checked' : ''}
-          onClick={onModeChange(CpuConsumersMode.Median)}>
+        <label className={mode === CpuConsumersMode.Median ? 'checked' : ''}>
+          <input
+            type="checkbox"
+            checked={mode === CpuConsumersMode.Median}
+            onChange={onModeChange(CpuConsumersMode.Median)}
+          />
           Median
-        </a>
+        </label>
 
-        <a
-          className={mode === CpuConsumersMode.Max ? 'checked' : ''}
-          onClick={onModeChange(CpuConsumersMode.Max)}>
+        <label className={mode === CpuConsumersMode.Max ? 'checked' : ''}>
+          <input
+            type="checkbox"
+            checked={mode === CpuConsumersMode.Max}
+            onChange={onModeChange(CpuConsumersMode.Max)}
+          />
           Max
-        </a>
+        </label>
       </div>
 
       <div id="cpu-consumers-limit">

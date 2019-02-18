@@ -39,16 +39,6 @@ export default class CpuConsumersPage
     this.calculateConsumers(this.state.mode);
   }
 
-  public handleModeChange = (mode: number): React.MouseEventHandler<HTMLAnchorElement> => () => {
-    this.setState({ mode: mode as CpuConsumersMode });
-    this.calculateConsumers(mode);
-  }
-
-  public handleLimitChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const limit: number = parseInt(event.target.value, 10);
-    this.setState({ limit });
-  }
-
   public calculateConsumers(mode: CpuConsumersMode) {
     const consumers: CpuConsumer[] = [];
     const threadsOverTime = ThreadDumpsUtils.getThreadsOverTime(this.props.threadDumps);
@@ -81,6 +71,16 @@ export default class CpuConsumersPage
         />
       </div>
     );
+  }
+
+  private handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
+    this.setState({ mode: mode as CpuConsumersMode });
+    this.calculateConsumers(mode);
+  }
+
+  private handleLimitChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const limit: number = parseInt(event.target.value, 10);
+    this.setState({ limit });
   }
 
   private calculateValueFromThreads(threadsMap: Map<number, Thread>, mode: CpuConsumersMode) {

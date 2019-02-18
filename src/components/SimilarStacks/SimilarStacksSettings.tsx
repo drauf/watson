@@ -1,11 +1,11 @@
 import React from 'react';
-import { SimilarStacksFilter } from './SimilarStacksPage';
+import Filter from '../Filter/Filter';
 
 type SimilarStacksSettingsProps = {
   linesToConsider: number;
   minimalGroupSize: number;
   withoutIdle: boolean;
-  onFilterChange: (filter: number) => React.MouseEventHandler<HTMLAnchorElement>;
+  onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
   onSettingsChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
@@ -15,11 +15,8 @@ const SimilarStacksSettings: React.SFC<SimilarStacksSettingsProps> =
       <div className="filters">
         <b>Filters:</b>
 
-        <a
-          className={withoutIdle ? 'checked' : ''}
-          onClick={onFilterChange(SimilarStacksFilter.WithoutIdle)}>
-          Without Idle
-        </a>
+        <Filter name="withoutIdle" displayName="Without Idle"
+          checked={withoutIdle} onChange={onFilterChange} />
       </div>
 
       <label>

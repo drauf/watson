@@ -5,10 +5,6 @@ import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
 
-export enum SimilarStacksFilter {
-  WithoutIdle,
-}
-
 type SimilarStacksPageProps = {
   threadDumps: ThreadDump[];
 };
@@ -44,7 +40,7 @@ export default class SimilarStacksPage
           linesToConsider={this.state.linesToConsider}
           minimalGroupSize={this.state.minimalGroupSize}
           withoutIdle={this.state.withoutIdle}
-          onFilterChange={this.changeFilter}
+          onFilterChange={this.handleFilterChange}
           onSettingsChange={this.handleSettingsChange} />
 
         {threadGroups.map((group, index) => (
@@ -56,12 +52,9 @@ export default class SimilarStacksPage
     );
   }
 
-  private changeFilter = (filter: number): React.MouseEventHandler<HTMLAnchorElement> => () => {
-    const selected = filter as SimilarStacksFilter;
-
-    if (selected === SimilarStacksFilter.WithoutIdle) {
-      this.setState(prevState => ({ withoutIdle: !prevState.withoutIdle }));
-    }
+  private handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const newState: ComponentState = { [event.target.name]: event.target.checked };
+    this.setState(newState);
   }
 
   private handleSettingsChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
