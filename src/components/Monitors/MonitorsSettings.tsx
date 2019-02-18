@@ -1,11 +1,11 @@
 import React from 'react';
-import { MonitorsFilter } from './MonitorsPage';
+import Filter from '../Filter/Filter';
 
 type CpuConsumersSettingsProps = {
   withOwner: boolean;
   withoutIdle: boolean;
   withoutOwner: boolean;
-  onFilterChange: (filter: number) => React.MouseEventHandler<HTMLAnchorElement>;
+  onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 const MonitorsSettings: React.SFC<CpuConsumersSettingsProps> =
@@ -14,23 +14,14 @@ const MonitorsSettings: React.SFC<CpuConsumersSettingsProps> =
       <div className="filters">
         <b>Filters:</b>
 
-        <a
-          className={withoutIdle ? 'checked' : ''}
-          onClick={onFilterChange(MonitorsFilter.WithoutIdle)}>
-          Without Idle
-        </a>
+        <Filter name="withoutIdle" displayName="Without Idle"
+          checked={withoutIdle} onChange={onFilterChange} />
 
-        <a
-          className={withOwner ? 'checked' : ''}
-          onClick={onFilterChange(MonitorsFilter.WithOwner)}>
-          With Owner
-        </a>
+        <Filter name="withOwner" displayName="With Owner"
+          checked={withOwner} onChange={onFilterChange} />
 
-        <a
-          className={withoutOwner ? 'checked' : ''}
-          onClick={onFilterChange(MonitorsFilter.WithoutOwner)}>
-          Without Owner
-        </a>
+        <Filter name="withoutOwner" displayName="Without Owner"
+          checked={withoutOwner} onChange={onFilterChange} />
       </div>
     </div>
   );
