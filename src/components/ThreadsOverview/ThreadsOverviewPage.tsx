@@ -13,6 +13,7 @@ type ThreadsOverviewPageProps = {
 };
 
 type ThreadsOverviewPageState = {
+  nonJvm: boolean;
   tomcat: boolean;
   nonTomcat: boolean;
   database: boolean;
@@ -26,6 +27,7 @@ export default class ThreadsOverviewPage
 
   // tslint:disable:object-literal-sort-keys
   public state = {
+    nonJvm: true,
     tomcat: false,
     nonTomcat: false,
     database: false,
@@ -36,6 +38,7 @@ export default class ThreadsOverviewPage
   // tslint:enable:object-literal-sort-keys
 
   // tslint:disable:max-line-length
+  private jvmRegex = /^Attach Listener|^C[12] CompilerThread|^G1 Concurrent |^G1 Main|^Gang worker#|^GC Daemon|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
   private tomcatRegex = /^http(s\-jsse)?\-nio\-[0-9]+\-exec\-[0-9]+/;
   private databaseRegex = /^oracle\.jdbc\.driver\.|^org\.postgresql\.|^com\.microsoft\.sqlserver\.|^com\.mysql\.jdbc\./;
   private luceneRegex = /^org\.apache\.lucene\./;
@@ -56,6 +59,7 @@ export default class ThreadsOverviewPage
     return (
       <div id="threads-overview-page">
         <ThreadsOverviewSettings
+          nonJvm={this.state.nonJvm}
           tomcat={this.state.tomcat}
           nonTomcat={this.state.nonTomcat}
           database={this.state.database}
@@ -114,6 +118,7 @@ export default class ThreadsOverviewPage
     }
 
     return threadDumps
+      .filter(threads => this.state.nonJvm ? !this.matchesName(threads, this.jvmRegex) : true)
       .filter(threads => this.state.tomcat ? this.matchesName(threads, this.tomcatRegex) : true)
       .filter(threads => this.state.nonTomcat ? !this.matchesName(threads, this.tomcatRegex) : true)
       .filter(threads => userProvided ? this.matchesName(threads, userProvided) : true);
