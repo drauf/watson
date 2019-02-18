@@ -38,7 +38,6 @@ export default class ThreadsOverviewPage
 
     return (
       <div id="threads-overview-page">
-        <ThreadsOverviewLegend />
         <ThreadsOverviewSettings
           nameFilter={this.state.nameFilter}
           stackFilter={this.state.stackFilter}
@@ -49,6 +48,7 @@ export default class ThreadsOverviewPage
           threadsNumber={threadOverTime.length}
           threadDumps={filteredDumps}
         />
+        <ThreadsOverviewLegend />
         <ThreadsOverviewTable
           dates={dates}
           isFilteredByStack={this.state.stackFilter.length > 0}

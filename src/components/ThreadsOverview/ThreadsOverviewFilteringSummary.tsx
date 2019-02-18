@@ -33,7 +33,7 @@ const ThreadsOverviewFilteringSummary: React.SFC<ThreadsOverviewProps>
       );
     }
 
-    return null;
+    return <p id="matching-summary" />;
   };
 
 const matchingInGroupCounter = (sum: number, currentGroup: Map<number, Thread>): number => {

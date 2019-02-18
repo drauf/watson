@@ -4,22 +4,13 @@ const ThreadsOverviewLegend: React.SFC = () => (
   <table id="thread-overview-legend">
     <tbody>
       <tr>
-        <td className="runnable" />
-        <td className="blocked" />
-        <td className="waiting" />
-        <td className="timed-waiting" />
-        <td className="unknown" />
+        <td className="runnable">runnable</td>
+        <td className="blocked">blocked</td>
+        <td className="waiting">waiting</td>
+        <td className="timed-waiting">timed waiting</td>
+        <td className="unknown">unknown</td>
         <td />
-        <td className="matching" />
-      </tr>
-      <tr>
-        <td>runnable</td>
-        <td>blocked</td>
-        <td>waiting</td>
-        <td>timed waiting</td>
-        <td>new or unknown</td>
-        <td />
-        <td>matching filter</td>
+        <td className="matching">matching filter</td>
       </tr>
     </tbody>
   </table>
