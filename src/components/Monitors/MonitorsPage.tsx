@@ -7,8 +7,8 @@ import './MonitorsPage.css';
 import MonitorsSettings from './MonitorsSettings';
 
 export enum MonitorsFilter {
-  All,
   WithOwner,
+  WithoutIdle,
   WithoutOwner,
 }
 
@@ -17,14 +17,18 @@ type MonitorsPageProps = {
 };
 
 type MonitorsPageState = {
-  filter: MonitorsFilter;
+  withOwner: boolean;
+  withoutIdle: boolean;
+  withoutOwner: boolean;
 };
 
 export default class MonitorsPage
   extends React.PureComponent<MonitorsPageProps, MonitorsPageState> {
 
   public state: MonitorsPageState = {
-    filter: MonitorsFilter.All,
+    withOwner: false,
+    withoutIdle: true,
+    withoutOwner: false,
   };
 
   public render() {
@@ -39,14 +43,28 @@ export default class MonitorsPage
 
     return (
       <div id="monitors-page">
-        <MonitorsSettings filter={this.state.filter} onFilterChange={this.changeFilter} />
+        <MonitorsSettings
+          withOwner={this.state.withOwner}
+          withoutIdle={this.state.withoutIdle}
+          withoutOwner={this.state.withoutOwner}
+          onFilterChange={this.changeFilter} />
         {filtered.map(monitor => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />)}
       </div>
     );
   }
 
   private changeFilter = (filter: number): React.MouseEventHandler<HTMLAnchorElement> => () => {
-    this.setState({ filter: filter as MonitorsFilter });
+    const selected = filter as MonitorsFilter;
+
+    if (selected === MonitorsFilter.WithoutIdle) {
+      this.setState(prevState => ({ withoutIdle: !prevState.withoutIdle }));
+    }
+    if (selected === MonitorsFilter.WithOwner) {
+      this.setState(prevState => ({ withOwner: !prevState.withOwner }));
+    }
+    if (selected === MonitorsFilter.WithoutOwner) {
+      this.setState(prevState => ({ withoutOwner: !prevState.withoutOwner }));
+    }
   }
 
   private getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {
@@ -73,18 +91,39 @@ export default class MonitorsPage
   }
 
   private filterMonitors = (monitors: MonitorOverTime[]) => {
-    switch (this.state.filter) {
-      case MonitorsFilter.WithOwner:
-        return monitors.filter(monitor => this.hasAnyOwner(monitor));
-      case MonitorsFilter.WithoutOwner:
-        return monitors.filter(monitor => !this.hasAnyOwner(monitor));
-      case MonitorsFilter.All:
-      default:
-        return monitors;
+    let filtered = monitors;
+
+    if (this.state.withoutIdle) {
+      filtered = filtered.filter(monitor => !this.isQueueThread(monitor));
     }
+    if (this.state.withOwner) {
+      filtered = filtered.filter(monitor => this.hasAnyOwner(monitor));
+    }
+    if (this.state.withoutOwner) {
+      filtered = filtered.filter(monitor => !this.hasAnyOwner(monitor));
+    }
+
+    return filtered;
   }
 
   private hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => {
     return monitorOverTime.monitors.find(monitor => monitor.owner !== null) !== undefined;
+  }
+
+  private isQueueThread = (monitorOverTime: MonitorOverTime): boolean => {
+    for (const monitor of monitorOverTime.monitors) {
+      // if the lock has an owner, it's not a queue thread
+      if (monitor.owner !== null) {
+        return false;
+      }
+
+      // if the stack trace is too long, it's not a queue thread
+      for (const thread of monitor.waiting) {
+        if (thread.stackTrace.length > 11) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }

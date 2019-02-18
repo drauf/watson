@@ -2,29 +2,23 @@ import React from 'react';
 import { SimilarStacksFilter } from './SimilarStacksPage';
 
 type SimilarStacksSettingsProps = {
-  filter: SimilarStacksFilter;
   linesToConsider: number;
   minimalGroupSize: number;
+  withoutIdle: boolean;
   onFilterChange: (filter: number) => React.MouseEventHandler<HTMLAnchorElement>;
   onSettingsChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 const SimilarStacksSettings: React.SFC<SimilarStacksSettingsProps> =
-  ({ filter, linesToConsider, minimalGroupSize, onFilterChange, onSettingsChange }) => (
+  ({ linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onSettingsChange }) => (
     <div id="similar-stacks-settings">
       <div className="filters">
-        <b>Filter:</b>
+        <b>Filters:</b>
 
         <a
-          className={filter === SimilarStacksFilter.HideQueues ? 'checked' : ''}
-          onClick={onFilterChange(SimilarStacksFilter.HideQueues)}>
-          Hide Queues
-        </a>
-
-        <a
-          className={filter === SimilarStacksFilter.All ? 'checked' : ''}
-          onClick={onFilterChange(SimilarStacksFilter.All)}>
-          Show All
+          className={withoutIdle ? 'checked' : ''}
+          onClick={onFilterChange(SimilarStacksFilter.WithoutIdle)}>
+          Without Idle
         </a>
       </div>
 

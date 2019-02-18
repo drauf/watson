@@ -2,30 +2,32 @@ import React from 'react';
 import { MonitorsFilter } from './MonitorsPage';
 
 type CpuConsumersSettingsProps = {
-  filter: MonitorsFilter;
+  withOwner: boolean;
+  withoutIdle: boolean;
+  withoutOwner: boolean;
   onFilterChange: (filter: number) => React.MouseEventHandler<HTMLAnchorElement>;
 };
 
 const MonitorsSettings: React.SFC<CpuConsumersSettingsProps> =
-  ({ filter, onFilterChange }) => (
+  ({ withOwner, withoutIdle, withoutOwner, onFilterChange }) => (
     <div id="monitors-settings">
       <div className="filters">
-        <b>Filter:</b>
+        <b>Filters:</b>
 
         <a
-          className={filter === MonitorsFilter.All ? 'checked' : ''}
-          onClick={onFilterChange(MonitorsFilter.All)}>
-          All
+          className={withoutIdle ? 'checked' : ''}
+          onClick={onFilterChange(MonitorsFilter.WithoutIdle)}>
+          Without Idle
         </a>
 
         <a
-          className={filter === MonitorsFilter.WithOwner ? 'checked' : ''}
+          className={withOwner ? 'checked' : ''}
           onClick={onFilterChange(MonitorsFilter.WithOwner)}>
           With Owner
         </a>
 
         <a
-          className={filter === MonitorsFilter.WithoutOwner ? 'checked' : ''}
+          className={withoutOwner ? 'checked' : ''}
           onClick={onFilterChange(MonitorsFilter.WithoutOwner)}>
           Without Owner
         </a>
