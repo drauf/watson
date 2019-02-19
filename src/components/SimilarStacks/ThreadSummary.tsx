@@ -19,18 +19,6 @@ export default class ThreadSummary
     showLockOwner: false,
   };
 
-  public toggleDetails = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
-  }
-
-  public toggleLockOwner = () => {
-    this.setState(prevState => ({ showLockOwner: !prevState.showLockOwner }));
-  }
-
-  public handleUnload = () => {
-    this.setState({ showDetails: false, showLockOwner: false });
-  }
-
   public render() {
     const thread = this.props.thread;
     const lockOwner = thread.lockWaitingFor ? thread.lockWaitingFor.owner : null;
@@ -49,6 +37,18 @@ export default class ThreadSummary
           <ThreadDetailsWindow thread={lockOwner} onUnload={this.handleUnload} />}
       </li>
     );
+  }
+
+  private toggleDetails = () => {
+    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
+  }
+
+  private toggleLockOwner = () => {
+    this.setState(prevState => ({ showLockOwner: !prevState.showLockOwner }));
+  }
+
+  private handleUnload = () => {
+    this.setState({ showDetails: false, showLockOwner: false });
   }
 
   private waitingForRender(thread: Thread, lockOwner: Thread | null) {

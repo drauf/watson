@@ -8,8 +8,8 @@ type MonitorItemProps = {
 };
 
 const MonitorItem: React.SFC<MonitorItemProps> = ({ monitor }) => {
-  const className = monitor.className
-    ? monitor.className.substring(monitor.className.lastIndexOf('.') + 1)
+  const javaClass = monitor.javaClass
+    ? monitor.javaClass.substring(monitor.javaClass.lastIndexOf('.') + 1)
     : 'unknown class';
 
   return (
@@ -17,7 +17,7 @@ const MonitorItem: React.SFC<MonitorItemProps> = ({ monitor }) => {
       <div className="left">
         <b>{monitor.date ? monitor.date.toLocaleTimeString() : 'unknown timestamp'}</b>
         <br />
-        {className}
+        {javaClass}
       </div>
       <div>
         <MonitorOwner monitor={monitor} />

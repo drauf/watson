@@ -1,5 +1,5 @@
 import React, { ComponentState } from 'react';
-import ThreadDumpsUtils from '../../common/ThreadDumpsUtils';
+import getThreadsOverTime from '../../common/ThreadDumpsUtils';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
@@ -51,7 +51,7 @@ export default class ThreadsOverviewPage
       );
     }
 
-    const threadOverTime = ThreadDumpsUtils.getThreadsOverTime(this.props.threadDumps);
+    const threadOverTime = getThreadsOverTime(this.props.threadDumps);
     const filteredDumps = this.filterThreads(threadOverTime);
     const dates = this.props.threadDumps.map(dump => dump.date);
     const isFilteredByStack = this.isFilteredByStack();

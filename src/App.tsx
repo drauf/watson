@@ -16,14 +16,6 @@ export default class App extends React.PureComponent<any, AppState> {
     threadDumps: [],
   };
 
-  public handleFilesParsed(threadDumps: ThreadDump[]) {
-    this.setState({ threadDumps });
-  }
-
-  public clearThreadDumps = () => {
-    this.setState({ threadDumps: [] });
-  }
-
   public render() {
     if (this.state.threadDumps.length === 0) {
       return <FullPageDropzone onDrop={this.state.parser.parseFiles} />;
@@ -31,5 +23,13 @@ export default class App extends React.PureComponent<any, AppState> {
     return (
       <Container threadDumps={this.state.threadDumps} clearThreadDumps={this.clearThreadDumps} />
     );
+  }
+
+  private handleFilesParsed(threadDumps: ThreadDump[]) {
+    this.setState({ threadDumps });
+  }
+
+  private clearThreadDumps = () => {
+    this.setState({ threadDumps: [] });
   }
 }

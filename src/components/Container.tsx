@@ -34,24 +34,6 @@ export default class Container extends React.PureComponent<ContainerProps, Conta
     this.scrollToTop();
   }
 
-  public toggleNavigation = () => {
-    this.setState(prevState => ({ navigationOpen: !prevState.navigationOpen }));
-  }
-
-  public handlePageSelect = (selectedPage: Page) => {
-    if (selectedPage !== this.state.selectedPage) {
-      this.setState({ selectedPage });
-      this.scrollToTop();
-    }
-  }
-
-  public scrollToTop = () => {
-    const contentDiv = document.getElementById('content');
-    if (contentDiv) {
-      contentDiv.scrollTop = 0;
-    }
-  }
-
   public render() {
     return (
       <div id="container">
@@ -68,5 +50,23 @@ export default class Container extends React.PureComponent<ContainerProps, Conta
         </div>
       </div >
     );
+  }
+
+  private toggleNavigation = () => {
+    this.setState(prevState => ({ navigationOpen: !prevState.navigationOpen }));
+  }
+
+  private handlePageSelect = (selectedPage: Page) => {
+    if (selectedPage !== this.state.selectedPage) {
+      this.setState({ selectedPage });
+      this.scrollToTop();
+    }
+  }
+
+  private scrollToTop = () => {
+    const contentDiv = document.getElementById('content');
+    if (contentDiv) {
+      contentDiv.scrollTop = 0;
+    }
   }
 }

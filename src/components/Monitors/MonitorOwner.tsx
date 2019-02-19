@@ -17,15 +17,6 @@ export default class MonitorOwner
     showOwner: false,
   };
 
-  public handleClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    this.setState(prevState => ({ showOwner: !prevState.showOwner }));
-  }
-
-  public handleUnload = () => {
-    this.setState({ showOwner: false });
-  }
-
   public render() {
     const monitor = this.props.monitor;
 
@@ -44,5 +35,14 @@ export default class MonitorOwner
           <ThreadDetailsWindow thread={monitor.owner} onUnload={this.handleUnload} />}
       </>
     );
+  }
+
+  private handleClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    this.setState(prevState => ({ showOwner: !prevState.showOwner }));
+  }
+
+  private handleUnload = () => {
+    this.setState({ showOwner: false });
   }
 }

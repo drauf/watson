@@ -17,14 +17,6 @@ export default class WaitingListItem
     showDetails: false,
   };
 
-  public handleClick = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
-  }
-
-  public handleUnload = () => {
-    this.setState({ showDetails: false });
-  }
-
   public render() {
     const thread = this.props.thread;
 
@@ -37,5 +29,13 @@ export default class WaitingListItem
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
       </>
     );
+  }
+
+  private handleClick = () => {
+    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
+  }
+
+  private handleUnload = () => {
+    this.setState({ showDetails: false });
   }
 }

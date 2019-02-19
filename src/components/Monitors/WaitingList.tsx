@@ -18,10 +18,6 @@ export default class WaitingList extends React.PureComponent<WaitingListProps, W
     expanded: false,
   };
 
-  public handleClick = () => {
-    this.setState(prevState => ({ expanded: !prevState.expanded }));
-  }
-
   public render() {
     if (this.props.waiting.length === 0) {
       return null;

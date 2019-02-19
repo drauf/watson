@@ -42,6 +42,7 @@ export default class MonitorsPage
           withoutIdle={this.state.withoutIdle}
           withoutOwner={this.state.withoutOwner}
           onFilterChange={this.handleFilterChange} />
+
         {filtered.map(monitor => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />)}
       </div>
     );
