@@ -7,10 +7,10 @@
 #threads-overview-settings {
   margin-top: 22px;
   line-height: 36px;
+  min-height: 36px;
   width: 90%;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
 }
 #regexp-filters label {
   margin-left: 3em;
@@ -20,16 +20,17 @@
     margin-left: 16px;
   }
   #regexp-filters input {
-    width: 116px;
+    width: 100px;
   }
 }
 @media (max-width: 1439px) {
   #regexp-filters label {
-    margin-left: 0;
-    margin-right: 16px;
+    display: block;
   }
-  #regexp-filters input {
-    width: 100px;
+}
+@media (max-width: 1124px) {
+  #regexp-filters label {
+    display: none;
   }
 }
 
