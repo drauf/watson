@@ -10,9 +10,8 @@ type NavigationProps = {
 
 export default class Navigation extends React.PureComponent<NavigationProps> {
   // tslint:disable:max-line-length
-  public static SOURCE_CODE_LINK: string = 'https://bitbucket.org/atlassian/watsonjs/';
   public static ISSUE_TRACKER_LINK: string = 'https://ecosystem.atlassian.net/secure/RapidBoard.jspa?projectKey=WAT&rapidView=501&view=planning';
-  public static DOCUMENTATION_LINK: string = 'https://hello.atlassian.net/wiki/spaces/~drauf/pages/390789227/Watson+your+astute+assistant';
+  public static SOURCE_CODE_LINK: string = 'https://bitbucket.org/atlassian/watsonjs/';
   // tslint:enable:max-line-length
 
   public onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
@@ -42,9 +41,8 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
           </ul>
 
           <ul>
-            <a href={Navigation.SOURCE_CODE_LINK}><li>Source code</li></a>
             <a href={Navigation.ISSUE_TRACKER_LINK}><li>Issue tracker</li></a>
-            <a href={Navigation.DOCUMENTATION_LINK}><li>Documentation</li></a>
+            <a href={Navigation.SOURCE_CODE_LINK}><li>Source code</li></a>
           </ul>
         </div>
       </nav>
