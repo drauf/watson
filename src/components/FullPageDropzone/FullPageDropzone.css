@@ -17,8 +17,11 @@
   border: 2px dashed #0052CC;
 }
 
+#dropzone-links {
+  padding: 0;
+}
 #dropzone-links li {
   padding: 4px;
-  margin: 0 12px;
+  margin: 0 6px;
   display: inline-block;
 }
