@@ -14,10 +14,6 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
   public static SOURCE_CODE_LINK: string = 'https://bitbucket.org/atlassian/watsonjs/';
   // tslint:enable:max-line-length
 
-  public onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
-    this.props.onPageSelect(page as Page);
-  }
-
   public render() {
     return (
       <nav className={this.props.open ? 'open' : ''}>
@@ -47,5 +43,9 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
         </div>
       </nav>
     );
+  }
+
+  private onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
+    this.props.onPageSelect(page as Page);
   }
 }

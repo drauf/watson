@@ -8,8 +8,8 @@ const line2 = 'For example, <i>jira_cpu_usage.1540384812.txt</i> might be matche
 const line3 = 'If the names of the files you upload have a different format, weird things <i>might</i> and <i>will</i> happen.';
 // tslint:enable:max-line-length
 
-// don't open dropzone popup when clicking on the navigation links
 const stopPropagation = (event: React.MouseEvent) => {
+  // prevent opening the dropzone popup when clicking on the navigation links
   event.stopPropagation();
 };
 

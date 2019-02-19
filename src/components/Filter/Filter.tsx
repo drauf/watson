@@ -1,4 +1,5 @@
 import React from 'react';
+import './Filter.css';
 
 type FilterProps = {
   name: string;

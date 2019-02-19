@@ -20,14 +20,6 @@ export default class ThreadOverviewItem
     showDetails: false,
   };
 
-  public toggleDetails = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
-  }
-
-  public handleUnload = () => {
-    this.setState({ showDetails: false });
-  }
-
   public render() {
     const thread = this.props.thread;
 
@@ -49,5 +41,13 @@ export default class ThreadOverviewItem
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
       </>
     );
+  }
+
+  private toggleDetails = () => {
+    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
+  }
+
+  private handleUnload = () => {
+    this.setState({ showDetails: false });
   }
 }

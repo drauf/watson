@@ -9,7 +9,7 @@ type ThreadOverviewRowProps = {
 };
 
 const ThreadOverviewRow: React.SFC<ThreadOverviewRowProps> = ({ total, threads, isFiltered }) => {
-  const threadsPadded = [];
+  const threadsPadded: Array<Thread | undefined> = [];
   for (let i = 0; i < total; i++) {
     threadsPadded[i] = threads.get(i);
   }

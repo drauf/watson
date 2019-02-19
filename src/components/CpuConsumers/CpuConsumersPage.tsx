@@ -1,5 +1,5 @@
 import React from 'react';
-import ThreadDumpsUtils from '../../common/ThreadDumpsUtils';
+import getThreadsOverTime from '../../common/ThreadDumpsUtils';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import CpuConsumer from './CpuConsumer';
@@ -20,7 +20,6 @@ type CpuConsumersPageProps = {
 type CpuConsumersPageState = {
   mode: CpuConsumersMode;
   limit: number;
-  consumers: CpuConsumer[];
 };
 
 export default class CpuConsumersPage
@@ -30,31 +29,16 @@ export default class CpuConsumersPage
   private static MISSING_FILES_MESSAGE = 'To see the CPU Consumers you must upload at least one matching pair of threads and cpu_info files.';
 
   public state: CpuConsumersPageState = {
-    consumers: [],
     limit: 100,
     mode: CpuConsumersMode.Mean,
   };
-
-  public componentDidMount() {
-    this.calculateConsumers(this.state.mode);
-  }
-
-  public calculateConsumers(mode: CpuConsumersMode) {
-    const consumers: CpuConsumer[] = [];
-    const threadsOverTime = ThreadDumpsUtils.getThreadsOverTime(this.props.threadDumps);
-
-    for (const threads of threadsOverTime) {
-      consumers.push(new CpuConsumer(this.calculateValueFromThreads(threads, mode), threads));
-    }
-    consumers.sort((a, b) => b.calculatedValue - a.calculatedValue);
-
-    this.setState({ consumers });
-  }
 
   public render() {
     if (!this.props.threadDumps.find(dump => !!dump.loadAverages && dump.threads.length > 0)) {
       return <h2>{CpuConsumersPage.MISSING_FILES_MESSAGE}</h2>;
     }
+
+    const consumers = this.calculateCpuUsages(this.state.mode);
 
     return (
       <div id="cpu-consumers-page">
@@ -67,7 +51,7 @@ export default class CpuConsumersPage
         <CpuConsumersList
           limit={this.state.limit}
           dumpsNumber={this.props.threadDumps.length}
-          consumers={this.state.consumers}
+          consumers={consumers}
         />
       </div>
     );
@@ -75,7 +59,6 @@ export default class CpuConsumersPage
 
   private handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
     this.setState({ mode: mode as CpuConsumersMode });
-    this.calculateConsumers(mode);
   }
 
   private handleLimitChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -83,17 +66,35 @@ export default class CpuConsumersPage
     this.setState({ limit });
   }
 
-  private calculateValueFromThreads(threadsMap: Map<number, Thread>, mode: CpuConsumersMode) {
+  private calculateCpuUsages(calculationMode: CpuConsumersMode): CpuConsumer[] {
+    const consumers: CpuConsumer[] = [];
+    const threadsOverTime = getThreadsOverTime(this.props.threadDumps);
+
+    for (const threads of threadsOverTime) {
+      consumers.push(this.calculateUsageFor(threads, calculationMode));
+    }
+    consumers.sort((a, b) => b.calculatedValue - a.calculatedValue);
+
+    return consumers;
+  }
+
+  private calculateUsageFor(threadsMap: Map<number, Thread>, calculationMode: CpuConsumersMode) {
     const threads = Array.from(threadsMap.values());
 
-    switch (mode) {
+    let usage: number = 0;
+    switch (calculationMode) {
       case CpuConsumersMode.Mean:
-        return threads.reduce(this.reduceSum, 0) / this.props.threadDumps.length;
+        usage = threads.reduce(this.reduceSum, 0) / this.props.threadDumps.length;
+        break;
       case CpuConsumersMode.Median:
-        return this.calculateMedian(threads);
+        usage = this.calculateMedian(threads);
+        break;
       case CpuConsumersMode.Max:
-        return threads.reduce(this.reduceMax, 0);
+        usage = threads.reduce(this.reduceMax, 0);
+        break;
     }
+
+    return new CpuConsumer(usage, threadsMap);
   }
 
   private reduceSum(sum: number, currentThread: Thread): number {
