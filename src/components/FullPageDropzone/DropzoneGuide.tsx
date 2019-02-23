@@ -1,4 +1,5 @@
 import React from 'react';
+import { OutboundLink } from 'react-ga';
 import Navigation from '../Navigation/Navigation';
 
 // tslint:disable:max-line-length
@@ -21,8 +22,24 @@ const DropzoneGuide: React.SFC = () => (
     <span dangerouslySetInnerHTML={{ __html: line3 }} />
 
     <ul id="dropzone-links" onClick={stopPropagation}>
-      <li><a href={Navigation.ISSUE_TRACKER_LINK}>Issue tracker</a></li>
-      <li><a href={Navigation.SOURCE_CODE_LINK}>Source code</a></li>
+      <li>
+        <OutboundLink
+          eventLabel="Issue tracker"
+          to={Navigation.ISSUE_TRACKER_LINK}
+          target="_blank"
+        >
+          Issue tracker
+      </OutboundLink>
+      </li>
+      <li>
+        <OutboundLink
+          eventLabel="Issue tracker"
+          to={Navigation.SOURCE_CODE_LINK}
+          target="_blank"
+        >
+          Source code
+      </OutboundLink>
+      </li>
     </ul>
   </>
 );

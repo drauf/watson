@@ -1,4 +1,5 @@
 import React from 'react';
+import { OutboundLink } from 'react-ga';
 import { Page } from '../Container';
 import './Navigation.css';
 
@@ -37,8 +38,20 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
           </ul>
 
           <ul>
-            <a href={Navigation.ISSUE_TRACKER_LINK}><li>Issue tracker</li></a>
-            <a href={Navigation.SOURCE_CODE_LINK}><li>Source code</li></a>
+            <OutboundLink
+              eventLabel="Issue tracker"
+              to={Navigation.ISSUE_TRACKER_LINK}
+              target="_blank"
+            >
+              <li>Issue tracker</li>
+            </OutboundLink>
+            <OutboundLink
+              eventLabel="Issue tracker"
+              to={Navigation.SOURCE_CODE_LINK}
+              target="_blank"
+            >
+              <li>Source code</li>
+            </OutboundLink>
           </ul>
         </div>
       </nav>

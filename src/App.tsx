@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import './App.css';
 import Container from './components/Container';
 import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
@@ -30,6 +31,11 @@ export default class App extends React.PureComponent<any, AppState> {
   }
 
   private clearThreadDumps = () => {
+    ReactGA.event({
+      action: 'Cleared thread dumps',
+      category: 'Navigation',
+    });
+
     this.setState({ threadDumps: [] });
   }
 }

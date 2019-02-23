@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import ThreadDump from '../types/ThreadDump';
 import './Container.css';
 import Content from './Content';
@@ -53,11 +54,26 @@ export default class Container extends React.PureComponent<ContainerProps, Conta
   }
 
   private toggleNavigation = () => {
-    this.setState(prevState => ({ navigationOpen: !prevState.navigationOpen }));
+    this.setState((prevState) => {
+      const isOpen = !prevState.navigationOpen;
+
+      ReactGA.event({
+        action: isOpen ? 'Navigation toggled open' : 'Navigation toggled close',
+        category: 'Navigation',
+      });
+
+      return { navigationOpen: isOpen };
+    });
   }
 
   private handlePageSelect = (selectedPage: Page) => {
     if (selectedPage !== this.state.selectedPage) {
+      ReactGA.event({
+        action: 'Page changed',
+        category: 'Navigation',
+        label: selectedPage,
+      });
+
       this.setState({ selectedPage });
       this.scrollToTop();
     }

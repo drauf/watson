@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import './ThreadDetailsWindow.css';
@@ -9,15 +10,22 @@ type ThreadDetailsWindowProps = {
   onUnload: () => void;
 };
 
-const ThreadDetailsWindow: React.SFC<ThreadDetailsWindowProps> = ({ thread, onUnload }) => (
-  <WindowPortal windowTitle={thread.name} className="thread-details" onUnload={onUnload}>
-    {renderName(thread)}
-    {renderStatus(thread)}
-    {renderLockWaitingFor(thread)}
-    {renderLocksHeld(thread)}
-    {renderStackTrace(thread)}
-  </WindowPortal>
-);
+const ThreadDetailsWindow: React.SFC<ThreadDetailsWindowProps> = ({ thread, onUnload }) => {
+  ReactGA.event({
+    action: 'Opened thread details',
+    category: 'Navigation',
+  });
+
+  return (
+    <WindowPortal windowTitle={thread.name} className="thread-details" onUnload={onUnload}>
+      {renderName(thread)}
+      {renderStatus(thread)}
+      {renderLockWaitingFor(thread)}
+      {renderLocksHeld(thread)}
+      {renderStackTrace(thread)}
+    </WindowPortal>
+  );
+};
 
 const renderName = (thread: Thread) => {
   return (
