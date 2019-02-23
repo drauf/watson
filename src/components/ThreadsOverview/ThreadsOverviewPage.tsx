@@ -1,4 +1,5 @@
 import React, { ComponentState } from 'react';
+import ReactGA from 'react-ga';
 import getThreadsOverTime from '../../common/ThreadDumpsUtils';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
@@ -85,12 +86,28 @@ export default class ThreadsOverviewPage
   }
 
   private handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const newState: ComponentState = { [event.target.name]: event.target.checked };
+    const name: string = event.target.name;
+    const isChecked: boolean = event.target.checked;
+    const newState: ComponentState = { [name]: isChecked };
+
+    ReactGA.event({
+      action: 'Threads Overview settings changed',
+      category: 'Navigation',
+      label: `Filter ${name} changed to ${isChecked}`,
+    });
     this.setState(newState);
   }
 
   private handleRegExpChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const newState: ComponentState = { [event.target.name]: event.target.value };
+    const name: string = event.target.name;
+    const value: string = event.target.value;
+    const newState: ComponentState = { [name]: value };
+
+    ReactGA.event({
+      action: 'Threads Overview settings changed',
+      category: 'Navigation',
+      label: `RegExp ${name} changed to ${value}`,
+    });
     this.setState(newState);
   }
 

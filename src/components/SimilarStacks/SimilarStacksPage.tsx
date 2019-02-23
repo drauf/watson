@@ -1,4 +1,5 @@
 import React, { ComponentState } from 'react';
+import ReactGA from 'react-ga';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import SimilarStacksGroup from './SimilarStacksGroup';
@@ -53,13 +54,31 @@ export default class SimilarStacksPage
   }
 
   private handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const newState: ComponentState = { [event.target.name]: event.target.checked };
+    const name: string = event.target.name;
+    const isChecked: boolean = event.target.checked;
+    const newState: ComponentState = { [name]: isChecked };
+
+    ReactGA.event({
+      action: 'Similar Stacks settings changed',
+      category: 'Navigation',
+      label: `Filter ${name} changed to ${isChecked}`,
+    });
     this.setState(newState);
   }
 
   private handleSettingsChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value: number = parseInt(event.target.value ? event.target.value : '0', 10);
-    const newState: ComponentState = { [event.target.name]: value > 0 ? value : 0 };
+    const name: string = event.target.name;
+    let value: number = parseInt(event.target.value ? event.target.value : '0', 10);
+    if (value < 0) {
+      value = 0;
+    }
+    const newState: ComponentState = { [name]: value > 0 ? value : 0 };
+
+    ReactGA.event({
+      action: 'Similar Stacks settings changed',
+      category: 'Navigation',
+      label: `Setting ${name} changed to ${value}`,
+    });
     this.setState(newState);
   }
 

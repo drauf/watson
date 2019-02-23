@@ -1,4 +1,5 @@
 import React, { ComponentState } from 'react';
+import ReactGA from 'react-ga';
 import ThreadDump from '../../types/ThreadDump';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
@@ -49,7 +50,15 @@ export default class MonitorsPage
   }
 
   private handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const newState: ComponentState = { [event.target.name]: event.target.checked };
+    const name: string = event.target.name;
+    const isChecked: boolean = event.target.checked;
+    const newState: ComponentState = { [name]: isChecked };
+
+    ReactGA.event({
+      action: 'Monitors settings changed',
+      category: 'Navigation',
+      label: `Filter ${name} changed to ${isChecked}`,
+    });
     this.setState(newState);
   }
 

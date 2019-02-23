@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import getThreadsOverTime from '../../common/ThreadDumpsUtils';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
@@ -58,11 +59,21 @@ export default class CpuConsumersPage
   }
 
   private handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
+    ReactGA.event({
+      action: 'CPU Consumers settings changed',
+      category: 'Navigation',
+      label: `Mode changed to ${mode}`,
+    });
     this.setState({ mode: mode as CpuConsumersMode });
   }
 
   private handleLimitChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const limit: number = parseInt(event.target.value, 10);
+    ReactGA.event({
+      action: 'CPU Consumers settings changed',
+      category: 'Navigation',
+      label: `Limit changed to ${limit}`,
+    });
     this.setState({ limit });
   }
 
