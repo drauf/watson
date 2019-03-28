@@ -4,11 +4,11 @@ import {
 } from 'recharts';
 import ThreadDump from '../../types/ThreadDump';
 
-type RunningProcessesChartProps = {
+type Props = {
   threadDumps: ThreadDump[];
 };
 
-const RunningProcessesChart: React.SFC<RunningProcessesChartProps> = ({ threadDumps }) => {
+const RunningProcessesChart: React.SFC<Props> = ({ threadDumps }) => {
   const data: object[] = [];
   threadDumps.map((threadDump) => {
     if (threadDump.loadAverages) {

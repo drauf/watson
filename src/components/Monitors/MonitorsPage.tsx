@@ -1,5 +1,6 @@
 import React, { ComponentState } from 'react';
 import ReactGA from 'react-ga';
+import { getThreadDumps } from '../../App';
 import ThreadDump from '../../types/ThreadDump';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
@@ -7,33 +8,35 @@ import MonitorOverTimeItem from './MonitorOverTimeItem';
 import './MonitorsPage.css';
 import MonitorsSettings from './MonitorsSettings';
 
-type MonitorsPageProps = {
-  threadDumps: ThreadDump[];
-};
-
-type MonitorsPageState = {
+type State = {
   withOwner: boolean;
   withoutIdle: boolean;
   withoutOwner: boolean;
 };
 
-export default class MonitorsPage
-  extends React.PureComponent<MonitorsPageProps, MonitorsPageState> {
+export default class MonitorsPage extends React.PureComponent<any, State> {
 
-  public state: MonitorsPageState = {
+  public state: State = {
     withOwner: false,
     withoutIdle: true,
     withoutOwner: false,
   };
 
+  private threadDumps: ThreadDump[];
+
+  constructor(props: any) {
+    super(props);
+    this.threadDumps = getThreadDumps();
+  }
+
   public render() {
-    if (!this.props.threadDumps.find(dump => dump.threads.length > 0)) {
+    if (!this.threadDumps.find(dump => dump.threads.length > 0)) {
       return (
         <h2>To see the Monitors you must upload at least one file with thread dumps.</h2>
       );
     }
 
-    const monitors = this.getMonitorsOverTime(this.props.threadDumps);
+    const monitors = this.getMonitorsOverTime(this.threadDumps);
     const filtered = this.filterMonitors(monitors);
 
     return (

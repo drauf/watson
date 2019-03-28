@@ -1,6 +1,6 @@
 import React from 'react';
 import { OutboundLink } from 'react-ga';
-import Navigation from '../Navigation/Navigation';
+import { ISSUE_TRACKER_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
 
 // tslint:disable:max-line-length
 const header = 'You should upload both the <i>jira_cpu_usage</i> and <i>jira_threads</i> files.';
@@ -25,7 +25,7 @@ const DropzoneGuide: React.SFC = () => (
       <li>
         <OutboundLink
           eventLabel="Issue tracker"
-          to={Navigation.ISSUE_TRACKER_LINK}
+          to={ISSUE_TRACKER_LINK}
           target="_blank"
         >
           Issue tracker
@@ -34,7 +34,7 @@ const DropzoneGuide: React.SFC = () => (
       <li>
         <OutboundLink
           eventLabel="Issue tracker"
-          to={Navigation.SOURCE_CODE_LINK}
+          to={SOURCE_CODE_LINK}
           target="_blank"
         >
           Source code

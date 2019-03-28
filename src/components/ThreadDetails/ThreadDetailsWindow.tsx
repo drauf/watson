@@ -5,12 +5,12 @@ import ThreadStatus from '../../types/ThreadStatus';
 import './ThreadDetailsWindow.css';
 import WindowPortal from './WindowPortal';
 
-type ThreadDetailsWindowProps = {
+type Props = {
   thread: Thread;
   onUnload: () => void;
 };
 
-const ThreadDetailsWindow: React.SFC<ThreadDetailsWindowProps> = ({ thread, onUnload }) => {
+const ThreadDetailsWindow: React.SFC<Props> = ({ thread, onUnload }) => {
   ReactGA.event({
     action: 'Opened thread details',
     category: 'Navigation',

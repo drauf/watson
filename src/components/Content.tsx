@@ -1,32 +1,21 @@
 import React from 'react';
-import ThreadDump from '../types/ThreadDump';
-import { Page } from './Container';
+import { Route, Switch } from 'react-router-dom';
 import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
 import MonitorsPage from './Monitors/MonitorsPage';
+import NotFoundError from './NotFoundError';
 import SimilarStacksPage from './SimilarStacks/SimilarStacksPage';
 import SummaryPage from './Summary/SummaryPage';
 import ThreadsOverviewPage from './ThreadsOverview/ThreadsOverviewPage';
 
-type ContentProps = {
-  selectedPage: Page;
-  threadDumps: ThreadDump[];
-};
-
-const Content: React.SFC<ContentProps> = ({ selectedPage, threadDumps }) => {
-  switch (selectedPage) {
-    case Page.Summary:
-      return <SummaryPage threadDumps={threadDumps} />;
-    case Page.CpuConsumers:
-      return <CpuConsumersPage threadDumps={threadDumps} />;
-    case Page.SimilarStacks:
-      return <SimilarStacksPage threadDumps={threadDumps} />;
-    case Page.ThreadsOverview:
-      return <ThreadsOverviewPage threadDumps={threadDumps} />;
-    case Page.Monitors:
-      return <MonitorsPage threadDumps={threadDumps} />;
-    default:
-      return <h2>Oops, something went wrong! There is no page called {selectedPage}.</h2>;
-  }
-};
+const Content: React.SFC = () => (
+  <Switch>
+    <Route path="/summary/" component={SummaryPage} />
+    <Route path="/cpu-consumers/" component={CpuConsumersPage} />
+    <Route path="/similar-stacks/" component={SimilarStacksPage} />
+    <Route path="/threads-overview/" component={ThreadsOverviewPage} />
+    <Route path="/monitors/" component={MonitorsPage} />
+    <Route component={NotFoundError} />
+  </Switch>
+);
 
 export default Content;

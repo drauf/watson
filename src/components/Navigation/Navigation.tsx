@@ -1,19 +1,19 @@
 import React from 'react';
-import { OutboundLink } from 'react-ga';
-import { Page } from '../Container';
+import ReactGA, { OutboundLink } from 'react-ga';
+import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
+import { clearThreadDumps } from '../../App';
 import './Navigation.css';
 
-type NavigationProps = {
+// tslint:disable:max-line-length
+export const ISSUE_TRACKER_LINK: string = 'https://ecosystem.atlassian.net/secure/RapidBoard.jspa?projectKey=WAT&rapidView=501&view=planning';
+export const SOURCE_CODE_LINK: string = 'https://bitbucket.org/atlassian/watsonjs/';
+// tslint:enable:max-line-length
+
+type Props = RouteComponentProps & {
   open: boolean;
-  onPageSelect: (page: Page) => void;
-  clearThreadDumps: () => void;
 };
 
-export default class Navigation extends React.PureComponent<NavigationProps> {
-  // tslint:disable:max-line-length
-  public static ISSUE_TRACKER_LINK: string = 'https://ecosystem.atlassian.net/secure/RapidBoard.jspa?projectKey=WAT&rapidView=501&view=planning';
-  public static SOURCE_CODE_LINK: string = 'https://bitbucket.org/atlassian/watsonjs/';
-  // tslint:enable:max-line-length
+class Navigation extends React.PureComponent<Props> {
 
   public render() {
     return (
@@ -23,31 +23,31 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
           </p>
 
         <ul>
-          <li onClick={this.onClick(Page.Summary)}>Summary</li>
+          <NavLink to="/summary/"><li>Summary</li></NavLink>
         </ul>
         <ul>
-          <li onClick={this.onClick(Page.CpuConsumers)}>CPU Consumers</li>
-          <li onClick={this.onClick(Page.SimilarStacks)}>Similar Stack Traces</li>
-          <li onClick={this.onClick(Page.ThreadsOverview)}>Threads Overview</li>
-          <li onClick={this.onClick(Page.Monitors)}>Monitors</li>
+          <NavLink to="/cpu-consumers/"><li>CPU Consumers</li></NavLink>
+          <NavLink to="/similar-stacks/"><li>Similar Stack Traces</li></NavLink>
+          <NavLink to="/threads-overview/"><li>Threads Overview</li></NavLink>
+          <NavLink to="/monitors/"><li>Monitors</li></NavLink>
         </ul>
 
         <div id="nav-content-bottom">
           <ul>
-            <li onClick={this.props.clearThreadDumps}>Load another thread dump</li>
+            <li onClick={this.onClear}>Load another thread dump</li>
           </ul>
 
           <ul>
             <OutboundLink
               eventLabel="Issue tracker"
-              to={Navigation.ISSUE_TRACKER_LINK}
+              to={ISSUE_TRACKER_LINK}
               target="_blank"
             >
               <li>Issue tracker</li>
             </OutboundLink>
             <OutboundLink
               eventLabel="Issue tracker"
-              to={Navigation.SOURCE_CODE_LINK}
+              to={SOURCE_CODE_LINK}
               target="_blank"
             >
               <li>Source code</li>
@@ -58,7 +58,15 @@ export default class Navigation extends React.PureComponent<NavigationProps> {
     );
   }
 
-  private onClick = (page: string): React.MouseEventHandler<HTMLLIElement> => () => {
-    this.props.onPageSelect(page as Page);
+  private onClear = () => {
+    ReactGA.event({
+      action: 'Cleared thread dumps',
+      category: 'Navigation',
+    });
+
+    clearThreadDumps();
+    this.props.history.push('/');
   }
 }
+
+export default withRouter(Navigation);

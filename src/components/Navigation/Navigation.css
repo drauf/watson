@@ -45,11 +45,12 @@ nav.open li:hover {
   background: #EBECF0;
 }
 
+nav a:hover {
+  text-decoration: none;
+}
+
 #nav-content-bottom {
   width: 0;
   bottom: 0;
   position: absolute;
-}
-#nav-content-bottom a:hover {
-  text-decoration: none;
 }
