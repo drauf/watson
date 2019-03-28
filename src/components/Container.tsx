@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { getThreadDumps } from '../App';
 import './Container.css';
 import Content from './Content';
 import Navigation from './Navigation/Navigation';
 import NavToggle from './Navigation/NavToggle';
+import { getThreadDumps } from './threadDumps';
 
 type ContainerState = {
   navigationOpen: boolean;

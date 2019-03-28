@@ -29,7 +29,7 @@ const ThreadDetailsWindow: React.SFC<Props> = ({ thread, onUnload }) => {
 
 const renderName = (thread: Thread) => {
   return (
-    <h3>{thread.date ? thread.date.toLocaleTimeString() : ''} <i>{thread.name}</i></h3>
+    <h3>{Thread.getFormattedTime(thread)} <i>{thread.name}</i></h3>
   );
 };
 

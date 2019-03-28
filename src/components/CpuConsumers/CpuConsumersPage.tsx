@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactGA from 'react-ga';
-import { getThreadDumps } from '../../App';
 import getThreadsOverTime from '../../common/ThreadDumpsUtils';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import { getThreadDumps } from '../threadDumps';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumersList from './CpuConsumersList';
 import './CpuConsumersPage.css';

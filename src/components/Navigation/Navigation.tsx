@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactGA, { OutboundLink } from 'react-ga';
 import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
-import { clearThreadDumps } from '../../App';
+import { clearThreadDumps } from '../threadDumps';
 import './Navigation.css';
 
 // tslint:disable:max-line-length

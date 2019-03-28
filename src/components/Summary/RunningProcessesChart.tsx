@@ -13,7 +13,7 @@ const RunningProcessesChart: React.SFC<Props> = ({ threadDumps }) => {
   threadDumps.map((threadDump) => {
     if (threadDump.loadAverages) {
       data.push({
-        name: threadDump.date ? threadDump.date.toLocaleString() : null,
+        name: ThreadDump.getFormattedDate(threadDump),
         runningProcesses: threadDump.runningProcesses,
       });
     }

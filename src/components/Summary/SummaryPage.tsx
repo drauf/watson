@@ -1,5 +1,5 @@
 import React from 'react';
-import { getThreadDumps } from '../../App';
+import { getThreadDumps } from '../threadDumps';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
 import RunningProcessesChart from './RunningProcessesChart';

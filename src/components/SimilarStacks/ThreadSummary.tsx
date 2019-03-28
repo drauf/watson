@@ -27,7 +27,7 @@ export default class ThreadSummary
     return (
       <li>
         <a onClick={this.toggleDetails}>"{thread.name}"</a>
-        {thread.date ? ` ${thread.date.toLocaleTimeString()}` : ''}
+        {` ${Thread.getFormattedTime(thread)}`}
         {this.waitingForRender(thread, lockOwner)}
         {thread.locksHeld.length > 0 && `, holding [${locksHeld}]`}
 

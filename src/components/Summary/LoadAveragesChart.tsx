@@ -15,7 +15,7 @@ const LoadAveragesChart: React.SFC<Props> = ({ threadDumps }) => {
       data.push({
         fifteenMinutes: threadDump.loadAverages.fifteenMinutes,
         fiveMinutes: threadDump.loadAverages.fiveMinutes,
-        name: threadDump.date ? threadDump.date.toLocaleString() : null,
+        name: ThreadDump.getFormattedDate(threadDump),
         oneMinute: threadDump.loadAverages.oneMinute,
       });
     }

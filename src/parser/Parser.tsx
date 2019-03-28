@@ -111,7 +111,7 @@ export default class Parser {
 
   private groupCpuUsagesWithThreadDumps() {
     this.cpuUsages
-      .filter(cpuUsage => cpuUsage.date)
+      .filter(cpuUsage => cpuUsage.getEpoch())
       .forEach((cpuUsage) => {
         const threadDump: ThreadDump = this.findCorrespondingThreadDump(cpuUsage);
         this.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
@@ -120,28 +120,35 @@ export default class Parser {
 
   private sortThreadDumps() {
     this.threadDumps.sort((t1, t2) => {
-      if (t1.date === t2.date) {
+      if (t1.getEpoch() === t2.getEpoch()) {
         return 0;
       }
-      if (!t1.date) {
+      if (!t1.getEpoch()) {
         return -1;
       }
-      if (!t2.date) {
+      if (!t2.getEpoch()) {
         return 1;
       }
-      return t1.date.valueOf() - t2.date.valueOf();
+      return (t1.getEpoch() as number) - (t2.getEpoch() as number);
     });
   }
 
   private findCorrespondingThreadDump(cpuUsage: CpuUsage): ThreadDump {
     let closest: ThreadDump | null = null;
     let smallestDiff: number = MAX_TIME_DIFFERENCE_ALLOWED;
-    const cpuUsageDate = cpuUsage.date as Date;
+    const cpuUsageEpoch = cpuUsage.getEpoch();
 
     this.threadDumps
-      .filter(threadDump => threadDump.date)
+      .filter(threadDump => threadDump.getEpoch())
       .forEach((threadDump) => {
-        const diff = Math.abs((threadDump.date as Date).valueOf() - cpuUsageDate.valueOf());
+        const dumpEpoch = threadDump.getEpoch();
+        const usageEpoch = cpuUsageEpoch;
+
+        if (!dumpEpoch || !usageEpoch) {
+          return;
+        }
+
+        const diff = Math.abs(dumpEpoch - usageEpoch);
 
         if (diff < smallestDiff) {
           smallestDiff = diff;
@@ -150,7 +157,7 @@ export default class Parser {
       });
 
     if (closest == null) {
-      closest = new ThreadDump();
+      closest = new ThreadDump(null);
       this.threadDumps.push(closest);
     }
 
