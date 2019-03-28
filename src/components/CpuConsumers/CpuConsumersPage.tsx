@@ -2,8 +2,7 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import getThreadsOverTime from '../../common/ThreadDumpsUtils';
 import Thread from '../../types/Thread';
-import ThreadDump from '../../types/ThreadDump';
-import { getThreadDumps } from '../threadDumps';
+import { Props } from '../withThreadDumps';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumersList from './CpuConsumersList';
 import './CpuConsumersPage.css';
@@ -20,7 +19,7 @@ type State = {
   limit: number;
 };
 
-export default class CpuConsumersPage extends React.PureComponent<any, State> {
+export default class CpuConsumersPage extends React.PureComponent<Props, State> {
 
   // tslint:disable-next-line:max-line-length
   private static MISSING_FILES_MESSAGE = 'To see the CPU Consumers you must upload at least one matching pair of threads and cpu_info files.';
@@ -30,15 +29,8 @@ export default class CpuConsumersPage extends React.PureComponent<any, State> {
     mode: CpuConsumersMode.Mean,
   };
 
-  private threadDumps: ThreadDump[];
-
-  constructor(props: any) {
-    super(props);
-    this.threadDumps = getThreadDumps();
-  }
-
   public render() {
-    if (!this.threadDumps.find(dump => !!dump.loadAverages && dump.threads.length > 0)) {
+    if (!this.props.threadDumps.find(dump => !!dump.loadAverages && dump.threads.length > 0)) {
       return <h2>{CpuConsumersPage.MISSING_FILES_MESSAGE}</h2>;
     }
 
@@ -54,7 +46,7 @@ export default class CpuConsumersPage extends React.PureComponent<any, State> {
         />
         <CpuConsumersList
           limit={this.state.limit}
-          dumpsNumber={this.threadDumps.length}
+          dumpsNumber={this.props.threadDumps.length}
           consumers={consumers}
         />
       </div>
@@ -82,7 +74,7 @@ export default class CpuConsumersPage extends React.PureComponent<any, State> {
 
   private calculateCpuUsages(calculationMode: CpuConsumersMode): CpuConsumer[] {
     const consumers: CpuConsumer[] = [];
-    const threadsOverTime = getThreadsOverTime(this.threadDumps);
+    const threadsOverTime = getThreadsOverTime(this.props.threadDumps);
 
     for (const threads of threadsOverTime) {
       consumers.push(this.calculateUsageFor(threads, calculationMode));
@@ -98,7 +90,7 @@ export default class CpuConsumersPage extends React.PureComponent<any, State> {
     let usage: number = 0;
     switch (calculationMode) {
       case CpuConsumersMode.Mean:
-        usage = threads.reduce(this.reduceSum, 0) / this.threadDumps.length;
+        usage = threads.reduce(this.reduceSum, 0) / this.props.threadDumps.length;
         break;
       case CpuConsumersMode.Median:
         usage = this.calculateMedian(threads);

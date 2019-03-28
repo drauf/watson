@@ -2,7 +2,7 @@ import React, { ComponentState } from 'react';
 import ReactGA from 'react-ga';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import { getThreadDumps } from '../threadDumps';
+import { Props } from '../withThreadDumps';
 import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
@@ -13,7 +13,7 @@ type State = {
   withoutIdle: boolean;
 };
 
-export default class SimilarStacksPage extends React.PureComponent<any, State> {
+export default class SimilarStacksPage extends React.PureComponent<Props, State> {
   // tslint:disable-next-line:max-line-length
   private static NO_THREAD_DUMPS_MESSGE = 'To see the Similar Stack Traces you must upload at least one file with thread dumps.';
 
@@ -23,21 +23,14 @@ export default class SimilarStacksPage extends React.PureComponent<any, State> {
     withoutIdle: true,
   };
 
-  private threadDumps: ThreadDump[];
-
-  constructor(props: any) {
-    super(props);
-    this.threadDumps = getThreadDumps();
-  }
-
   public render() {
-    if (!this.threadDumps.find(dump => dump.threads.length > 0)) {
+    if (!this.props.threadDumps.find(dump => dump.threads.length > 0)) {
       return (
         <h2>{SimilarStacksPage.NO_THREAD_DUMPS_MESSGE}</h2>
       );
     }
 
-    const threadGroups = this.groupByStackTrace(this.threadDumps, this.state.linesToConsider);
+    const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider);
     return (
       <div id="similar-stacks-page">
         <SimilarStacksSettings
