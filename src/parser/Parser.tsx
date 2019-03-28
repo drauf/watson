@@ -159,7 +159,7 @@ export default class Parser {
 
   private groupCpuUsageWithThreadDump(threadDump: ThreadDump, cpuUsage: CpuUsage): void {
     threadDump.loadAverages = cpuUsage.loadAverages;
-    threadDump.currentCpuUsage = cpuUsage.currentCpuUsage;
+    threadDump.runningProcesses = cpuUsage.runningProcesses;
     threadDump.memoryUsage = cpuUsage.memoryUsage;
 
     cpuUsage.threadCpuUsages.forEach((cpu) => {

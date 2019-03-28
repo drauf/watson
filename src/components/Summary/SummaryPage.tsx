@@ -1,8 +1,8 @@
 import React from 'react';
 import ThreadDump from '../../types/ThreadDump';
-import CurrentCpuUsageChart from './CurrentCpuUsageChart';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
+import RunningProcessesChart from './RunningProcessesChart';
 import './SummaryPage.css';
 import SwapUsageChart from './SwapUsageChart';
 
@@ -19,10 +19,12 @@ const SummaryPage: React.SFC<SummaryPageProps> = ({ threadDumps }) => {
 
   return (
     <div id="summary-page">
+      <div id="memory-usages">
+        <MemoryUsageChart threadDumps={threadDumps} />
+        <SwapUsageChart threadDumps={threadDumps} />
+      </div>
       <LoadAveragesChart threadDumps={threadDumps} />
-      <MemoryUsageChart threadDumps={threadDumps} />
-      <SwapUsageChart threadDumps={threadDumps} />
-      <CurrentCpuUsageChart threadDumps={threadDumps} />
+      <RunningProcessesChart threadDumps={threadDumps} />
     </div>
   );
 };
