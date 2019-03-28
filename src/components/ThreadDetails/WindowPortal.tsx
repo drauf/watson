@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-type WindowPortalProps = {
+type Props = {
   windowTitle: string;
   className: string;
   onUnload: () => void;
 };
 
-export default class WindowPortal extends React.PureComponent<WindowPortalProps> {
+export default class WindowPortal extends React.PureComponent<Props> {
   private static windows: Array<Window | null> = [];
   private externalWindow: Window | null;
   private container: HTMLElement;
@@ -15,7 +15,7 @@ export default class WindowPortal extends React.PureComponent<WindowPortalProps>
   private windowFeatures =
     'width=960,height=530,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
 
-  constructor(props: WindowPortalProps) {
+  constructor(props: Props) {
     super(props);
 
     this.externalWindow = null;
