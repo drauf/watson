@@ -4,40 +4,40 @@ import {
 } from 'recharts';
 import ThreadDump from '../../types/ThreadDump';
 
-type LoadAveragesChartProps = {
+type RunningProcessesChartProps = {
   threadDumps: ThreadDump[];
 };
 
-const LoadAveragesChart: React.SFC<LoadAveragesChartProps> = ({ threadDumps }) => {
+const RunningProcessesChart: React.SFC<RunningProcessesChartProps> = ({ threadDumps }) => {
   const data: object[] = [];
   threadDumps.map((threadDump) => {
     if (threadDump.loadAverages) {
       data.push({
-        fifteenMinutes: threadDump.loadAverages.fifteenMinutes,
-        fiveMinutes: threadDump.loadAverages.fiveMinutes,
         name: threadDump.date ? threadDump.date.toLocaleString() : null,
-        oneMinute: threadDump.loadAverages.oneMinute,
+        runningProcesses: threadDump.runningProcesses,
       });
     }
   });
 
   return (
     <>
-      <h3>Load averages</h3>
-      <ResponsiveContainer width="100%" height={350}>
+      <h3>Running processes</h3>
+      <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>
           <XAxis dataKey="name" />
           <YAxis type="number" />
           <CartesianGrid stroke="#EBECF0" strokeDasharray="5 5" />
           <Tooltip />
           <Legend />
-          <Line name="One minute" dataKey="oneMinute" stroke="#36B37E" />
-          <Line name="Five minutes" dataKey="fiveMinutes" stroke="#FFAB00" />
-          <Line name="Fifteen minutes" dataKey="fifteenMinutes" stroke="#6554C0" />
+          <Line
+            name="Running processes"
+            dataKey="runningProcesses"
+            stroke="#36B37E"
+          />
         </LineChart>
       </ResponsiveContainer>
     </>
   );
 };
 
-export default LoadAveragesChart;
+export default RunningProcessesChart;

@@ -1,40 +1,45 @@
 import React from 'react';
 import {
-  Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis,
+  Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip,
 } from 'recharts';
+import MemoryUsage from '../../types/MemoryUsage';
 import ThreadDump from '../../types/ThreadDump';
+import labelFormatter from './LabelFormatter';
+
+const COLORS = ['#00B8D9', '#36B37E'];
 
 type MemoryUsageChartProps = {
   threadDumps: ThreadDump[];
 };
 
 const MemoryUsageChart: React.SFC<MemoryUsageChartProps> = ({ threadDumps }) => {
-  const data: object[] = [];
-  threadDumps.map((threadDump) => {
-    if (threadDump.memoryUsage) {
-      data.push({
-        memoryFree: (threadDump.memoryUsage.memoryFree / 1000000).toFixed(2),
-        memoryUsed: (threadDump.memoryUsage.memoryUsed / 1000000).toFixed(2),
-        name: threadDump.date ? threadDump.date.toLocaleString() : null,
-      });
-    }
-  });
+  const memoryUsages: MemoryUsage[] = threadDumps
+    .map(threadDump => threadDump.memoryUsage)
+    .filter(memoryUsage => !!memoryUsage);
+
+  const freeMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryFree, 0) / memoryUsages.length;
+  const usedMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryUsed, 0) / memoryUsages.length;
+
+  const data: object[] = [
+    { name: 'Used memory', value: usedMemoryAvg },
+    { name: 'Free memory', value: freeMemoryAvg },
+  ];
 
   return (
-    <>
-      <h2>Memory usage</h2>
-      <ResponsiveContainer width="100%" height={400}>
-        <AreaChart data={data}>
-          <XAxis dataKey="name" />
-          <YAxis type="number" unit="GB" domain={[0, dataMax => dataMax.toFixed(2)]} />
-          <CartesianGrid stroke="#EBECF0" strokeDasharray="5 5" />
-          <Tooltip />
+    <div>
+      <h3>Memory usage</h3>
+      <ResponsiveContainer width="100%" height={250}>
+        <PieChart>
+          <Pie data={data} dataKey="value" nameKey="name">
+            {
+              data.map((_, index) => <Cell key={index} fill={COLORS[index]} />)
+            }
+          </Pie>
+          <Tooltip formatter={labelFormatter} />
           <Legend />
-          <Area name="used" dataKey="memoryUsed" stackId="1" stroke="#00A3BF" fill="#00B8D9" />
-          <Area name="free" dataKey="memoryFree" stackId="1" stroke="#00875A" fill="#36B37E" />
-        </AreaChart>
+        </PieChart>
       </ResponsiveContainer>
-    </>
+    </div>
   );
 };
 

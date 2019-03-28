@@ -1,5 +1,4 @@
 import CpuUsage from '../types/CpuUsage';
-import CurrentCpuUsage from '../types/CurrentCpuUsage';
 import LoadAverages from '../types/LoadAverage';
 import MemoryUsage from '../types/MemoryUsage';
 import ThreadCpuUsage from '../types/ThreadCpuUsage';
@@ -9,8 +8,7 @@ import {
 
 const FILENAME_DATE_PATTERN: RegExp = /\.(\d*)\.txt$/;
 const LOAD_AVERAGES_PATTERN: RegExp = / load average: ([0-9\.]+), ([0-9\.]+), ([0-9\.]+)/;
-const USER_CPU_PATTERN: RegExp = /([0-9\.]+)%us/;
-const SYSTEM_CPU_PATTERN: RegExp = /([0-9\.]+)%sy/;
+const RUNNING_PROCESSES_PATTERN: RegExp = /([0-9\.]+) running/;
 const TOTAL_MEMORY_PATTERN: RegExp = /([0-9\.]+)k?[ +]total/;
 const USED_MEMORY_PATTERN: RegExp = /([0-9\.]+)k? used/;
 const FREE_MEMORY_PATTERN: RegExp = /([0-9\.]+)k? free/;
@@ -30,10 +28,10 @@ export default class CpuUsageParser {
     cpuUsage.loadAverages = CpuUsageParser.parseLoadAverages(lines.shift());
 
     // Tasks: 466 total,   4 running, 462 sleeping,   0 stopped,   0 zombie
-    lines.shift();
+    cpuUsage.runningProcesses = CpuUsageParser.parseRunningProcesses(lines.shift());
 
     // Cpu(s): 11.4%us,  0.5%sy,  0.0%ni, 87.9%id,  0.0%wa,  0.0%hi,  0.1%si,  0.0%st
-    cpuUsage.currentCpuUsage = CpuUsageParser.parseCurrentCpuUsage(lines.shift());
+    lines.shift(); // ignoring as it's not a useful data for us
 
     // Mem:  65846052k total, 57542808k used,  8303244k free,  1200960k buffers
     // Swap:  2097148k total,        0k used,  2097148k free, 23876776k cached
@@ -65,13 +63,8 @@ export default class CpuUsageParser {
     return loadAverages;
   }
 
-  private static parseCurrentCpuUsage(line?: string): CurrentCpuUsage {
-    const currentCpuUsage: CurrentCpuUsage = new CurrentCpuUsage();
-
-    currentCpuUsage.userTime = parseFloat(matchOne(USER_CPU_PATTERN, line));
-    currentCpuUsage.systemTime = parseFloat(matchOne(SYSTEM_CPU_PATTERN, line));
-
-    return currentCpuUsage;
+  private static parseRunningProcesses(line?: string): number {
+    return parseInt(matchOne(RUNNING_PROCESSES_PATTERN, line), 10);
   }
 
   private static parseMemoryUsage(line1?: string, line2?: string): MemoryUsage {
