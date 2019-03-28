@@ -7,7 +7,7 @@ import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
 const App: React.SFC<RouteComponentProps> = () => (
   <Switch>
     <Route exact={true} path="/" component={FullPageDropzone} />
-    <Route component={Container} />
+    <Route path="/:key" component={Container} />
   </Switch>
 );
 

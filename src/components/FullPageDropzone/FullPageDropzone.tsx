@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Parser from '../../parser/Parser';
 import ThreadDump from '../../types/ThreadDump';
-import { setThreadDumps } from '../threadDumps';
+import { setThreadDumps } from '../threadDumpsStorageService';
 import DropzoneGuide from './DropzoneGuide';
 import './FullPageDropzone.css';
 
@@ -30,10 +30,8 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
   }
 
   private onParsed = (threadDumps: ThreadDump[]): void => {
-    // const UUID =
-    setThreadDumps(threadDumps);
-    // this.props.history.push(`${UUID}/summary/`);
-    this.props.history.push('/summary/');
+    const key = setThreadDumps(threadDumps);
+    this.props.history.push(`/${key}/summary/`);
   }
 }
 

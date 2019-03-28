@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactGA from 'react-ga';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import './Container.css';
-import Content from './Content';
+import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
+import MonitorsPage from './Monitors/MonitorsPage';
 import Navigation from './Navigation/Navigation';
 import NavToggle from './Navigation/NavToggle';
-import { getThreadDumps } from './threadDumps';
+import NotFoundError from './NotFoundError';
+import SimilarStacksPage from './SimilarStacks/SimilarStacksPage';
+import SummaryPage from './Summary/SummaryPage';
+import ThreadsOverviewPage from './ThreadsOverview/ThreadsOverviewPage';
+import { withThreadDumps as withDumps } from './withThreadDumps';
 
 type ContainerState = {
   navigationOpen: boolean;
 };
 
-class Container extends React.PureComponent<RouteComponentProps, ContainerState> {
+class Container extends React.PureComponent<any, ContainerState> {
 
   public state: ContainerState = {
     navigationOpen: true,
@@ -22,11 +27,6 @@ class Container extends React.PureComponent<RouteComponentProps, ContainerState>
   }
 
   public render() {
-    if (getThreadDumps().length === 0) {
-      this.props.history.push('/');
-      return null;
-    }
-
     return (
       <div id="container">
         <Navigation open={this.state.navigationOpen} />
@@ -34,9 +34,16 @@ class Container extends React.PureComponent<RouteComponentProps, ContainerState>
         <NavToggle open={this.state.navigationOpen} onClick={this.toggleNavigation} />
 
         <div id="content">
-          <Content />
+          <Switch>
+            <Route path="/:key/summary/" component={withDumps(SummaryPage)} />
+            <Route path="/:key/cpu-consumers/" component={withDumps(CpuConsumersPage)} />
+            <Route path="/:key/similar-stacks/" component={withDumps(SimilarStacksPage)} />
+            <Route path="/:key/threads-overview/" component={withDumps(ThreadsOverviewPage)} />
+            <Route path="/:key/monitors/" component={withDumps(MonitorsPage)} />
+            <Route component={NotFoundError} />
+          </Switch>
         </div>
-      </div >
+      </div>
     );
   }
 
@@ -61,4 +68,4 @@ class Container extends React.PureComponent<RouteComponentProps, ContainerState>
   }
 }
 
-export default withRouter(Container);
+export default Container;

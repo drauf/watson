@@ -3,7 +3,7 @@ import ReactGA from 'react-ga';
 import getThreadsOverTime from '../../common/ThreadDumpsUtils';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import { getThreadDumps } from '../threadDumps';
+import { Props } from '../withThreadDumps';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
@@ -20,7 +20,7 @@ type State = {
   stackFilter: string;
 };
 
-export default class ThreadsOverviewPage extends React.PureComponent<any, State> {
+export default class ThreadsOverviewPage extends React.PureComponent<Props, State> {
 
   // tslint:disable:object-literal-sort-keys
   public state = {
@@ -41,23 +41,16 @@ export default class ThreadsOverviewPage extends React.PureComponent<any, State>
   private luceneRegex = /^org\.apache\.lucene\./;
   // tslint:enable:max-line-length
 
-  private threadDumps: ThreadDump[];
-
-  constructor(props: any) {
-    super(props);
-    this.threadDumps = getThreadDumps();
-  }
-
   public render() {
-    if (!this.threadDumps.find(dump => dump.threads.length > 0)) {
+    if (!this.props.threadDumps.find(dump => dump.threads.length > 0)) {
       return (
         <h2>To see the Threads Overview you must upload at least one file with thread dumps.</h2>
       );
     }
 
-    const threadOverTime = getThreadsOverTime(this.threadDumps);
+    const threadOverTime = getThreadsOverTime(this.props.threadDumps);
     const filteredDumps = this.filterThreads(threadOverTime);
-    const dates = this.threadDumps.map(dump => ThreadDump.getFormattedDate(dump));
+    const dates = this.props.threadDumps.map(dump => ThreadDump.getFormattedTime(dump));
     const isFilteredByStack = this.isFilteredByStack();
 
     return (
