@@ -1,9 +1,9 @@
 import React, { ComponentState } from 'react';
 import ReactGA from 'react-ga';
-import { getThreadDumps } from '../../App';
 import getThreadsOverTime from '../../common/ThreadDumpsUtils';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import { getThreadDumps } from '../threadDumps';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
@@ -57,7 +57,7 @@ export default class ThreadsOverviewPage extends React.PureComponent<any, State>
 
     const threadOverTime = getThreadsOverTime(this.threadDumps);
     const filteredDumps = this.filterThreads(threadOverTime);
-    const dates = this.threadDumps.map(dump => dump.date);
+    const dates = this.threadDumps.map(dump => ThreadDump.getFormattedDate(dump));
     const isFilteredByStack = this.isFilteredByStack();
 
     return (

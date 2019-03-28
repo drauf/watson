@@ -3,7 +3,7 @@ import LoadAverages from '../types/LoadAverage';
 import MemoryUsage from '../types/MemoryUsage';
 import ThreadCpuUsage from '../types/ThreadCpuUsage';
 import {
-  getDateFromFilename, matchMultipleGroups, matchMultipleTimes, matchOne,
+  getEpochFromFilename, matchMultipleGroups, matchMultipleTimes, matchOne,
 } from './RegExpUtils';
 
 const FILENAME_DATE_PATTERN: RegExp = /\.(\d*)\.txt$/;
@@ -19,8 +19,7 @@ export type ParseCpuUsageCallback = (cpuUsage: CpuUsage) => void;
 export default class CpuUsageParser {
 
   public static parseCpuUsage(file: File, reader: FileReader, callback: ParseCpuUsageCallback) {
-    const cpuUsage: CpuUsage = new CpuUsage();
-    cpuUsage.date = getDateFromFilename(FILENAME_DATE_PATTERN, file.name);
+    const cpuUsage: CpuUsage = new CpuUsage(getEpochFromFilename(FILENAME_DATE_PATTERN, file.name));
 
     const lines: string[] = (reader.result as string).split('\n');
 

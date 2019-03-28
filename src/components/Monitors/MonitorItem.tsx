@@ -15,7 +15,7 @@ const MonitorItem: React.SFC<MonitorItemProps> = ({ monitor }) => {
   return (
     <div className="monitors-container">
       <div className="left">
-        <b>{monitor.date ? monitor.date.toLocaleTimeString() : 'unknown timestamp'}</b>
+        <b>{monitor.time}</b>
         <br />
         {javaClass}
       </div>

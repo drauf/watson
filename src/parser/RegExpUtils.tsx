@@ -1,6 +1,6 @@
-export function getDateFromFilename(pattern: RegExp, filename: string): Date | null {
+export function getEpochFromFilename(pattern: RegExp, filename: string): number {
   const epoch = matchOne(pattern, filename);
-  return new Date(parseInt(epoch, 10) * 1000);
+  return parseInt(epoch, 10) * 1000;
 }
 
 export function matchOne(pattern: RegExp, str?: string): string {

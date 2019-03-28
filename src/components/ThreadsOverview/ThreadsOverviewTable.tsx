@@ -3,7 +3,7 @@ import Thread from '../../types/Thread';
 import ThreadOverviewRow from './ThreadOverviewRow';
 
 type ThreadsOverviewProps = {
-  dates: Array<Date | null>;
+  dates: Array<string | null>;
   isFilteredByStack: boolean;
   threadDumps: Array<Map<number, Thread>>;
 };
@@ -15,7 +15,7 @@ const ThreadsOverview: React.SFC<ThreadsOverviewProps>
         <tr>
           <th />
           {dates.map((date, index) => (
-            <th key={index}>{date ? date.toLocaleTimeString() : null}</th>
+            <th key={index}>{date}</th>
           ))}
         </tr>
       </thead>

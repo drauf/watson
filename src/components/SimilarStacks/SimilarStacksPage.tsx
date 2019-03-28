@@ -1,8 +1,8 @@
 import React, { ComponentState } from 'react';
 import ReactGA from 'react-ga';
-import { getThreadDumps } from '../../App';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import { getThreadDumps } from '../threadDumps';
 import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';

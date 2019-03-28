@@ -1,7 +1,7 @@
 import React, { ComponentState } from 'react';
 import ReactGA from 'react-ga';
-import { getThreadDumps } from '../../App';
 import ThreadDump from '../../types/ThreadDump';
+import { getThreadDumps } from '../threadDumps';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeItem from './MonitorOverTimeItem';
@@ -70,7 +70,7 @@ export default class MonitorsPage extends React.PureComponent<any, State> {
 
     threadDumps.forEach((threadDump) => {
       threadDump.locks.forEach((lock) => {
-        const monitor = new Monitor(threadDump.date, lock);
+        const monitor = new Monitor(threadDump, lock);
 
         let monitorOverTime = monitorsOverTime.get(lock.id);
         if (!monitorOverTime) {

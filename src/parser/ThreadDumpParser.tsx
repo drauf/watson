@@ -2,7 +2,7 @@ import Lock from '../types/Lock';
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
 import ThreadStatus from '../types/ThreadStatus';
-import { getDateFromFilename, matchMultipleGroups, matchOne } from './RegExpUtils';
+import { getEpochFromFilename, matchMultipleGroups, matchOne } from './RegExpUtils';
 
 const THREAD_HEADER_PREFIX: string = '"';
 
@@ -22,8 +22,7 @@ export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
 export default class ThreadDumpParser {
 
   public static parseThreadDump(file: File, reader: FileReader, callback: ParseThreadDumpCallback) {
-    const threadDump: ThreadDump = new ThreadDump();
-    threadDump.date = getDateFromFilename(FILENAME_DATE_PATTERN, file.name);
+    const threadDump = new ThreadDump(getEpochFromFilename(FILENAME_DATE_PATTERN, file.name));
 
     const lines: string[] = (reader.result as string).split('\n');
     lines.forEach(line => ThreadDumpParser.parseLine(line, threadDump));
@@ -46,7 +45,7 @@ export default class ThreadDumpParser {
     const id = parseInt(matchOne(NID_PATTERN, header), 16);
     const name = matchOne(NAME_PATTERN, header).trim();
 
-    ThreadDumpParser.currentThread = new Thread(id, name, threadDump.date);
+    ThreadDumpParser.currentThread = new Thread(id, name, threadDump.getEpoch());
     threadDump.threads.push(ThreadDumpParser.currentThread);
   }
 
