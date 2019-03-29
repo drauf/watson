@@ -20,7 +20,6 @@
   list-style: none;
 }
 #consumers-list h6 {
-  margin-top: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -28,6 +27,18 @@
 
 .cpu-usage:hover {
   cursor: pointer;
-  color: #0052CC;
+  color: #172B4D;
   text-decoration: underline;
+}
+.high {
+  color: #BF2600;
+}
+.mid {
+  color: #403294;
+}
+.low {
+  color: #008DA6;
+}
+.vlow {
+  color: #006644;
 }
