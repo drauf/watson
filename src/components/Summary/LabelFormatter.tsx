@@ -3,18 +3,14 @@ import { TooltipFormatter } from 'recharts';
 // perform a "best effort" conversion to GBs
 const labelFormatter: TooltipFormatter
   = (value: string | number | Array<string | number>): React.ReactNode => {
-    const inGigabytes = convertToGigabytes(value as number);
-    return `${inGigabytes} GB`;
+    return convert(value as number);
   };
 
-const convertToGigabytes = (value: number): string => {
-  if (value > 1000000000) {
-    return round(value / 1000000000);
-  }
+const convert = (value: number): string => {
   if (value > 1000000) {
-    return round(value / 1000000);
+    return `${round(value / 1000000)} GB`;
   }
-  return round(value / 1000);
+  return `${round(value / 1000)} MB`;
 };
 
 const round = (value: number): string => {
