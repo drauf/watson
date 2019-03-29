@@ -1,9 +1,9 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { setThreadDumps } from '../../common/threadDumpsStorageService';
 import Parser from '../../parser/Parser';
 import ThreadDump from '../../types/ThreadDump';
-import { setThreadDumps } from '../threadDumpsStorageService';
 import DropzoneGuide from './DropzoneGuide';
 import './FullPageDropzone.css';
 

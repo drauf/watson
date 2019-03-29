@@ -1,5 +1,5 @@
 import React from 'react';
-import { Props } from '../withThreadDumps';
+import { Props } from '../../common/withThreadDumps';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
 import RunningProcessesChart from './RunningProcessesChart';

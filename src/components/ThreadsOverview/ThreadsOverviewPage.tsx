@@ -1,9 +1,9 @@
 import React, { ComponentState } from 'react';
 import ReactGA from 'react-ga';
 import getThreadsOverTime from '../../common/ThreadDumpsUtils';
+import { Props } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import { Props } from '../withThreadDumps';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
