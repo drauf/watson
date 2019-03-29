@@ -1,12 +1,11 @@
 import React from 'react';
 import { OutboundLink } from 'react-ga';
-import { ISSUE_TRACKER_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
+import { ISSUE_TRACKER_LINK, KUDOS_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
 
 // tslint:disable:max-line-length
-const header = 'You should upload both the <i>jira_cpu_usage</i> and <i>jira_threads</i> files.';
-const line1 = 'Files are matched together based on the timestamps in their names, allowing for small differences.';
-const line2 = 'For example, <i>jira_cpu_usage.1540384812.txt</i> might be matched with <i>jira_threads.1540384814.txt</i>.';
-const line3 = 'If the names of the files you upload have a different format, weird things <i>might</i> and <i>will</i> happen.';
+const header = 'You should load all <i>jira_cpu_usage</i>, <i>jira_threads</i>, and <i>pmap_output</i> files.';
+const subheader = 'Alternatively, for limited functionality, load a single file (like <i>catalina.out</i>) containg all thread dumps.';
+const disclaimer = 'Watson works fully offline. No files will leave your machine.';
 // tslint:enable:max-line-length
 
 const stopPropagation = (event: React.MouseEvent) => {
@@ -17,28 +16,25 @@ const stopPropagation = (event: React.MouseEvent) => {
 const DropzoneGuide: React.SFC = () => (
   <>
     <h6 dangerouslySetInnerHTML={{ __html: header }} />
-    <span dangerouslySetInnerHTML={{ __html: line1 }} />
-    <span dangerouslySetInnerHTML={{ __html: line2 }} />
-    <span dangerouslySetInnerHTML={{ __html: line3 }} />
+    <span dangerouslySetInnerHTML={{ __html: subheader }} />
+
+    <p dangerouslySetInnerHTML={{ __html: disclaimer }} />
 
     <ul id="dropzone-links" onClick={stopPropagation}>
       <li>
-        <OutboundLink
-          eventLabel="Issue tracker"
-          to={ISSUE_TRACKER_LINK}
-          target="_blank"
-        >
-          Issue tracker
-      </OutboundLink>
+        <OutboundLink id="kudos" eventLabel="go/kudos" to={KUDOS_LINK} target="_blank">
+          go/kudos
+        </OutboundLink>
       </li>
       <li>
-        <OutboundLink
-          eventLabel="Issue tracker"
-          to={SOURCE_CODE_LINK}
-          target="_blank"
-        >
+        <OutboundLink eventLabel="Issue tracker" to={ISSUE_TRACKER_LINK} target="_blank">
+          Issue tracker
+        </OutboundLink>
+      </li>
+      <li>
+        <OutboundLink eventLabel="Issue tracker" to={SOURCE_CODE_LINK} target="_blank">
           Source code
-      </OutboundLink>
+        </OutboundLink>
       </li>
     </ul>
   </>

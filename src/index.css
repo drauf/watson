@@ -97,3 +97,27 @@ input:focus {
 .clickable {
   cursor: pointer;
 }
+
+#kudos {
+  animation: colorchange 20s infinite;
+}
+@keyframes colorchange {
+  0% {
+    color: #0747A6;
+  }
+  20% {
+    color: #008DA6;
+  }
+  40% {
+    color: #006644;
+  }
+  60% {
+    color: #BF2600;
+  }
+  80% {
+    color: #403294;
+  }
+  100% {
+    color: #0747A6;
+  }
+}

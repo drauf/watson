@@ -5,6 +5,7 @@ import { clearCurrentThreadDump } from '../../common/threadDumpsStorageService';
 import './Navigation.css';
 
 // tslint:disable:max-line-length
+export const KUDOS_LINK: string = 'http://go.atlassian.com/kudos';
 export const ISSUE_TRACKER_LINK: string = 'https://ecosystem.atlassian.net/secure/RapidBoard.jspa?projectKey=WAT&rapidView=501&view=planning';
 export const SOURCE_CODE_LINK: string = 'https://bitbucket.org/atlassian/watsonjs/';
 // tslint:enable:max-line-length
@@ -40,18 +41,13 @@ class Navigation extends React.PureComponent<Props> {
           </ul>
 
           <ul>
-            <OutboundLink
-              eventLabel="Issue tracker"
-              to={ISSUE_TRACKER_LINK}
-              target="_blank"
-            >
+            <OutboundLink eventLabel="go/kudos" to={KUDOS_LINK} target="_blank">
+              <li id="kudos">go/kudos</li>
+            </OutboundLink>
+            <OutboundLink eventLabel="Issue tracker" to={ISSUE_TRACKER_LINK} target="_blank">
               <li>Issue tracker</li>
             </OutboundLink>
-            <OutboundLink
-              eventLabel="Issue tracker"
-              to={SOURCE_CODE_LINK}
-              target="_blank"
-            >
+            <OutboundLink eventLabel="Issue tracker" to={SOURCE_CODE_LINK} target="_blank">
               <li>Source code</li>
             </OutboundLink>
           </ul>
