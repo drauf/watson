@@ -29,13 +29,26 @@ export default class CpuConsumerSingleUsage
     const thread = this.props.thread;
 
     if (!thread) {
-      return <span className="monospaced">[  --  ]</span>;
+      return <span className="monospaced">     -- </span>;
     }
 
-    const cpuUsage = `${thread.cpuUsage.toFixed(1).padStart(5)}%`;
+    const cpuUsage = `${thread.cpuUsage.toFixed(1)}%`;
+    const padding = ' '.repeat(8 - cpuUsage.length);
+    let className = thread.cpuUsage > 78
+      ? 'high '
+      : thread.cpuUsage > 42
+        ? 'mid '
+        : thread.cpuUsage > 13
+          ? 'low '
+          : thread.cpuUsage > 0
+            ? 'vlow '
+            : '';
+    className += 'cpu-usage';
+
     return (
       <>
-        <span className="cpu-usage" onClick={this.handleClick}>[{cpuUsage}]</span>
+        <span>{padding}</span>
+        <span className={className} onClick={this.handleClick}>{cpuUsage}</span>
 
         {this.state.showDetails &&
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
