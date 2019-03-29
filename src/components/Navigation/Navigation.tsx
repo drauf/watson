@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactGA, { OutboundLink } from 'react-ga';
 import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
-import { clearThreadDumps } from '../threadDumpsStorageService';
+import { clearCurrentThreadDump } from '../../common/threadDumpsStorageService';
 import './Navigation.css';
 
 // tslint:disable:max-line-length
@@ -66,7 +66,7 @@ class Navigation extends React.PureComponent<Props> {
       category: 'Navigation',
     });
 
-    clearThreadDumps();
+    clearCurrentThreadDump();
     this.props.history.push('/');
   }
 }

@@ -1,7 +1,7 @@
 import React, { ComponentState } from 'react';
 import ReactGA from 'react-ga';
+import { Props } from '../../common/withThreadDumps';
 import ThreadDump from '../../types/ThreadDump';
-import { Props } from '../withThreadDumps';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeItem from './MonitorOverTimeItem';

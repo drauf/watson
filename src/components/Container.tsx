@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { Route, Switch } from 'react-router-dom';
+import { withThreadDumps as withDumps } from '../common/withThreadDumps';
 import './Container.css';
 import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
 import MonitorsPage from './Monitors/MonitorsPage';
@@ -10,7 +11,6 @@ import NotFoundError from './NotFoundError';
 import SimilarStacksPage from './SimilarStacks/SimilarStacksPage';
 import SummaryPage from './Summary/SummaryPage';
 import ThreadsOverviewPage from './ThreadsOverview/ThreadsOverviewPage';
-import { withThreadDumps as withDumps } from './withThreadDumps';
 
 type ContainerState = {
   navigationOpen: boolean;
