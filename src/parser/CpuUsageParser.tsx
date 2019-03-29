@@ -18,10 +18,8 @@ export type ParseCpuUsageCallback = (cpuUsage: CpuUsage) => void;
 
 export default class CpuUsageParser {
 
-  public static parseCpuUsage(file: File, reader: FileReader, callback: ParseCpuUsageCallback) {
-    const cpuUsage: CpuUsage = new CpuUsage(getEpochFromFilename(FILENAME_DATE_PATTERN, file.name));
-
-    const lines: string[] = (reader.result as string).split('\n');
+  public static parseCpuUsage(name: string, lines: string[], callback: ParseCpuUsageCallback) {
+    const cpuUsage: CpuUsage = new CpuUsage(getEpochFromFilename(FILENAME_DATE_PATTERN, name));
 
     // top - 10:25:00 up 3 days, 13:14,  1 user,  load average: 90.75, 97.79, 86.84
     cpuUsage.loadAverages = CpuUsageParser.parseLoadAverages(lines.shift());

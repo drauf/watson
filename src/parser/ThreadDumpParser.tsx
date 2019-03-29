@@ -2,11 +2,11 @@ import Lock from '../types/Lock';
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
 import ThreadStatus from '../types/ThreadStatus';
-import { getEpochFromFilename, matchMultipleGroups, matchOne } from './RegExpUtils';
+import { matchMultipleGroups, matchOne } from './RegExpUtils';
 
 const THREAD_HEADER_PREFIX: string = '"';
 
-const FILENAME_DATE_PATTERN: RegExp = /\.(\d*)\.txt$/;
+export const DATE_PATTERN: RegExp = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})$/;
 const NAME_PATTERN: RegExp = /^\"(.*)\" /;
 const NID_PATTERN: RegExp = / nid=([0-9a-fx,]+)/;
 const FRAME_PATTERN: RegExp = /^\s+at (.*)/;
@@ -21,10 +21,8 @@ export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
 
 export default class ThreadDumpParser {
 
-  public static parseThreadDump(file: File, reader: FileReader, callback: ParseThreadDumpCallback) {
-    const threadDump = new ThreadDump(getEpochFromFilename(FILENAME_DATE_PATTERN, file.name));
-
-    const lines: string[] = (reader.result as string).split('\n');
+  public static parseThreadDump(lines: string[], callback: ParseThreadDumpCallback) {
+    const threadDump = new ThreadDump(matchOne(DATE_PATTERN, lines.shift() as string));
     lines.forEach(line => ThreadDumpParser.parseLine(line, threadDump));
     ThreadDumpParser.identifyAnonymousSynchronizers(threadDump.threads);
 
