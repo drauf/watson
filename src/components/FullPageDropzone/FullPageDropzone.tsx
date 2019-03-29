@@ -16,7 +16,7 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
           {
             isDragActive ?
               <h4>Drop files here...</h4> :
-              <h4>Try dropping some files here, or click to select files to upload.</h4>
+              <h4>Drop the catalog here, or click to select files to load.</h4>
           }
           <DropzoneGuide />
         </div>
