@@ -19,8 +19,8 @@ export default class ThreadDump {
   public locks: Lock[] = [];
   private epoch!: number | null;
 
-  constructor(epoch: number | null) {
-    this.epoch = epoch;
+  constructor(date: string | null) {
+    this.epoch = date ? new Date(date).valueOf() : null;
   }
 
   public getEpoch = () => {

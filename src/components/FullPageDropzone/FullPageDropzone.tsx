@@ -9,7 +9,7 @@ import './FullPageDropzone.css';
 
 class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
   public render = () => (
-    <Dropzone accept=".txt" multiple={true} onDrop={this.onDrop}>
+    <Dropzone accept={['.txt', '.out']} multiple={true} onDrop={this.onDrop}>
       {({ getRootProps, getInputProps, isDragActive }) => (
         <div id="dropzone" {...getRootProps()}>
           <input {...getInputProps()} />
