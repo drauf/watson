@@ -53,7 +53,7 @@ const renderStatus = (thread: Thread) => {
 const renderLocksHeld = (thread: Thread) => {
   return (
     thread.locksHeld.length > 0 &&
-    <span><b>Locks held:</b> [{thread.locksHeld.join(', ')}]</span>
+    <span><b>Locks held:</b> [{thread.locksHeld.map(lock => lock.id).join(', ')}]</span>
   );
 };
 
