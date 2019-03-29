@@ -49,7 +49,7 @@ export default class Parser {
     for (const file of files) {
       if (file.name.includes('cpu')) {
         cpuUsageFiles.push(file);
-      } else {
+      } else if (file.name !== 'pmap_output.txt') {
         threadDumpFiles.push(file);
       }
     }
