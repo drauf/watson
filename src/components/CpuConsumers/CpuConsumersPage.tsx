@@ -20,9 +20,8 @@ type State = {
 };
 
 export default class CpuConsumersPage extends React.PureComponent<Props, State> {
-
   // tslint:disable-next-line:max-line-length
-  private static MISSING_FILES_MESSAGE = 'To see the CPU Consumers you must upload at least one matching pair of threads and cpu_info files.';
+  private static MISSING_FILES = 'You need to load matching <i>cpu_info</i> and <i>jira_threads</i> files to see this data.';
 
   public state: State = {
     limit: 100,
@@ -30,10 +29,6 @@ export default class CpuConsumersPage extends React.PureComponent<Props, State> 
   };
 
   public render() {
-    if (!this.props.threadDumps.find(dump => !!dump.loadAverages && dump.threads.length > 0)) {
-      return <h2>{CpuConsumersPage.MISSING_FILES_MESSAGE}</h2>;
-    }
-
     const consumers = this.calculateCpuUsages(this.state.mode);
 
     return (
@@ -44,11 +39,15 @@ export default class CpuConsumersPage extends React.PureComponent<Props, State> 
           onModeChange={this.handleModeChange}
           onLimitChange={this.handleLimitChange}
         />
-        <CpuConsumersList
-          limit={this.state.limit}
-          dumpsNumber={this.props.threadDumps.length}
-          consumers={consumers}
-        />
+
+        {!this.props.threadDumps.find(dump => !!dump.loadAverages && dump.threads.length > 0)
+          ? <h4 dangerouslySetInnerHTML={{ __html: CpuConsumersPage.MISSING_FILES }} />
+          : <CpuConsumersList
+            limit={this.state.limit}
+            dumpsNumber={this.props.threadDumps.length}
+            consumers={consumers}
+          />
+        }
       </div>
     );
   }
@@ -69,7 +68,7 @@ export default class CpuConsumersPage extends React.PureComponent<Props, State> 
       category: 'Navigation',
       label: `Limit changed to ${limit}`,
     });
-    this.setState({ limit });
+    this.setState({ limit: limit > 20 ? limit : 20 });
   }
 
   private calculateCpuUsages(calculationMode: CpuConsumersMode): CpuConsumer[] {

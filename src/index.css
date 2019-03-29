@@ -121,3 +121,10 @@ input:focus {
     color: #0747A6;
   }
 }
+
+#centered {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

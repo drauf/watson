@@ -15,6 +15,9 @@ type State = {
 };
 
 export default class MonitorsPage extends React.PureComponent<Props, State> {
+  // tslint:disable-next-line:max-line-length
+  private static NO_THREAD_DUMPS = 'You need to load the <i>thread_dump</i> files to see this data.';
+  private static N0_THREADS_MATCHING = 'No monitors match the selected criteria.';
 
   public state: State = {
     withOwner: false,
@@ -23,12 +26,6 @@ export default class MonitorsPage extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    if (!this.props.threadDumps.find(dump => dump.threads.length > 0)) {
-      return (
-        <h2>To see the Monitors you must upload at least one file with thread dumps.</h2>
-      );
-    }
-
     const monitors = this.getMonitorsOverTime(this.props.threadDumps);
     const filtered = this.filterMonitors(monitors);
 
@@ -40,7 +37,11 @@ export default class MonitorsPage extends React.PureComponent<Props, State> {
           withoutOwner={this.state.withoutOwner}
           onFilterChange={this.handleFilterChange} />
 
-        {filtered.map(monitor => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />)}
+        {!this.props.threadDumps.find(dump => dump.threads.length > 0)
+          ? <h4 dangerouslySetInnerHTML={{ __html: MonitorsPage.NO_THREAD_DUMPS }} />
+          : filtered.length === 0
+            ? <h4>{MonitorsPage.N0_THREADS_MATCHING}</h4>
+            : filtered.map(monitor => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />)}
       </div>
     );
   }
@@ -82,7 +83,7 @@ export default class MonitorsPage extends React.PureComponent<Props, State> {
   }
 
   private filterMonitors = (monitors: MonitorOverTime[]) => {
-    let filtered = monitors;
+    let filtered = monitors.filter(monitor => monitor.waitingSum > 0);
 
     if (this.state.withoutIdle) {
       filtered = filtered.filter(monitor => !this.isQueueThread(monitor));

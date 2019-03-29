@@ -15,7 +15,8 @@ type State = {
 
 export default class SimilarStacksPage extends React.PureComponent<Props, State> {
   // tslint:disable-next-line:max-line-length
-  private static NO_THREAD_DUMPS_MESSGE = 'To see the Similar Stack Traces you must upload at least one file with thread dumps.';
+  private static NO_THREAD_DUMPS = 'You need to load the <i>thread_dump</i> files to see this data.';
+  private static N0_THREADS_MATCHING = 'No stack traces match the selected criteria.';
 
   public state: State = {
     linesToConsider: 40,
@@ -24,13 +25,9 @@ export default class SimilarStacksPage extends React.PureComponent<Props, State>
   };
 
   public render() {
-    if (!this.props.threadDumps.find(dump => dump.threads.length > 0)) {
-      return (
-        <h2>{SimilarStacksPage.NO_THREAD_DUMPS_MESSGE}</h2>
-      );
-    }
+    const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider)
+      .filter(group => group.length >= this.state.minimalGroupSize);
 
-    const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider);
     return (
       <div id="similar-stacks-page">
         <SimilarStacksSettings
@@ -40,11 +37,14 @@ export default class SimilarStacksPage extends React.PureComponent<Props, State>
           onFilterChange={this.handleFilterChange}
           onSettingsChange={this.handleSettingsChange} />
 
-        {threadGroups.map((group, index) => (
-          <SimilarStacksGroup key={index}
-            threadGroup={group}
-            linesToConsider={this.state.linesToConsider}
-            minimalGroupSize={this.state.minimalGroupSize} />))}
+        {!this.props.threadDumps.find(dump => dump.threads.length > 0)
+          ? <h4 dangerouslySetInnerHTML={{ __html: SimilarStacksPage.NO_THREAD_DUMPS }} />
+          : threadGroups.length === 0
+            ? <h4>{SimilarStacksPage.N0_THREADS_MATCHING}</h4>
+            : threadGroups.map((group, index) => (
+              <SimilarStacksGroup key={index}
+                threadGroup={group}
+                linesToConsider={this.state.linesToConsider} />))}
       </div>
     );
   }

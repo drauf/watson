@@ -6,21 +6,23 @@ import RunningProcessesChart from './RunningProcessesChart';
 import './SummaryPage.css';
 import SwapUsageChart from './SwapUsageChart';
 
-const SummaryPage: React.SFC<Props> = ({ threadDumps }) => {
-  if (!threadDumps.find(dump => !!dump.loadAverages)) {
-    return (
-      <h2>To see the Summary you must upload at least one cpu_info file.</h2>
-    );
-  }
+// tslint:disable-next-line:max-line-length
+const MISSING_FILES = 'You need to load the <i>cpu_info</i> files to view the Summary page.';
 
+const SummaryPage: React.SFC<Props> = ({ threadDumps }) => {
   return (
     <div id="summary-page">
-      <div id="memory-usages">
-        <MemoryUsageChart threadDumps={threadDumps} />
-        <SwapUsageChart threadDumps={threadDumps} />
-      </div>
-      <LoadAveragesChart threadDumps={threadDumps} />
-      <RunningProcessesChart threadDumps={threadDumps} />
+      {!threadDumps.find(dump => !!dump.loadAverages)
+        ? <h4 dangerouslySetInnerHTML={{ __html: MISSING_FILES }} />
+        : <>
+          <div id="memory-usages">
+            <MemoryUsageChart threadDumps={threadDumps} />
+            <SwapUsageChart threadDumps={threadDumps} />
+          </div>
+          <LoadAveragesChart threadDumps={threadDumps} />
+          <RunningProcessesChart threadDumps={threadDumps} />
+        </>
+      }
     </div>
   );
 };

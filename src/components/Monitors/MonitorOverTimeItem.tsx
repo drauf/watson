@@ -20,10 +20,6 @@ export default class MonitorOverTimeItem
   public render() {
     const monitor = this.props.monitor;
 
-    if (monitor.waitingSum === 0) {
-      return null;
-    }
-
     return (
       <>
         <h6 className="clickable" onClick={this.toggleCollapse}>
