@@ -31,7 +31,11 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
 
   private onParsed = (threadDumps: ThreadDump[]): void => {
     const key = setThreadDumps(threadDumps);
-    this.props.history.push(`/${key}/summary/`);
+    if (threadDumps.find(dump => !!dump.loadAverages)) {
+      this.props.history.push(`/${key}/summary/`);
+    } else {
+      this.props.history.push(`/${key}/similar-stacks/`);
+    }
   }
 }
 

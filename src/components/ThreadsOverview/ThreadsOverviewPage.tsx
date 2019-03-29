@@ -21,6 +21,8 @@ type State = {
 };
 
 export default class ThreadsOverviewPage extends React.PureComponent<Props, State> {
+  // tslint:disable-next-line:max-line-length
+  private static NO_THREAD_DUMPS = 'You need to load the <i>thread_dump</i> files to see this data.';
 
   // tslint:disable:object-literal-sort-keys
   public state = {
@@ -42,12 +44,6 @@ export default class ThreadsOverviewPage extends React.PureComponent<Props, Stat
   // tslint:enable:max-line-length
 
   public render() {
-    if (!this.props.threadDumps.find(dump => dump.threads.length > 0)) {
-      return (
-        <h2>To see the Threads Overview you must upload at least one file with thread dumps.</h2>
-      );
-    }
-
     const threadOverTime = getThreadsOverTime(this.props.threadDumps);
     const filteredDumps = this.filterThreads(threadOverTime);
     const dates = this.props.threadDumps.map(dump => ThreadDump.getFormattedTime(dump));
@@ -72,11 +68,14 @@ export default class ThreadsOverviewPage extends React.PureComponent<Props, Stat
           threadDumps={filteredDumps}
         />
         <ThreadsOverviewLegend />
-        <ThreadsOverviewTable
-          dates={dates}
-          isFilteredByStack={isFilteredByStack}
-          threadDumps={filteredDumps}
-        />
+        {!this.props.threadDumps.find(dump => dump.threads.length > 0)
+          ? <h4 dangerouslySetInnerHTML={{ __html: ThreadsOverviewPage.NO_THREAD_DUMPS }} />
+          : <ThreadsOverviewTable
+            dates={dates}
+            isFilteredByStack={isFilteredByStack}
+            threadDumps={filteredDumps}
+          />
+        }
       </div>
     );
   }

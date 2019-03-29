@@ -39,7 +39,7 @@ export const withThreadDumps = <P extends Props>(WrappedComponent: React.Compone
 
     public render() {
       if (this.state.promisePending) {
-        return <>Loading data from cache...</>;
+        return <h4 id="centered">Loading data from cache...</h4>;
       }
 
       return <WrappedComponent threadDumps={this.state.threadDumps} {...this.props} />;

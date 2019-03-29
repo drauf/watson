@@ -2,28 +2,22 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import GroupDetails from './GroupDetails';
 
-type SimilarStacksGroupProps = {
+type Props = {
   threadGroup: Thread[];
   linesToConsider: number;
-  minimalGroupSize: number;
 };
 
-type SimilarStacksGroupState = {
+type State = {
   showDetails: boolean;
 };
 
-export default class SimilarStacksGroup
-  extends React.PureComponent<SimilarStacksGroupProps, SimilarStacksGroupState> {
+export default class SimilarStacksGroup extends React.PureComponent<Props, State> {
 
-  public state: SimilarStacksGroupState = {
+  public state: State = {
     showDetails: true,
   };
 
   public render() {
-    if (this.props.minimalGroupSize > this.props.threadGroup.length) {
-      return null;
-    }
-
     return (
       <>
         <h6 className="clickable" onClick={this.toggleGroup}>
