@@ -4,10 +4,6 @@ import MemoryUsage from './MemoryUsage';
 import Thread from './Thread';
 
 export default class ThreadDump {
-  public static getFormattedDate = (threadDump: ThreadDump): string => {
-    return threadDump.epoch ? new Date(threadDump.epoch).toLocaleString() : 'unknown date';
-  }
-
   public static getFormattedTime = (threadDump: ThreadDump): string => {
     return threadDump.epoch ? new Date(threadDump.epoch).toLocaleTimeString() : 'unknown time';
   }
@@ -20,7 +16,17 @@ export default class ThreadDump {
   private epoch!: number | null;
 
   constructor(date: string | null) {
-    this.epoch = date ? new Date(date).valueOf() : null;
+    if (!date) {
+      this.epoch = null;
+      return;
+    }
+
+    // we want to create a date like below, but we can't because Safari throws "Invalid Date"
+    // this.epoch = new Date(date).valueOf();
+    const hours = parseInt(date.substring(11, 13), 10);
+    const minutes = parseInt(date.substring(14, 16), 10);
+    const seconds = parseInt(date.substring(17), 10);
+    this.epoch = hours * 3600000 + minutes * 60000 + seconds * 1000;
   }
 
   public getEpoch = () => {
