@@ -16,3 +16,27 @@
   flex-direction: column;
   overflow: auto;
 }
+
+#page {
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 24px;
+
+  display: flex;
+  flex-direction: column;
+}
+#wide-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#settings {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+#settings input {
+  margin-left: 3em;
+}

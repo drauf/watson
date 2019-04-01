@@ -1,7 +1,6 @@
-import React, { ComponentState } from 'react';
-import ReactGA from 'react-ga';
-import { Props } from '../../common/withThreadDumps';
+import React from 'react';
 import ThreadDump from '../../types/ThreadDump';
+import PageWithSettings from '../PageWithSettings/PageWithSettings';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeItem from './MonitorOverTimeItem';
@@ -14,10 +13,7 @@ type State = {
   withoutOwner: boolean;
 };
 
-export default class MonitorsPage extends React.PureComponent<Props, State> {
-  // tslint:disable-next-line:max-line-length
-  private static NO_THREAD_DUMPS = 'You need to load the <i>thread_dump</i> files to see this data.';
-  private static N0_THREADS_MATCHING = 'No monitors match the selected criteria.';
+export default class MonitorsPage extends PageWithSettings<State> {
 
   public state: State = {
     withOwner: false,
@@ -25,38 +21,27 @@ export default class MonitorsPage extends React.PureComponent<Props, State> {
     withoutOwner: false,
   };
 
+  protected PAGE_NAME = 'Monitors';
+
   public render() {
     const monitors = this.getMonitorsOverTime(this.props.threadDumps);
     const filtered = this.filterMonitors(monitors);
 
     return (
-      <div id="monitors-page">
+      <div id="page">
         <MonitorsSettings
           withOwner={this.state.withOwner}
           withoutIdle={this.state.withoutIdle}
           withoutOwner={this.state.withoutOwner}
           onFilterChange={this.handleFilterChange} />
 
-        {!this.props.threadDumps.find(dump => dump.threads.length > 0)
+        {!this.props.threadDumps.some(dump => dump.threads.length > 0)
           ? <h4 dangerouslySetInnerHTML={{ __html: MonitorsPage.NO_THREAD_DUMPS }} />
           : filtered.length === 0
             ? <h4>{MonitorsPage.N0_THREADS_MATCHING}</h4>
             : filtered.map(monitor => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />)}
       </div>
     );
-  }
-
-  private handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const name: string = event.target.name;
-    const isChecked: boolean = event.target.checked;
-    const newState: ComponentState = { [name]: isChecked };
-
-    ReactGA.event({
-      action: 'Monitors settings changed',
-      category: 'Navigation',
-      label: `Filter ${name} changed to ${isChecked}`,
-    });
-    this.setState(newState);
   }
 
   private getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {
@@ -99,7 +84,7 @@ export default class MonitorsPage extends React.PureComponent<Props, State> {
   }
 
   private hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => {
-    return monitorOverTime.monitors.find(monitor => monitor.owner !== null) !== undefined;
+    return monitorOverTime.monitors.some(monitor => monitor.owner !== null);
   }
 
   private isQueueThread = (monitorOverTime: MonitorOverTime): boolean => {

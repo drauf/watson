@@ -29,7 +29,7 @@ export default class CpuConsumerSingleUsage
     const thread = this.props.thread;
 
     if (!thread) {
-      return <span className="monospaced">     -- </span>;
+      return <>     -- </>;
     }
 
     const cpuUsage = `${thread.cpuUsage.toFixed(1)}%`;
@@ -47,7 +47,7 @@ export default class CpuConsumerSingleUsage
 
     return (
       <>
-        <span>{padding}</span>
+        {padding}
         <span className={className} onClick={this.handleClick}>{cpuUsage}</span>
 
         {this.state.showDetails &&

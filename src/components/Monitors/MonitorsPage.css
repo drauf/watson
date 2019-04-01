@@ -1,20 +1,8 @@
-#monitors-page {
-  width: 90%;
-  margin: 0 auto;
-  padding-bottom: 24px;
-}
-
-#monitors-settings {
-  height: 80px;
-  display: flex;
-  align-items: center;
-}
-
 .monitors-container {
   display: flex;
 }
 .monitors-container div {
-  padding: 5px;
+  padding: 6px;
 
   white-space: nowrap;
   overflow: hidden;

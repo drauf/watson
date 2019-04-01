@@ -1,30 +1,25 @@
 import React from 'react';
-import { Props } from '../../common/withThreadDumps';
+import PageWithSettings from '../PageWithSettings/PageWithSettings';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
 import RunningProcessesChart from './RunningProcessesChart';
 import './SummaryPage.css';
 import SwapUsageChart from './SwapUsageChart';
 
-// tslint:disable-next-line:max-line-length
-const MISSING_FILES = 'You need to load the <i>cpu_info</i> files to view the Summary page.';
-
-const SummaryPage: React.SFC<Props> = ({ threadDumps }) => {
-  return (
-    <div id="summary-page">
-      {!threadDumps.find(dump => !!dump.loadAverages)
-        ? <h4 dangerouslySetInnerHTML={{ __html: MISSING_FILES }} />
+export default class SummaryPage extends PageWithSettings<any> {
+  public render = () => (
+    <div id="page">
+      {!this.props.threadDumps.some(dump => !!dump.loadAverages)
+        ? <h4 dangerouslySetInnerHTML={{ __html: SummaryPage.NO_CPU_INFOS }} />
         : <>
           <div id="memory-usages">
-            <MemoryUsageChart threadDumps={threadDumps} />
-            <SwapUsageChart threadDumps={threadDumps} />
+            <MemoryUsageChart threadDumps={this.props.threadDumps} />
+            <SwapUsageChart threadDumps={this.props.threadDumps} />
           </div>
-          <LoadAveragesChart threadDumps={threadDumps} />
-          <RunningProcessesChart threadDumps={threadDumps} />
+          <LoadAveragesChart threadDumps={this.props.threadDumps} />
+          <RunningProcessesChart threadDumps={this.props.threadDumps} />
         </>
       }
     </div>
-  );
-};
-
-export default SummaryPage;
+  )
+}

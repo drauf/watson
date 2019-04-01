@@ -9,7 +9,7 @@ const StackTrace: React.SFC<StackTraceProps> = ({ stackTrace, linesToConsider })
   const stack = linesToConsider > 0 ? stackTrace.slice(0, linesToConsider) : stackTrace;
 
   return (
-    <ol className="monospaced">
+    <ol className="stacktrace">
       {stack.map((line, index) => (
         <li key={index}>{line}</li>))}
     </ol>

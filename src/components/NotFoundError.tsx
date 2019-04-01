@@ -1,6 +1,7 @@
 import React from 'react';
+import { WithThreadDumpsProps } from '../common/withThreadDumps';
 
-const NotFoundError: React.SFC = () => (
+const NotFoundError: React.SFC<WithThreadDumpsProps> = () => (
   <h4 id="centered">Oops, you've found a dead link!</h4>
 );
 

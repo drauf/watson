@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactGA from 'react-ga';
-import getThreadsOverTime from '../../common/ThreadDumpsUtils';
-import { Props } from '../../common/withThreadDumps';
+import getThreadsOverTime from '../../common/getThreadsOverTime';
 import Thread from '../../types/Thread';
+import PageWithSettings from '../PageWithSettings/PageWithSettings';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumersList from './CpuConsumersList';
 import './CpuConsumersPage.css';
@@ -19,29 +19,29 @@ type State = {
   limit: number;
 };
 
-export default class CpuConsumersPage extends React.PureComponent<Props, State> {
-  // tslint:disable-next-line:max-line-length
-  private static MISSING_FILES = 'You need to load matching <i>cpu_info</i> and <i>jira_threads</i> files to see this data.';
+export default class CpuConsumersPage extends PageWithSettings<State> {
 
   public state: State = {
     limit: 100,
     mode: CpuConsumersMode.Mean,
   };
 
+  protected PAGE_NAME = 'CPU Consumers';
+
   public render() {
     const consumers = this.calculateCpuUsages(this.state.mode);
 
     return (
-      <div id="cpu-consumers-page">
+      <div id="page">
         <CpuConsumersSettings
           mode={this.state.mode}
           limit={this.state.limit}
           onModeChange={this.handleModeChange}
-          onLimitChange={this.handleLimitChange}
+          onLimitChange={this.handleNumberChange}
         />
 
-        {!this.props.threadDumps.find(dump => !!dump.loadAverages && dump.threads.length > 0)
-          ? <h4 dangerouslySetInnerHTML={{ __html: CpuConsumersPage.MISSING_FILES }} />
+        {!this.props.threadDumps.some(dump => !!dump.loadAverages && dump.threads.length > 0)
+          ? <h4 dangerouslySetInnerHTML={{ __html: CpuConsumersPage.NO_CPU_AND_THREADS_PAIR }} />
           : <CpuConsumersList
             limit={this.state.limit}
             dumpsNumber={this.props.threadDumps.length}
@@ -54,21 +54,11 @@ export default class CpuConsumersPage extends React.PureComponent<Props, State> 
 
   private handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
     ReactGA.event({
-      action: 'CPU Consumers settings changed',
+      action: `${this.PAGE_NAME} settings changed`,
       category: 'Navigation',
       label: `Mode changed to ${mode}`,
     });
     this.setState({ mode: mode as CpuConsumersMode });
-  }
-
-  private handleLimitChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const limit: number = parseInt(event.target.value, 10);
-    ReactGA.event({
-      action: 'CPU Consumers settings changed',
-      category: 'Navigation',
-      label: `Limit changed to ${limit}`,
-    });
-    this.setState({ limit: limit > 20 ? limit : 20 });
   }
 
   private calculateCpuUsages(calculationMode: CpuConsumersMode): CpuConsumer[] {
