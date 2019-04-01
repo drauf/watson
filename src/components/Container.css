@@ -21,9 +21,6 @@
   width: 90%;
   margin: 0 auto;
   padding-bottom: 24px;
-
-  display: flex;
-  flex-direction: column;
 }
 #wide-page {
   display: flex;
@@ -32,7 +29,7 @@
 }
 
 #settings {
-  height: 80px;
+  min-height: 80px;
   display: flex;
   align-items: center;
 }
