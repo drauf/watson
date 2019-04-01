@@ -10,7 +10,7 @@ type CpuConsumersSettingsProps = {
 
 const MonitorsSettings: React.SFC<CpuConsumersSettingsProps> =
   ({ withOwner, withoutIdle, withoutOwner, onFilterChange }) => (
-    <div id="monitors-settings">
+    <div id="settings">
       <div className="filters">
         <b>Filters:</b>
 

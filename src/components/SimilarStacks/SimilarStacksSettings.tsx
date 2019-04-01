@@ -11,7 +11,7 @@ type SimilarStacksSettingsProps = {
 
 const SimilarStacksSettings: React.SFC<SimilarStacksSettingsProps> =
   ({ linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onSettingsChange }) => (
-    <div id="similar-stacks-settings">
+    <div id="settings">
       <div className="filters">
         <b>Filters:</b>
 

@@ -5,16 +5,12 @@ nav {
   transition: all 0.5s ease;
 }
 nav.open {
-  width: 250px;
+  width: 230px;
 }
 
 #brand-visible {
   color: #0052CC;
-  font-size: 35px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 40px;
-  padding: 12px 40px 0;
+  padding-left: 30px;
   transform: scale(1);
   transition: all 0.5s ease;
 }
@@ -26,17 +22,17 @@ nav.open {
 nav ul {
   list-style-type: none;
   padding: 0;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 nav li {
   transform: scale(0);
   transition: all 0.5s ease;
 }
 nav.open li {
-  width: 210px;
+  width: 200px;
   font-size: 14px;
   line-height: 36px;
-  padding-left: 40px;
+  padding-left: 30px;
   transform: scale(1);
 }
 nav.open li:hover {
@@ -50,7 +46,6 @@ nav a:hover {
 }
 
 #nav-content-bottom {
-  width: 0;
   bottom: 0;
-  position: absolute;
+  position: fixed;
 }

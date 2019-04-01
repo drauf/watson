@@ -1,28 +1,6 @@
-#similar-stacks-page {
-  width: 90%;
-  margin: 0 auto;
-  padding-bottom: 24px;
-}
-
-#similar-stacks-settings {
-  height: 80px;
-  display: flex;
-  align-items: center;
-}
-
-#similar-stacks-settings label {
-  margin-right: 3em;
-}
-
-#similar-stacks-page ul {
-  font-size: 13px;
-  line-height: 17px;
-  margin: 0;
-  list-style: none;
-}
-
-#similar-stacks-page ol {
+.stacktrace {
+  font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", "Ubuntu Mono", Menlo, Courier, monospace;
   font-size: 12px;
   line-height: 16px;
-  margin-top: 8px;
+  margin-top: 0;
 }

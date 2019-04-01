@@ -1,8 +1,8 @@
-import React, { ComponentState } from 'react';
-import ReactGA from 'react-ga';
-import { Props } from '../../common/withThreadDumps';
+import React from 'react';
+import isIdleThread from '../../common/isIdleThread';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import PageWithSettings from '../PageWithSettings/PageWithSettings';
 import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
@@ -13,10 +13,7 @@ type State = {
   withoutIdle: boolean;
 };
 
-export default class SimilarStacksPage extends React.PureComponent<Props, State> {
-  // tslint:disable-next-line:max-line-length
-  private static NO_THREAD_DUMPS = 'You need to load the <i>thread_dump</i> files to see this data.';
-  private static N0_THREADS_MATCHING = 'No stack traces match the selected criteria.';
+export default class SimilarStacksPage extends PageWithSettings<State> {
 
   public state: State = {
     linesToConsider: 40,
@@ -24,20 +21,22 @@ export default class SimilarStacksPage extends React.PureComponent<Props, State>
     withoutIdle: true,
   };
 
+  protected PAGE_NAME = 'Similar Stacks';
+
   public render() {
     const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider)
       .filter(group => group.length >= this.state.minimalGroupSize);
 
     return (
-      <div id="similar-stacks-page">
+      <div id="page">
         <SimilarStacksSettings
           linesToConsider={this.state.linesToConsider}
           minimalGroupSize={this.state.minimalGroupSize}
           withoutIdle={this.state.withoutIdle}
           onFilterChange={this.handleFilterChange}
-          onSettingsChange={this.handleSettingsChange} />
+          onSettingsChange={this.handleNumberChange} />
 
-        {!this.props.threadDumps.find(dump => dump.threads.length > 0)
+        {!this.props.threadDumps.some(dump => dump.threads.length > 0)
           ? <h4 dangerouslySetInnerHTML={{ __html: SimilarStacksPage.NO_THREAD_DUMPS }} />
           : threadGroups.length === 0
             ? <h4>{SimilarStacksPage.N0_THREADS_MATCHING}</h4>
@@ -47,35 +46,6 @@ export default class SimilarStacksPage extends React.PureComponent<Props, State>
                 linesToConsider={this.state.linesToConsider} />))}
       </div>
     );
-  }
-
-  private handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const name: string = event.target.name;
-    const isChecked: boolean = event.target.checked;
-    const newState: ComponentState = { [name]: isChecked };
-
-    ReactGA.event({
-      action: 'Similar Stacks settings changed',
-      category: 'Navigation',
-      label: `Filter ${name} changed to ${isChecked}`,
-    });
-    this.setState(newState);
-  }
-
-  private handleSettingsChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const name: string = event.target.name;
-    let value: number = parseInt(event.target.value ? event.target.value : '0', 10);
-    if (value < 0) {
-      value = 0;
-    }
-    const newState: ComponentState = { [name]: value > 0 ? value : 0 };
-
-    ReactGA.event({
-      action: 'Similar Stacks settings changed',
-      category: 'Navigation',
-      label: `Setting ${name} changed to ${value}`,
-    });
-    this.setState(newState);
   }
 
   private groupByStackTrace(threadDumps: ThreadDump[], linesToConsider: number) {
@@ -103,8 +73,7 @@ export default class SimilarStacksPage extends React.PureComponent<Props, State>
   }
 
   private getStackTrace(thread: Thread, linesToConsider: number): string | null {
-    // we assume that threads with stacks shorter than 17 don't do anything useful
-    if (this.state.withoutIdle && thread.stackTrace.length < 17) {
+    if (this.state.withoutIdle && isIdleThread(thread)) {
       return null;
     }
 

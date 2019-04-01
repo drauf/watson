@@ -10,7 +10,7 @@ type CpuConsumersSettingsProps = {
 
 const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> =
   ({ mode, limit, onModeChange, onLimitChange }) => (
-    <div id="cpu-consumers-settings">
+    <div id="settings">
       <div className="filters">
         <b>CPU usage calculation:</b>
 
@@ -44,7 +44,7 @@ const CpuConsumersSettings: React.SFC<CpuConsumersSettingsProps> =
 
       <div id="cpu-consumers-limit">
         <label>
-          <input type="number" name="threadsLimit" min="0" max="10000"
+          <input type="number" name="limit" min="0" max="10000"
             value={limit}
             onChange={onLimitChange}
           />

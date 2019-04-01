@@ -40,7 +40,7 @@ class Container extends React.PureComponent<any, ContainerState> {
             <Route path="/:key/similar-stacks/" component={withDumps(SimilarStacksPage)} />
             <Route path="/:key/threads-overview/" component={withDumps(ThreadsOverviewPage)} />
             <Route path="/:key/monitors/" component={withDumps(MonitorsPage)} />
-            <Route component={NotFoundError} />
+            <Route component={withDumps(NotFoundError)} />
           </Switch>
         </div>
       </div>

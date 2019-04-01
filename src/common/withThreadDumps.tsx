@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import ThreadDump from '../types/ThreadDump';
 import { getThreadDumpsAsync } from './threadDumpsStorageService';
 
-export type Props = RouteComponentProps<any> & {
+export type WithThreadDumpsProps = RouteComponentProps<any> & {
   threadDumps: ThreadDump[];
 };
 
@@ -12,39 +12,40 @@ type State = {
   threadDumps: ThreadDump[];
 };
 
-export const withThreadDumps = <P extends Props>(WrappedComponent: React.ComponentType<P>) => {
-  class WithThreadDumps extends React.Component<P, State> {
-    public state: State = {
-      promisePending: true,
-      threadDumps: [],
-    };
+export const withThreadDumps =
+  <P extends WithThreadDumpsProps>(WrappedComponent: React.ComponentType<P>) => {
+    class WithThreadDumps extends React.Component<P, State> {
+      public state: State = {
+        promisePending: true,
+        threadDumps: [],
+      };
 
-    constructor(props: P) {
-      super(props);
+      constructor(props: P) {
+        super(props);
 
-      const key: string = props.match.params.key;
-      const threadDumpsPromise = getThreadDumpsAsync(key);
+        const key: string = props.match.params.key;
+        const threadDumpsPromise = getThreadDumpsAsync(key);
 
-      threadDumpsPromise
-        .then((threadDumps) => {
-          if (threadDumps.length === 0) {
-            props.history.push('/');
-          }
-          return threadDumps;
-        })
-        .then((threadDumps) => {
-          this.setState({ threadDumps, promisePending: false });
-        });
-    }
-
-    public render() {
-      if (this.state.promisePending) {
-        return <h4 id="centered">Loading data from cache...</h4>;
+        threadDumpsPromise
+          .then((threadDumps) => {
+            if (threadDumps.length === 0) {
+              props.history.push('/');
+            }
+            return threadDumps;
+          })
+          .then((threadDumps) => {
+            this.setState({ threadDumps, promisePending: false });
+          });
       }
 
-      return <WrappedComponent threadDumps={this.state.threadDumps} {...this.props} />;
-    }
-  }
+      public render() {
+        if (this.state.promisePending) {
+          return <h4 id="centered">Loading data from cache...</h4>;
+        }
 
-  return WithThreadDumps;
-};
+        return <WrappedComponent threadDumps={this.state.threadDumps} {...this.props} />;
+      }
+    }
+
+    return WithThreadDumps;
+  };

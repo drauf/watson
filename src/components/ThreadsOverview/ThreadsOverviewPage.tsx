@@ -1,9 +1,8 @@
-import React, { ComponentState } from 'react';
-import ReactGA from 'react-ga';
-import getThreadsOverTime from '../../common/ThreadDumpsUtils';
-import { Props } from '../../common/withThreadDumps';
+import React from 'react';
+import getThreadsOverTime from '../../common/getThreadsOverTime';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import PageWithSettings from '../PageWithSettings/PageWithSettings';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
@@ -20,9 +19,7 @@ type State = {
   stackFilter: string;
 };
 
-export default class ThreadsOverviewPage extends React.PureComponent<Props, State> {
-  // tslint:disable-next-line:max-line-length
-  private static NO_THREAD_DUMPS = 'You need to load the <i>thread_dump</i> files to see this data.';
+export default class ThreadsOverviewPage extends PageWithSettings<State> {
 
   // tslint:disable:object-literal-sort-keys
   public state = {
@@ -35,6 +32,8 @@ export default class ThreadsOverviewPage extends React.PureComponent<Props, Stat
     stackFilter: '',
   };
   // tslint:enable:object-literal-sort-keys
+
+  protected PAGE_NAME = 'Threads Overview';
 
   // tslint:disable:max-line-length
   private jvmRegex = /^Attach Listener|^C[12] CompilerThread|^G1 Concurrent |^G1 Main|^Gang worker#|^GC Daemon|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
@@ -50,7 +49,7 @@ export default class ThreadsOverviewPage extends React.PureComponent<Props, Stat
     const isFilteredByStack = this.isFilteredByStack();
 
     return (
-      <div id="threads-overview-page">
+      <div id="wide-page">
         <ThreadsOverviewSettings
           nonJvm={this.state.nonJvm}
           tomcat={this.state.tomcat}
@@ -62,13 +61,15 @@ export default class ThreadsOverviewPage extends React.PureComponent<Props, Stat
           onFilterChange={this.handleFilterChange}
           onRegExpChange={this.handleRegExpChange}
         />
+
         <ThreadsOverviewFilteringSummary
           isFilteredByStack={isFilteredByStack}
           threadsNumber={threadOverTime.length}
           threadDumps={filteredDumps}
         />
+
         <ThreadsOverviewLegend />
-        {!this.props.threadDumps.find(dump => dump.threads.length > 0)
+        {!this.props.threadDumps.some(dump => dump.threads.length > 0)
           ? <h4 dangerouslySetInnerHTML={{ __html: ThreadsOverviewPage.NO_THREAD_DUMPS }} />
           : <ThreadsOverviewTable
             dates={dates}
@@ -78,32 +79,6 @@ export default class ThreadsOverviewPage extends React.PureComponent<Props, Stat
         }
       </div>
     );
-  }
-
-  private handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const name: string = event.target.name;
-    const isChecked: boolean = event.target.checked;
-    const newState: ComponentState = { [name]: isChecked };
-
-    ReactGA.event({
-      action: 'Threads Overview settings changed',
-      category: 'Navigation',
-      label: `Filter ${name} changed to ${isChecked}`,
-    });
-    this.setState(newState);
-  }
-
-  private handleRegExpChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const name: string = event.target.name;
-    const value: string = event.target.value;
-    const newState: ComponentState = { [name]: value };
-
-    ReactGA.event({
-      action: 'Threads Overview settings changed',
-      category: 'Navigation',
-      label: `RegExp ${name} changed to ${value}`,
-    });
-    this.setState(newState);
   }
 
   private isFilteredByStack = (): boolean => {

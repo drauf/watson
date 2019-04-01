@@ -1,9 +1,3 @@
-#threads-overview-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 #threads-overview-settings {
   margin-top: 22px;
   line-height: 36px;

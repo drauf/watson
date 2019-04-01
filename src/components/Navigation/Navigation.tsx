@@ -21,9 +21,9 @@ class Navigation extends React.PureComponent<Props> {
 
     return (
       <nav className={this.props.open ? 'open' : ''}>
-        <p id={this.props.open ? 'brand-visible' : 'brand-hidden'}>
+        <h1 id={this.props.open ? 'brand-visible' : 'brand-hidden'}>
           Watson
-        </p>
+        </h1>
 
         <ul>
           <NavLink to={`/${key}/summary/`}><li>Summary</li></NavLink>
