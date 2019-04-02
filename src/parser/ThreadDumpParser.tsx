@@ -6,7 +6,7 @@ import { matchMultipleGroups, matchOne } from './RegExpUtils';
 
 const THREAD_HEADER_PREFIX: string = '"';
 
-export const DATE_PATTERN: RegExp = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})$/;
+export const DATE_PATTERN: RegExp = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\r?$/;
 const NAME_PATTERN: RegExp = /^\"(.*)\" /;
 const NID_PATTERN: RegExp = / nid=([0-9a-fx,]+)/;
 const FRAME_PATTERN: RegExp = /^\s+at (.*)/;
