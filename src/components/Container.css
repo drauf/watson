@@ -21,11 +21,17 @@
   width: 90%;
   margin: 0 auto;
   padding-bottom: 24px;
+  animation: fadein 400ms;
 }
 #wide-page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: fadein 400ms;
+}
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 #settings {

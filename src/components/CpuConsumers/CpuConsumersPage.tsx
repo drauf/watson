@@ -37,7 +37,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
           mode={this.state.mode}
           limit={this.state.limit}
           onModeChange={this.handleModeChange}
-          onLimitChange={this.handleNumberChange}
+          onLimitChange={this.handleIntegerChange}
         />
 
         {!this.props.threadDumps.some(dump => !!dump.loadAverages && dump.threads.length > 0)
