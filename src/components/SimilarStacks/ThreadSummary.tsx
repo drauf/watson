@@ -2,19 +2,18 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
-type ThreadSummaryProps = {
+type Props = {
   thread: Thread;
 };
 
-type ThreadSummaryState = {
+type State = {
   showDetails: boolean;
   showLockOwner: boolean;
 };
 
-export default class ThreadSummary
-  extends React.PureComponent<ThreadSummaryProps, ThreadSummaryState> {
+export default class ThreadSummary extends React.PureComponent<Props, State> {
 
-  public state: ThreadSummaryState = {
+  public state: State = {
     showDetails: false,
     showLockOwner: false,
   };

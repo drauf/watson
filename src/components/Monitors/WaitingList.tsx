@@ -2,19 +2,19 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import WaitingListItem from './WaitingListItem';
 
-type WaitingListProps = {
+type Props = {
   waiting: Thread[],
 };
 
-type WaitingListState = {
+type State = {
   expanded: boolean;
 };
 
-export default class WaitingList extends React.PureComponent<WaitingListProps, WaitingListState> {
+export default class WaitingList extends React.PureComponent<Props, State> {
 
   private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;
 
-  public state: WaitingListState = {
+  public state: State = {
     expanded: false,
   };
 

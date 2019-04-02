@@ -2,13 +2,13 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadOverviewItem from './ThreadOverviewItem';
 
-type ThreadOverviewRowProps = {
+type Props = {
   total: number;
   threads: Map<number, Thread>;
   isFiltered: boolean;
 };
 
-const ThreadOverviewRow: React.SFC<ThreadOverviewRowProps> = ({ total, threads, isFiltered }) => {
+const ThreadOverviewRow: React.SFC<Props> = ({ total, threads, isFiltered }) => {
   const threadsPadded: Array<Thread | undefined> = [];
   for (let i = 0; i < total; i++) {
     threadsPadded[i] = threads.get(i);

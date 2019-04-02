@@ -1,14 +1,14 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
 
-type CpuConsumersSettingsProps = {
+type Props = {
   withOwner: boolean;
   withoutIdle: boolean;
   withoutOwner: boolean;
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const MonitorsSettings: React.SFC<CpuConsumersSettingsProps> =
+const MonitorsSettings: React.SFC<Props> =
   ({ withOwner, withoutIdle, withoutOwner, onFilterChange }) => (
     <div id="settings">
       <div className="filters">

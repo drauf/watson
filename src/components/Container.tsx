@@ -13,19 +13,15 @@ import StuckThreadsPage from './StuckThreads/StuckThreadsPage';
 import SummaryPage from './Summary/SummaryPage';
 import ThreadsOverviewPage from './ThreadsOverview/ThreadsOverviewPage';
 
-type ContainerState = {
+type State = {
   navigationOpen: boolean;
 };
 
-class Container extends React.PureComponent<any, ContainerState> {
+class Container extends React.PureComponent<any, State> {
 
-  public state: ContainerState = {
+  public state: State = {
     navigationOpen: true,
   };
-
-  public componentDidMount() {
-    this.scrollToTop();
-  }
 
   public render() {
     return (
@@ -60,13 +56,6 @@ class Container extends React.PureComponent<any, ContainerState> {
 
       return { navigationOpen: isOpen };
     });
-  }
-
-  private scrollToTop = () => {
-    const contentDiv = document.getElementById('content');
-    if (contentDiv) {
-      contentDiv.scrollTop = 0;
-    }
   }
 }
 

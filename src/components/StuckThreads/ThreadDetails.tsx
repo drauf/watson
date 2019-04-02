@@ -21,8 +21,8 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
     const stack = thread.stackTrace.slice(0, Math.max(this.props.maxDifferingLines, 10));
 
     return (
-      <p>
-        <b>{Thread.getFormattedTime(thread)} </b>
+      <>
+        <b>{Thread.getFormattedTime(thread)}</b>
 
         <ul className="stacktrace">
           {stack.map((line, index) => (
@@ -32,7 +32,7 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
 
         {this.state.showDetails &&
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
-      </p>
+      </>
     );
   }
 

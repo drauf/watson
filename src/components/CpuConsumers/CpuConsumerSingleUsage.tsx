@@ -2,18 +2,17 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
-type CpuConsumerSingleUsageProps = {
+type Props = {
   thread: Thread | undefined;
 };
 
-type CpuConsumerSingleUsageState = {
+type State = {
   showDetails: boolean;
 };
 
-export default class CpuConsumerSingleUsage
-  extends React.PureComponent<CpuConsumerSingleUsageProps, CpuConsumerSingleUsageState> {
+export default class CpuConsumerSingleUsage extends React.PureComponent<Props, State> {
 
-  public state: CpuConsumerSingleUsageState = {
+  public state: State = {
     showDetails: false,
   };
 
