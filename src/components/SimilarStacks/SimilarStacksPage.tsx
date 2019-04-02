@@ -34,7 +34,7 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
           minimalGroupSize={this.state.minimalGroupSize}
           withoutIdle={this.state.withoutIdle}
           onFilterChange={this.handleFilterChange}
-          onSettingsChange={this.handleNumberChange} />
+          onIntegerChange={this.handleIntegerChange} />
 
         {!this.props.threadDumps.some(dump => dump.threads.length > 0)
           ? <h4 dangerouslySetInnerHTML={{ __html: SimilarStacksPage.NO_THREAD_DUMPS }} />

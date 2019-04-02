@@ -1,16 +1,16 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
 
-type SimilarStacksSettingsProps = {
-  linesToConsider: number;
-  minimalGroupSize: number;
+type Props = {
+  maxDifferingLines: number;
+  minClusterSize: number;
   withoutIdle: boolean;
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
   onIntegerChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const SimilarStacksSettings: React.SFC<SimilarStacksSettingsProps> =
-  ({ linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange }) => (
+const StuckThreadsSettings: React.SFC<Props> =
+  ({ maxDifferingLines, minClusterSize, withoutIdle, onFilterChange, onIntegerChange }) => (
     <div id="settings">
       <div className="filters">
         <b>Filters:</b>
@@ -22,23 +22,24 @@ const SimilarStacksSettings: React.SFC<SimilarStacksSettingsProps> =
       <label>
         <input
           type="number"
-          name="linesToConsider"
-          value={linesToConsider}
+          min="2"
+          name="minClusterSize"
+          value={minClusterSize}
           onChange={onIntegerChange}
         />
-        <b>Stack trace lines to compare</b>
+        <b>Minimal similar stacks to consider a thread stuck</b>
       </label>
 
       <label>
         <input
           type="number"
-          name="minimalGroupSize"
-          value={minimalGroupSize}
+          name="maxDifferingLines"
+          value={maxDifferingLines}
           onChange={onIntegerChange}
         />
-        <b>Minimal group size to show</b>
+        <b>Maximum differing lines between dumps</b>
       </label>
     </div>
   );
 
-export default SimilarStacksSettings;
+export default StuckThreadsSettings;

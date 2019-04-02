@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { Route, Switch } from 'react-router-dom';
-import { withThreadDumps as withDumps } from '../common/withThreadDumps';
+import { withThreadDumps as page } from '../common/withThreadDumps';
 import './Container.css';
 import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
 import MonitorsPage from './Monitors/MonitorsPage';
@@ -9,6 +9,7 @@ import Navigation from './Navigation/Navigation';
 import NavToggle from './Navigation/NavToggle';
 import NotFoundError from './NotFoundError';
 import SimilarStacksPage from './SimilarStacks/SimilarStacksPage';
+import StuckThreadsPage from './StuckThreads/StuckThreadsPage';
 import SummaryPage from './Summary/SummaryPage';
 import ThreadsOverviewPage from './ThreadsOverview/ThreadsOverviewPage';
 
@@ -35,12 +36,13 @@ class Container extends React.PureComponent<any, ContainerState> {
 
         <div id="content">
           <Switch>
-            <Route path="/:key/summary/" component={withDumps(SummaryPage)} />
-            <Route path="/:key/cpu-consumers/" component={withDumps(CpuConsumersPage)} />
-            <Route path="/:key/similar-stacks/" component={withDumps(SimilarStacksPage)} />
-            <Route path="/:key/threads-overview/" component={withDumps(ThreadsOverviewPage)} />
-            <Route path="/:key/monitors/" component={withDumps(MonitorsPage)} />
-            <Route component={withDumps(NotFoundError)} />
+            <Route exact path="/:key/summary/" component={page(SummaryPage)} />
+            <Route exact path="/:key/cpu-consumers/" component={page(CpuConsumersPage)} />
+            <Route exact path="/:key/similar-stacks/" component={page(SimilarStacksPage)} />
+            <Route exact path="/:key/stuck-threads/" component={page(StuckThreadsPage)} />
+            <Route exact path="/:key/threads-overview/" component={page(ThreadsOverviewPage)} />
+            <Route exact path="/:key/monitors/" component={page(MonitorsPage)} />
+            <Route component={page(NotFoundError)} />
           </Switch>
         </div>
       </div>

@@ -3,21 +3,20 @@ import Thread from '../../types/Thread';
 import StackTrace from './StackTrace';
 import ThreadSummary from './ThreadSummary';
 
-type SimilarStacksGroupProps = {
+type Props = {
   threadGroup: Thread[];
   linesToConsider: number;
 };
 
-type SimilarStacksGroupState = {
+type State = {
   expanded: boolean;
 };
 
-export default class GroupDetails
-  extends React.PureComponent<SimilarStacksGroupProps, SimilarStacksGroupState> {
+export default class GroupDetails extends React.PureComponent<Props, State> {
 
   private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;
 
-  public state: SimilarStacksGroupState = {
+  public state: State = {
     expanded: false,
   };
 

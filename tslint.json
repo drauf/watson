@@ -8,9 +8,12 @@
   ],
   "jsRules": {},
   "rules": {
-    "no-increment-decrement": false,
     "import-name": false,
     "interface-over-type-literal": false,
+    "jsx-boolean-value": [
+      false
+    ],
+    "no-increment-decrement": false,
     "no-console": [
       true,
       "debug",

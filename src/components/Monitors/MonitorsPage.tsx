@@ -38,7 +38,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
         {!this.props.threadDumps.some(dump => dump.threads.length > 0)
           ? <h4 dangerouslySetInnerHTML={{ __html: MonitorsPage.NO_THREAD_DUMPS }} />
           : filtered.length === 0
-            ? <h4>{MonitorsPage.N0_THREADS_MATCHING}</h4>
+            ? <h4>{MonitorsPage.N0_MONITORS_MATCHING}</h4>
             : filtered.map(monitor => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />)}
       </div>
     );
