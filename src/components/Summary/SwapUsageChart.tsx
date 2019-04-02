@@ -8,11 +8,11 @@ import labelFormatter from './LabelFormatter';
 
 const COLORS = ['#6554C0', '#FF5630'];
 
-type SwapUsageChartProps = {
+type Props = {
   threadDumps: ThreadDump[];
 };
 
-const SwapUsageChart: React.SFC<SwapUsageChartProps> = ({ threadDumps }) => {
+const SwapUsageChart: React.SFC<Props> = ({ threadDumps }) => {
   const memoryUsages: MemoryUsage[] = threadDumps
     .map(threadDump => threadDump.memoryUsage)
     .filter(memoryUsage => !!memoryUsage);

@@ -3,20 +3,19 @@ import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
-type ThreadOverviewItemProps = {
+type Props = {
   thread?: Thread;
   isFiltered: boolean;
   isMatchingFilter: boolean;
 };
 
-type ThreadOverviewItemState = {
+type State = {
   showDetails: boolean;
 };
 
-export default class ThreadOverviewItem
-  extends React.PureComponent<ThreadOverviewItemProps, ThreadOverviewItemState> {
+export default class ThreadOverviewItem extends React.PureComponent<Props, State> {
 
-  public state: ThreadOverviewItemState = {
+  public state: State = {
     showDetails: false,
   };
 

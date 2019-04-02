@@ -1,11 +1,11 @@
 import React from 'react';
 
-type StackTraceProps = {
+type Props = {
   stackTrace: string[];
   linesToConsider: number;
 };
 
-const StackTrace: React.SFC<StackTraceProps> = ({ stackTrace, linesToConsider }) => {
+const StackTrace: React.SFC<Props> = ({ stackTrace, linesToConsider }) => {
   const stack = linesToConsider > 0 ? stackTrace.slice(0, linesToConsider) : stackTrace;
 
   return (

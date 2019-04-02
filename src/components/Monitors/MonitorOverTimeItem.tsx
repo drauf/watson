@@ -2,18 +2,17 @@ import React from 'react';
 import MonitorItem from './MonitorItem';
 import MonitorOverTime from './MonitorOverTime';
 
-type MonitorOverTimeItemProps = {
+type Props = {
   monitor: MonitorOverTime;
 };
 
-type MonitorOverTimeItemState = {
+type State = {
   collapse: boolean;
 };
 
-export default class MonitorOverTimeItem
-  extends React.PureComponent<MonitorOverTimeItemProps, MonitorOverTimeItemState> {
+export default class MonitorOverTimeItem extends React.PureComponent<Props, State> {
 
-  public state: MonitorOverTimeItemState = {
+  public state: State = {
     collapse: false,
   };
 

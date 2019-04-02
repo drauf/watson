@@ -38,12 +38,23 @@ export const withThreadDumps =
           });
       }
 
+      public componentDidMount() {
+        this.scrollToTop();
+      }
+
       public render() {
         if (this.state.promisePending) {
           return <h4 id="centered">Loading data from cache...</h4>;
         }
 
         return <WrappedComponent threadDumps={this.state.threadDumps} {...this.props} />;
+      }
+
+      private scrollToTop = () => {
+        const contentDiv = document.getElementById('content');
+        if (contentDiv) {
+          contentDiv.scrollTop = 0;
+        }
       }
     }
 

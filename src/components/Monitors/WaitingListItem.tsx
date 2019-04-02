@@ -2,18 +2,17 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
-type WaitingListItemProps = {
+type Props = {
   thread: Thread;
 };
 
-type WaitingListItemState = {
+type State = {
   showDetails: boolean;
 };
 
-export default class WaitingListItem
-  extends React.PureComponent<WaitingListItemProps, WaitingListItemState> {
+export default class WaitingListItem extends React.PureComponent<Props, State> {
 
-  public state: WaitingListItemState = {
+  public state: State = {
     showDetails: false,
   };
 

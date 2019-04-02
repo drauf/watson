@@ -2,18 +2,17 @@ import React from 'react';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 import Monitor from './Monitor';
 
-type MonitorOwnerProps = {
+type Props = {
   monitor: Monitor;
 };
 
-type MonitorOwnerState = {
+type State = {
   showOwner: boolean;
 };
 
-export default class MonitorOwner
-  extends React.PureComponent<MonitorOwnerProps, MonitorOwnerState> {
+export default class MonitorOwner extends React.PureComponent<Props, State> {
 
-  public state: MonitorOwnerState = {
+  public state: State = {
     showOwner: false,
   };
 

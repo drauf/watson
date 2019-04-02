@@ -1,13 +1,13 @@
 import React from 'react';
 import Thread from '../../types/Thread';
 
-type ThreadsOverviewProps = {
+type Props = {
   isFilteredByStack: boolean;
   threadsNumber: number;
   threadDumps: Array<Map<number, Thread>>;
 };
 
-const ThreadsOverviewFilteringSummary: React.SFC<ThreadsOverviewProps>
+const ThreadsOverviewFilteringSummary: React.SFC<Props>
   = ({ isFilteredByStack, threadsNumber, threadDumps }) => {
 
     if (isFilteredByStack) {

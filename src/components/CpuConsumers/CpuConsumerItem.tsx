@@ -3,12 +3,12 @@ import Thread from '../../types/Thread';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumerSingleUsage from './CpuConsumerSingleUsage';
 
-type CpuConsumerItemProps = {
+type Props = {
   dumpsNumber: number;
   consumer: CpuConsumer;
 };
 
-const CpuConsumerItem: React.SFC<CpuConsumerItemProps> = ({ dumpsNumber, consumer }) => {
+const CpuConsumerItem: React.SFC<Props> = ({ dumpsNumber, consumer }) => {
   const threads: Array<Thread | undefined> = [];
 
   for (let i = 0; i < dumpsNumber; i++) {

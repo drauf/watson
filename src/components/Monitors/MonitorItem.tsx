@@ -3,11 +3,11 @@ import Monitor from './Monitor';
 import MonitorOwner from './MonitorOwner';
 import WaitingList from './WaitingList';
 
-type MonitorItemProps = {
+type Props = {
   monitor: Monitor;
 };
 
-const MonitorItem: React.SFC<MonitorItemProps> = ({ monitor }) => {
+const MonitorItem: React.SFC<Props> = ({ monitor }) => {
   const javaClass = monitor.javaClass
     ? monitor.javaClass.substring(monitor.javaClass.lastIndexOf('.') + 1)
     : 'unknown class';

@@ -1,7 +1,7 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
 
-type SimilarStacksSettingsProps = {
+type Props = {
   linesToConsider: number;
   minimalGroupSize: number;
   withoutIdle: boolean;
@@ -9,7 +9,7 @@ type SimilarStacksSettingsProps = {
   onIntegerChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const SimilarStacksSettings: React.SFC<SimilarStacksSettingsProps> =
+const SimilarStacksSettings: React.SFC<Props> =
   ({ linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange }) => (
     <div id="settings">
       <div className="filters">
