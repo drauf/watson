@@ -2,18 +2,18 @@ import ReactGA from 'react-ga';
 import CpuUsage from '../types/CpuUsage';
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
-import CpuUsageParser from './CpuUsageParser';
+import CpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './CpuUsageParser';
 import { matchOne } from './RegExpUtils';
-import ThreadDumpParser, { DATE_PATTERN } from './ThreadDumpParser';
+import ThreadDumpParser, { THREAD_DUMP_DATE_PATTERN } from './ThreadDumpParser';
 
 const MAX_TIME_DIFFERENCE_ALLOWED: number = 10000;
 
 export default class Parser {
-  private parsingStarted: number = Date.now();
   private cpuUsages: CpuUsage[] = [];
   private threadDumps: ThreadDump[] = [];
-  private cpuUsagesToParse: number = 0;
-  private threadDumpsToParse: number = 0;
+
+  private filesToParse: number = 0;
+  private parsingStarted: number = Date.now();
   private onFilesParsed: (threadDumps: ThreadDump[]) => void;
 
   constructor(onFilesParsed: (threadDumps: ThreadDump[]) => void) {
@@ -24,8 +24,7 @@ export default class Parser {
     this.parsingStarted = Date.now();
     this.cpuUsages = [];
     this.threadDumps = [];
-    this.cpuUsagesToParse = 0;
-    this.threadDumpsToParse = 0;
+    this.filesToParse = 0;
 
     this.parse(uploaded);
   }
@@ -48,8 +47,8 @@ export default class Parser {
       let currentDump: string[] = [];
       while (line !== undefined) {
         // check if it's the beginning of another thread dump
-        if (matchOne(DATE_PATTERN, line)) {
-          this.threadDumpsToParse++;
+        if (matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
+          this.filesToParse++;
           ThreadDumpParser.parseThreadDump(currentDump.slice(), this.onParsedThreadDump);
           currentDump = [line];
         } else {
@@ -61,35 +60,32 @@ export default class Parser {
 
       ThreadDumpParser.parseThreadDump(currentDump, this.onParsedThreadDump);
     };
-    this.threadDumpsToParse++;
+    this.filesToParse++;
     reader.readAsText(file);
   }
 
   private parseMultipleFiles(files: File[]) {
-    const cpuUsageFiles = [];
-    const threadDumpFiles = [];
+    this.filesToParse = this.filesToParse + files.length;
 
-    for (const file of files) {
-      if (file.name.includes('cpu')) {
-        cpuUsageFiles.push(file);
-        this.cpuUsagesToParse++;
-      } else if (file.name !== 'pmap_output.txt') {
-        threadDumpFiles.push(file);
-        this.threadDumpsToParse++;
-      }
-    }
-    this.parseCpuUsages(cpuUsageFiles);
-    this.parseThreadDumps(threadDumpFiles);
-  }
-
-  private parseCpuUsages(files: File[]) {
     for (const file of files) {
       const reader = new FileReader();
 
-      reader.onload = ((name: string) => () => {
+      reader.onload = () => {
         const lines: string[] = (reader.result as string).split('\n');
-        CpuUsageParser.parseCpuUsage(name, lines, this.onParsedCpuUsage);
-      })(file.name);
+        const firstLine = lines[0];
+
+        if (!firstLine) {
+          return;
+        }
+
+        if (matchOne(CPU_USAGE_TIMESTAMP_PATTERN, firstLine)) {
+          CpuUsageParser.parseCpuUsage(lines, this.onParsedCpuUsage);
+        } else if (matchOne(THREAD_DUMP_DATE_PATTERN, firstLine)) {
+          ThreadDumpParser.parseThreadDump(lines, this.onParsedThreadDump);
+        } else {
+          this.filesToParse = this.filesToParse - 1;
+        }
+      };
 
       reader.readAsText(file);
     }
@@ -97,33 +93,20 @@ export default class Parser {
 
   private onParsedCpuUsage = (cpuUsage: CpuUsage) => {
     this.cpuUsages.push(cpuUsage);
-    this.cpuUsagesToParse = this.cpuUsagesToParse - 1;
+    this.filesToParse = this.filesToParse - 1;
     this.checkCompletion();
-  }
-
-  private parseThreadDumps(files: File[]) {
-    for (const file of files) {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        const lines: string[] = (reader.result as string).split('\n');
-        ThreadDumpParser.parseThreadDump(lines, this.onParsedThreadDump);
-      };
-
-      reader.readAsText(file);
-    }
   }
 
   private onParsedThreadDump = (threadDump: ThreadDump) => {
     if (threadDump.threads.length > 0) {
       this.threadDumps.push(threadDump);
     }
-    this.threadDumpsToParse = this.threadDumpsToParse - 1;
+    this.filesToParse = this.filesToParse - 1;
     this.checkCompletion();
   }
 
   private checkCompletion() {
-    if (!this.cpuUsagesToParse && !this.threadDumpsToParse) {
+    if (!this.filesToParse) {
       this.fireAnalytics();
       this.groupCpuUsagesWithThreadDumps();
       this.sortThreadDumps();
@@ -183,13 +166,12 @@ export default class Parser {
       .filter(threadDump => threadDump.getEpoch())
       .forEach((threadDump) => {
         const dumpEpoch = threadDump.getEpoch();
-        const usageEpoch = cpuUsageEpoch;
 
-        if (!dumpEpoch || !usageEpoch) {
+        if (!dumpEpoch || !cpuUsageEpoch) {
           return;
         }
 
-        const diff = Math.abs((dumpEpoch % AN_HOUR) - (usageEpoch % AN_HOUR));
+        const diff = Math.abs((dumpEpoch % AN_HOUR) - (cpuUsageEpoch % AN_HOUR));
 
         if (diff < smallestDiff) {
           smallestDiff = diff;

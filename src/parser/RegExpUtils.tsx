@@ -1,8 +1,3 @@
-export function getEpochFromFilename(pattern: RegExp, filename: string): number {
-  const epoch = matchOne(pattern, filename);
-  return parseInt(epoch, 10) * 1000;
-}
-
 export function matchOne(pattern: RegExp, str?: string): string {
   const execArray: RegExpExecArray | null = pattern.exec(str || '');
   return execArray ? execArray[1] : '';

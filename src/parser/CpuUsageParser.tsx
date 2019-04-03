@@ -2,11 +2,9 @@ import CpuUsage from '../types/CpuUsage';
 import LoadAverages from '../types/LoadAverage';
 import MemoryUsage from '../types/MemoryUsage';
 import ThreadCpuUsage from '../types/ThreadCpuUsage';
-import {
-  getEpochFromFilename, matchMultipleGroups, matchMultipleTimes, matchOne,
-} from './RegExpUtils';
+import { matchMultipleGroups, matchMultipleTimes, matchOne } from './RegExpUtils';
 
-const FILENAME_DATE_PATTERN: RegExp = /\.(\d*)\.txt$/;
+export const CPU_USAGE_TIMESTAMP_PATTERN: RegExp = /^top - ([0-9]{2}:[0-9]{2}:[0-9]{2})/;
 const LOAD_AVERAGES_PATTERN: RegExp = / load average: ([0-9\.]+), ([0-9\.]+), ([0-9\.]+)/;
 const RUNNING_PROCESSES_PATTERN: RegExp = /([0-9\.]+) running/;
 const TOTAL_MEMORY_PATTERN: RegExp = /([0-9\.]+)k?[ +]total/;
@@ -18,8 +16,8 @@ export type ParseCpuUsageCallback = (cpuUsage: CpuUsage) => void;
 
 export default class CpuUsageParser {
 
-  public static parseCpuUsage(name: string, lines: string[], callback: ParseCpuUsageCallback) {
-    const cpuUsage: CpuUsage = new CpuUsage(getEpochFromFilename(FILENAME_DATE_PATTERN, name));
+  public static parseCpuUsage(lines: string[], callback: ParseCpuUsageCallback) {
+    const cpuUsage: CpuUsage = new CpuUsage(matchOne(CPU_USAGE_TIMESTAMP_PATTERN, lines[0]));
 
     // top - 10:25:00 up 3 days, 13:14,  1 user,  load average: 90.75, 97.79, 86.84
     cpuUsage.loadAverages = CpuUsageParser.parseLoadAverages(lines.shift());

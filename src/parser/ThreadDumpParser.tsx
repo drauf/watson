@@ -6,7 +6,8 @@ import { matchMultipleGroups, matchOne } from './RegExpUtils';
 
 const THREAD_HEADER_PREFIX: string = '"';
 
-export const DATE_PATTERN: RegExp = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\r?$/;
+// tslint:disable:max-line-length
+export const THREAD_DUMP_DATE_PATTERN: RegExp = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\r?$/;
 const NAME_PATTERN: RegExp = /^\"(.*)\" /;
 const NID_PATTERN: RegExp = / nid=([0-9a-fx,]+)/;
 const FRAME_PATTERN: RegExp = /^\s+at (.*)/;
@@ -16,13 +17,14 @@ const LOCKED_OWNABLE_SYNCHRONIZERS_PATTERN: RegExp = /^\s+Locked ownable synchro
 const NONE_HELD_PATTERN: RegExp = /^\s+- None/;
 const HELD_LOCK_PATTERN: RegExp = /^\s+- <([x0-9a-f]+)> \(a (.*)\)/;
 const JNI_REFERENCES_PATTERN: RegExp = /^\s?JNI global references: (\d+)/;
+// tslint:enable:max-line-length
 
 export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
 
 export default class ThreadDumpParser {
 
   public static parseThreadDump(lines: string[], callback: ParseThreadDumpCallback) {
-    const threadDump = new ThreadDump(matchOne(DATE_PATTERN, lines.shift() as string));
+    const threadDump = new ThreadDump(matchOne(THREAD_DUMP_DATE_PATTERN, lines.shift() as string));
     lines.forEach(line => ThreadDumpParser.parseLine(line, threadDump));
     ThreadDumpParser.identifyAnonymousSynchronizers(threadDump.threads);
 
