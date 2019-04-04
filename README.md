@@ -1,6 +1,19 @@
+## Environment setup
+
+#### For mac
+```
+xcode-select --install
+brew install gcc
+brew install yarn
+```
+
 ## Available Scripts
 
-In the project directory, you can run:
+In the root project directory, you can run:
+
+### `yarn install`
+
+Installs the required packages. Must be done prior to `yarn start`
 
 ### `yarn start`
 
