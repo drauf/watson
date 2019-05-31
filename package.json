@@ -16,9 +16,9 @@
   },
   "scripts": {
     "lint": "tslint 'src/**/*.tsx' --project tsconfig.json",
-    "start": "rescripts start",
-    "build": "rescripts build && cp build/static/css/*.css build/static/css/main.css && cp build/static/js/*.js build/static/js/main.js",
-    "test": "rescripts test"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,7 +30,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@rescripts/cli": "0.0.10",
     "@types/jest": "24.0.11",
     "@types/node": "11.12.0",
     "@types/react": "16.8.9",

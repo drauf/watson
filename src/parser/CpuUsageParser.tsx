@@ -10,7 +10,7 @@ const RUNNING_PROCESSES_PATTERN: RegExp = /([0-9\.]+) running/;
 const TOTAL_MEMORY_PATTERN: RegExp = /([0-9\.]+)k?[ +]total/;
 const USED_MEMORY_PATTERN: RegExp = /([0-9\.]+)k? used/;
 const FREE_MEMORY_PATTERN: RegExp = /([0-9\.]+)k? free/;
-const COLUMN_MATCHER: RegExp = /([0-9A-Za-z\.:]+) +/g;
+const COLUMN_MATCHER: RegExp = /([^\s]+) +/g;
 
 export type ParseCpuUsageCallback = (cpuUsage: CpuUsage) => void;
 
