@@ -10,6 +10,7 @@ const THREAD_HEADER_PREFIX: string = '"';
 export const THREAD_DUMP_DATE_PATTERN: RegExp = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\r?$/;
 const NAME_PATTERN: RegExp = /^\"(.*)\" /;
 const NID_PATTERN: RegExp = / nid=([0-9a-fx,]+)/;
+const TID_PATTERN: RegExp = / tid=([0-9a-fx,]+)/;
 const FRAME_PATTERN: RegExp = /^\s+at (.*)/;
 const THREAD_STATE_PATTERN: RegExp = /^\s*java.lang.Thread.State: (.*)/;
 const SYNCHRONIZATION_STATUS_PATTERN: RegExp = /^\s+- (.*?) +<([x0-9a-f]+)> \(a (.*)\)/;
@@ -42,8 +43,12 @@ export default class ThreadDumpParser {
   }
 
   private static parseThreadHeader(header: string, threadDump: ThreadDump): void {
-    const id = parseInt(matchOne(NID_PATTERN, header), 16);
     const name = matchOne(NAME_PATTERN, header).trim();
+    // Depending on the way thread dumps were made, they can either have NID or TID
+    // We prefer NID, as it allows linking thread dumps with cpu_usage files
+    const nid = parseInt(matchOne(NID_PATTERN, header), 16);
+    const tid = parseInt(matchOne(TID_PATTERN, header), 16);
+    const id = nid !== 0 ? nid : tid;
 
     ThreadDumpParser.currentThread = new Thread(id, name, threadDump.getEpoch());
     threadDump.threads.push(ThreadDumpParser.currentThread);
