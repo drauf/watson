@@ -96,7 +96,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
 
       // if the stack trace is too long, it's not a queue thread
       for (const thread of monitor.waiting) {
-        if (thread.stackTrace.length > 11) {
+        if (thread.stackTrace.length > 12) {
           return false;
         }
       }
