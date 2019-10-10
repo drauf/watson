@@ -40,14 +40,15 @@
   text-align: center;
 }
 
-.threads-overview-table {
+table {
+  position: relative;
   width: 99%;
   padding-left: 4px;
   margin: 10px 0 4px;
   border-spacing: 2px;
   table-layout: fixed;
 }
-.threads-overview-table td {
+td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -81,10 +82,22 @@ td.matching {
   background: #B3D4FF;
 }
 
-#threads-overview-details {
-  background: #fff;
-  height: 120px;
-  width: 100%;
-  bottom: 0;
-  position: fixed;
+td > span,
+th > span {
+  visibility: hidden;
+  position: absolute;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.3s;
+  border-radius: 3px;
+  background-color: #172B4D;
+  color: #fff;
+  font-weight: bold;
+  padding: 2px 7px 4px;
+}
+td:hover > span,
+th:hover > span {
+  display: block;
+  visibility: visible;
+  opacity: 1;
 }

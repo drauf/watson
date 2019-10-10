@@ -9,25 +9,30 @@ type Props = {
 };
 
 const ThreadsOverview: React.SFC<Props> = ({ dates, isFilteredByStack, threadDumps }) => (
-  <table className="threads-overview-table">
-    <thead>
-      <tr>
-        <th />
-        {dates.map((date, index) => (
-          <th key={index}>{date}</th>
+  <div id="threads-overview-table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th />
+          {dates.map((date, index) => (
+            <th key={index}>
+              {date}
+              <span>{date}</span>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {threadDumps.map((threads, index) => (
+          <ThreadOverviewRow key={index}
+            isFiltered={isFilteredByStack}
+            total={dates.length}
+            threads={threads}
+          />
         ))}
-      </tr>
-    </thead>
-    <tbody>
-      {threadDumps.map((threads, index) => (
-        <ThreadOverviewRow key={index}
-          isFiltered={isFilteredByStack}
-          total={dates.length}
-          threads={threads}
-        />
-      ))}
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 );
 
 export default ThreadsOverview;
