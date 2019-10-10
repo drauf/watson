@@ -19,7 +19,10 @@ const ThreadOverviewRow: React.SFC<Props> = ({ total, threads, isFiltered }) => 
 
   return (
     <tr>
-      <td className="name" title={threadName}>{threadName}</td>
+      <td className="name">
+        {threadName}
+        <span>{threadName}</span>
+      </td>
       {threadsPadded.map((thread, i) => (
         <ThreadOverviewItem key={i}
           thread={thread}
