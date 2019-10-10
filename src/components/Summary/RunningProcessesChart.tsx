@@ -20,7 +20,7 @@ const RunningProcessesChart: React.SFC<Props> = ({ threadDumps }) => {
   });
 
   return (
-    <>
+    <div className="chart">
       <h3>Running processes</h3>
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>
@@ -36,7 +36,7 @@ const RunningProcessesChart: React.SFC<Props> = ({ threadDumps }) => {
           />
         </LineChart>
       </ResponsiveContainer>
-    </>
+    </div>
   );
 };
 
