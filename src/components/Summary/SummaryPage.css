@@ -1,8 +1,13 @@
 #memory-usages {
-  width: 100%;
+  width: 80%;
   min-height: 300px;
   display: flex;
 }
 #memory-usages > div {
   width: 50%;
+  text-align: center;
+}
+
+.chart {
+  width: 80%;
 }

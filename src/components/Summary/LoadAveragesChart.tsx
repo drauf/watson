@@ -22,7 +22,7 @@ const LoadAveragesChart: React.SFC<Props> = ({ threadDumps }) => {
   });
 
   return (
-    <>
+    <div className="chart">
       <h3>Load averages</h3>
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data}>
@@ -36,7 +36,7 @@ const LoadAveragesChart: React.SFC<Props> = ({ threadDumps }) => {
           <Line name="Fifteen minutes" dataKey="fifteenMinutes" stroke="#6554C0" />
         </LineChart>
       </ResponsiveContainer>
-    </>
+    </div>
   );
 };
 
