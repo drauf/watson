@@ -52,7 +52,7 @@ td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #6B778C;
+  color: #344563;
   cursor: pointer;
 }
 td.name {
@@ -64,22 +64,22 @@ td.empty {
   cursor: default;
 }
 td.runnable {
-  background: #ABF5D1;
+  background: #E3FCEF;
 }
 td.blocked {
-  background: #FFBDAD;
+  background: #FFEBE5;
 }
 td.waiting {
   background: #EAE6FF;
 }
 td.timed-waiting {
-  background: #FFFAE6;
+  background: #FFFAE5;
 }
 td.unknown {
   background: #FFF;
 }
 td.matching {
-  background: #B3D4FF;
+  background: #DEEBFF;
 }
 
 td > span,
