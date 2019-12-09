@@ -1,6 +1,6 @@
 import React from 'react';
-import { OutboundLink } from 'react-ga';
 import { ISSUE_TRACKER_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
+import OutboundLink from '../Navigation/OutboundLink';
 
 // tslint:disable:max-line-length
 const header = 'For the full experience, you should gather thread dumps along with <i>top</i> outputs.';
@@ -17,7 +17,7 @@ const DropzoneGuide: React.SFC = () => (
   <div id="dropzone-guide" onClick={stopPropagation}>
     <h6 dangerouslySetInnerHTML={{ __html: header }} />
     <span>
-      See: <OutboundLink eventLabel="Gathering data" to={GATHER_DATA_LINK} target="_blank">
+      See: <OutboundLink to={GATHER_DATA_LINK}>
         How to gather data
         </OutboundLink>
     </span>
@@ -26,12 +26,12 @@ const DropzoneGuide: React.SFC = () => (
 
     <ul id="dropzone-links">
       <li>
-        <OutboundLink eventLabel="Issue tracker" to={ISSUE_TRACKER_LINK} target="_blank">
+        <OutboundLink to={ISSUE_TRACKER_LINK}>
           Issue tracker
         </OutboundLink>
       </li>
       <li>
-        <OutboundLink eventLabel="Source code" to={SOURCE_CODE_LINK} target="_blank">
+        <OutboundLink to={SOURCE_CODE_LINK}>
           Source code
         </OutboundLink>
       </li>

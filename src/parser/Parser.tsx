@@ -1,4 +1,3 @@
-import ReactGA from 'react-ga';
 import CpuUsage from '../types/CpuUsage';
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
@@ -13,7 +12,6 @@ export default class Parser {
   private threadDumps: ThreadDump[] = [];
 
   private filesToParse: number = 0;
-  private parsingStarted: number = Date.now();
   private onFilesParsed: (threadDumps: ThreadDump[]) => void;
 
   constructor(onFilesParsed: (threadDumps: ThreadDump[]) => void) {
@@ -21,7 +19,6 @@ export default class Parser {
   }
 
   public parseFiles = (uploaded: File[]) => {
-    this.parsingStarted = Date.now();
     this.cpuUsages = [];
     this.threadDumps = [];
     this.filesToParse = 0;
@@ -107,29 +104,10 @@ export default class Parser {
 
   private checkCompletion() {
     if (!this.filesToParse) {
-      this.fireAnalytics();
       this.groupCpuUsagesWithThreadDumps();
       this.sortThreadDumps();
       this.onFilesParsed(this.threadDumps);
     }
-  }
-
-  private fireAnalytics() {
-    ReactGA.timing({
-      category: 'Parsing',
-      value: Date.now() - this.parsingStarted,
-      variable: 'parsed-all',
-    });
-    ReactGA.event({
-      action: 'Loaded CPU usages',
-      category: 'Parsing',
-      value: this.cpuUsages.length,
-    });
-    ReactGA.event({
-      action: 'Loaded thread dumps',
-      category: 'Parsing',
-      value: this.threadDumps.length,
-    });
   }
 
   private groupCpuUsagesWithThreadDumps() {

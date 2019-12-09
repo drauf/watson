@@ -1,5 +1,4 @@
 import React, { ComponentState } from 'react';
-import ReactGA from 'react-ga';
 import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 
 export default class PageWithSettings<S> extends React.PureComponent<WithThreadDumpsProps, S> {
@@ -22,12 +21,6 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
     const name: string = event.target.name;
     const isChecked: boolean = event.target.checked;
     const newState: ComponentState = { [name]: isChecked };
-
-    ReactGA.event({
-      action: `${this.PAGE_NAME} settings changed`,
-      category: 'Navigation',
-      label: `Filter ${name} changed to ${isChecked}`,
-    });
     this.setState(newState);
   }
 
@@ -35,12 +28,6 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
     const name: string = event.target.name;
     const value: number = parseInt(event.target.value ? event.target.value : '0', 10);
     const newState: ComponentState = { [name]: value > 0 ? value : 0 };
-
-    ReactGA.event({
-      action: `${this.PAGE_NAME} settings changed`,
-      category: 'Navigation',
-      label: `Number ${name} changed to ${value}`,
-    });
     this.setState(newState);
   }
 
@@ -48,12 +35,6 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
     const name: string = event.target.name;
     const value: string = event.target.value;
     const newState: ComponentState = { [name]: value };
-
-    ReactGA.event({
-      action: `${this.PAGE_NAME} settings changed`,
-      category: 'Navigation',
-      label: `RegExp ${name} changed to ${value}`,
-    });
     this.setState(newState);
   }
 }
