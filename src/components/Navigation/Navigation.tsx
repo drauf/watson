@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactGA, { OutboundLink } from 'react-ga';
 import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 import { clearCurrentThreadDump } from '../../common/threadDumpsStorageService';
 import './Navigation.css';
+import OutboundLink from './OutboundLink';
 
 // tslint:disable:max-line-length
 export const ISSUE_TRACKER_LINK: string = 'https://github.com/drauf/watson/issues';
@@ -41,10 +41,10 @@ class Navigation extends React.PureComponent<Props> {
           </ul>
 
           <ul>
-            <OutboundLink eventLabel="Issue tracker" to={ISSUE_TRACKER_LINK} target="_blank">
+            <OutboundLink to={ISSUE_TRACKER_LINK}>
               <li>Issue tracker</li>
             </OutboundLink>
-            <OutboundLink eventLabel="Source code" to={SOURCE_CODE_LINK} target="_blank">
+            <OutboundLink to={SOURCE_CODE_LINK}>
               <li>Source code</li>
             </OutboundLink>
           </ul>
@@ -54,11 +54,6 @@ class Navigation extends React.PureComponent<Props> {
   }
 
   private onClear = () => {
-    ReactGA.event({
-      action: 'Cleared thread dumps',
-      category: 'Navigation',
-    });
-
     clearCurrentThreadDump();
     this.props.history.push('/');
   }

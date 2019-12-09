@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactGA from 'react-ga';
 import { Route, Switch } from 'react-router-dom';
 import { withThreadDumps as page } from '../common/withThreadDumps';
 import './Container.css';
@@ -46,16 +45,7 @@ class Container extends React.PureComponent<any, State> {
   }
 
   private toggleNavigation = () => {
-    this.setState((prevState) => {
-      const isOpen = !prevState.navigationOpen;
-
-      ReactGA.event({
-        action: isOpen ? 'Navigation toggled open' : 'Navigation toggled close',
-        category: 'Navigation',
-      });
-
-      return { navigationOpen: isOpen };
-    });
+    this.setState(prevState => ({ navigationOpen: !prevState.navigationOpen }));
   }
 }
 

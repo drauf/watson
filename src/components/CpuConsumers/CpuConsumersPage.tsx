@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactGA from 'react-ga';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import Thread from '../../types/Thread';
 import PageWithSettings from '../PageWithSettings/PageWithSettings';
@@ -53,11 +52,6 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
   }
 
   private handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
-    ReactGA.event({
-      action: `${this.PAGE_NAME} settings changed`,
-      category: 'Navigation',
-      label: `Mode changed to ${mode}`,
-    });
     this.setState({ mode: mode as CpuConsumersMode });
   }
 
