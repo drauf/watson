@@ -1,0 +1,15 @@
+{
+  "short_name": "Watson",
+  "name": "Create React App Sample",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "183x183 128x128 64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0052CC",
+  "background_color": "#f4f5f7"
+}
