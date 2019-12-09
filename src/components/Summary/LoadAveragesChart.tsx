@@ -28,7 +28,7 @@ const LoadAveragesChart: React.SFC<Props> = ({ threadDumps }) => {
         <LineChart data={data}>
           <XAxis dataKey="name" />
           <YAxis type="number" />
-          <CartesianGrid stroke="#EBECF0" strokeDasharray="5 5" />
+          <CartesianGrid stroke="#DFE1E5" strokeDasharray="5 5" />
           <Tooltip />
           <Legend />
           <Line name="One minute" dataKey="oneMinute" stroke="#36B37E" />
