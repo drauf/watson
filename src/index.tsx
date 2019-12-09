@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import App from './App';
 import { clearOldThreadDumps } from './common/threadDumpsStorageService';
 import { withTracker } from './common/withTracker';
@@ -16,8 +16,8 @@ ReactGA.initialize('UA-134928161-1', {
 clearOldThreadDumps();
 
 ReactDOM.render(
-  <Router>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Route component={withTracker(App, {})} />
-  </Router>,
+  </BrowserRouter>,
   document.getElementById('root'),
 );

@@ -2,6 +2,7 @@
   "name": "watson",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://drauf.github.io/watson/",
   "dependencies": {
     "flatted": "2.0.0",
     "localforage": "1.7.3",
@@ -18,7 +19,9 @@
     "lint": "tslint 'src/**/*.tsx' --project tsconfig.json",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
