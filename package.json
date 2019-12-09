@@ -5,6 +5,7 @@
   "homepage": "https://drauf.github.io/watson/",
   "dependencies": {
     "flatted": "2.0.0",
+    "gh-pages": "2.1.1",
     "localforage": "1.7.3",
     "react": "16.8.5",
     "react-dom": "16.8.5",
