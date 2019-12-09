@@ -1,6 +1,6 @@
 import React from 'react';
 import { OutboundLink } from 'react-ga';
-import { ISSUE_TRACKER_LINK, KUDOS_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
+import { ISSUE_TRACKER_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
 
 // tslint:disable:max-line-length
 const header = 'You should load all <i>jira_cpu_usage</i>, <i>jira_threads</i>, and <i>pmap_output</i> files.';
@@ -22,17 +22,12 @@ const DropzoneGuide: React.SFC = () => (
 
     <ul id="dropzone-links" onClick={stopPropagation}>
       <li>
-        <OutboundLink id="kudos" eventLabel="go/kudos" to={KUDOS_LINK} target="_blank">
-          go/kudos
-        </OutboundLink>
-      </li>
-      <li>
         <OutboundLink eventLabel="Issue tracker" to={ISSUE_TRACKER_LINK} target="_blank">
           Issue tracker
         </OutboundLink>
       </li>
       <li>
-        <OutboundLink eventLabel="Issue tracker" to={SOURCE_CODE_LINK} target="_blank">
+        <OutboundLink eventLabel="Source code" to={SOURCE_CODE_LINK} target="_blank">
           Source code
         </OutboundLink>
       </li>
