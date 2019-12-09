@@ -1,3 +1,14 @@
+# Watson
+
+Watson is a Jira-aware Java thread dump and CPU usage analyzer.
+
+It combines the best features from other popular Java TDAs and removes a lot of noise, e.g. hides idle Tomcat threads waiting for work.
+
+## Taking thread dumps
+To fully laverage Watson, you should capture Java thread dump **and** top outputs.
+
+The easiest way to do this is to use [Atlassian Support scripts](https://bitbucket.org/atlassianlabs/atlassian-support/src/master/).
+
 ## Environment setup
 
 #### For mac
@@ -7,7 +18,7 @@ brew install gcc
 brew install yarn
 ```
 
-## Available Scripts
+## Available scripts
 
 In the root project directory, you can run:
 
