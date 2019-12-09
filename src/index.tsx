@@ -16,7 +16,7 @@ ReactGA.initialize('UA-134928161-1', {
 clearOldThreadDumps();
 
 ReactDOM.render(
-  <Router basename={process.env.PUBLIC_URL}>
+  <Router>
     <Route component={withTracker(App, {})} />
   </Router>,
   document.getElementById('root'),

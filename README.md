@@ -4,7 +4,7 @@ It combines the best features of other popular Java TDAs and hides a lot of nois
 
 ![Watson UI screenshot](screenshot.png)
 
-## Taking thread dumps
+## Gathering thread dumps
 To fully leverage Watson, you should capture Java thread dump **and** top outputs.
 
 The easiest way to do this is to use [Atlassian Support scripts](https://bitbucket.org/atlassianlabs/atlassian-support/src/master/).

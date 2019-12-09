@@ -3,8 +3,8 @@ import { OutboundLink } from 'react-ga';
 import { ISSUE_TRACKER_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
 
 // tslint:disable:max-line-length
-const header = 'You should load all <i>jira_cpu_usage</i>, <i>jira_threads</i>, and <i>pmap_output</i> files.';
-const subheader = 'Alternatively, for limited functionality, load a single file (like <i>catalina.out</i>) containg all thread dumps.';
+const header = 'For the full experience, you should gather thread dumps along with <i>top</i> outputs.';
+const GATHER_DATA_LINK = 'https://github.com/drauf/watson/blob/master/README.md#gathering-thread-dumps';
 const disclaimer = 'Watson works fully offline. No files will leave your machine.';
 // tslint:enable:max-line-length
 
@@ -14,13 +14,17 @@ const stopPropagation = (event: React.MouseEvent) => {
 };
 
 const DropzoneGuide: React.SFC = () => (
-  <>
+  <div id="dropzone-guide" onClick={stopPropagation}>
     <h6 dangerouslySetInnerHTML={{ __html: header }} />
-    <span dangerouslySetInnerHTML={{ __html: subheader }} />
+    <span>
+      See: <OutboundLink eventLabel="Gathering data" to={GATHER_DATA_LINK} target="_blank">
+        How to gather data
+        </OutboundLink>
+    </span>
 
     <p dangerouslySetInnerHTML={{ __html: disclaimer }} />
 
-    <ul id="dropzone-links" onClick={stopPropagation}>
+    <ul id="dropzone-links">
       <li>
         <OutboundLink eventLabel="Issue tracker" to={ISSUE_TRACKER_LINK} target="_blank">
           Issue tracker
@@ -32,7 +36,7 @@ const DropzoneGuide: React.SFC = () => (
         </OutboundLink>
       </li>
     </ul>
-  </>
+  </div>
 );
 
 export default DropzoneGuide;
