@@ -92,7 +92,7 @@ input:focus {
   position: relative;
   top: 2px;
   color: #344563;
-  background: rgba(9,30,66,.08) url(/chevron.svg) no-repeat top left;
+  background: rgba(9,30,66,.08) url(chevron.svg) no-repeat top left;
   border-radius: 3.01px;
   margin-right: 5px;
   transition: background-color .1s ease-out;
