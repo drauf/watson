@@ -4,6 +4,8 @@ Watson is a Jira-aware Java thread dump and CPU usage analyzer.
 
 It combines the best features from other popular Java TDAs and removes a lot of noise, e.g. hides idle Tomcat threads waiting for work.
 
+![Watson UI screenshot](screenshot.png)
+
 ## Taking thread dumps
 To fully laverage Watson, you should capture Java thread dump **and** top outputs.
 
