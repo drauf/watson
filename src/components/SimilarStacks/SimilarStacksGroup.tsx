@@ -20,10 +20,10 @@ export default class SimilarStacksGroup extends React.PureComponent<Props, State
   public render() {
     return (
       <>
-        <h6 className="clickable" onClick={this.toggleGroup}>
+        <h5 className="clickable" onClick={this.toggleGroup}>
           <span className={this.state.showDetails ? 'chevron' : 'chevron rotate'} />
           {this.props.threadGroup.length} thread(s) with this stack:
-        </h6>
+        </h5>
 
         {this.state.showDetails &&
           <GroupDetails
