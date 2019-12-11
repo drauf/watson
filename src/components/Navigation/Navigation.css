@@ -41,6 +41,11 @@ nav.open li:hover {
   background: #EBECF0;
 }
 
+nav a {
+  color: #172B4D;
+  font-weight: 500;
+  text-decoration: none;
+}
 nav a:hover {
   text-decoration: none;
 }

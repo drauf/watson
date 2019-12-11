@@ -33,21 +33,20 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
 
     const cpuUsage = `${thread.cpuUsage.toFixed(1)}%`;
     const padding = ' '.repeat(8 - cpuUsage.length);
-    let className = thread.cpuUsage > 78
-      ? 'high '
+    const className = thread.cpuUsage > 78
+      ? 'vhigh'
       : thread.cpuUsage > 42
-        ? 'mid '
-        : thread.cpuUsage > 13
-          ? 'low '
-          : thread.cpuUsage > 0
-            ? 'vlow '
-            : '';
-    className += 'cpu-usage';
+        ? 'high'
+        : thread.cpuUsage > 21
+          ? 'mid'
+          : thread.cpuUsage > 10
+            ? 'low'
+            : 'vlow';
 
     return (
       <>
         {padding}
-        <span className={className} onClick={this.handleClick}>{cpuUsage}</span>
+        <a className={className} onClick={this.handleClick}>{cpuUsage}</a>
 
         {this.state.showDetails &&
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}

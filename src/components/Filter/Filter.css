@@ -7,19 +7,19 @@
   color: #0052CC;
 }
 .filters label:hover {
-  border: 1px solid #C1C7D0;
+  border: 1px solid #DFE1E5;
   color: #0065FF;
   text-decoration: none;
 }
 
 .filters .checked {
   color: #FFF;
-  background: #172B4D;
+  background: #253858;
 }
 .filters .checked:hover {
   border: 1px solid transparent;
   color: #091E42;
-  background: #EBECF0;
+  background: #DFE1E5;
 }
 
 .filters input {

@@ -15,7 +15,7 @@ const stopPropagation = (event: React.MouseEvent) => {
 
 const DropzoneGuide: React.SFC = () => (
   <div id="dropzone-guide" onClick={stopPropagation}>
-    <h6 dangerouslySetInnerHTML={{ __html: header }} />
+    <h5 dangerouslySetInnerHTML={{ __html: header }} />
     <span>
       See: <OutboundLink to={GATHER_DATA_LINK}>
         How to gather data

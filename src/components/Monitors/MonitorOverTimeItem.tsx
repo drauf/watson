@@ -21,10 +21,10 @@ export default class MonitorOverTimeItem extends React.PureComponent<Props, Stat
 
     return (
       <>
-        <h6 className="clickable" onClick={this.toggleCollapse}>
+        <h5 className="clickable" onClick={this.toggleCollapse}>
           <span className={this.state.collapse ? 'chevron rotate' : 'chevron'} />
           {monitor.waitingSum} thread(s) waiting for &lt;{monitor.id}&gt;
-        </h6>
+        </h5>
 
         {!this.state.collapse &&
           monitor.monitors.map((item, index) => <MonitorItem key={index} monitor={item} />)}

@@ -22,13 +22,16 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
 
     return (
       <>
-        <b>{Thread.getFormattedTime(thread)}</b>
+        <h6>
+          <a onClick={this.handleClick} title="Open thread details in a new window">
+            {Thread.getFormattedTime(thread)}
+          </a>
+        </h6>
 
-        <ul className="stacktrace">
+        <ol className="stacktrace">
           {stack.map((line, index) => (
             <li key={index}>{line}</li>))}
-          <li><a onClick={this.handleClick}>See thread details</a></li>
-        </ul>
+        </ol>
 
         {this.state.showDetails &&
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}

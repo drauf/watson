@@ -3,26 +3,24 @@
   white-space: pre;
   list-style: none;
 }
-#consumers-list h6 {
+#consumers-list h5 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.cpu-usage:hover {
-  cursor: pointer;
-  color: #172B4D;
-  text-decoration: underline;
+.vhigh {
+  color: #DE350B;
 }
 .high {
-  color: #BF2600;
+  color: #FF991F;
 }
 .mid {
-  color: #403294;
+  color: #00A3BF;
 }
 .low {
-  color: #008DA6;
+  color: #5243AA;
 }
 .vlow {
-  color: #006644;
+  color: #172B4D;
 }
