@@ -9,7 +9,6 @@
 .filters label:hover {
   border: 1px solid #DFE1E5;
   color: #0065FF;
-  text-decoration: none;
 }
 
 .filters .checked {
