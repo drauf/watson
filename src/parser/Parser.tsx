@@ -72,6 +72,7 @@ export default class Parser {
         const firstLine = lines[0];
 
         if (!firstLine) {
+          this.onParsedInvalidFile();
           return;
         }
 
@@ -86,6 +87,11 @@ export default class Parser {
 
       reader.readAsText(file);
     }
+  }
+
+  private onParsedInvalidFile = () => {
+    this.filesToParse = this.filesToParse - 1;
+    this.checkCompletion();
   }
 
   private onParsedCpuUsage = (cpuUsage: CpuUsage) => {
