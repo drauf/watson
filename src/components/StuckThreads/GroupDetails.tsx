@@ -10,14 +10,34 @@ type Props = {
 const GroupDetails: React.SFC<Props> = ({ maxDifferingLines, threadGroup }) => {
   return (
     <>
-      {threadGroup.map((thread, index) =>
+      {threadGroup.map((thread, index, array) =>
         <ThreadDetails
           key={index}
           thread={thread}
+          showStackTrace={shouldShowStackTrace(thread, array[index + 1], maxDifferingLines)}
           maxDifferingLines={maxDifferingLines}
         />)}
     </>
   );
 };
+
+// Only show the stack trace if it's the last one or the next one is different than current
+const shouldShowStackTrace =
+  (current: Thread, next: Thread | undefined, maxDifferingLines: number): boolean => {
+    if (!next) {
+      return true;
+    }
+
+    const currentStack = current.stackTrace;
+    const nextStack = next.stackTrace;
+    const limit = Math.min(maxDifferingLines, currentStack.length);
+
+    for (let i = 0; i < limit; i++) {
+      if (currentStack[i] !== nextStack[i]) {
+        return true;
+      }
+    }
+    return false;
+  };
 
 export default GroupDetails;
