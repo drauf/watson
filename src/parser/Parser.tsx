@@ -54,24 +54,23 @@ export default class Parser {
 
   // a single file can contain multiple thread dumps - split them into "batches"
   private splitThreadDumps(lines: string[]) {
-    let line = lines.shift();
     let currentDump: string[] = [];
 
-    // skip lines until a thread dump starts
-    while (line !== undefined && !matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
-      line = lines.shift();
-    }
-
-    while (line !== undefined) {
+    for (const line of lines) {
       // check if a new thread dump starts
-      if (currentDump.length > 0 && matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
+      if (matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
+        // special case for the first thread dump in the file
+        if (currentDump.length === 0) {
+          currentDump.push(line);
+          continue;
+        }
+
         this.parseThreadDump(currentDump);
         currentDump = [line];
-      } else {
+      } else if (currentDump.length > 0) {
+        // do not add lines if there is no thread dump (e.g. when parsing catalina.out)
         currentDump.push(line);
       }
-
-      line = lines.shift();
     }
 
     if (currentDump.length > 0) {
