@@ -3,7 +3,9 @@ import ThreadStatus from './ThreadStatus';
 
 export default class Thread {
   public static getFormattedTime = (thread: Thread): string => {
-    return thread.epoch ? new Date(thread.epoch).toLocaleTimeString() : '';
+    return thread.epoch
+      ? new Date(thread.epoch).toUTCString().substr(17, 8)
+      : '';
   }
 
   public id: number;
