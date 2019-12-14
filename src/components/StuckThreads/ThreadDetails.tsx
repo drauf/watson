@@ -4,6 +4,7 @@ import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
 type Props = {
   maxDifferingLines: number;
+  showStackTrace: boolean;
   thread: Thread;
 };
 
@@ -28,10 +29,11 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
           </a>
         </h6>
 
-        <ol className="stacktrace">
-          {stack.map((line, index) => (
-            <li key={index}>{line}</li>))}
-        </ol>
+        {this.props.showStackTrace &&
+          <ol className="stacktrace">
+            {stack.map((line, index) => (
+              <li key={index}>{line}</li>))}
+          </ol>}
 
         {this.state.showDetails &&
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
