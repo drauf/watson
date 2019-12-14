@@ -36,7 +36,7 @@ export const clearCurrentThreadDump = (): void => {
 export const clearOldThreadDumps = (): void => {
   const sevenDaysAgo = new Date().setDate(new Date().getDate() - 7);
 
-  lastUsedStorage.iterate((date, key) => {
+  lastUsedStorage.iterate((date: number, key) => {
     if (date < sevenDaysAgo) {
       threadDumpsStorage.removeItem(key);
       lastUsedStorage.removeItem(key);

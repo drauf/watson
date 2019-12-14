@@ -27,43 +27,6 @@ export default class Parser {
   }
 
   private parse(files: File[]) {
-    // if only one file was uploaded, assume that it's a set of dumps
-    if (files.length === 1 && !files[0].name.includes('cpu')) {
-      this.parseSingleFile(files[0]);
-    } else {
-      this.parseMultipleFiles(files);
-    }
-  }
-
-  private parseSingleFile(file: File) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const lines: string[] = (reader.result as string).split('\n');
-
-      let line = lines.shift();
-      let currentDump: string[] = [];
-      while (line !== undefined) {
-        // check if it's the beginning of another thread dump
-        if (matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
-          this.filesToParse++;
-          ThreadDumpParser.parseThreadDump(currentDump.slice(), this.onParsedThreadDump);
-          currentDump = [line];
-        } else {
-          currentDump.push(line);
-        }
-
-        line = lines.shift();
-      }
-
-      ThreadDumpParser.parseThreadDump(currentDump, this.onParsedThreadDump);
-    };
-    this.filesToParse++;
-    reader.readAsText(file);
-  }
-
-  private parseMultipleFiles(files: File[]) {
-    this.filesToParse = this.filesToParse + files.length;
-
     for (const file of files) {
       const reader = new FileReader();
 
@@ -72,43 +35,72 @@ export default class Parser {
         const firstLine = lines[0];
 
         if (!firstLine) {
-          this.onParsedInvalidFile();
+          this.fileParsed();
           return;
         }
 
         if (matchOne(CPU_USAGE_TIMESTAMP_PATTERN, firstLine)) {
-          CpuUsageParser.parseCpuUsage(lines, this.onParsedCpuUsage);
-        } else if (matchOne(THREAD_DUMP_DATE_PATTERN, firstLine)) {
-          ThreadDumpParser.parseThreadDump(lines, this.onParsedThreadDump);
+          this.parseCpuUsage(lines);
         } else {
-          this.filesToParse = this.filesToParse - 1;
+          this.splitThreadDumps(lines);
         }
+        this.fileParsed();
       };
 
+      this.filesToParse = this.filesToParse + 1;
       reader.readAsText(file);
     }
   }
 
-  private onParsedInvalidFile = () => {
-    this.filesToParse = this.filesToParse - 1;
-    this.checkCompletion();
+  // a single file can contain multiple thread dumps - split them into "batches"
+  private splitThreadDumps(lines: string[]) {
+    let line = lines.shift();
+    let currentDump: string[] = [];
+
+    // skip lines until a thread dump starts
+    while (line !== undefined && !matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
+      line = lines.shift();
+    }
+
+    while (line !== undefined) {
+      // check if a new thread dump starts
+      if (currentDump.length > 0 && matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
+        this.parseThreadDump(currentDump);
+        currentDump = [line];
+      } else {
+        currentDump.push(line);
+      }
+
+      line = lines.shift();
+    }
+
+    if (currentDump.length > 0) {
+      this.parseThreadDump(currentDump);
+    }
+  }
+
+  private parseCpuUsage = (lines: string[]) => {
+    CpuUsageParser.parseCpuUsage(lines.slice(), this.onParsedCpuUsage);
   }
 
   private onParsedCpuUsage = (cpuUsage: CpuUsage) => {
     this.cpuUsages.push(cpuUsage);
-    this.filesToParse = this.filesToParse - 1;
-    this.checkCompletion();
+  }
+
+  private parseThreadDump = (lines: string[]) => {
+    ThreadDumpParser.parseThreadDump(lines.slice(), this.onParsedThreadDump);
   }
 
   private onParsedThreadDump = (threadDump: ThreadDump) => {
     if (threadDump.threads.length > 0) {
       this.threadDumps.push(threadDump);
     }
-    this.filesToParse = this.filesToParse - 1;
-    this.checkCompletion();
   }
 
-  private checkCompletion() {
+  private fileParsed() {
+    this.filesToParse = this.filesToParse - 1;
+
+    // finish parsing if there are no files left
     if (!this.filesToParse) {
       this.groupCpuUsagesWithThreadDumps();
       this.sortThreadDumps();

@@ -14,10 +14,7 @@ const TID_PATTERN: RegExp = / tid=([0-9a-fx,]+)/;
 const FRAME_PATTERN: RegExp = /^\s+at (.*)/;
 const THREAD_STATE_PATTERN: RegExp = /^\s*java.lang.Thread.State: (.*)/;
 const SYNCHRONIZATION_STATUS_PATTERN: RegExp = /^\s+- (.*?) +<([x0-9a-f]+)> \(a (.*)\)/;
-const LOCKED_OWNABLE_SYNCHRONIZERS_PATTERN: RegExp = /^\s+Locked ownable synchronizers:/;
-const NONE_HELD_PATTERN: RegExp = /^\s+- None/;
 const HELD_LOCK_PATTERN: RegExp = /^\s+- <([x0-9a-f]+)> \(a (.*)\)/;
-const JNI_REFERENCES_PATTERN: RegExp = /^\s?JNI global references: (\d+)/;
 // tslint:enable:max-line-length
 
 export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
@@ -116,17 +113,7 @@ export default class ThreadDumpParser {
       const lock: Lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
       lock.owner = ThreadDumpParser.currentThread;
       ThreadDumpParser.currentThread.locksHeld.push(lock);
-      return;
     }
-
-    // ignore those lines, as they provide no useful data
-    if (matchOne(LOCKED_OWNABLE_SYNCHRONIZERS_PATTERN, line)
-      || matchOne(NONE_HELD_PATTERN, line)
-      || matchOne(JNI_REFERENCES_PATTERN, line)) {
-      return;
-    }
-
-    console.warn(`Unable to parse line: ${line}`);
   }
 
   private static identifyAnonymousSynchronizers(threads: Thread[]): void {
