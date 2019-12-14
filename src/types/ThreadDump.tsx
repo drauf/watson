@@ -5,7 +5,9 @@ import Thread from './Thread';
 
 export default class ThreadDump {
   public static getFormattedTime = (threadDump: ThreadDump): string => {
-    return threadDump.epoch ? new Date(threadDump.epoch).toLocaleTimeString() : 'unknown time';
+    return threadDump.epoch
+      ? new Date(threadDump.epoch).toUTCString().substr(17, 8)
+      : 'unknown time';
   }
 
   public static from = (date: string | null): ThreadDump => {
