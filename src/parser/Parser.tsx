@@ -155,7 +155,7 @@ export default class Parser {
       });
 
     if (closest == null) {
-      closest = new ThreadDump(null);
+      closest = ThreadDump.fromEpoch(cpuUsageEpoch);
       this.threadDumps.push(closest);
     }
 
