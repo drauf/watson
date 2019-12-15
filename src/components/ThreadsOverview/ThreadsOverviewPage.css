@@ -48,10 +48,16 @@ table {
   border-spacing: 2px;
   table-layout: fixed;
 }
-td {
+
+/* Hide overflowing text */
+th, td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Background colors depending on the thread state */
+td {
   color: #344563;
   cursor: pointer;
 }
@@ -82,13 +88,12 @@ td.matching {
   background: #DEEBFF;
 }
 
+/* Tooltips on hover */
 td > span,
 th > span {
-  visibility: hidden;
+  display: none;
   position: absolute;
   z-index: 100;
-  opacity: 0;
-  transition: opacity 0.3s ease 0.3s;
   border-radius: 3px;
   background-color: #091E42;
   color: #fff;
@@ -98,6 +103,4 @@ th > span {
 td:hover > span,
 th:hover > span {
   display: block;
-  visibility: visible;
-  opacity: 1;
 }
