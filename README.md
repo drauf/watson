@@ -1,7 +1,10 @@
-![Home page screenshot](screenshots/home-page.png)
-![Threads overview page screenshot](screenshots/threads-overview.png)
+![Home page](screenshots/home-page.png)
+![Summary page](screenshots/summary.png)
+![CPU consumers page](screenshots/cpu-consumers.png)
+![Similar stack traces page](screenshots/similar-stack-traces.png)
+![Threads overview page](screenshots/threads-overview.png)
 
-Watson is a Jira-aware Java thread dump and CPU usage analyzer.
+Watson is a Java thread dump and CPU usage analyzer.
 
 It combines the best features of other popular Java TDAs and hides a lot of noise, like idle Tomcat threads waiting for work.
 
@@ -42,8 +45,3 @@ Runs `tslint` to check if coding rules are followed.
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
