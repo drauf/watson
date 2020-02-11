@@ -1,12 +1,12 @@
+Watson is a Java thread dump and CPU usage analyzer.
+
+It combines the best features of other popular Java TDAs and hides a lot of noise, like idle Tomcat threads waiting for work.
+
 ![Home page](screenshots/home-page.png)
 ![Summary page](screenshots/summary.png)
 ![CPU consumers page](screenshots/cpu-consumers.png)
 ![Similar stack traces page](screenshots/similar-stack-traces.png)
 ![Threads overview page](screenshots/threads-overview.png)
-
-Watson is a Java thread dump and CPU usage analyzer.
-
-It combines the best features of other popular Java TDAs and hides a lot of noise, like idle Tomcat threads waiting for work.
 
 ## Gathering thread dumps
 To fully leverage Watson, you should capture Java thread dump **and** top outputs.
