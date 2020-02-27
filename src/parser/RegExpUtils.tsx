@@ -8,8 +8,11 @@ export function matchMultipleGroups(pattern: RegExp, str?: string): string[] {
   return execArray != null ? execArray.slice(1) : [];
 }
 
-// any RegExp passed here needs to have the 'g' flag, otherwise it'll cause an infinite loop!
 export function matchMultipleTimes(pattern: RegExp, str?: string): string[] {
+  if (!pattern.global || (pattern.global && pattern.sticky)) {
+    throw new Error('Only regular expressions with "g" flag are allowed');
+  }
+
   const matches: string[] = [];
 
   let execArray: RegExpExecArray | null = pattern.exec(str || '');
