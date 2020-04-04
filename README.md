@@ -45,3 +45,7 @@ Runs `tslint` to check if coding rules are followed.
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.
+
+### `yarn deploy`
+
+Deploys the app to GitHub pages. Requires commit rights to the `gh-pages` branch.
