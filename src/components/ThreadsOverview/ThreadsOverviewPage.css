@@ -1,31 +1,21 @@
 #threads-overview-settings {
   margin-top: 22px;
   line-height: 36px;
-  min-height: 36px;
+  min-height: 83px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+#regexp-filters {
+  margin-left: 4em;
+  line-height: 42px;
   width: 90%;
   display: flex;
   align-items: center;
+  flex-direction: row;
 }
 #regexp-filters label {
-  margin-left: 3em;
-}
-@media (max-width: 1666px) {
-  #regexp-filters label {
-    margin-left: 16px;
-  }
-  #regexp-filters input {
-    width: 100px;
-  }
-}
-@media (max-width: 1439px) {
-  #regexp-filters label {
-    display: block;
-  }
-}
-@media (max-width: 1124px) {
-  #regexp-filters label {
-    display: none;
-  }
+  margin-right: 2em;
 }
 
 #matching-summary {

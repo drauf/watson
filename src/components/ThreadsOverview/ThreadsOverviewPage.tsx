@@ -2,6 +2,7 @@ import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import ThreadStatus from '../../types/ThreadStatus';
 import PageWithSettings from '../PageWithSettings/PageWithSettings';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
@@ -23,6 +24,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
 
   // tslint:disable:object-literal-sort-keys
   public state = {
+    active: true,
     nonJvm: true,
     tomcat: false,
     nonTomcat: false,
@@ -52,6 +54,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     return (
       <div id="wide-page">
         <ThreadsOverviewSettings
+          active={this.state.active}
           nonJvm={this.state.nonJvm}
           tomcat={this.state.tomcat}
           nonTomcat={this.state.nonTomcat}
@@ -89,10 +92,64 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
   }
 
   private filterThreads = (threadDumps: Array<Map<number, Thread>>) => {
-    let filtered = threadDumps;
+    let filtered = this.filterByActive(threadDumps, this.state.active);
     filtered = this.filterByName(filtered, this.state.nameFilter);
     this.markMatchingStackFilter(filtered, this.state.stackFilter);
     return filtered;
+  }
+
+  private filterByActive = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
+    if (!shouldFilter) {
+      return threadDumps;
+    }
+
+    return threadDumps.filter(threads => this.isActive(threads));
+  }
+
+  private isActive = (threads: Map<number, Thread>): boolean => {
+    let status;
+    for (const thread of threads.values()) {
+      // Status changed, so the thread is active
+      if (status && thread.status !== status) {
+        return true;
+      }
+
+      // Otherwise the thread is active if it's blocked or runnable and not idle
+      status = thread.status;
+      if (status === ThreadStatus.BLOCKED
+        || (status === ThreadStatus.RUNNABLE && !this.isIdleThread(thread.stackTrace))) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private isIdleThread = (stackTrace: string[]): boolean => {
+    if (!stackTrace || !stackTrace[0]) {
+      return true;
+    }
+
+    // Prevent false positives for threads waiting for IO
+    if (stackTrace.length > 16) {
+      return false;
+    }
+
+    // Filter out the most common queue threads just waiting for some work to do
+    if (stackTrace[0] === 'sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)') {
+      return true;
+    }
+    if (stackTrace[0] === 'sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)') {
+      return true;
+    }
+    if (stackTrace[0] === 'java.net.SocketInputStream.socketRead0(Native Method)') {
+      return true;
+    }
+    if (stackTrace[0] === 'java.net.PlainSocketImpl.socketAccept(Native Method)') {
+      return true;
+    }
+
+    return false;
   }
 
   private filterByName = (threadDumps: Array<Map<number, Thread>>, nameFilter: string) => {
@@ -112,9 +169,9 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
       .filter(threads => userProvided ? this.matchesName(threads, userProvided) : true);
   }
 
-  private matchesName(threads: Map<number, Thread>, regex: RegExp): boolean {
-    for (const thread of threads) {
-      if (regex.test(thread[1].name)) {
+  private matchesName = (threads: Map<number, Thread>, regex: RegExp): boolean => {
+    for (const thread of threads.values()) {
+      if (regex.test(thread.name)) {
         return true;
       }
     }
