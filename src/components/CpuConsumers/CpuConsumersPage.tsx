@@ -1,6 +1,8 @@
 import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
+import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
+import ThreadDump from '../../types/ThreadDump';
 import PageWithSettings from '../PageWithSettings/PageWithSettings';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumersList from './CpuConsumersList';
@@ -16,16 +18,23 @@ export enum CpuConsumersMode {
 type State = {
   mode: CpuConsumersMode;
   limit: number;
+  threadDumps: ThreadDump[];
 };
 
 export default class CpuConsumersPage extends PageWithSettings<State> {
-
-  public state: State = {
-    limit: 100,
-    mode: CpuConsumersMode.Mean,
-  };
-
   protected PAGE_NAME = 'CPU Consumers';
+
+  constructor(props: WithThreadDumpsProps) {
+    super(props);
+
+    const nonEmptyThreadDumps = this.props.threadDumps.filter(dump => dump.threads.length > 0);
+
+    this.state = {
+      limit: 100,
+      mode: CpuConsumersMode.Mean,
+      threadDumps: nonEmptyThreadDumps,
+    };
+  }
 
   public render() {
     const consumers = this.calculateCpuUsages(this.state.mode);
@@ -39,11 +48,11 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
           onLimitChange={this.handleIntegerChange}
         />
 
-        {!this.props.threadDumps.some(dump => !!dump.loadAverages && dump.threads.length > 0)
+        {!this.state.threadDumps.some(dump => !!dump.loadAverages)
           ? <h4 dangerouslySetInnerHTML={{ __html: CpuConsumersPage.NO_CPU_AND_THREADS_PAIR }} />
           : <CpuConsumersList
             limit={this.state.limit}
-            dumpsNumber={this.props.threadDumps.length}
+            dumpsNumber={this.state.threadDumps.length}
             consumers={consumers}
           />
         }
@@ -57,7 +66,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
 
   private calculateCpuUsages(calculationMode: CpuConsumersMode): CpuConsumer[] {
     const consumers: CpuConsumer[] = [];
-    const threadsOverTime = getThreadsOverTime(this.props.threadDumps);
+    const threadsOverTime = getThreadsOverTime(this.state.threadDumps);
 
     for (const threads of threadsOverTime) {
       consumers.push(this.calculateUsageFor(threads, calculationMode));
@@ -73,7 +82,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
     let usage: number = 0;
     switch (calculationMode) {
       case CpuConsumersMode.Mean:
-        usage = threads.reduce(this.reduceSum, 0) / this.props.threadDumps.length;
+        usage = threads.reduce(this.reduceSum, 0) / this.state.threadDumps.length;
         break;
       case CpuConsumersMode.Median:
         usage = this.calculateMedian(threads);

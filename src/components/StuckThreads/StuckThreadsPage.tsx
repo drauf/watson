@@ -3,6 +3,7 @@ import getThreadsOverTime from '../../common/getThreadsOverTime';
 import isIdleThread from '../../common/isIdleThread';
 import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
+import ThreadDump from '../../types/ThreadDump';
 import PageWithSettings from '../PageWithSettings/PageWithSettings';
 import StuckThreadsGroup from './StuckThreadsGroup';
 import StuckThreadsSettings from './StuckThreadsSettings';
@@ -10,6 +11,7 @@ import StuckThreadsSettings from './StuckThreadsSettings';
 type State = {
   maxDifferingLines: number;
   minClusterSize: number;
+  threadDumps: ThreadDump[];
   withoutIdle: boolean;
 };
 
@@ -19,15 +21,18 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
 
+    const nonEmptyThreadDumps = this.props.threadDumps.filter(dump => dump.threads.length > 0);
+
     this.state = {
       maxDifferingLines: 5,
-      minClusterSize: this.props.threadDumps.length,
+      minClusterSize: nonEmptyThreadDumps.length,
+      threadDumps: nonEmptyThreadDumps,
       withoutIdle: true,
     };
   }
 
   public render() {
-    const threadOverTime = getThreadsOverTime(this.props.threadDumps);
+    const threadOverTime = getThreadsOverTime(this.state.threadDumps);
     const filtered = this.filterThreads(threadOverTime);
     const clusters = this.buildClusters(filtered);
 
@@ -40,7 +45,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
           onFilterChange={this.handleFilterChange}
           onIntegerChange={this.handleIntegerChange} />
 
-        {!this.props.threadDumps.some(dump => dump.threads.length > 0)
+        {this.state.threadDumps.length === 0
           ? <h4 dangerouslySetInnerHTML={{ __html: StuckThreadsPage.NO_THREAD_DUMPS }} />
           : clusters.length === 0
             ? <h4>{StuckThreadsPage.N0_THREADS_MATCHING}</h4>
