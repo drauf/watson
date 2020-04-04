@@ -8,6 +8,7 @@ type Props = {
   nonTomcat: boolean;
   database: boolean;
   lucene: boolean;
+  usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -15,7 +16,7 @@ type Props = {
 };
 
 const ThreadsOverviewSettings: React.SFC<Props> = ({ active, nonJvm, tomcat, nonTomcat,
-  database, lucene, nameFilter, stackFilter, onFilterChange, onRegExpChange }) => (
+  database, lucene, usingCpu, nameFilter, stackFilter, onFilterChange, onRegExpChange }) => (
     <div id="threads-overview-settings">
       <div className="filters">
         <b>Filters:</b>
@@ -37,6 +38,9 @@ const ThreadsOverviewSettings: React.SFC<Props> = ({ active, nonJvm, tomcat, non
 
         <Filter name="lucene" displayName="Lucene"
           checked={lucene} onChange={onFilterChange} />
+
+        <Filter name="usingCpu" displayName="Using >30% CPU"
+          checked={usingCpu} onChange={onFilterChange} />
       </div>
 
       <div id="regexp-filters">
