@@ -2,6 +2,7 @@ import React from 'react';
 import Filter from '../Filter/Filter';
 
 type Props = {
+  active: boolean;
   nonJvm: boolean;
   tomcat: boolean;
   nonTomcat: boolean;
@@ -13,11 +14,14 @@ type Props = {
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const ThreadsOverviewSettings: React.SFC<Props> = ({ nonJvm, tomcat, nonTomcat,
+const ThreadsOverviewSettings: React.SFC<Props> = ({ active, nonJvm, tomcat, nonTomcat,
   database, lucene, nameFilter, stackFilter, onFilterChange, onRegExpChange }) => (
     <div id="threads-overview-settings">
       <div className="filters">
         <b>Filters:</b>
+
+        <Filter name="active" displayName="Active"
+          checked={active} onChange={onFilterChange} />
 
         <Filter name="nonJvm" displayName="Non-JVM"
           checked={nonJvm} onChange={onFilterChange} />
