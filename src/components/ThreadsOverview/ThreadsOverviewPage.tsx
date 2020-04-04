@@ -16,6 +16,7 @@ type State = {
   nonTomcat: boolean;
   database: boolean;
   lucene: boolean;
+  usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
 };
@@ -30,6 +31,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     nonTomcat: false,
     database: false,
     lucene: false,
+    usingCpu: false,
     nameFilter: '',
     stackFilter: '',
   };
@@ -60,6 +62,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
           nonTomcat={this.state.nonTomcat}
           database={this.state.database}
           lucene={this.state.lucene}
+          usingCpu={this.state.usingCpu}
           nameFilter={this.state.nameFilter}
           stackFilter={this.state.stackFilter}
           onFilterChange={this.handleFilterChange}
@@ -93,6 +96,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
 
   private filterThreads = (threadDumps: Array<Map<number, Thread>>) => {
     let filtered = this.filterByActive(threadDumps, this.state.active);
+    filtered = this.filterByCpuUsage(filtered, this.state.usingCpu);
     filtered = this.filterByName(filtered, this.state.nameFilter);
     this.markMatchingStackFilter(filtered, this.state.stackFilter);
     return filtered;
@@ -147,6 +151,24 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
     if (stackTrace[0] === 'java.net.PlainSocketImpl.socketAccept(Native Method)') {
       return true;
+    }
+
+    return false;
+  }
+
+  private filterByCpuUsage = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
+    if (!shouldFilter) {
+      return threadDumps;
+    }
+
+    return threadDumps.filter(threads => this.isUsingCpu(threads));
+  }
+
+  private isUsingCpu = (threads: Map<number, Thread>): boolean => {
+    for (const thread of threads.values()) {
+      if (thread.cpuUsage > 30) {
+        return true;
+      }
     }
 
     return false;
