@@ -43,9 +43,10 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
   // tslint:enable:max-line-length
 
   public render() {
-    const threadOverTime = getThreadsOverTime(this.props.threadDumps);
+    const nonEmptyThreadDumps = this.props.threadDumps.filter(dump => dump.threads.length > 0);
+    const threadOverTime = getThreadsOverTime(nonEmptyThreadDumps);
     const filteredDumps = this.filterThreads(threadOverTime);
-    const dates = this.props.threadDumps.map(dump => ThreadDump.getFormattedTime(dump));
+    const dates = nonEmptyThreadDumps.map(dump => ThreadDump.getFormattedTime(dump));
     const isFilteredByStack = this.isFilteredByStack();
 
     return (
@@ -69,7 +70,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
         />
 
         <ThreadsOverviewLegend />
-        {!this.props.threadDumps.some(dump => dump.threads.length > 0)
+        {nonEmptyThreadDumps.length === 0
           ? <h4 dangerouslySetInnerHTML={{ __html: ThreadsOverviewPage.NO_THREAD_DUMPS }} />
           : <ThreadsOverviewTable
             dates={dates}
