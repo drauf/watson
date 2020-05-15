@@ -8,14 +8,14 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "ESNext"
     ],
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "removeComments": true,
     "strict": true,
-    "target": "es2018",
+    "target": "ESNext",
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

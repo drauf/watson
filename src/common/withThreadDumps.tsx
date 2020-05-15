@@ -47,7 +47,7 @@ export const withThreadDumps =
           return <h4 id="centered">Loading data from cache...</h4>;
         }
 
-        return <WrappedComponent threadDumps={this.state.threadDumps} {...this.props} />;
+        return <WrappedComponent {...this.props} threadDumps={this.state.threadDumps} />;
       }
 
       private scrollToTop = () => {
