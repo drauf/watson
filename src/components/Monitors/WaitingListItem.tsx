@@ -21,11 +21,11 @@ export default class WaitingListItem extends React.PureComponent<Props, State> {
 
     return (
       <>
-        <a onClick={this.handleClick}>{thread.name}</a>
-        <br />
-
+        <button className="link" onClick={this.handleClick}>{thread.name}</button>
         {this.state.showDetails &&
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+
+        <br />
       </>
     );
   }

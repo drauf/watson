@@ -28,7 +28,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     const thread = this.props.thread;
 
     if (!thread) {
-      return <span className="lozenge">n/a</span>;
+      return <button className="no-click">n/a</button>;
     }
 
     const cpuUsage = this.getCpuUsage(thread.cpuUsage);
@@ -36,8 +36,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
 
     return (
       <>
-        <a className={`lozenge ${className}`} onClick={this.handleClick}>{cpuUsage}</a>
-
+        <button className={className} onClick={this.handleClick}>{cpuUsage}</button>
         {this.state.showDetails &&
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
       </>

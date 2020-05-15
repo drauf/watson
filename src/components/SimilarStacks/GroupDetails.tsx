@@ -34,11 +34,13 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
           {threads.map((thread, index) => <ThreadSummary key={index} thread={thread} />)}
 
           {collapsable > 0 &&
-            <li><a onClick={this.toggleExpand}>
-              {this.state.expanded
-                ? `Collapse threads list (hide ${collapsable} thread(s))`
-                : `Expand threads list (${collapsable} more thread(s) to show)`}
-            </a></li>}
+            <li>
+              <button className="link" onClick={this.toggleExpand}>
+                {this.state.expanded
+                  ? `Collapse threads list (hide ${collapsable} thread(s))`
+                  : `Expand threads list (${collapsable} more thread(s) to show)`}
+              </button>
+            </li>}
         </ul>
         <StackTrace stackTrace={stackTrace} linesToConsider={this.props.linesToConsider} />
       </>
