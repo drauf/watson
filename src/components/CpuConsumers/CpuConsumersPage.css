@@ -17,21 +17,26 @@
 
 .no-click {
   color: #172B4D;
+  -webkit-text-fill-color: #172B4D;
   pointer-events: none;
 }
 
 .high {
   background: #FFEBE6;
   color: #BF2600;
+  -webkit-text-fill-color: #BF2600;
 }
 .medium {
   background: #FFF0B3;
   color: #42526E;
+  -webkit-text-fill-color: #42526E;
 }
 .low {
   background: #DEEBFF;
   color: #0747A6;
+  -webkit-text-fill-color: #0747A6;
 }
 .none {
   color: #172B4D;
+  -webkit-text-fill-color: #172B4D;
 }

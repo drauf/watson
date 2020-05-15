@@ -69,6 +69,7 @@ button {
   all: unset;
   cursor: pointer;
   color: #0052CC;
+  -webkit-text-fill-color: #0052CC;
 }
 button:hover {
   text-decoration: underline;
