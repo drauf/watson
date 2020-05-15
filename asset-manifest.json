@@ -1,14 +1,23 @@
 {
-  "main.css": "https://drauf.github.io/watson/static/css/main.99221305.chunk.css",
-  "main.js": "https://drauf.github.io/watson/static/js/main.aa1ed725.chunk.js",
-  "main.js.map": "https://drauf.github.io/watson/static/js/main.aa1ed725.chunk.js.map",
-  "runtime~main.js": "https://drauf.github.io/watson/static/js/runtime~main.83716040.js",
-  "runtime~main.js.map": "https://drauf.github.io/watson/static/js/runtime~main.83716040.js.map",
-  "static/js/2.dcaec057.chunk.js": "https://drauf.github.io/watson/static/js/2.dcaec057.chunk.js",
-  "static/js/2.dcaec057.chunk.js.map": "https://drauf.github.io/watson/static/js/2.dcaec057.chunk.js.map",
-  "index.html": "https://drauf.github.io/watson/index.html",
-  "precache-manifest.2b55650c9530d630ffed05676e725802.js": "https://drauf.github.io/watson/precache-manifest.2b55650c9530d630ffed05676e725802.js",
-  "service-worker.js": "https://drauf.github.io/watson/service-worker.js",
-  "static/css/main.99221305.chunk.css.map": "https://drauf.github.io/watson/static/css/main.99221305.chunk.css.map",
-  "static/media/index.css": "https://drauf.github.io/watson/static/media/chevron.ecb8f00b.svg"
+  "files": {
+    "main.css": "https://drauf.github.io/watson/static/css/main.e8a52af6.chunk.css",
+    "main.js": "https://drauf.github.io/watson/static/js/main.ec12784d.chunk.js",
+    "main.js.map": "https://drauf.github.io/watson/static/js/main.ec12784d.chunk.js.map",
+    "runtime-main.js": "https://drauf.github.io/watson/static/js/runtime-main.c4bce0f0.js",
+    "runtime-main.js.map": "https://drauf.github.io/watson/static/js/runtime-main.c4bce0f0.js.map",
+    "static/js/2.bf7a9446.chunk.js": "https://drauf.github.io/watson/static/js/2.bf7a9446.chunk.js",
+    "static/js/2.bf7a9446.chunk.js.map": "https://drauf.github.io/watson/static/js/2.bf7a9446.chunk.js.map",
+    "index.html": "https://drauf.github.io/watson/index.html",
+    "precache-manifest.6da9ac1e1539efe413e7476a0cfd875f.js": "https://drauf.github.io/watson/precache-manifest.6da9ac1e1539efe413e7476a0cfd875f.js",
+    "service-worker.js": "https://drauf.github.io/watson/service-worker.js",
+    "static/css/main.e8a52af6.chunk.css.map": "https://drauf.github.io/watson/static/css/main.e8a52af6.chunk.css.map",
+    "static/js/2.bf7a9446.chunk.js.LICENSE.txt": "https://drauf.github.io/watson/static/js/2.bf7a9446.chunk.js.LICENSE.txt",
+    "static/media/index.css": "https://drauf.github.io/watson/static/media/chevron.ecb8f00b.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c4bce0f0.js",
+    "static/js/2.bf7a9446.chunk.js",
+    "static/css/main.e8a52af6.chunk.css",
+    "static/js/main.ec12784d.chunk.js"
+  ]
 }
