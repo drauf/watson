@@ -49,6 +49,7 @@ th, td {
 /* Background colors depending on the thread state */
 td {
   color: #344563;
+  font-weight: 500;
   cursor: pointer;
 }
 td.name {
@@ -56,26 +57,27 @@ td.name {
   cursor: default;
 }
 td.empty {
-  background: #FFF;
   cursor: default;
 }
 td.runnable {
   background: #E3FCEF;
+  color: #006644;
 }
 td.blocked {
-  background: #FFEBE5;
+  background: #FFEBE6;
+  color: #BF2600;
 }
 td.waiting {
   background: #EAE6FF;
+  color: #5243AA;
 }
 td.timed-waiting {
-  background: #FFFAE5;
-}
-td.unknown {
-  background: #FFF;
+  background: #FFFAE6;
+  color: #505F79;
 }
 td.matching {
   background: #DEEBFF;
+  color: #0747A6;
 }
 
 /* Tooltips on hover */
