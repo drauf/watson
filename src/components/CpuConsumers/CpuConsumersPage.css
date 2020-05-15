@@ -3,11 +3,6 @@
   white-space: pre;
   list-style: none;
 }
-#consumers-list h5 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 .vhigh {
   color: #DE350B;
