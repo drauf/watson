@@ -41,11 +41,14 @@ nav.open li:hover {
   background: #EBECF0;
 }
 
-nav a, nav button {
+nav a,
+nav button {
   color: #172B4D;
+  -webkit-text-fill-color: #172B4D;
   font-weight: 500;
 }
-nav a:hover {
+nav a:hover,
+nav button:hover {
   text-decoration: none;
 }
 
