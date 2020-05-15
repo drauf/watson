@@ -8,7 +8,7 @@ const THREAD_HEADER_PREFIX: string = '"';
 
 // tslint:disable:max-line-length
 export const THREAD_DUMP_DATE_PATTERN: RegExp = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\r?$/;
-const NAME_PATTERN: RegExp = /^\"(.*)\" /;
+const NAME_PATTERN: RegExp = /^"(.*)" /;
 const NID_PATTERN: RegExp = / nid=([0-9a-fx,]+)/;
 const TID_PATTERN: RegExp = / tid=([0-9a-fx,]+)/;
 const FRAME_PATTERN: RegExp = /^\s+at (.*)/;
@@ -74,11 +74,12 @@ export default class ThreadDumpParser {
       const lockId: string = synchronizationStatus[1];
       const className: string = synchronizationStatus[2];
 
+      let lock: Lock;
       switch (state) {
         case 'waiting on':
         case 'parking to wait for':
         case 'waiting to lock':
-          let lock: Lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
+          lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
           lock.waiting.push(ThreadDumpParser.currentThread);
           ThreadDumpParser.currentThread.lockWaitingFor = lock;
           return;

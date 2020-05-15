@@ -41,7 +41,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
 
   // tslint:disable:max-line-length
   private jvmRegex = /^Attach Listener|^C[12] CompilerThread|^G1 Concurrent |^G1 Main|^Gang worker#|^GC Daemon|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
-  private tomcatRegex = /^http(s\-jsse)?\-[a-z]io\-[0-9]+\-exec\-[0-9]+/;
+  private tomcatRegex = /^http(s-jsse)?-[a-z]io-[0-9]+-exec-[0-9]+/;
   private databaseRegex = /^oracle\.jdbc\.driver\.|^org\.postgresql\.|^com\.microsoft\.sqlserver\.|^com\.mysql\.jdbc\./;
   private luceneRegex = /^org\.apache\.lucene\./;
   // tslint:enable:max-line-length
