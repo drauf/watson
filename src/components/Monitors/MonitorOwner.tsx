@@ -27,7 +27,9 @@ export default class MonitorOwner extends React.PureComponent<Props, State> {
       <>
         <b>Held by:</b>
         <br />
-        <a className="expandable-details" onClick={this.handleClick}>{monitor.owner.name}</a>
+        <button className="link" onClick={this.handleClick}>
+          {monitor.owner.name}
+        </button>
         <br />
 
         {this.state.showOwner &&

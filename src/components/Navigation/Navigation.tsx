@@ -37,7 +37,7 @@ class Navigation extends React.PureComponent<Props> {
 
         <div id="nav-content-bottom">
           <ul>
-            <a onClick={this.onClear}><li>Load another thread dump</li></a>
+            <button onClick={this.onClear}><li>Load another thread dump</li></button>
           </ul>
 
           <ul>

@@ -66,7 +66,7 @@ const renderStackTrace = (thread: Thread) => {
     <textarea
       wrap="off"
       readOnly={true}
-      className="mono stacktrace-window"
+      className="stacktrace-window"
       value={thread.stackTrace.join('\n')} />
   );
 };

@@ -3,9 +3,8 @@
   list-style: none;
 }
 
-.lozenge {
+#consumers-list button {
   width: 52px;
-  color: #172B4D;
   border-radius: 3px;
   display: inline-block;
   font-size: 13px;
@@ -15,6 +14,11 @@
   margin: 5px 3px 0;
   padding: 3px;
 }
+
+.no-click {
+  pointer-events: none;
+}
+
 .high {
   background: #FFEBE6;
   color: #BF2600;

@@ -20,7 +20,7 @@ const CpuConsumerItem: React.SFC<Props> = ({ dumpsNumber, consumer }) => {
       <h5 className="clickable">
         {formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurences.values())}
       </h5>
-      <span className="mono">
+      <span>
         {threads.map((thread, index) => <CpuConsumerSingleUsage thread={thread} key={index} />)}
       </span>
     </li>

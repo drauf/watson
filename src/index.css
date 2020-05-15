@@ -16,10 +16,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.mono {
-  font-family: 'SFMono-Medium', 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', 'Ubuntu Mono', Menlo, Consolas, Courier, monospace;
-}
-
 /* Text size h900 */
 h1 {
   font-size: 35px;
@@ -66,7 +62,18 @@ a {
   text-decoration: none;
 }
 a:hover {
+  text-decoration: underline;
+}
+
+button {
+  all: unset;
   cursor: pointer;
+  border: 1px solid red;
+}
+button.link {
+  color: #0052CC;
+}
+button.link:hover {
   text-decoration: underline;
 }
 

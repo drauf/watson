@@ -41,7 +41,7 @@ nav.open li:hover {
   background: #EBECF0;
 }
 
-nav a {
+nav a, nav button {
   color: #172B4D;
   font-weight: 500;
 }
