@@ -68,11 +68,9 @@ a:hover {
 button {
   all: unset;
   cursor: pointer;
-}
-button.link {
   color: #0052CC;
 }
-button.link:hover {
+button:hover {
   text-decoration: underline;
 }
 

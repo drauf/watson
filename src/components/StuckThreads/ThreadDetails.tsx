@@ -24,7 +24,7 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
     return (
       <>
         <h6>
-          <button className="link" onClick={this.handleClick}>
+          <button onClick={this.handleClick}>
             {Thread.getFormattedTime(thread)}
           </button>
         </h6>

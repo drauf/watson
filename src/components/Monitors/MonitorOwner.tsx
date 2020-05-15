@@ -27,7 +27,7 @@ export default class MonitorOwner extends React.PureComponent<Props, State> {
       <>
         <b>Held by:</b>
         <br />
-        <button className="link" onClick={this.handleClick}>
+        <button onClick={this.handleClick}>
           {monitor.owner.name}
         </button>
         <br />

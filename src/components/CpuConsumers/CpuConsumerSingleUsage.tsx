@@ -58,6 +58,6 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     if (cpuUsage > 10) {
       return 'low';
     }
-    return '';
+    return 'none';
   }
 }
