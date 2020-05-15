@@ -15,7 +15,7 @@ The easiest way to do this is to use [Atlassian Support scripts](https://bitbuck
 
 ## Environment setup
 
-You only need [https://classic.yarnpkg.com/en/docs/install/](yarn) installed on your machine.
+You only need [yarn](https://classic.yarnpkg.com/en/docs/install/) installed on your machine.
 
 ## Available scripts
 
