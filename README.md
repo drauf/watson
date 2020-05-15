@@ -15,12 +15,7 @@ The easiest way to do this is to use [Atlassian Support scripts](https://bitbuck
 
 ## Environment setup
 
-#### For mac
-```
-xcode-select --install
-brew install gcc
-brew install yarn
-```
+You only need [https://classic.yarnpkg.com/en/docs/install/](yarn) installed on your machine.
 
 ## Available scripts
 
