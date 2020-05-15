@@ -7,6 +7,7 @@ It combines the best features of other popular Java TDAs and hides a lot of nois
 ![CPU consumers page](screenshots/cpu-consumers.png)
 ![Similar stack traces page](screenshots/similar-stack-traces.png)
 ![Threads overview page](screenshots/threads-overview.png)
+![Monitors page](screenshots/monitors.png)
 
 ## Gathering thread dumps
 To fully leverage Watson, you should capture Java thread dump **and** top outputs.
