@@ -28,29 +28,37 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     const thread = this.props.thread;
 
     if (!thread) {
-      return <>     -- </>;
+      return <span className="lozenge">n/a</span>;
     }
 
-    const cpuUsage = `${thread.cpuUsage.toFixed(1)}%`;
-    const padding = ' '.repeat(8 - cpuUsage.length);
-    const className = thread.cpuUsage > 78
-      ? 'vhigh'
-      : thread.cpuUsage > 42
-        ? 'high'
-        : thread.cpuUsage > 21
-          ? 'mid'
-          : thread.cpuUsage > 10
-            ? 'low'
-            : 'vlow';
+    const cpuUsage = this.getCpuUsage(thread.cpuUsage);
+    const className = this.getClassName(thread.cpuUsage);
 
     return (
       <>
-        {padding}
-        <a className={className} onClick={this.handleClick}>{cpuUsage}</a>
+        <a className={`lozenge ${className}`} onClick={this.handleClick}>{cpuUsage}</a>
 
         {this.state.showDetails &&
           <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
       </>
     );
+  }
+
+  private getCpuUsage = (cpuUsage: number): string => {
+    return `${cpuUsage.toFixed(1)}%`;
+  }
+
+  private getClassName = (cpuUsage: number): string => {
+    // The numbers here are completely arbitrary
+    if (cpuUsage > 78) {
+      return 'high';
+    }
+    if (cpuUsage > 42) {
+      return 'medium';
+    }
+    if (cpuUsage > 10) {
+      return 'low';
+    }
+    return '';
   }
 }
