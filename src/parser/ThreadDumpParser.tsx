@@ -162,7 +162,7 @@ export default class ThreadDumpParser {
 
   private static getOrCreateLock(locks: Lock[], id: string, className: string): Lock {
     for (const existingLock of locks) {
-      if (existingLock.id === id) {
+      if (existingLock.hasId(id)) {
         return existingLock;
       }
     }
