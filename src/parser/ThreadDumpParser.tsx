@@ -139,7 +139,7 @@ export default class ThreadDumpParser {
       });
   }
 
-  private static stringToThreadStatus(status: string): ThreadStatus {
+  private static stringToThreadStatus(status: string): ThreadStatus | undefined {
     const key = status as keyof typeof ThreadStatus;
     const threadStatus = ThreadStatus[key];
     if (threadStatus) {
@@ -156,7 +156,7 @@ export default class ThreadDumpParser {
       return ThreadStatus.TIMED_WAITING;
     }
 
-    return ThreadStatus.UNKNOWN;
+    return undefined;
   }
 
   private static getOrCreateLock(locks: Lock[], id: string, className: string): Lock {

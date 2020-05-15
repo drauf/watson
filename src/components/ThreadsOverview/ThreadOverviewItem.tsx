@@ -1,6 +1,5 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import ThreadStatus from '../../types/ThreadStatus';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
 type Props = {
@@ -28,7 +27,7 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
 
     const className = (this.props.isFiltered)
       ? this.props.isMatchingFilter ? 'matching' : ''
-      : thread.status ? thread.status.toString() : ThreadStatus.UNKNOWN.toString();
+      : thread.status ? thread.status.toString() : '';
 
     return (
       <>

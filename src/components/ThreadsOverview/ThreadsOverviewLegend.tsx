@@ -8,7 +8,6 @@ const ThreadsOverviewLegend: React.SFC = () => (
         <td className="blocked">blocked</td>
         <td className="waiting">waiting</td>
         <td className="timed-waiting">timed waiting</td>
-        <td className="unknown">unknown</td>
         <td />
         <td className="matching">matching filter</td>
       </tr>
