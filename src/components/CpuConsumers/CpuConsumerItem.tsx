@@ -17,7 +17,7 @@ const CpuConsumerItem: React.SFC<Props> = ({ dumpsNumber, consumer }) => {
 
   return (
     <li>
-      <h5 className="clickable">
+      <h5 className="ellipsis">
         {formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurences.values())}
       </h5>
       <span>

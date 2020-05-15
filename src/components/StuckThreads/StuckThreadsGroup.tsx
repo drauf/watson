@@ -25,7 +25,7 @@ export default class StuckThreadsGroup extends React.PureComponent<Props, State>
     const thread = this.props.threadGroup[0];
     return (
       <>
-        <h5 className="clickable" onClick={this.toggleGroup}>
+        <h5 className="clickable ellipsis" onClick={this.toggleGroup}>
           <span className={this.state.showDetails ? 'chevron' : 'chevron rotate'} />
           {this.props.threadGroup.length} similar stack(s) for "{thread.name}"
         </h5>
