@@ -167,10 +167,7 @@ export default class ThreadDumpParser {
       }
     }
 
-    const newLock: Lock = new Lock();
-    newLock.id = id;
-    newLock.className = className;
-
+    const newLock: Lock = new Lock(id, className);
     locks.push(newLock);
     return newLock;
   }
