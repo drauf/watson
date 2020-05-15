@@ -4,18 +4,27 @@
   list-style: none;
 }
 
-.vhigh {
-  color: #DE350B;
+.lozenge {
+  width: 52px;
+  color: #172B4D;
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 99%;
+  text-align: center;
+  margin: 5px 3px 0;
+  padding: 3px;
 }
 .high {
-  color: #FF991F;
+  background: #FFEBE6;
+  color: #BF2600;
 }
-.mid {
-  color: #00A3BF;
+.medium {
+  background: #FFF0B3;
+  color: #42526E;
 }
 .low {
-  color: #5243AA;
-}
-.vlow {
-  color: #172B4D;
+  background: #DEEBFF;
+  color: #0747A6;
 }
