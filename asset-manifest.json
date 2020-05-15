@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "https://drauf.github.io/watson/static/css/main.0a0a6ba3.chunk.css",
-    "main.js": "https://drauf.github.io/watson/static/js/main.c54256b6.chunk.js",
-    "main.js.map": "https://drauf.github.io/watson/static/js/main.c54256b6.chunk.js.map",
+    "main.js": "https://drauf.github.io/watson/static/js/main.e42899bd.chunk.js",
+    "main.js.map": "https://drauf.github.io/watson/static/js/main.e42899bd.chunk.js.map",
     "runtime-main.js": "https://drauf.github.io/watson/static/js/runtime-main.c4bce0f0.js",
     "runtime-main.js.map": "https://drauf.github.io/watson/static/js/runtime-main.c4bce0f0.js.map",
     "static/js/2.bf7a9446.chunk.js": "https://drauf.github.io/watson/static/js/2.bf7a9446.chunk.js",
     "static/js/2.bf7a9446.chunk.js.map": "https://drauf.github.io/watson/static/js/2.bf7a9446.chunk.js.map",
     "index.html": "https://drauf.github.io/watson/index.html",
-    "precache-manifest.7f46600cedf875e2592c3aac386eac60.js": "https://drauf.github.io/watson/precache-manifest.7f46600cedf875e2592c3aac386eac60.js",
+    "precache-manifest.2c23e7b2fcc9cb69e7be616f164cba1f.js": "https://drauf.github.io/watson/precache-manifest.2c23e7b2fcc9cb69e7be616f164cba1f.js",
     "service-worker.js": "https://drauf.github.io/watson/service-worker.js",
     "static/css/main.0a0a6ba3.chunk.css.map": "https://drauf.github.io/watson/static/css/main.0a0a6ba3.chunk.css.map",
     "static/js/2.bf7a9446.chunk.js.LICENSE.txt": "https://drauf.github.io/watson/static/js/2.bf7a9446.chunk.js.LICENSE.txt",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.c4bce0f0.js",
     "static/js/2.bf7a9446.chunk.js",
     "static/css/main.0a0a6ba3.chunk.css",
-    "static/js/main.c54256b6.chunk.js"
+    "static/js/main.e42899bd.chunk.js"
   ]
 }
