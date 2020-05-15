@@ -11,6 +11,11 @@ export default class Lock {
     this.className = className;
   }
 
+  public hasId(id: string): boolean {
+    const parsed = this.parseId(id);
+    return this.id === parsed;
+  }
+
   private parseId(id: string): string {
     // convert to number and back to hex to get rid of trailing 0s
     const asNumber = parseInt(id, 16);
