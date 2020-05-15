@@ -35,7 +35,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
 
           {collapsable > 0 &&
             <li>
-              <button className="link" onClick={this.toggleExpand}>
+              <button onClick={this.toggleExpand}>
                 {this.state.expanded
                   ? `Collapse threads list (hide ${collapsable} thread(s))`
                   : `Expand threads list (${collapsable} more thread(s) to show)`}

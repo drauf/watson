@@ -36,7 +36,7 @@ export default class WaitingList extends React.PureComponent<Props, State> {
         {threads.map((thread, index) => <WaitingListItem thread={thread} key={index} />)}
 
         {collapsable > 0 &&
-          <button className="link" onClick={this.toggleExpand}>
+          <button onClick={this.toggleExpand}>
             {this.state.expanded
               ? `Collapse threads list (hide ${collapsable} thread(s))`
               : `Expand threads list (${collapsable} more thread(s) to show)`}

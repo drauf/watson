@@ -16,6 +16,7 @@
 }
 
 .no-click {
+  color: #172B4D;
   pointer-events: none;
 }
 
@@ -30,4 +31,7 @@
 .low {
   background: #DEEBFF;
   color: #0747A6;
+}
+.none {
+  color: #172B4D;
 }

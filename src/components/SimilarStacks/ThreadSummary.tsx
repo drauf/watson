@@ -25,7 +25,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
 
     return (
       <li>
-        <button className="link" onClick={this.toggleDetails}>"{thread.name}"</button>
+        <button onClick={this.toggleDetails}>"{thread.name}"</button>
         {` ${Thread.getFormattedTime(thread)}`}
         {this.waitingForRender(thread, lockOwner)}
         {thread.locksHeld.length > 0 && `, holding [${locksHeld}]`}
@@ -62,7 +62,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
       return (
         <>
           , awaiting notification on
-          <button className="link" onClick={this.toggleLockOwner}>[{lockWaitingFor}]</button>
+          <button onClick={this.toggleLockOwner}>[{lockWaitingFor}]</button>
         </>
       );
     }
