@@ -10,7 +10,7 @@ type Props = {
 
 const LoadAveragesChart: React.SFC<Props> = ({ threadDumps }) => {
   const data: object[] = [];
-  threadDumps.map((threadDump) => {
+  threadDumps.forEach((threadDump) => {
     if (threadDump.loadAverages) {
       data.push({
         fifteenMinutes: threadDump.loadAverages.fifteenMinutes,
