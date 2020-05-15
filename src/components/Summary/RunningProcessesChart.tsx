@@ -10,7 +10,7 @@ type Props = {
 
 const RunningProcessesChart: React.SFC<Props> = ({ threadDumps }) => {
   const data: object[] = [];
-  threadDumps.map((threadDump) => {
+  threadDumps.forEach((threadDump) => {
     if (threadDump.loadAverages) {
       data.push({
         name: ThreadDump.getFormattedTime(threadDump),
