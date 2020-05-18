@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "https://drauf.github.io/watson/static/css/main.0a0a6ba3.chunk.css",
-    "main.js": "https://drauf.github.io/watson/static/js/main.e42899bd.chunk.js",
-    "main.js.map": "https://drauf.github.io/watson/static/js/main.e42899bd.chunk.js.map",
+    "main.css": "https://drauf.github.io/watson/static/css/main.d0fab873.chunk.css",
+    "main.js": "https://drauf.github.io/watson/static/js/main.7e5d8752.chunk.js",
+    "main.js.map": "https://drauf.github.io/watson/static/js/main.7e5d8752.chunk.js.map",
     "runtime-main.js": "https://drauf.github.io/watson/static/js/runtime-main.c4bce0f0.js",
     "runtime-main.js.map": "https://drauf.github.io/watson/static/js/runtime-main.c4bce0f0.js.map",
     "static/js/2.bf7a9446.chunk.js": "https://drauf.github.io/watson/static/js/2.bf7a9446.chunk.js",
     "static/js/2.bf7a9446.chunk.js.map": "https://drauf.github.io/watson/static/js/2.bf7a9446.chunk.js.map",
     "index.html": "https://drauf.github.io/watson/index.html",
-    "precache-manifest.2c23e7b2fcc9cb69e7be616f164cba1f.js": "https://drauf.github.io/watson/precache-manifest.2c23e7b2fcc9cb69e7be616f164cba1f.js",
+    "precache-manifest.4bd069561377a80e029405c9b814646b.js": "https://drauf.github.io/watson/precache-manifest.4bd069561377a80e029405c9b814646b.js",
     "service-worker.js": "https://drauf.github.io/watson/service-worker.js",
-    "static/css/main.0a0a6ba3.chunk.css.map": "https://drauf.github.io/watson/static/css/main.0a0a6ba3.chunk.css.map",
+    "static/css/main.d0fab873.chunk.css.map": "https://drauf.github.io/watson/static/css/main.d0fab873.chunk.css.map",
     "static/js/2.bf7a9446.chunk.js.LICENSE.txt": "https://drauf.github.io/watson/static/js/2.bf7a9446.chunk.js.LICENSE.txt",
     "static/media/index.css": "https://drauf.github.io/watson/static/media/chevron.ecb8f00b.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.c4bce0f0.js",
     "static/js/2.bf7a9446.chunk.js",
-    "static/css/main.0a0a6ba3.chunk.css",
-    "static/js/main.e42899bd.chunk.js"
+    "static/css/main.d0fab873.chunk.css",
+    "static/js/main.7e5d8752.chunk.js"
   ]
 }
