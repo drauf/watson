@@ -11,3 +11,11 @@
 .chart {
   width: 80%;
 }
+
+.tooltip {
+  max-width: 640px;
+  margin: 0px;
+  padding: 0 20px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(204, 204, 204);
+}
