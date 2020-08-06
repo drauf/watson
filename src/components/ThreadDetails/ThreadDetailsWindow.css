@@ -1,4 +1,29 @@
 .thread-details {
+  width: 100%;
+  height: 98%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.thread-details span {
+  margin-left: 5px;
+}
+
+.details-header {
+  width: 100%;
+  margin: auto;
+  padding-bottom: 10px;
+  background-color: #FAFBFC;
+}
+.details-header h3 {
+  margin-left: 10px;
+}
+.details-header div {
+  margin: 3px 20px 0;
+}
+
+.details-body {
   width: 98%;
   height: 98%;
   margin: auto;
@@ -7,7 +32,14 @@
   align-content: center;
 }
 
-.stacktrace-window {
+.stacktrace-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+.stacktrace-textarea {
   width: 100%;
   height: 100%;
   color: #6B778C;
@@ -16,4 +48,60 @@
   line-height: 16px;
   margin-top: 8px;
   resize: none;
+}
+
+.thread-state {
+  color: #344563;
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 99%;
+  text-align: center;
+  margin: 0;
+  padding: 3px 8px;
+}
+
+.unknown {
+  cursor: default;
+}
+.runnable {
+  background: #E3FCEF;
+  color: #006644;
+}
+.blocked {
+  background: #FFEBE6;
+  color: #BF2600;
+}
+.waiting {
+  background: #EAE6FF;
+  color: #5243AA;
+}
+.timed-waiting {
+  background: #FFFAE6;
+  color: #505F79;
+}
+.matching {
+  background: #DEEBFF;
+  color: #0747A6;
+}
+
+.high {
+  background: #FFEBE6;
+  color: #BF2600;
+  -webkit-text-fill-color: #BF2600;
+}
+.medium {
+  background: #FFF0B3;
+  color: #42526E;
+  -webkit-text-fill-color: #42526E;
+}
+.low {
+  background: #DEEBFF;
+  color: #0747A6;
+  -webkit-text-fill-color: #0747A6;
+}
+.none {
+  color: #172B4D;
+  -webkit-text-fill-color: #172B4D;
 }
