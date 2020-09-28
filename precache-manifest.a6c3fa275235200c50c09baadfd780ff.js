@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b340f267e557fa9a3079b1eb9c74aebf",
+    "revision": "bdf8a295cbfd7e6efc3f384e129c9b17",
     "url": "https://drauf.github.io/watson/index.html"
   },
   {
-    "revision": "4d84883b97a85ddcc141",
+    "revision": "502b39fff505ec5d9c10",
     "url": "https://drauf.github.io/watson/static/css/main.9c0e2811.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "https://drauf.github.io/watson/static/js/2.512aed2a.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4d84883b97a85ddcc141",
-    "url": "https://drauf.github.io/watson/static/js/main.fd13f03a.chunk.js"
+    "revision": "502b39fff505ec5d9c10",
+    "url": "https://drauf.github.io/watson/static/js/main.804a45ed.chunk.js"
   },
   {
     "revision": "9d047bee78f5a4a2e920",
