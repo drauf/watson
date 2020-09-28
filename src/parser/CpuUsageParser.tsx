@@ -3,6 +3,7 @@ import LoadAverages from '../types/LoadAverage';
 import MemoryUsage from '../types/MemoryUsage';
 import ThreadCpuUsage from '../types/ThreadCpuUsage';
 import { matchMultipleGroups, matchMultipleTimes, matchOne } from './RegExpUtils';
+import TopColumnOffsets from './TopColumnOffsets';
 
 export const CPU_USAGE_TIMESTAMP_PATTERN: RegExp = /^top - ([0-9]{2}:[0-9]{2}:[0-9]{2})/;
 const LOAD_AVERAGES_PATTERN: RegExp = / load average: ([0-9.]+), ([0-9.]+), ([0-9.]+)/;
@@ -79,6 +80,8 @@ export default class CpuUsageParser {
   private static parseThreadCpuUsages(lines: string[]): ThreadCpuUsage[] {
     const threadCpuUsages: ThreadCpuUsage[] = [];
 
+    const offsets: TopColumnOffsets = this.getColumnOffsets(lines[1]);
+
     for (let i = 2; i < lines.length; i++) {
       const line: string = lines[i];
       if (!line) continue;
@@ -90,12 +93,34 @@ export default class CpuUsageParser {
       }
 
       const threadCpuUsage: ThreadCpuUsage = new ThreadCpuUsage();
-      threadCpuUsage.id = parseInt(columns[0], 10);
-      threadCpuUsage.cpuUsage = parseFloat(columns[8]);
-      threadCpuUsage.runningFor = columns[10];
+      threadCpuUsage.id = parseInt(columns[offsets.getProcessIdOffset()], 10);
+      threadCpuUsage.cpuUsage = parseFloat(columns[offsets.getCpuUsageOffset()]);
+      threadCpuUsage.runningFor = columns[offsets.getRunningForOffset()];
       threadCpuUsages.push(threadCpuUsage);
     }
 
     return threadCpuUsages;
+  }
+
+  private static getColumnOffsets(header: string): TopColumnOffsets {
+    const offsets = new TopColumnOffsets();
+
+    //   PID USER      PR  NI    VIRT    RES    SHR   SWAP S %CPU %MEM     TIME+ COMMAND
+    const columns: string[] = matchMultipleTimes(COLUMN_MATCHER, header);
+    columns.forEach((columnName, index) => {
+      switch (columnName) {
+        case 'PID':
+          offsets.setProcessIdOffset(index);
+          break;
+        case '%CPU':
+          offsets.setCpuUsageOffset(index);
+          break;
+        case 'TIME+':
+          offsets.setRunningForOffset(index);
+          break;
+      }
+    });
+
+    return offsets;
   }
 }
