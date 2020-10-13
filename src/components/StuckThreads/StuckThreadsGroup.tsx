@@ -12,7 +12,6 @@ type State = {
 };
 
 export default class StuckThreadsGroup extends React.PureComponent<Props, State> {
-
   public state: State = {
     showDetails: true,
   };
@@ -27,18 +26,25 @@ export default class StuckThreadsGroup extends React.PureComponent<Props, State>
       <>
         <h5 className="clickable ellipsis" onClick={this.toggleGroup}>
           <span className={this.state.showDetails ? 'chevron' : 'chevron rotate'} />
-          {this.props.threadGroup.length} similar stack(s) for "{thread.name}"
+          {this.props.threadGroup.length}
+          {' '}
+          similar stack(s) for "
+          {thread.name}
+          "
         </h5>
 
-        {this.state.showDetails &&
+        {this.state.showDetails
+          && (
           <GroupDetails
             threadGroup={this.props.threadGroup}
-            maxDifferingLines={this.props.maxDifferingLines} />}
+            maxDifferingLines={this.props.maxDifferingLines}
+          />
+          )}
       </>
     );
   }
 
   private toggleGroup = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
+    this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   }
 }

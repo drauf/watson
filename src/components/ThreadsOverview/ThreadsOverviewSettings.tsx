@@ -15,48 +15,86 @@ type Props = {
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const ThreadsOverviewSettings: React.SFC<Props> = ({ active, nonJvm, tomcat, nonTomcat,
-  database, lucene, usingCpu, nameFilter, stackFilter, onFilterChange, onRegExpChange }) => (
-    <div id="threads-overview-settings">
-      <div className="filters">
-        <b>Filters:</b>
+const ThreadsOverviewSettings: React.SFC<Props> = ({
+  active, nonJvm, tomcat, nonTomcat,
+  database, lucene, usingCpu, nameFilter, stackFilter, onFilterChange, onRegExpChange,
+}: Props) => (
+  <div id="threads-overview-settings">
+    <div className="filters">
+      <b>Filters:</b>
 
-        <Filter name="active" displayName="Active"
-          checked={active} onChange={onFilterChange} />
+      <Filter
+        name="active"
+        displayName="Active"
+        checked={active}
+        onChange={onFilterChange}
+      />
 
-        <Filter name="nonJvm" displayName="Non-JVM"
-          checked={nonJvm} onChange={onFilterChange} />
+      <Filter
+        name="nonJvm"
+        displayName="Non-JVM"
+        checked={nonJvm}
+        onChange={onFilterChange}
+      />
 
-        <Filter name="tomcat" displayName="Tomcat"
-          checked={tomcat} onChange={onFilterChange} />
+      <Filter
+        name="tomcat"
+        displayName="Tomcat"
+        checked={tomcat}
+        onChange={onFilterChange}
+      />
 
-        <Filter name="nonTomcat" displayName="Non-Tomcat"
-          checked={nonTomcat} onChange={onFilterChange} />
+      <Filter
+        name="nonTomcat"
+        displayName="Non-Tomcat"
+        checked={nonTomcat}
+        onChange={onFilterChange}
+      />
 
-        <Filter name="database" displayName="Database"
-          checked={database} onChange={onFilterChange} />
+      <Filter
+        name="database"
+        displayName="Database"
+        checked={database}
+        onChange={onFilterChange}
+      />
 
-        <Filter name="lucene" displayName="Lucene"
-          checked={lucene} onChange={onFilterChange} />
+      <Filter
+        name="lucene"
+        displayName="Lucene"
+        checked={lucene}
+        onChange={onFilterChange}
+      />
 
-        <Filter name="usingCpu" displayName="Using >30% CPU"
-          checked={usingCpu} onChange={onFilterChange} />
-      </div>
-
-      <div id="regexp-filters">
-        <label>
-          <input type="text" name="nameFilter" value={nameFilter} onChange={onRegExpChange}
-          />
-          <b>Thread name RegExp</b>
-        </label>
-
-        <label>
-          <input type="text" name="stackFilter" value={stackFilter} onChange={onRegExpChange}
-          />
-          <b>Stack trace RegExp</b>
-        </label>
-      </div>
+      <Filter
+        name="usingCpu"
+        displayName="Using >30% CPU"
+        checked={usingCpu}
+        onChange={onFilterChange}
+      />
     </div>
-  );
+
+    <div id="regexp-filters">
+      <label>
+        <input
+          type="text"
+          name="nameFilter"
+          value={nameFilter}
+          onChange={onRegExpChange}
+        />
+        <b>Thread name RegExp</b>
+      </label>
+
+      <label>
+        <input
+          type="text"
+          name="stackFilter"
+          value={stackFilter}
+          onChange={onRegExpChange}
+        />
+        <b>Stack trace RegExp</b>
+      </label>
+    </div>
+  </div>
+);
 
 export default ThreadsOverviewSettings;

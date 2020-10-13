@@ -14,7 +14,7 @@ const ThreadOverviewRow: React.SFC<Props> = ({ total, threads, isFiltered }) => 
     threadsPadded[i] = threads.get(i);
   }
 
-  const firstThread = threadsPadded.find(thread => thread !== undefined);
+  const firstThread = threadsPadded.find((thread) => thread !== undefined);
   const threadName = firstThread ? firstThread.name : '';
 
   return (
@@ -24,7 +24,8 @@ const ThreadOverviewRow: React.SFC<Props> = ({ total, threads, isFiltered }) => 
         <span>{threadName}</span>
       </td>
       {threadsPadded.map((thread, i) => (
-        <ThreadOverviewItem key={i}
+        <ThreadOverviewItem
+          key={i}
           thread={thread}
           isFiltered={isFiltered}
           isMatchingFilter={thread ? thread.matchingFilter : false}

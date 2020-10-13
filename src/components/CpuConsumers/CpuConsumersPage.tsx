@@ -27,7 +27,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
 
-    const nonEmptyThreadDumps = this.props.threadDumps.filter(dump => dump.threads.length > 0);
+    const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
 
     this.state = {
       limit: 100,
@@ -48,14 +48,15 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
           onLimitChange={this.handleIntegerChange}
         />
 
-        {!this.state.threadDumps.some(dump => !!dump.loadAverages)
+        {!this.state.threadDumps.some((dump) => !!dump.loadAverages)
           ? <h4 dangerouslySetInnerHTML={{ __html: CpuConsumersPage.NO_CPU_AND_THREADS_PAIR }} />
-          : <CpuConsumersList
-            limit={this.state.limit}
-            dumpsNumber={this.state.threadDumps.length}
-            consumers={consumers}
-          />
-        }
+          : (
+            <CpuConsumersList
+                limit={this.state.limit}
+                dumpsNumber={this.state.threadDumps.length}
+                consumers={consumers}
+            />
+          )}
       </div>
     );
   }

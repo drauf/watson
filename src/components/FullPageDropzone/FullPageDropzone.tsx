@@ -9,14 +9,14 @@ import './FullPageDropzone.css';
 
 class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
   public render = () => (
-    <Dropzone multiple={true} onDrop={this.onDrop}>
+    <Dropzone multiple onDrop={this.onDrop}>
       {({ getRootProps, getInputProps, isDragActive }) => (
         <div id="dropzone" {...getRootProps()}>
           <input {...getInputProps()} />
           {
-            isDragActive ?
-              <h4>Drop files here...</h4> :
-              <h4>Drop the catalog here, or click to select files to load.</h4>
+            isDragActive
+              ? <h4>Drop files here...</h4>
+              : <h4>Drop the catalog here, or click to select files to load.</h4>
           }
           <DropzoneGuide />
         </div>
@@ -31,7 +31,7 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
 
   private onParsed = (threadDumps: ThreadDump[]): void => {
     const key = setThreadDumps(threadDumps);
-    if (threadDumps.some(dump => !!dump.loadAverages)) {
+    if (threadDumps.some((dump) => !!dump.loadAverages)) {
       this.props.history.push(`/${key}/summary/`);
     } else {
       this.props.history.push(`/${key}/similar-stacks/`);

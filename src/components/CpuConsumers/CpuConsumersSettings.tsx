@@ -8,7 +8,9 @@ type Props = {
   onLimitChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const CpuConsumersSettings: React.SFC<Props> = ({ mode, limit, onModeChange, onLimitChange }) => (
+const CpuConsumersSettings: React.SFC<Props> = ({
+  mode, limit, onModeChange, onLimitChange,
+}) => (
   <div id="settings">
     <div className="filters">
       <b>CPU usage calculation:</b>
@@ -20,7 +22,7 @@ const CpuConsumersSettings: React.SFC<Props> = ({ mode, limit, onModeChange, onL
           onChange={onModeChange(CpuConsumersMode.Mean)}
         />
         Mean
-        </label>
+      </label>
 
       <label className={mode === CpuConsumersMode.Median ? 'checked' : ''}>
         <input
@@ -29,7 +31,7 @@ const CpuConsumersSettings: React.SFC<Props> = ({ mode, limit, onModeChange, onL
           onChange={onModeChange(CpuConsumersMode.Median)}
         />
         Median
-        </label>
+      </label>
 
       <label className={mode === CpuConsumersMode.Max ? 'checked' : ''}>
         <input
@@ -38,12 +40,16 @@ const CpuConsumersSettings: React.SFC<Props> = ({ mode, limit, onModeChange, onL
           onChange={onModeChange(CpuConsumersMode.Max)}
         />
         Max
-        </label>
+      </label>
     </div>
 
     <div id="cpu-consumers-limit">
       <label>
-        <input type="number" name="limit" min="0" max="10000"
+        <input
+          type="number"
+          name="limit"
+          min="0"
+          max="10000"
           value={limit}
           onChange={onLimitChange}
         />

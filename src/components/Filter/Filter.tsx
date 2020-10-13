@@ -8,7 +8,9 @@ type Props = {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const Filter: React.SFC<Props> = ({ name, displayName, checked, onChange }) => (
+const Filter: React.SFC<Props> = ({
+  name, displayName, checked, onChange,
+}) => (
   <label className={checked ? 'checked' : ''}>
     <input
       type="checkbox"

@@ -8,14 +8,14 @@ type Props = {
   threadDumps: Array<Map<number, Thread>>;
 };
 
-const ThreadsOverview: React.SFC<Props> = ({ dates, isFilteredByStack, threadDumps }) => (
+const ThreadsOverview: React.SFC<Props> = ({ dates, isFilteredByStack, threadDumps }: Props) => (
   <div id="threads-overview-table-wrapper">
     <table>
       <thead>
         <tr>
-          <th />
-          {dates.map((date, index) => (
-            <th key={index}>
+          <th>Thread Name / Time</th>
+          {dates.map((date) => (
+            <th key={date}>
               {date}
               <span>{date}</span>
             </th>
@@ -23,8 +23,9 @@ const ThreadsOverview: React.SFC<Props> = ({ dates, isFilteredByStack, threadDum
         </tr>
       </thead>
       <tbody>
-        {threadDumps.map((threads, index) => (
-          <ThreadOverviewRow key={index}
+        {threadDumps.map((threads) => (
+          <ThreadOverviewRow
+            key={threads.values().next().value.name}
             isFiltered={isFilteredByStack}
             total={dates.length}
             threads={threads}

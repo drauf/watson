@@ -9,11 +9,15 @@ const MAX_TIME_DIFFERENCE_ALLOWED: number = 10000;
 
 export default class Parser {
   private cpuUsages: CpuUsage[] = [];
+
   private threadDumps: ThreadDump[] = [];
 
   private filesToParse: number = 0;
+
+  // eslint-disable-next-line no-unused-vars
   private onFilesParsed: (threadDumps: ThreadDump[]) => void;
 
+  // eslint-disable-next-line no-unused-vars
   constructor(onFilesParsed: (threadDumps: ThreadDump[]) => void) {
     this.onFilesParsed = onFilesParsed;
   }
@@ -27,7 +31,7 @@ export default class Parser {
   }
 
   private parse(files: File[]) {
-    for (const file of files) {
+    files.forEach((file) => {
       const reader = new FileReader();
 
       reader.onload = () => {
@@ -47,22 +51,22 @@ export default class Parser {
         this.fileParsed();
       };
 
-      this.filesToParse = this.filesToParse + 1;
+      this.filesToParse += 1;
       reader.readAsText(file);
-    }
+    });
   }
 
   // a single file can contain multiple thread dumps - split them into "batches"
   private splitThreadDumps(lines: string[]) {
     let currentDump: string[] = [];
 
-    for (const line of lines) {
+    lines.forEach((line) => {
       // check if a new thread dump starts
       if (matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
         // special case for the first thread dump in the file
         if (currentDump.length === 0) {
           currentDump.push(line);
-          continue;
+          return;
         }
 
         this.parseThreadDump(currentDump);
@@ -71,7 +75,7 @@ export default class Parser {
         // do not add lines if there is no thread dump (e.g. when parsing catalina.out)
         currentDump.push(line);
       }
-    }
+    });
 
     if (currentDump.length > 0) {
       this.parseThreadDump(currentDump);
@@ -97,7 +101,7 @@ export default class Parser {
   }
 
   private fileParsed() {
-    this.filesToParse = this.filesToParse - 1;
+    this.filesToParse -= 1;
 
     // finish parsing if there are no files left
     if (!this.filesToParse) {
@@ -109,10 +113,10 @@ export default class Parser {
 
   private groupCpuUsagesWithThreadDumps() {
     this.cpuUsages
-      .filter(cpuUsage => cpuUsage.getEpoch())
+      .filter((cpuUsage) => cpuUsage.getEpoch())
       .forEach((cpuUsage) => {
         const threadDump: ThreadDump = this.findCorrespondingThreadDump(cpuUsage);
-        this.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
+        Parser.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
       });
   }
 
@@ -138,7 +142,7 @@ export default class Parser {
     let smallestDiff: number = MAX_TIME_DIFFERENCE_ALLOWED;
 
     this.threadDumps
-      .filter(threadDump => threadDump.getEpoch())
+      .filter((threadDump) => threadDump.getEpoch())
       .forEach((threadDump) => {
         const dumpEpoch = threadDump.getEpoch();
 
@@ -162,13 +166,13 @@ export default class Parser {
     return closest;
   }
 
-  private groupCpuUsageWithThreadDump(threadDump: ThreadDump, cpuUsage: CpuUsage): void {
+  private static groupCpuUsageWithThreadDump(threadDump: ThreadDump, cpuUsage: CpuUsage): void {
     threadDump.loadAverages = cpuUsage.loadAverages;
     threadDump.runningProcesses = cpuUsage.runningProcesses;
     threadDump.memoryUsage = cpuUsage.memoryUsage;
 
     cpuUsage.threadCpuUsages.forEach((cpu) => {
-      const thread = this.findThreadWithId(threadDump, cpu.id);
+      const thread = Parser.findThreadWithId(threadDump, cpu.id);
 
       if (thread) {
         thread.cpuUsage = cpu.cpuUsage;
@@ -177,12 +181,7 @@ export default class Parser {
     });
   }
 
-  private findThreadWithId(threadDump: ThreadDump, id: number): Thread | null {
-    for (const thread of threadDump.threads) {
-      if (thread.id === id) {
-        return thread;
-      }
-    }
-    return null;
+  private static findThreadWithId(threadDump: ThreadDump, id: number): Thread | undefined {
+    return threadDump.threads.find((thread) => thread.id === id);
   }
 }

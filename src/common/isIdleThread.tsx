@@ -1,12 +1,5 @@
 import Thread from '../types/Thread';
 
-// tslint:disable:max-line-length
-export default function isIdleThread(thread: Thread): boolean {
-  return thread.stackTrace.length < 17
-    || isRufusThread(thread)
-    || isRubiniusThread(thread);
-}
-
 function isRufusThread(thread: Thread): boolean {
   if (!thread.name.includes('rufus-scheduler')) {
     return false;
@@ -20,4 +13,10 @@ function isRubiniusThread(thread: Thread): boolean {
     return false;
   }
   return thread.stackTrace[5] === 'org.jruby.ext.rubinius.RubiniusChannel$INVOKER$i$0$0$receive.call(RubiniusChannel$INVOKER$i$0$0$receive.gen)';
+}
+
+export default function isIdleThread(thread: Thread): boolean {
+  return thread.stackTrace.length < 17
+    || isRufusThread(thread)
+    || isRubiniusThread(thread);
 }

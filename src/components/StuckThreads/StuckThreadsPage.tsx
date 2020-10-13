@@ -21,7 +21,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
 
-    const nonEmptyThreadDumps = this.props.threadDumps.filter(dump => dump.threads.length > 0);
+    const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
 
     this.state = {
       maxDifferingLines: 5,
@@ -43,25 +43,27 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
           minClusterSize={this.state.minClusterSize}
           withoutIdle={this.state.withoutIdle}
           onFilterChange={this.handleFilterChange}
-          onIntegerChange={this.handleIntegerChange} />
+          onIntegerChange={this.handleIntegerChange}
+        />
 
         {this.state.threadDumps.length === 0
           ? <h4 dangerouslySetInnerHTML={{ __html: StuckThreadsPage.NO_THREAD_DUMPS }} />
           : clusters.length === 0
             ? <h4>{StuckThreadsPage.N0_THREADS_MATCHING}</h4>
             : clusters.map((group, index) => (
-              <StuckThreadsGroup key={index}
-                threadGroup={group}
-                maxDifferingLines={this.state.maxDifferingLines} />))}
+              <StuckThreadsGroup
+                  key={index}
+                  threadGroup={group}
+                  maxDifferingLines={this.state.maxDifferingLines}
+              />
+            ))}
       </div>
     );
   }
 
-  private filterThreads = (threadDumps: Array<Map<number, Thread>>): Thread[][] => {
-    return threadDumps
-      .map(threadDump => this.filterThread(threadDump))
-      .filter(dump => dump.length > 0);
-  }
+  private filterThreads = (threadDumps: Array<Map<number, Thread>>): Thread[][] => threadDumps
+    .map((threadDump) => this.filterThread(threadDump))
+    .filter((dump) => dump.length > 0)
 
   private filterThread = (threadOverTime: Map<number, Thread>): Thread[] => {
     const filtered = [];
@@ -82,8 +84,8 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
 
     for (const threadOverTime of threadDumps) {
       this.getClustersFromThread(threadOverTime)
-        .filter(c => c.length >= this.state.minClusterSize)
-        .forEach(c => clusters.push(c));
+        .filter((c) => c.length >= this.state.minClusterSize)
+        .forEach((c) => clusters.push(c));
     }
 
     return clusters.sort((c1, c2) => c2.length - c1.length);

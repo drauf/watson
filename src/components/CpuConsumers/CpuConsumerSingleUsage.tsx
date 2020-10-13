@@ -11,13 +11,12 @@ type State = {
 };
 
 export default class CpuConsumerSingleUsage extends React.PureComponent<Props, State> {
-
   public state: State = {
     showDetails: false,
   };
 
   public handleClick = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
+    this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   }
 
   public handleUnload = () => {
@@ -25,7 +24,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
   }
 
   public render() {
-    const thread = this.props.thread;
+    const { thread } = this.props;
 
     if (!thread) {
       return <button className="no-click">n/a</button>;
@@ -37,15 +36,13 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     return (
       <>
         <button className={className} onClick={this.handleClick}>{cpuUsage}</button>
-        {this.state.showDetails &&
-          <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+        {this.state.showDetails
+          && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
       </>
     );
   }
 
-  private getCpuUsage = (cpuUsage: number): string => {
-    return `${cpuUsage.toFixed(1)}%`;
-  }
+  private getCpuUsage = (cpuUsage: number): string => `${cpuUsage.toFixed(1)}%`
 
   private getClassName = (cpuUsage: number): string => {
     // The numbers here are completely arbitrary

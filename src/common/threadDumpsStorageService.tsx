@@ -7,6 +7,18 @@ let currentThreadDumps: ThreadDump[];
 const lastUsedStorage = localforage.createInstance({ name: 'lastUsed' });
 const threadDumpsStorage = localforage.createInstance({ name: 'threadDumps' });
 
+async function getFromStorage(key: string) {
+  const fromStorage = await threadDumpsStorage.getItem<string>(key);
+
+  // update the "Last used" date if the key exists
+  if (fromStorage) {
+    lastUsedStorage.setItem(key, new Date().valueOf());
+  }
+
+  currentThreadDumps = fromStorage ? parse(fromStorage) : [];
+  return currentThreadDumps;
+}
+
 // Given a key, returns a promise that resolves to the stored thread dumps.
 export const getThreadDumpsAsync = async (key: string): Promise<ThreadDump[]> => {
   if (currentThreadDumps === undefined) {
@@ -43,15 +55,3 @@ export const clearOldThreadDumps = (): void => {
     }
   });
 };
-
-async function getFromStorage(key: string) {
-  const fromStorage = await threadDumpsStorage.getItem<string>(key);
-
-  // update the "Last used" date if the key exists
-  if (fromStorage) {
-    lastUsedStorage.setItem(key, new Date().valueOf());
-  }
-
-  currentThreadDumps = fromStorage ? parse(fromStorage) : [];
-  return currentThreadDumps;
-}

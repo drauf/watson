@@ -12,18 +12,17 @@ type State = {
   threadDumps: ThreadDump[];
 };
 
-export const withThreadDumps =
-  <P extends WithThreadDumpsProps>(WrappedComponent: React.ComponentType<P>) => {
+export const
+  withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent: React.ComponentType<P>) => {
     class WithThreadDumps extends React.Component<P, State> {
-      public state: State = {
-        promisePending: true,
-        threadDumps: [],
-      };
-
       constructor(props: P) {
         super(props);
+        this.state = {
+          promisePending: true,
+          threadDumps: [],
+        };
 
-        const key: string = props.match.params.key;
+        const { key } = props.match.params;
         const threadDumpsPromise = getThreadDumpsAsync(key);
 
         threadDumpsPromise
@@ -42,19 +41,22 @@ export const withThreadDumps =
         this.scrollToTop();
       }
 
-      public render() {
-        if (this.state.promisePending) {
-          return <h4 id="centered">Loading data from cache...</h4>;
-        }
-
-        return <WrappedComponent {...this.props} threadDumps={this.state.threadDumps} />;
-      }
-
       private scrollToTop = () => {
         const contentDiv = document.getElementById('content');
         if (contentDiv) {
           contentDiv.scrollTop = 0;
         }
+      }
+
+      public render() {
+        const { promisePending, threadDumps } = this.state;
+
+        if (promisePending) {
+          return <h4 id="centered">Loading data from cache...</h4>;
+        }
+
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        return <WrappedComponent {...this.props} threadDumps={threadDumps} />;
       }
     }
 

@@ -12,38 +12,41 @@ type State = {
 };
 
 export default class ThreadSummary extends React.PureComponent<Props, State> {
-
   public state: State = {
     showDetails: false,
     showLockOwner: false,
   };
 
   public render() {
-    const thread = this.props.thread;
+    const { thread } = this.props;
     const lockOwner = thread.lockWaitingFor ? thread.lockWaitingFor.owner : null;
     const locksHeld = this.getLocksHeldString(thread);
 
     return (
       <li>
-        <button onClick={this.toggleDetails}>"{thread.name}"</button>
+        <button onClick={this.toggleDetails}>
+          "
+          {thread.name}
+          "
+        </button>
         {` ${Thread.getFormattedTime(thread)}`}
         {this.waitingForRender(thread, lockOwner)}
         {thread.locksHeld.length > 0 && `, holding [${locksHeld}]`}
 
-        {this.state.showDetails &&
-          <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
-        {this.state.showLockOwner && lockOwner &&
-          <ThreadDetailsWindow thread={lockOwner} onUnload={this.handleUnload} />}
+        {this.state.showDetails
+          && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+        {this.state.showLockOwner && lockOwner
+          && <ThreadDetailsWindow thread={lockOwner} onUnload={this.handleUnload} />}
       </li>
     );
   }
 
   private toggleDetails = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
+    this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   }
 
   private toggleLockOwner = () => {
-    this.setState(prevState => ({ showLockOwner: !prevState.showLockOwner }));
+    this.setState((prevState) => ({ showLockOwner: !prevState.showLockOwner }));
   }
 
   private handleUnload = () => {
@@ -62,7 +65,11 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
       return (
         <>
           , awaiting notification on
-          <button onClick={this.toggleLockOwner}>[{lockWaitingFor}]</button>
+          <button onClick={this.toggleLockOwner}>
+            [
+            {lockWaitingFor}
+            ]
+          </button>
         </>
       );
     }
@@ -73,7 +80,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     if (thread.locksHeld.length === 0) {
       return null;
     }
-    return thread.locksHeld.map(lock => lock.id).reduce(this.locksReducer);
+    return thread.locksHeld.map((lock) => lock.id).reduce(this.locksReducer);
   }
 
   private locksReducer(accumulator: string, lockId: string, index: number): string {

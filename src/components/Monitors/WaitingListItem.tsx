@@ -11,19 +11,18 @@ type State = {
 };
 
 export default class WaitingListItem extends React.PureComponent<Props, State> {
-
   public state: State = {
     showDetails: false,
   };
 
   public render() {
-    const thread = this.props.thread;
+    const { thread } = this.props;
 
     return (
       <>
         <button onClick={this.handleClick}>{thread.name}</button>
-        {this.state.showDetails &&
-          <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+        {this.state.showDetails
+          && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
 
         <br />
       </>
@@ -31,7 +30,7 @@ export default class WaitingListItem extends React.PureComponent<Props, State> {
   }
 
   private handleClick = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
+    this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   }
 
   private handleUnload = () => {

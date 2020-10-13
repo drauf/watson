@@ -14,7 +14,6 @@ type Props = RouteComponentProps<any> & {
 };
 
 class Navigation extends React.PureComponent<Props> {
-
   public render() {
     const key: string = this.props.match.params.key as string;
 

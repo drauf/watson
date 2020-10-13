@@ -8,7 +8,7 @@ type Props = {
   threadDumps: ThreadDump[];
 };
 
-const LoadAveragesChart: React.SFC<Props> = ({ threadDumps }) => {
+const LoadAveragesChart: React.SFC<Props> = ({ threadDumps }: Props) => {
   const data: object[] = [];
   threadDumps.forEach((threadDump) => {
     if (threadDump.loadAverages) {

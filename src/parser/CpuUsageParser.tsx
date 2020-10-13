@@ -13,10 +13,10 @@ const USED_MEMORY_PATTERN: RegExp = /([0-9.]+)k? used/;
 const FREE_MEMORY_PATTERN: RegExp = /([0-9.]+)k? free/;
 const COLUMN_MATCHER: RegExp = /([^\s]+) +/g;
 
+// eslint-disable-next-line no-unused-vars
 export type ParseCpuUsageCallback = (cpuUsage: CpuUsage) => void;
 
 export default class CpuUsageParser {
-
   public static parseCpuUsage(lines: string[], callback: ParseCpuUsageCallback) {
     const cpuUsage: CpuUsage = new CpuUsage(matchOne(CPU_USAGE_TIMESTAMP_PATTERN, lines[0]));
 
@@ -82,22 +82,18 @@ export default class CpuUsageParser {
 
     const offsets: TopColumnOffsets = this.getColumnOffsets(lines[1]);
 
-    for (let i = 2; i < lines.length; i++) {
-      const line: string = lines[i];
-      if (!line) continue;
-
-      const columns: string[] = matchMultipleTimes(COLUMN_MATCHER, line);
-      if (columns.length < 11) {
-        console.error(`Unable to parse thread cpu usage info from line: ${line}`);
-        continue;
-      }
-
-      const threadCpuUsage: ThreadCpuUsage = new ThreadCpuUsage();
-      threadCpuUsage.id = parseInt(columns[offsets.getProcessIdOffset()], 10);
-      threadCpuUsage.cpuUsage = parseFloat(columns[offsets.getCpuUsageOffset()]);
-      threadCpuUsage.runningFor = columns[offsets.getRunningForOffset()];
-      threadCpuUsages.push(threadCpuUsage);
-    }
+    lines
+      .slice(2)
+      .filter((line) => line)
+      .map((line) => matchMultipleTimes(COLUMN_MATCHER, line))
+      .filter((columns) => columns.length >= 11)
+      .forEach((columns) => {
+        const threadCpuUsage: ThreadCpuUsage = new ThreadCpuUsage();
+        threadCpuUsage.id = parseInt(columns[offsets.getProcessIdOffset()], 10);
+        threadCpuUsage.cpuUsage = parseFloat(columns[offsets.getCpuUsageOffset()]);
+        threadCpuUsage.runningFor = columns[offsets.getRunningForOffset()];
+        threadCpuUsages.push(threadCpuUsage);
+      });
 
     return threadCpuUsages;
   }
@@ -117,6 +113,8 @@ export default class CpuUsageParser {
           break;
         case 'TIME+':
           offsets.setRunningForOffset(index);
+          break;
+        default:
           break;
       }
     });
