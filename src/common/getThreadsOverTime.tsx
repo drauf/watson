@@ -1,6 +1,11 @@
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
 
+const getThreadName = (threads: Map<number, Thread>): string => {
+  const firstThread = Array.from(threads.values()).find((thread) => (thread));
+  return firstThread ? firstThread.name : '';
+};
+
 export default function getThreadsOverTime(threadDumps: ThreadDump[]): Array<Map<number, Thread>> {
   const threadsOverTime = new Map<number, Map<number, Thread>>();
 
@@ -19,12 +24,3 @@ export default function getThreadsOverTime(threadDumps: ThreadDump[]): Array<Map
   return Array.from(threadsOverTime.values())
     .sort((t1, t2) => getThreadName(t1).localeCompare(getThreadName(t2)));
 }
-
-const getThreadName = (threads: Map<number, Thread>): string => {
-  for (const [, thread] of threads) {
-    if (thread) {
-      return thread.name;
-    }
-  }
-  return '';
-};

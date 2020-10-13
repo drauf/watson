@@ -4,9 +4,13 @@ import ThreadCpuUsage from './ThreadCpuUsage';
 
 export default class CpuUsage {
   public runningProcesses!: number;
+
   public loadAverages!: LoadAverages | null;
+
   public memoryUsage!: MemoryUsage;
+
   public threadCpuUsages!: ThreadCpuUsage[];
+
   private epoch: number | null;
 
   constructor(timestamp: string) {
@@ -18,7 +22,5 @@ export default class CpuUsage {
     this.epoch = hours * 3600000 + minutes * 60000 + seconds * 1000;
   }
 
-  public getEpoch = () => {
-    return this.epoch;
-  }
+  public getEpoch = () => this.epoch
 }

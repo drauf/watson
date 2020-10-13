@@ -11,13 +11,12 @@ type State = {
 };
 
 export default class MonitorOwner extends React.PureComponent<Props, State> {
-
   public state: State = {
     showOwner: false,
   };
 
   public render() {
-    const monitor = this.props.monitor;
+    const { monitor } = this.props;
 
     if (!monitor.owner) {
       return null;
@@ -32,15 +31,15 @@ export default class MonitorOwner extends React.PureComponent<Props, State> {
         </button>
         <br />
 
-        {this.state.showOwner &&
-          <ThreadDetailsWindow thread={monitor.owner} onUnload={this.handleUnload} />}
+        {this.state.showOwner
+          && <ThreadDetailsWindow thread={monitor.owner} onUnload={this.handleUnload} />}
       </>
     );
   }
 
   private handleClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    this.setState(prevState => ({ showOwner: !prevState.showOwner }));
+    this.setState((prevState) => ({ showOwner: !prevState.showOwner }));
   }
 
   private handleUnload = () => {

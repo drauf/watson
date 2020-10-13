@@ -1,10 +1,6 @@
-import { TooltipFormatter } from 'recharts';
+import React from 'react';
 
-// perform a "best effort" conversion to GBs
-const labelFormatter: TooltipFormatter
-  = (value: string | number | Array<string | number>): React.ReactNode => {
-    return convert(value as number);
-  };
+const round = (value: number): string => value.toFixed(2);
 
 const convert = (value: number): string => {
   if (value > 1000000) {
@@ -13,8 +9,8 @@ const convert = (value: number): string => {
   return `${round(value / 1000)} MB`;
 };
 
-const round = (value: number): string => {
-  return value.toFixed(2);
-};
-
-export default labelFormatter;
+// perform a "best effort" conversion to GBs
+export default function
+labelFormatter(value: string | number | Array<string | number>): React.ReactNode {
+  return convert(value as number);
+}

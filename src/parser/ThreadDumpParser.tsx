@@ -17,13 +17,13 @@ const SYNCHRONIZATION_STATUS_PATTERN: RegExp = /^\s+- (.*?) +<([x0-9a-f]+)> \(a 
 const HELD_LOCK_PATTERN: RegExp = /^\s+- <([x0-9a-f]+)> \(a (.*)\)/;
 // tslint:enable:max-line-length
 
+// eslint-disable-next-line no-unused-vars
 export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
 
 export default class ThreadDumpParser {
-
   public static parseThreadDump(lines: string[], callback: ParseThreadDumpCallback) {
     const threadDump = ThreadDump.from(matchOne(THREAD_DUMP_DATE_PATTERN, lines.shift() as string));
-    lines.forEach(line => ThreadDumpParser.parseLine(line, threadDump));
+    lines.forEach((line) => ThreadDumpParser.parseLine(line, threadDump));
     ThreadDumpParser.identifyAnonymousSynchronizers(threadDump.threads);
 
     callback(threadDump);
@@ -123,8 +123,8 @@ export default class ThreadDumpParser {
     const validStatuses = [ThreadStatus.BLOCKED, ThreadStatus.TIMED_WAITING, ThreadStatus.WAITING];
 
     threads
-      .filter(thread => !thread.lockWaitingFor)
-      .filter(thread => thread.status !== undefined && validStatuses.includes(thread.status))
+      .filter((thread) => !thread.lockWaitingFor)
+      .filter((thread) => thread.status !== undefined && validStatuses.includes(thread.status))
       .forEach((thread) => {
         const lock: Lock = thread.classicalLocksHeld[0];
         if (!lock) {
@@ -161,10 +161,9 @@ export default class ThreadDumpParser {
   }
 
   private static getOrCreateLock(locks: Lock[], id: string, className: string): Lock {
-    for (const existingLock of locks) {
-      if (existingLock.hasId(id)) {
-        return existingLock;
-      }
+    const existingLock = locks.find((lock) => lock.hasId(id));
+    if (existingLock) {
+      return existingLock;
     }
 
     const newLock: Lock = new Lock(id, className);

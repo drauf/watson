@@ -11,28 +11,31 @@ type State = {
 };
 
 export default class MonitorOverTimeItem extends React.PureComponent<Props, State> {
-
   public state: State = {
     collapse: false,
   };
 
   public render() {
-    const monitor = this.props.monitor;
+    const { monitor } = this.props;
 
     return (
       <>
         <h5 className="clickable ellipsis" onClick={this.toggleCollapse}>
           <span className={this.state.collapse ? 'chevron rotate' : 'chevron'} />
-          {monitor.waitingSum} thread(s) waiting for &lt;{monitor.id}&gt;
+          {monitor.waitingSum}
+          {' '}
+          thread(s) waiting for &lt;
+          {monitor.id}
+          &gt;
         </h5>
 
-        {!this.state.collapse &&
-          monitor.monitors.map((item, index) => <MonitorItem key={index} monitor={item} />)}
+        {!this.state.collapse
+          && monitor.monitors.map((item, index) => <MonitorItem key={index} monitor={item} />)}
       </>
     );
   }
 
   private toggleCollapse = () => {
-    this.setState(prevState => ({ collapse: !prevState.collapse }));
+    this.setState((prevState) => ({ collapse: !prevState.collapse }));
   }
 }

@@ -9,36 +9,41 @@ type Props = {
   onIntegerChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const SimilarStacksSettings: React.SFC<Props> =
-  ({ linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange }) => (
-    <div id="settings">
-      <div className="filters">
-        <b>Filters:</b>
+const SimilarStacksSettings: React.SFC<Props> = ({
+  linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange,
+}) => (
+  <div id="settings">
+    <div className="filters">
+      <b>Filters:</b>
 
-        <Filter name="withoutIdle" displayName="Without Idle"
-          checked={withoutIdle} onChange={onFilterChange} />
-      </div>
-
-      <label>
-        <input
-          type="number"
-          name="linesToConsider"
-          value={linesToConsider}
-          onChange={onIntegerChange}
-        />
-        <b>Stack trace lines to compare</b>
-      </label>
-
-      <label>
-        <input
-          type="number"
-          name="minimalGroupSize"
-          value={minimalGroupSize}
-          onChange={onIntegerChange}
-        />
-        <b>Minimal group size to show</b>
-      </label>
+      <Filter
+        name="withoutIdle"
+        displayName="Without Idle"
+        checked={withoutIdle}
+        onChange={onFilterChange}
+      />
     </div>
-  );
+
+    <label>
+      <input
+        type="number"
+        name="linesToConsider"
+        value={linesToConsider}
+        onChange={onIntegerChange}
+      />
+      <b>Stack trace lines to compare</b>
+    </label>
+
+    <label>
+      <input
+        type="number"
+        name="minimalGroupSize"
+        value={minimalGroupSize}
+        onChange={onIntegerChange}
+      />
+      <b>Minimal group size to show</b>
+    </label>
+  </div>
+);
 
 export default SimilarStacksSettings;

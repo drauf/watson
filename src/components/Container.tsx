@@ -17,17 +17,23 @@ type State = {
 };
 
 class Container extends React.PureComponent<any, State> {
+  constructor(props: any) {
+    super(props);
+    this.state = { navigationOpen: true };
+  }
 
-  public state: State = {
-    navigationOpen: true,
-  };
+  private toggleNavigation = () => {
+    this.setState((prevState) => ({ navigationOpen: !prevState.navigationOpen }));
+  }
 
   public render() {
+    const { navigationOpen } = this.state;
+
     return (
       <div id="container">
-        <Navigation open={this.state.navigationOpen} />
+        <Navigation open={navigationOpen} />
 
-        <NavToggle open={this.state.navigationOpen} onClick={this.toggleNavigation} />
+        <NavToggle open={navigationOpen} onClick={this.toggleNavigation} />
 
         <div id="content">
           <Switch>
@@ -42,10 +48,6 @@ class Container extends React.PureComponent<any, State> {
         </div>
       </div>
     );
-  }
-
-  private toggleNavigation = () => {
-    this.setState(prevState => ({ navigationOpen: !prevState.navigationOpen }));
   }
 }
 

@@ -18,7 +18,7 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const thread = this.props.thread;
+    const { thread } = this.props;
     const stack = thread.stackTrace.slice(0, Math.max(this.props.maxDifferingLines, 10));
 
     return (
@@ -29,20 +29,22 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
           </button>
         </h6>
 
-        {this.props.showStackTrace &&
+        {this.props.showStackTrace
+          && (
           <ol className="stacktrace">
             {stack.map((line, index) => (
               <li key={index}>{line}</li>))}
-          </ol>}
+          </ol>
+          )}
 
-        {this.state.showDetails &&
-          <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+        {this.state.showDetails
+          && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
       </>
     );
   }
 
   private handleClick = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
+    this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   }
 
   private handleUnload = () => {

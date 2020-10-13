@@ -4,8 +4,11 @@ import ThreadDump from '../../types/ThreadDump';
 
 export default class Monitor {
   public time: string;
+
   public javaClass: string;
+
   public owner: Thread | null;
+
   public waiting: Thread[];
 
   public constructor(threadDump: ThreadDump, lock: Lock) {

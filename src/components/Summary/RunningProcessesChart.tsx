@@ -53,10 +53,18 @@ const CustomTooltip: React.SFC<TooltipProps> = ({ active, payload, label }) => {
     return (
       <div className="tooltip ellipsis">
         <p>
-          {`${label} - ${payload[0].value}`} running processes (from <i>top</i>)
+          {`${label} - ${payload[0].value}`}
+          {' '}
+          running processes (from
+          <i>top</i>
+          )
         </p>
 
-        Top 10 <i>jstack</i> threads:
+        Top 10
+        {' '}
+        <i>jstack</i>
+        {' '}
+        threads:
         <ol>
           {threadNames.length > 0
             ? threadNames.map((name, key) => <li key={key}>{name}</li>)
@@ -73,11 +81,11 @@ const getSortedThreadNames = (payload: unknown): string[] => {
   const threads: Thread[] = payload as Thread[];
 
   return threads
-    .filter(thread => thread.status === ThreadStatus.RUNNABLE)
-    .filter(thread => thread.cpuUsage > 0)
+    .filter((thread) => thread.status === ThreadStatus.RUNNABLE)
+    .filter((thread) => thread.cpuUsage > 0)
     .sort((a, b) => b.cpuUsage - a.cpuUsage)
     .slice(0, 10)
-    .map(thread => `${thread.cpuUsage}% CPU - ${thread.name}`);
+    .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
 };
 
 export default RunningProcessesChart;

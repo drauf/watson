@@ -4,11 +4,9 @@ import MemoryUsage from './MemoryUsage';
 import Thread from './Thread';
 
 export default class ThreadDump {
-  public static getFormattedTime = (threadDump: ThreadDump): string => {
-    return threadDump.epoch
-      ? new Date(threadDump.epoch).toUTCString().substr(17, 8)
-      : 'unknown time';
-  }
+  public static getFormattedTime = (threadDump: ThreadDump): string => (threadDump.epoch
+    ? new Date(threadDump.epoch).toUTCString().substr(17, 8)
+    : 'unknown time')
 
   public static from = (date: string | null): ThreadDump => {
     if (!date) {
@@ -29,16 +27,16 @@ export default class ThreadDump {
   }
 
   public loadAverages!: LoadAverages | null;
+
   public runningProcesses!: number;
+
   public memoryUsage!: MemoryUsage;
+
   public threads: Thread[] = [];
+
   public locks: Lock[] = [];
+
   private epoch: number | null = null;
 
-  private constructor() {
-  }
-
-  public getEpoch = () => {
-    return this.epoch;
-  }
+  public getEpoch = () => this.epoch
 }

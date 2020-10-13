@@ -13,13 +13,12 @@ type State = {
 };
 
 export default class ThreadOverviewItem extends React.PureComponent<Props, State> {
-
   public state: State = {
     showDetails: false,
   };
 
   public render() {
-    const thread = this.props.thread;
+    const { thread } = this.props;
 
     if (!thread) {
       return <td className="empty" />;
@@ -36,14 +35,14 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
           <span>{thread.stackTrace[0]}</span>
         </td>
 
-        {this.state.showDetails &&
-          <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+        {this.state.showDetails
+          && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
       </>
     );
   }
 
   private toggleDetails = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
+    this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   }
 
   private handleUnload = () => {

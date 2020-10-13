@@ -14,8 +14,8 @@ type Props = {
 
 const SwapUsageChart: React.SFC<Props> = ({ threadDumps }) => {
   const memoryUsages: MemoryUsage[] = threadDumps
-    .map(threadDump => threadDump.memoryUsage)
-    .filter(memoryUsage => !!memoryUsage);
+    .map((threadDump) => threadDump.memoryUsage)
+    .filter((memoryUsage) => !!memoryUsage);
 
   const freeSwapAvg = memoryUsages.reduce((a, b) => a + b.swapFree, 0) / memoryUsages.length;
   const usedSwapAvg = memoryUsages.reduce((a, b) => a + b.swapUsed, 0) / memoryUsages.length;

@@ -14,7 +14,6 @@ type State = {
 };
 
 export default class SimilarStacksPage extends PageWithSettings<State> {
-
   public state: State = {
     linesToConsider: 40,
     minimalGroupSize: 2,
@@ -25,7 +24,7 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
 
   public render() {
     const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider)
-      .filter(group => group.length >= this.state.minimalGroupSize);
+      .filter((group) => group.length >= this.state.minimalGroupSize);
 
     return (
       <div id="page">
@@ -34,16 +33,20 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
           minimalGroupSize={this.state.minimalGroupSize}
           withoutIdle={this.state.withoutIdle}
           onFilterChange={this.handleFilterChange}
-          onIntegerChange={this.handleIntegerChange} />
+          onIntegerChange={this.handleIntegerChange}
+        />
 
-        {!this.props.threadDumps.some(dump => dump.threads.length > 0)
+        {!this.props.threadDumps.some((dump) => dump.threads.length > 0)
           ? <h4 dangerouslySetInnerHTML={{ __html: SimilarStacksPage.NO_THREAD_DUMPS }} />
           : threadGroups.length === 0
             ? <h4>{SimilarStacksPage.N0_THREADS_MATCHING}</h4>
             : threadGroups.map((group, index) => (
-              <SimilarStacksGroup key={index}
-                threadGroup={group}
-                linesToConsider={this.state.linesToConsider} />))}
+              <SimilarStacksGroup
+                  key={index}
+                  threadGroup={group}
+                  linesToConsider={this.state.linesToConsider}
+              />
+            ))}
       </div>
     );
   }

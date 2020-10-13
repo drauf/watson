@@ -13,7 +13,6 @@ type State = {
 };
 
 export default class GroupDetails extends React.PureComponent<Props, State> {
-
   private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;
 
   public state: State = {
@@ -33,14 +32,16 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
         <ul>
           {threads.map((thread, index) => <ThreadSummary key={index} thread={thread} />)}
 
-          {collapsable > 0 &&
+          {collapsable > 0
+            && (
             <li>
               <button onClick={this.toggleExpand}>
                 {this.state.expanded
                   ? `Collapse threads list (hide ${collapsable} thread(s))`
                   : `Expand threads list (${collapsable} more thread(s) to show)`}
               </button>
-            </li>}
+            </li>
+            )}
         </ul>
         <StackTrace stackTrace={stackTrace} linesToConsider={this.props.linesToConsider} />
       </>
@@ -48,7 +49,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
   }
 
   private toggleExpand = () => {
-    this.setState(prevState => ({ expanded: !prevState.expanded }));
+    this.setState((prevState) => ({ expanded: !prevState.expanded }));
   }
 
   private getStackTrace = (threads: Thread[]): string[] => {

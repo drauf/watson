@@ -22,7 +22,6 @@ type State = {
 };
 
 export default class ThreadsOverviewPage extends PageWithSettings<State> {
-
   // tslint:disable:object-literal-sort-keys
   public state = {
     active: true,
@@ -41,16 +40,19 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
 
   // tslint:disable:max-line-length
   private jvmRegex = /^Attach Listener|^C[12] CompilerThread|^G1 Concurrent |^G1 Main|^Gang worker#|^GC Daemon|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
+
   private tomcatRegex = /^http(s-jsse)?-[a-z]io-[0-9]+-exec-[0-9]+/;
+
   private databaseRegex = /^oracle\.jdbc\.driver\.|^org\.postgresql\.|^com\.microsoft\.sqlserver\.|^com\.mysql\.jdbc\./;
+
   private luceneRegex = /^org\.apache\.lucene\./;
   // tslint:enable:max-line-length
 
   public render() {
-    const nonEmptyThreadDumps = this.props.threadDumps.filter(dump => dump.threads.length > 0);
+    const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
     const threadOverTime = getThreadsOverTime(nonEmptyThreadDumps);
     const filteredDumps = this.filterThreads(threadOverTime);
-    const dates = nonEmptyThreadDumps.map(dump => ThreadDump.getFormattedTime(dump));
+    const dates = nonEmptyThreadDumps.map((dump) => ThreadDump.getFormattedTime(dump));
     const isFilteredByStack = this.isFilteredByStack();
 
     return (
@@ -78,21 +80,20 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
         <ThreadsOverviewLegend />
         {nonEmptyThreadDumps.length === 0
           ? <h4 dangerouslySetInnerHTML={{ __html: ThreadsOverviewPage.NO_THREAD_DUMPS }} />
-          : <ThreadsOverviewTable
-            dates={dates}
-            isFilteredByStack={isFilteredByStack}
-            threadDumps={filteredDumps}
-          />
-        }
+          : (
+            <ThreadsOverviewTable
+                dates={dates}
+                isFilteredByStack={isFilteredByStack}
+                threadDumps={filteredDumps}
+            />
+          )}
       </div>
     );
   }
 
-  private isFilteredByStack = (): boolean => {
-    return this.state.stackFilter.length > 0
+  private isFilteredByStack = (): boolean => this.state.stackFilter.length > 0
       || this.state.lucene
-      || this.state.database;
-  }
+      || this.state.database
 
   private filterThreads = (threadDumps: Array<Map<number, Thread>>) => {
     let filtered = this.filterByActive(threadDumps, this.state.active);
@@ -107,7 +108,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
       return threadDumps;
     }
 
-    return threadDumps.filter(threads => this.isActive(threads));
+    return threadDumps.filter((threads) => this.isActive(threads));
   }
 
   private isActive = (threads: Map<number, Thread>): boolean => {
@@ -161,7 +162,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
       return threadDumps;
     }
 
-    return threadDumps.filter(threads => this.isUsingCpu(threads));
+    return threadDumps.filter((threads) => this.isUsingCpu(threads));
   }
 
   private isUsingCpu = (threads: Map<number, Thread>): boolean => {
@@ -185,10 +186,10 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     return threadDumps
-      .filter(threads => this.state.nonJvm ? !this.matchesName(threads, this.jvmRegex) : true)
-      .filter(threads => this.state.tomcat ? this.matchesName(threads, this.tomcatRegex) : true)
-      .filter(threads => this.state.nonTomcat ? !this.matchesName(threads, this.tomcatRegex) : true)
-      .filter(threads => userProvided ? this.matchesName(threads, userProvided) : true);
+      .filter((threads) => (this.state.nonJvm ? !this.matchesName(threads, this.jvmRegex) : true))
+      .filter((threads) => (this.state.tomcat ? this.matchesName(threads, this.tomcatRegex) : true))
+      .filter((threads) => (this.state.nonTomcat ? !this.matchesName(threads, this.tomcatRegex) : true))
+      .filter((threads) => (userProvided ? this.matchesName(threads, userProvided) : true));
   }
 
   private matchesName = (threads: Map<number, Thread>, regex: RegExp): boolean => {
@@ -209,7 +210,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     threadDumps.forEach((threads) => {
-      threads.forEach(thread => this.markIfMatchesAllFilters(thread, filters));
+      threads.forEach((thread) => this.markIfMatchesAllFilters(thread, filters));
     });
   }
 

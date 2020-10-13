@@ -11,7 +11,6 @@ type State = {
 };
 
 export default class WaitingList extends React.PureComponent<Props, State> {
-
   private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;
 
   public state: State = {
@@ -30,22 +29,28 @@ export default class WaitingList extends React.PureComponent<Props, State> {
 
     return (
       <>
-        <b>{this.props.waiting.length} thread(s) waiting for notification on lock:</b>
+        <b>
+          {this.props.waiting.length}
+          {' '}
+          thread(s) waiting for notification on lock:
+        </b>
         <br />
 
         {threads.map((thread, index) => <WaitingListItem thread={thread} key={index} />)}
 
-        {collapsable > 0 &&
+        {collapsable > 0
+          && (
           <button onClick={this.toggleExpand}>
             {this.state.expanded
               ? `Collapse threads list (hide ${collapsable} thread(s))`
               : `Expand threads list (${collapsable} more thread(s) to show)`}
-          </button>}
+          </button>
+          )}
       </>
     );
   }
 
   private toggleExpand = () => {
-    this.setState(prevState => ({ expanded: !prevState.expanded }));
+    this.setState((prevState) => ({ expanded: !prevState.expanded }));
   }
 }

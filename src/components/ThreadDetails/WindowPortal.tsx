@@ -8,24 +8,9 @@ type Props = {
 };
 
 export default class WindowPortal extends React.PureComponent<Props> {
-  private static windows: Array<Window | null> = [];
-  private externalWindow: Window | null;
-  private container: HTMLElement;
+  private static windows: Array<Window> = [];
 
-  private windowFeatures =
-    'width=960,height=700,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
-
-  constructor(props: Props) {
-    super(props);
-
-    this.externalWindow = null;
-    this.container = document.createElement('div');
-    if (this.props.className) {
-      this.container.className = this.props.className;
-    }
-  }
-
-  public copyStyles(sourceDoc: Document, targetDoc: Document) {
+  public static copyStyles(sourceDoc: Document, targetDoc: Document) {
     Array.from(sourceDoc.styleSheets).forEach((sheet) => {
       const styleSheet = sheet as CSSStyleSheet;
 
@@ -47,16 +32,36 @@ export default class WindowPortal extends React.PureComponent<Props> {
     });
   }
 
+  private windowFeatures =
+    'width=960,height=700,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
+
+  private externalWindow: Window | null;
+
+  private container: HTMLElement;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.externalWindow = null;
+    this.container = document.createElement('div');
+
+    const { className } = this.props;
+    if (className) {
+      this.container.className = className;
+    }
+  }
+
   public componentDidMount() {
     window.onunload = this.closeAllExternalWindows;
 
     this.externalWindow = window.open('', '', this.windowFeatures);
     if (this.externalWindow) {
-      WindowPortal.windows.push(this.externalWindow);
-      this.externalWindow.document.title = this.props.windowTitle;
+      const { windowTitle, onUnload } = this.props;
+      this.externalWindow.document.title = windowTitle;
       this.externalWindow.document.body.appendChild(this.container);
-      this.copyStyles(document, this.externalWindow.document);
-      this.externalWindow.onunload = this.props.onUnload;
+      this.externalWindow.onunload = onUnload;
+      WindowPortal.copyStyles(document, this.externalWindow.document);
+      WindowPortal.windows.push(this.externalWindow);
     }
   }
 
@@ -64,18 +69,17 @@ export default class WindowPortal extends React.PureComponent<Props> {
     if (this.externalWindow && !this.externalWindow.closed) {
       this.externalWindow.close();
     }
-    WindowPortal.windows = WindowPortal.windows.filter(ext => ext !== this.externalWindow);
-  }
-
-  public render() {
-    return ReactDOM.createPortal(this.props.children, this.container);
+    WindowPortal.windows = WindowPortal.windows.filter((ext) => ext !== this.externalWindow);
   }
 
   private closeAllExternalWindows = () => {
-    for (const external of WindowPortal.windows) {
-      if (external && !external.closed) {
-        external.close();
-      }
-    }
+    WindowPortal.windows
+      .filter((external) => !external.closed)
+      .forEach((external) => external.close());
+  }
+
+  public render() {
+    const { children } = this.props;
+    return ReactDOM.createPortal(children, this.container);
   }
 }
