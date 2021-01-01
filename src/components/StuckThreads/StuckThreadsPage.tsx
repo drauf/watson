@@ -52,9 +52,9 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
             ? <h4>{StuckThreadsPage.N0_THREADS_MATCHING}</h4>
             : clusters.map((group, index) => (
               <StuckThreadsGroup
-                  key={index}
-                  threadGroup={group}
-                  maxDifferingLines={this.state.maxDifferingLines}
+                key={index}
+                threadGroup={group}
+                maxDifferingLines={this.state.maxDifferingLines}
               />
             ))}
       </div>

@@ -42,9 +42,9 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
             ? <h4>{SimilarStacksPage.N0_THREADS_MATCHING}</h4>
             : threadGroups.map((group, index) => (
               <SimilarStacksGroup
-                  key={index}
-                  threadGroup={group}
-                  linesToConsider={this.state.linesToConsider}
+                key={index}
+                threadGroup={group}
+                linesToConsider={this.state.linesToConsider}
               />
             ))}
       </div>

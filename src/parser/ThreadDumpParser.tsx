@@ -4,20 +4,17 @@ import ThreadDump from '../types/ThreadDump';
 import ThreadStatus from '../types/ThreadStatus';
 import { matchMultipleGroups, matchOne } from './RegExpUtils';
 
-const THREAD_HEADER_PREFIX: string = '"';
+const THREAD_HEADER_PREFIX = '"';
 
-// tslint:disable:max-line-length
-export const THREAD_DUMP_DATE_PATTERN: RegExp = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\r?$/;
-const NAME_PATTERN: RegExp = /^"(.*)" /;
-const NID_PATTERN: RegExp = / nid=([0-9a-fx,]+)/;
-const TID_PATTERN: RegExp = / tid=([0-9a-fx,]+)/;
-const FRAME_PATTERN: RegExp = /^\s+at (.*)/;
-const THREAD_STATE_PATTERN: RegExp = /^\s*java.lang.Thread.State: (.*)/;
-const SYNCHRONIZATION_STATUS_PATTERN: RegExp = /^\s+- (.*?) +<([x0-9a-f]+)> \(a (.*)\)/;
-const HELD_LOCK_PATTERN: RegExp = /^\s+- <([x0-9a-f]+)> \(a (.*)\)/;
-// tslint:enable:max-line-length
+export const THREAD_DUMP_DATE_PATTERN = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\r?$/;
+const NAME_PATTERN = /^"(.*)" /;
+const NID_PATTERN = / nid=([0-9a-fx,]+)/;
+const TID_PATTERN = / tid=([0-9a-fx,]+)/;
+const FRAME_PATTERN = /^\s+at (.*)/;
+const THREAD_STATE_PATTERN = /^\s*java.lang.Thread.State: (.*)/;
+const SYNCHRONIZATION_STATUS_PATTERN = /^\s+- (.*?) +<([x0-9a-f]+)> \(a (.*)\)/;
+const HELD_LOCK_PATTERN = /^\s+- <([x0-9a-f]+)> \(a (.*)\)/;
 
-// eslint-disable-next-line no-unused-vars
 export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
 
 export default class ThreadDumpParser {

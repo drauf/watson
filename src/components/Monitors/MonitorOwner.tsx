@@ -11,30 +11,9 @@ type State = {
 };
 
 export default class MonitorOwner extends React.PureComponent<Props, State> {
-  public state: State = {
-    showOwner: false,
-  };
-
-  public render() {
-    const { monitor } = this.props;
-
-    if (!monitor.owner) {
-      return null;
-    }
-
-    return (
-      <>
-        <b>Held by:</b>
-        <br />
-        <button onClick={this.handleClick}>
-          {monitor.owner.name}
-        </button>
-        <br />
-
-        {this.state.showOwner
-          && <ThreadDetailsWindow thread={monitor.owner} onUnload={this.handleUnload} />}
-      </>
-    );
+  constructor(props: Props) {
+    super(props);
+    this.state = { showOwner: false };
   }
 
   private handleClick = (event: React.MouseEvent) => {
@@ -44,5 +23,27 @@ export default class MonitorOwner extends React.PureComponent<Props, State> {
 
   private handleUnload = () => {
     this.setState({ showOwner: false });
+  }
+
+  public render() {
+    const { monitor } = this.props;
+
+    if (!monitor.owner) {
+      return null;
+    }
+
+    const { showOwner } = this.state;
+    return (
+      <>
+        <b>Held by:</b>
+        <br />
+        <button type="button" onClick={this.handleClick}>
+          {monitor.owner.name}
+        </button>
+        <br />
+
+        {showOwner && <ThreadDetailsWindow thread={monitor.owner} onUnload={this.handleUnload} />}
+      </>
+    );
   }
 }

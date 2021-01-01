@@ -80,31 +80,33 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
   private calculateUsageFor(threadsMap: Map<number, Thread>, calculationMode: CpuConsumersMode) {
     const threads = Array.from(threadsMap.values());
 
-    let usage: number = 0;
+    let usage = 0;
     switch (calculationMode) {
       case CpuConsumersMode.Mean:
-        usage = threads.reduce(this.reduceSum, 0) / this.state.threadDumps.length;
+        usage = threads.reduce(CpuConsumersPage.reduceSum, 0) / this.state.threadDumps.length;
         break;
       case CpuConsumersMode.Median:
-        usage = this.calculateMedian(threads);
+        usage = CpuConsumersPage.calculateMedian(threads);
         break;
       case CpuConsumersMode.Max:
-        usage = threads.reduce(this.reduceMax, 0);
+        usage = threads.reduce(CpuConsumersPage.reduceMax, 0);
         break;
+      default:
+        throw new Error(`Unsupported calculation mode: ${calculationMode}`);
     }
 
     return new CpuConsumer(usage, threadsMap);
   }
 
-  private reduceSum(sum: number, currentThread: Thread): number {
+  private static reduceSum(sum: number, currentThread: Thread): number {
     return sum + currentThread.cpuUsage;
   }
 
-  private reduceMax(maxValue: number, currentThread: Thread): number {
+  private static reduceMax(maxValue: number, currentThread: Thread): number {
     return (currentThread.cpuUsage > maxValue) ? currentThread.cpuUsage : maxValue;
   }
 
-  private calculateMedian(threads: Thread[]): number {
+  private static calculateMedian(threads: Thread[]): number {
     const values = threads.slice();
     values.sort((a, b) => a.cpuUsage - b.cpuUsage);
     const lowMiddle = Math.floor((values.length - 1) / 2);

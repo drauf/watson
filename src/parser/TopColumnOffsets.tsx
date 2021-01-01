@@ -1,9 +1,9 @@
 export default class TopColumnOffsets {
-  private id: number = 1;
+  private id = 1;
 
-  private cpuUsage: number = 8;
+  private cpuUsage = 8;
 
-  private runningFor: number = 10;
+  private runningFor = 10;
 
   public getProcessIdOffset(): number {
     return this.id;

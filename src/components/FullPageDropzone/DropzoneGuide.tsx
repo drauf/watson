@@ -2,11 +2,9 @@ import React from 'react';
 import { ISSUE_TRACKER_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
 import OutboundLink from '../Navigation/OutboundLink';
 
-// tslint:disable:max-line-length
 const header = 'For the full experience, you should gather thread dumps along with <i>top</i> outputs.';
 const GATHER_DATA_LINK = 'https://github.com/drauf/watson/blob/master/README.md#gathering-thread-dumps';
 const disclaimer = 'Watson works fully offline. No files will leave your machine.';
-// tslint:enable:max-line-length
 
 const stopPropagation = (event: React.MouseEvent) => {
   // prevent opening the dropzone popup when clicking on the navigation links
@@ -14,7 +12,8 @@ const stopPropagation = (event: React.MouseEvent) => {
 };
 
 const DropzoneGuide: React.SFC = () => (
-  <div id="dropzone-guide" onClick={stopPropagation}>
+  // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+  <div id="dropzone-guide" role="complementary" onClick={stopPropagation}>
     <h5 dangerouslySetInnerHTML={{ __html: header }} />
     <span>
       See:

@@ -11,9 +11,10 @@ type State = {
 };
 
 export default class CpuConsumerSingleUsage extends React.PureComponent<Props, State> {
-  public state: State = {
-    showDetails: false,
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = { showDetails: false };
+  }
 
   public handleClick = () => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
@@ -21,25 +22,6 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
 
   public handleUnload = () => {
     this.setState({ showDetails: false });
-  }
-
-  public render() {
-    const { thread } = this.props;
-
-    if (!thread) {
-      return <button className="no-click">n/a</button>;
-    }
-
-    const cpuUsage = this.getCpuUsage(thread.cpuUsage);
-    const className = this.getClassName(thread.cpuUsage);
-
-    return (
-      <>
-        <button className={className} onClick={this.handleClick}>{cpuUsage}</button>
-        {this.state.showDetails
-          && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
-      </>
-    );
   }
 
   private getCpuUsage = (cpuUsage: number): string => `${cpuUsage.toFixed(1)}%`
@@ -56,5 +38,24 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
       return 'low';
     }
     return 'none';
+  }
+
+  public render() {
+    const { thread } = this.props;
+
+    if (!thread) {
+      return <button type="button" className="no-click">n/a</button>;
+    }
+
+    const { showDetails } = this.state;
+    const cpuUsage = this.getCpuUsage(thread.cpuUsage);
+    const className = this.getClassName(thread.cpuUsage);
+
+    return (
+      <>
+        <button type="button" className={className} onClick={this.handleClick}>{cpuUsage}</button>
+        {showDetails && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+      </>
+    );
   }
 }

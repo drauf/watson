@@ -4,10 +4,8 @@ import { clearCurrentThreadDump } from '../../common/threadDumpsStorageService';
 import './Navigation.css';
 import OutboundLink from './OutboundLink';
 
-// tslint:disable:max-line-length
-export const ISSUE_TRACKER_LINK: string = 'https://github.com/drauf/watson/issues';
-export const SOURCE_CODE_LINK: string = 'https://github.com/drauf/watson';
-// tslint:enable:max-line-length
+export const ISSUE_TRACKER_LINK = 'https://github.com/drauf/watson/issues';
+export const SOURCE_CODE_LINK = 'https://github.com/drauf/watson';
 
 type Props = RouteComponentProps<any> & {
   open: boolean;
