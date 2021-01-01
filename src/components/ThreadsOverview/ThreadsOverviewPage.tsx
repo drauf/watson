@@ -82,9 +82,9 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
           ? <h4 dangerouslySetInnerHTML={{ __html: ThreadsOverviewPage.NO_THREAD_DUMPS }} />
           : (
             <ThreadsOverviewTable
-                dates={dates}
-                isFilteredByStack={isFilteredByStack}
-                threadDumps={filteredDumps}
+              dates={dates}
+              isFilteredByStack={isFilteredByStack}
+              threadDumps={filteredDumps}
             />
           )}
       </div>
@@ -92,8 +92,8 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
   }
 
   private isFilteredByStack = (): boolean => this.state.stackFilter.length > 0
-      || this.state.lucene
-      || this.state.database
+    || this.state.lucene
+    || this.state.database
 
   private filterThreads = (threadDumps: Array<Map<number, Thread>>) => {
     let filtered = this.filterByActive(threadDumps, this.state.active);

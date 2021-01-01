@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2020": true
+    "es2020": true,
+    "jest": true
   },
   "extends": [
     "plugin:react/recommended",
@@ -30,6 +31,10 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": [
+      "error"
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",

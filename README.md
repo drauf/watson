@@ -48,7 +48,7 @@ You will also see any lint errors in the console.
 
 #### `yarn lint`
 
-Runs `tslint` to check if coding rules are followed.
+Runs the linter to check if coding rules are followed.
 
 #### `yarn test`
 

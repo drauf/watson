@@ -52,9 +52,9 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
           ? <h4 dangerouslySetInnerHTML={{ __html: CpuConsumersPage.NO_CPU_AND_THREADS_PAIR }} />
           : (
             <CpuConsumersList
-                limit={this.state.limit}
-                dumpsNumber={this.state.threadDumps.length}
-                consumers={consumers}
+              limit={this.state.limit}
+              dumpsNumber={this.state.threadDumps.length}
+              consumers={consumers}
             />
           )}
       </div>
