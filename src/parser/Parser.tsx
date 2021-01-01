@@ -5,19 +5,17 @@ import CpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './CpuUsageParser';
 import { matchOne } from './RegExpUtils';
 import ThreadDumpParser, { THREAD_DUMP_DATE_PATTERN } from './ThreadDumpParser';
 
-const MAX_TIME_DIFFERENCE_ALLOWED: number = 10000;
+const MAX_TIME_DIFFERENCE_ALLOWED = 10000;
 
 export default class Parser {
   private cpuUsages: CpuUsage[] = [];
 
   private threadDumps: ThreadDump[] = [];
 
-  private filesToParse: number = 0;
+  private filesToParse = 0;
 
-  // eslint-disable-next-line no-unused-vars
   private onFilesParsed: (threadDumps: ThreadDump[]) => void;
 
-  // eslint-disable-next-line no-unused-vars
   constructor(onFilesParsed: (threadDumps: ThreadDump[]) => void) {
     this.onFilesParsed = onFilesParsed;
   }

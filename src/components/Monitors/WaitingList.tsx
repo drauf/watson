@@ -13,44 +13,46 @@ type State = {
 export default class WaitingList extends React.PureComponent<Props, State> {
   private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;
 
-  public state: State = {
-    expanded: false,
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = { expanded: false };
+  }
+
+  private toggleExpand = () => {
+    this.setState((prevState) => ({ expanded: !prevState.expanded }));
+  }
 
   public render() {
-    if (this.props.waiting.length === 0) {
+    const { waiting } = this.props;
+    const { expanded } = this.state;
+
+    if (waiting.length === 0) {
       return null;
     }
 
-    const collapsable = this.props.waiting.length - WaitingList.THREADS_TO_SHOW_WHEN_COLLAPSED;
-    const threads = this.state.expanded
-      ? this.props.waiting
-      : this.props.waiting.slice(0, WaitingList.THREADS_TO_SHOW_WHEN_COLLAPSED);
+    const collapsable = waiting.length - WaitingList.THREADS_TO_SHOW_WHEN_COLLAPSED;
+    const threads = expanded ? waiting : waiting.slice(0, WaitingList.THREADS_TO_SHOW_WHEN_COLLAPSED);
 
     return (
       <>
         <b>
-          {this.props.waiting.length}
+          {waiting.length}
           {' '}
           thread(s) waiting for notification on lock:
         </b>
         <br />
 
-        {threads.map((thread, index) => <WaitingListItem thread={thread} key={index} />)}
+        {threads.map((thread) => <WaitingListItem thread={thread} key={thread.id} />)}
 
         {collapsable > 0
           && (
-          <button onClick={this.toggleExpand}>
-            {this.state.expanded
-              ? `Collapse threads list (hide ${collapsable} thread(s))`
-              : `Expand threads list (${collapsable} more thread(s) to show)`}
-          </button>
+            <button type="button" onClick={this.toggleExpand}>
+              {expanded
+                ? `Collapse threads list (hide ${collapsable} thread(s))`
+                : `Expand threads list (${collapsable} more thread(s) to show)`}
+            </button>
           )}
       </>
     );
-  }
-
-  private toggleExpand = () => {
-    this.setState((prevState) => ({ expanded: !prevState.expanded }));
   }
 }

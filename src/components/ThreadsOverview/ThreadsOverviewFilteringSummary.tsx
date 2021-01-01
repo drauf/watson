@@ -11,7 +11,7 @@ const ThreadsOverviewFilteringSummary: React.SFC<Props> = ({ isFilteredByStack, 
   if (isFilteredByStack) {
     const matching = threadDumps.reduce(matchingInGroupCounter, 0);
     const total = threadDumps.reduce(nonEmptyCounter, 0);
-    const percentage = (matching / total * 100).toFixed(1);
+    const percentage = ((matching / total) * 100).toFixed(1);
 
     return (
       <p id="matching-summary">
@@ -29,7 +29,7 @@ const ThreadsOverviewFilteringSummary: React.SFC<Props> = ({ isFilteredByStack, 
 
   if (threadsNumber !== threadDumps.length) {
     const matching = threadDumps.length;
-    const percentage = (matching / threadsNumber * 100).toFixed(1);
+    const percentage = ((matching / threadsNumber) * 100).toFixed(1);
 
     return (
       <p id="matching-summary">

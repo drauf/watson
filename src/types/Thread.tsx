@@ -12,7 +12,7 @@ export default class Thread {
 
   public status: ThreadStatus | undefined;
 
-  public cpuUsage: number = 0.0;
+  public cpuUsage = 0.0;
 
   public runningFor!: string;
 
@@ -24,7 +24,7 @@ export default class Thread {
 
   public stackTrace: string[] = [];
 
-  public matchingFilter: boolean = false;
+  public matchingFilter = false;
 
   private epoch: number | null;
 

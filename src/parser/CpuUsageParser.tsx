@@ -5,15 +5,14 @@ import ThreadCpuUsage from '../types/ThreadCpuUsage';
 import { matchMultipleGroups, matchMultipleTimes, matchOne } from './RegExpUtils';
 import TopColumnOffsets from './TopColumnOffsets';
 
-export const CPU_USAGE_TIMESTAMP_PATTERN: RegExp = /^top - ([0-9]{2}:[0-9]{2}:[0-9]{2})/;
-const LOAD_AVERAGES_PATTERN: RegExp = / load average: ([0-9.]+), ([0-9.]+), ([0-9.]+)/;
-const RUNNING_PROCESSES_PATTERN: RegExp = /([0-9.]+) running/;
-const TOTAL_MEMORY_PATTERN: RegExp = /([0-9.]+)k?[ +]total/;
-const USED_MEMORY_PATTERN: RegExp = /([0-9.]+)k? used/;
-const FREE_MEMORY_PATTERN: RegExp = /([0-9.]+)k? free/;
-const COLUMN_MATCHER: RegExp = /([^\s]+) +/g;
+export const CPU_USAGE_TIMESTAMP_PATTERN = /^top - ([0-9]{2}:[0-9]{2}:[0-9]{2})/;
+const LOAD_AVERAGES_PATTERN = / load average: ([0-9.]+), ([0-9.]+), ([0-9.]+)/;
+const RUNNING_PROCESSES_PATTERN = /([0-9.]+) running/;
+const TOTAL_MEMORY_PATTERN = /([0-9.]+)k?[ +]total/;
+const USED_MEMORY_PATTERN = /([0-9.]+)k? used/;
+const FREE_MEMORY_PATTERN = /([0-9.]+)k? free/;
+const COLUMN_MATCHER = /([^\s]+) +/g;
 
-// eslint-disable-next-line no-unused-vars
 export type ParseCpuUsageCallback = (cpuUsage: CpuUsage) => void;
 
 export default class CpuUsageParser {

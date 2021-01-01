@@ -1,40 +1,70 @@
 {
   "env": {
     "browser": true,
-    "es2020": true,
+    "es2021": true,
     "jest": true
   },
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb",
-    "airbnb/hooks"
-  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 12,
     "sourceType": "module"
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [
-          ".tsx"
-        ]
-      }
-    }
   },
   "plugins": [
     "react",
     "@typescript-eslint"
   ],
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": [
+    "max-len": "off",
+    // Fix "X is already declared in the upper scope" for TS enums
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": [
       "error"
     ],
+    // Diff to airbnb: Allow use of for…in loops
+    "no-restricted-syntax": [
+      "error",
+      "ForInStatement",
+      "LabeledStatement",
+      "WithStatement"
+    ],
+    // Allow using either nesting or id for mapping labels to controls
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
+    ],
+    // Use TS types instead of PropTypes
+    "react/prop-types": "off",
+    // Fix "React was used before it was defined" error
+    "no-use-before-define": "off",
+    // Allow ++ operator
+    "no-plusplus": "off",
+    // Allow printing errors and warning to the console
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    // Make .tsx files work properly
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -49,15 +79,15 @@
           ".tsx"
         ]
       }
-    ],
-    "no-console": [
-      "error",
-      {
-        "allow": [
-          "warn",
-          "error"
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".tsx"
         ]
       }
-    ]
+    }
   }
 }

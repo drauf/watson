@@ -21,14 +21,14 @@ const CpuConsumerItem: React.SFC<Props> = ({ dumpsNumber, consumer }) => {
         {formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurences.values())}
       </h5>
       <span>
-        {threads.map((thread, index) => <CpuConsumerSingleUsage thread={thread} key={index} />)}
+        {threads.map((thread) => <CpuConsumerSingleUsage thread={thread} key={thread ? thread.id : -1} />)}
       </span>
     </li>
   );
 };
 
 const formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => {
-  let threadName: string = '';
+  let threadName = '';
 
   for (const thread of threads) {
     if (thread) {

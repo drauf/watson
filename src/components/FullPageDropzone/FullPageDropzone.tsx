@@ -9,6 +9,7 @@ import './FullPageDropzone.css';
 
 class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
   public render = () => (
+    /* eslint-disable react/jsx-props-no-spreading */
     <Dropzone multiple onDrop={this.onDrop}>
       {({ getRootProps, getInputProps, isDragActive }) => (
         <div id="dropzone" {...getRootProps()}>
@@ -22,6 +23,7 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
         </div>
       )}
     </Dropzone>
+    /* eslint-enable react/jsx-props-no-spreading */
   )
 
   private onDrop = (files: File[]): void => {
@@ -30,11 +32,13 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
   }
 
   private onParsed = (threadDumps: ThreadDump[]): void => {
+    const { history } = this.props;
     const key = setThreadDumps(threadDumps);
+
     if (threadDumps.some((dump) => !!dump.loadAverages)) {
-      this.props.history.push(`/${key}/summary/`);
+      history.push(`/${key}/summary/`);
     } else {
-      this.props.history.push(`/${key}/similar-stacks/`);
+      history.push(`/${key}/similar-stacks/`);
     }
   }
 }

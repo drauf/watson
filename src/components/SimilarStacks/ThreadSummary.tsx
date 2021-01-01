@@ -25,9 +25,9 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     return (
       <li>
         <button onClick={this.toggleDetails}>
-          "
+          &quot;
           {thread.name}
-          "
+          &quot;
         </button>
         {` ${Thread.getFormattedTime(thread)}`}
         {this.waitingForRender(thread, lockOwner)}

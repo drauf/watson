@@ -28,9 +28,10 @@ export default class StuckThreadsGroup extends React.PureComponent<Props, State>
           <span className={this.state.showDetails ? 'chevron' : 'chevron rotate'} />
           {this.props.threadGroup.length}
           {' '}
-          similar stack(s) for "
+          similar stack(s) for
+          &quot;
           {thread.name}
-          "
+          &quot;
         </h5>
 
         {this.state.showDetails
