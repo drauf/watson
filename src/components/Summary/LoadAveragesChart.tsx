@@ -9,7 +9,9 @@ type Props = {
 };
 
 const LoadAveragesChart: React.SFC<Props> = ({ threadDumps }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [];
+
   threadDumps.forEach((threadDump) => {
     if (threadDump.loadAverages) {
       data.push({

@@ -12,12 +12,18 @@ type Props = RouteComponentProps<any> & {
 };
 
 class Navigation extends React.PureComponent<Props> {
+  private onClear = () => {
+    clearCurrentThreadDump();
+    this.props.history.push('/');
+  }
+
   public render() {
-    const key: string = this.props.match.params.key as string;
+    const { open, match } = this.props;
+    const key: string = match.params.key as string;
 
     return (
-      <nav className={this.props.open ? 'open' : ''}>
-        <h1 id={this.props.open ? 'brand-visible' : 'brand-hidden'}>
+      <nav className={open ? 'open' : ''}>
+        <h1 id={open ? 'brand-visible' : 'brand-hidden'}>
           Watson
         </h1>
 
@@ -34,7 +40,7 @@ class Navigation extends React.PureComponent<Props> {
 
         <div id="nav-content-bottom">
           <ul>
-            <button onClick={this.onClear}><li>Load another thread dump</li></button>
+            <button type="button" onClick={this.onClear}><li>Load another thread dump</li></button>
           </ul>
 
           <ul>
@@ -48,11 +54,6 @@ class Navigation extends React.PureComponent<Props> {
         </div>
       </nav>
     );
-  }
-
-  private onClear = () => {
-    clearCurrentThreadDump();
-    this.props.history.push('/');
   }
 }
 

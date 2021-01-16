@@ -15,37 +15,9 @@ type State = {
 export default class GroupDetails extends React.PureComponent<Props, State> {
   private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;
 
-  public state: State = {
-    expanded: false,
-  };
-
-  public render() {
-    const stackTrace = this.getStackTrace(this.props.threadGroup);
-    const sortedByName = this.props.threadGroup.sort((t1, t2) => t1.name.localeCompare(t2.name));
-    const collapsable = sortedByName.length - GroupDetails.THREADS_TO_SHOW_WHEN_COLLAPSED;
-    const threads = this.state.expanded
-      ? sortedByName
-      : sortedByName.slice(0, GroupDetails.THREADS_TO_SHOW_WHEN_COLLAPSED);
-
-    return (
-      <>
-        <ul>
-          {threads.map((thread, index) => <ThreadSummary key={index} thread={thread} />)}
-
-          {collapsable > 0
-            && (
-            <li>
-              <button onClick={this.toggleExpand}>
-                {this.state.expanded
-                  ? `Collapse threads list (hide ${collapsable} thread(s))`
-                  : `Expand threads list (${collapsable} more thread(s) to show)`}
-              </button>
-            </li>
-            )}
-        </ul>
-        <StackTrace stackTrace={stackTrace} linesToConsider={this.props.linesToConsider} />
-      </>
-    );
+  constructor(props: Props) {
+    super(props);
+    this.state = { expanded: false };
   }
 
   private toggleExpand = () => {
@@ -59,5 +31,37 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
       }
     }
     return [];
+  }
+
+  public render() {
+    const { threadGroup, linesToConsider } = this.props;
+    const { expanded } = this.state;
+
+    const stackTrace = this.getStackTrace(threadGroup);
+    const sortedByName = threadGroup.sort((t1, t2) => t1.name.localeCompare(t2.name));
+    const collapsable = sortedByName.length - GroupDetails.THREADS_TO_SHOW_WHEN_COLLAPSED;
+    const threads = expanded
+      ? sortedByName
+      : sortedByName.slice(0, GroupDetails.THREADS_TO_SHOW_WHEN_COLLAPSED);
+
+    return (
+      <>
+        <ul>
+          {threads.map((thread) => <ThreadSummary key={thread.id} thread={thread} />)}
+
+          {collapsable > 0
+            && (
+              <li>
+                <button type="button" onClick={this.toggleExpand}>
+                  {expanded
+                    ? `Collapse threads list (hide ${collapsable} thread(s))`
+                    : `Expand threads list (${collapsable} more thread(s) to show)`}
+                </button>
+              </li>
+            )}
+        </ul>
+        <StackTrace stackTrace={stackTrace} linesToConsider={linesToConsider} />
+      </>
+    );
   }
 }

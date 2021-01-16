@@ -20,6 +20,7 @@ const SwapUsageChart: React.SFC<Props> = ({ threadDumps }) => {
   const freeSwapAvg = memoryUsages.reduce((a, b) => a + b.swapFree, 0) / memoryUsages.length;
   const usedSwapAvg = memoryUsages.reduce((a, b) => a + b.swapUsed, 0) / memoryUsages.length;
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [
     { name: 'Free swap', value: freeSwapAvg },
     { name: 'Used swap', value: usedSwapAvg },
@@ -32,7 +33,7 @@ const SwapUsageChart: React.SFC<Props> = ({ threadDumps }) => {
         <PieChart>
           <Pie data={data} dataKey="value" nameKey="name">
             {
-              data.map((_, index) => <Cell key={index} fill={COLORS[index]} />)
+              data.map((_, index) => <Cell key={COLORS[index]} fill={COLORS[index]} />)
             }
           </Pie>
           <Tooltip formatter={labelFormatter} />
