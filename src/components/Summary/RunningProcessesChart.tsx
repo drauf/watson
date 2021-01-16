@@ -11,7 +11,9 @@ type Props = {
 };
 
 const RunningProcessesChart: React.SFC<Props> = ({ threadDumps }) => {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [];
+
   threadDumps.forEach((threadDump) => {
     if (threadDump.loadAverages) {
       data.push({
@@ -67,7 +69,7 @@ const CustomTooltip: React.SFC<TooltipProps> = ({ active, payload, label }) => {
         threads:
         <ol>
           {threadNames.length > 0
-            ? threadNames.map((name, key) => <li key={key}>{name}</li>)
+            ? threadNames.map((name) => <li key={name}>{name}</li>)
             : <li>none</li>}
         </ol>
       </div>

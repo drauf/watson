@@ -20,6 +20,7 @@ const MemoryUsageChart: React.SFC<Props> = ({ threadDumps }) => {
   const freeMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryFree, 0) / memoryUsages.length;
   const usedMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryUsed, 0) / memoryUsages.length;
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [
     { name: 'Used memory', value: usedMemoryAvg },
     { name: 'Free memory', value: freeMemoryAvg },
@@ -32,7 +33,7 @@ const MemoryUsageChart: React.SFC<Props> = ({ threadDumps }) => {
         <PieChart>
           <Pie data={data} dataKey="value" nameKey="name">
             {
-              data.map((_, index) => <Cell key={index} fill={COLORS[index]} />)
+              data.map((_, index) => <Cell key={COLORS[index]} fill={COLORS[index]} />)
             }
           </Pie>
           <Tooltip formatter={labelFormatter} />

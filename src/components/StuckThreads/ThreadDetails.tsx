@@ -13,34 +13,9 @@ type State = {
 };
 
 export default class ThreadDetails extends React.PureComponent<Props, State> {
-  public state: State = {
-    showDetails: false,
-  };
-
-  public render() {
-    const { thread } = this.props;
-    const stack = thread.stackTrace.slice(0, Math.max(this.props.maxDifferingLines, 10));
-
-    return (
-      <>
-        <h6>
-          <button onClick={this.handleClick}>
-            {Thread.getFormattedTime(thread)}
-          </button>
-        </h6>
-
-        {this.props.showStackTrace
-          && (
-          <ol className="stacktrace">
-            {stack.map((line, index) => (
-              <li key={index}>{line}</li>))}
-          </ol>
-          )}
-
-        {this.state.showDetails
-          && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
-      </>
-    );
+  constructor(props: Props) {
+    super(props);
+    this.state = { showDetails: false };
   }
 
   private handleClick = () => {
@@ -49,5 +24,30 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
 
   private handleUnload = () => {
     this.setState({ showDetails: false });
+  }
+
+  public render() {
+    const { thread, maxDifferingLines, showStackTrace } = this.props;
+    const { showDetails } = this.state;
+    const stack = thread.stackTrace.slice(0, Math.max(maxDifferingLines, 10));
+
+    return (
+      <>
+        <h6>
+          <button type="button" onClick={this.handleClick}>
+            {Thread.getFormattedTime(thread)}
+          </button>
+        </h6>
+
+        {showStackTrace && (
+          <ol className="stacktrace">
+            {stack.map((line) => (
+              <li key={line}>{line}</li>))}
+          </ol>
+        )}
+
+        {showDetails && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+      </>
+    );
   }
 }

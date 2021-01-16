@@ -14,10 +14,6 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
 
   protected PAGE_NAME = 'Unknown Page';
 
-  public render(): JSX.Element | null {
-    return null;
-  }
-
   protected handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name } = event.target;
     const isChecked: boolean = event.target.checked;
@@ -37,5 +33,9 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
     const { value } = event.target;
     const newState: ComponentState = { [name]: value };
     this.setState(newState);
+  }
+
+  public render(): JSX.Element | null {
+    return null;
   }
 }

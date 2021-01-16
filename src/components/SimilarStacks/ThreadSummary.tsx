@@ -12,33 +12,9 @@ type State = {
 };
 
 export default class ThreadSummary extends React.PureComponent<Props, State> {
-  public state: State = {
-    showDetails: false,
-    showLockOwner: false,
-  };
-
-  public render() {
-    const { thread } = this.props;
-    const lockOwner = thread.lockWaitingFor ? thread.lockWaitingFor.owner : null;
-    const locksHeld = this.getLocksHeldString(thread);
-
-    return (
-      <li>
-        <button onClick={this.toggleDetails}>
-          &quot;
-          {thread.name}
-          &quot;
-        </button>
-        {` ${Thread.getFormattedTime(thread)}`}
-        {this.waitingForRender(thread, lockOwner)}
-        {thread.locksHeld.length > 0 && `, holding [${locksHeld}]`}
-
-        {this.state.showDetails
-          && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
-        {this.state.showLockOwner && lockOwner
-          && <ThreadDetailsWindow thread={lockOwner} onUnload={this.handleUnload} />}
-      </li>
-    );
+  constructor(props: Props) {
+    super(props);
+    this.state = { showDetails: false, showLockOwner: false };
   }
 
   private toggleDetails = () => {
@@ -80,10 +56,33 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     if (thread.locksHeld.length === 0) {
       return null;
     }
-    return thread.locksHeld.map((lock) => lock.id).reduce(this.locksReducer);
+    return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
   }
 
-  private locksReducer(accumulator: string, lockId: string, index: number): string {
+  private static locksReducer(accumulator: string, lockId: string, index: number): string {
     return (index === 0) ? lockId : `${accumulator}, ${lockId}`;
+  }
+
+  public render() {
+    const { thread } = this.props;
+    const { showDetails, showLockOwner } = this.state;
+    const lockOwner = thread.lockWaitingFor ? thread.lockWaitingFor.owner : null;
+    const locksHeld = this.getLocksHeldString(thread);
+
+    return (
+      <li>
+        <button type="button" onClick={this.toggleDetails}>
+          &quot;
+          {thread.name}
+          &quot;
+        </button>
+        {` ${Thread.getFormattedTime(thread)}`}
+        {this.waitingForRender(thread, lockOwner)}
+        {thread.locksHeld.length > 0 && `, holding [${locksHeld}]`}
+
+        {showDetails && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+        {showLockOwner && lockOwner && <ThreadDetailsWindow thread={lockOwner} onUnload={this.handleUnload} />}
+      </li>
+    );
   }
 }

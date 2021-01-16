@@ -12,32 +12,35 @@ type State = {
 };
 
 export default class SimilarStacksGroup extends React.PureComponent<Props, State> {
-  public state: State = {
-    showDetails: true,
-  };
-
-  public render() {
-    return (
-      <>
-        <h5 className="clickable ellipsis" onClick={this.toggleGroup}>
-          <span className={this.state.showDetails ? 'chevron' : 'chevron rotate'} />
-          {this.props.threadGroup.length}
-          {' '}
-          thread(s) with this stack:
-        </h5>
-
-        {this.state.showDetails
-          && (
-          <GroupDetails
-            threadGroup={this.props.threadGroup}
-            linesToConsider={this.props.linesToConsider}
-          />
-          )}
-      </>
-    );
+  constructor(props: Props) {
+    super(props);
+    this.state = { showDetails: false };
   }
 
   private toggleGroup = () => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
+  }
+
+  public render() {
+    const { threadGroup, linesToConsider } = this.props;
+    const { showDetails } = this.state;
+
+    return (
+      <>
+        <h5 className="clickable ellipsis" onClick={this.toggleGroup}>
+          <span className={showDetails ? 'chevron' : 'chevron rotate'} />
+          {threadGroup.length}
+          {' '}
+          thread(s) with this stack:
+        </h5>
+
+        {showDetails && (
+          <GroupDetails
+            threadGroup={threadGroup}
+            linesToConsider={linesToConsider}
+          />
+        )}
+      </>
+    );
   }
 }

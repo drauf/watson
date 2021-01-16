@@ -1,5 +1,6 @@
 import React from 'react';
 import Thread from '../../types/Thread';
+import ThreadStatus from '../../types/ThreadStatus';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
 type Props = {
@@ -13,32 +14,9 @@ type State = {
 };
 
 export default class ThreadOverviewItem extends React.PureComponent<Props, State> {
-  public state: State = {
-    showDetails: false,
-  };
-
-  public render() {
-    const { thread } = this.props;
-
-    if (!thread) {
-      return <td className="empty" />;
-    }
-
-    const className = (this.props.isFiltered)
-      ? this.props.isMatchingFilter ? 'matching' : ''
-      : thread.status ? thread.status.toString() : '';
-
-    return (
-      <>
-        <td className={className} onClick={this.toggleDetails}>
-          {thread.stackTrace[0]}
-          <span>{thread.stackTrace[0]}</span>
-        </td>
-
-        {this.state.showDetails
-          && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
-      </>
-    );
+  constructor(props: Props) {
+    super(props);
+    this.state = { showDetails: false };
   }
 
   private toggleDetails = () => {
@@ -47,5 +25,34 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
 
   private handleUnload = () => {
     this.setState({ showDetails: false });
+  }
+
+  private getClassName = (isFiltered: boolean, isMatchingFilter: boolean, status: ThreadStatus | undefined) => {
+    if (isFiltered) {
+      return isMatchingFilter ? 'matching' : '';
+    }
+    return status ? status.toString() : '';
+  }
+
+  public render() {
+    const { showDetails } = this.state;
+    const { thread, isFiltered, isMatchingFilter } = this.props;
+
+    if (!thread) {
+      return <td className="empty" />;
+    }
+
+    const className = this.getClassName(isFiltered, isMatchingFilter, thread.status);
+
+    return (
+      <>
+        <td className={className} onClick={this.toggleDetails}>
+          {thread.stackTrace[0]}
+          <span>{thread.stackTrace[0]}</span>
+        </td>
+
+        {showDetails && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+      </>
+    );
   }
 }

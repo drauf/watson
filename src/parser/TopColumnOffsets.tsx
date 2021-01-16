@@ -9,7 +9,7 @@ export default class TopColumnOffsets {
     return this.id;
   }
 
-  public setProcessIdOffset(offset: number) {
+  public setProcessIdOffset(offset: number): void {
     this.id = offset;
   }
 
@@ -17,7 +17,7 @@ export default class TopColumnOffsets {
     return this.cpuUsage;
   }
 
-  public setCpuUsageOffset(offset: number) {
+  public setCpuUsageOffset(offset: number): void {
     this.cpuUsage = offset;
   }
 
@@ -25,7 +25,7 @@ export default class TopColumnOffsets {
     return this.runningFor;
   }
 
-  public setRunningForOffset(offset: number) {
+  public setRunningForOffset(offset: number): void {
     this.runningFor = offset;
   }
 }
