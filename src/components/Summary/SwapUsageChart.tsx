@@ -12,7 +12,7 @@ type Props = {
   threadDumps: ThreadDump[];
 };
 
-const SwapUsageChart: React.SFC<Props> = ({ threadDumps }) => {
+const SwapUsageChart: React.FunctionComponent<Props> = ({ threadDumps }) => {
   const memoryUsages: MemoryUsage[] = threadDumps
     .map((threadDump) => threadDump.memoryUsage)
     .filter((memoryUsage) => !!memoryUsage);

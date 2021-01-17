@@ -15,7 +15,7 @@ type Props = {
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const ThreadsOverviewSettings: React.SFC<Props> = ({
+const ThreadsOverviewSettings: React.FunctionComponent<Props> = ({
   active, nonJvm, tomcat, nonTomcat,
   database, lucene, usingCpu, nameFilter, stackFilter, onFilterChange, onRegExpChange,
 }: Props) => (

@@ -7,11 +7,11 @@ type Props = {
   threadGroup: Thread[];
 };
 
-const GroupDetails: React.SFC<Props> = ({ maxDifferingLines, threadGroup }) => (
+const GroupDetails: React.FunctionComponent<Props> = ({ maxDifferingLines, threadGroup }) => (
   <>
     {threadGroup.map((thread, index, array) => (
       <ThreadDetails
-        key={index}
+        key={thread.runningFor}
         thread={thread}
         showStackTrace={shouldShowStackTrace(thread, array[index + 1], maxDifferingLines)}
         maxDifferingLines={maxDifferingLines}

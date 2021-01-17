@@ -7,7 +7,7 @@ type Props = {
   threadDumps: Array<Map<number, Thread>>;
 };
 
-const ThreadsOverviewFilteringSummary: React.SFC<Props> = ({ isFilteredByStack, threadsNumber, threadDumps }) => {
+const ThreadsOverviewFilteringSummary: React.FunctionComponent<Props> = ({ isFilteredByStack, threadsNumber, threadDumps }) => {
   if (isFilteredByStack) {
     const matching = threadDumps.reduce(matchingInGroupCounter, 0);
     const total = threadDumps.reduce(nonEmptyCounter, 0);

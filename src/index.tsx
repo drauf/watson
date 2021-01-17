@@ -8,8 +8,10 @@ import './index.css';
 clearOldThreadDumps();
 
 ReactDOM.render(
-  <Router>
-    <Route component={App} />
-  </Router>,
+  <React.StrictMode>
+    <Router>
+      <Route component={App} />
+    </Router>
+  </React.StrictMode>,
   document.getElementById('root'),
 );

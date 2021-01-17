@@ -9,7 +9,7 @@ type Props = {
   onIntegerChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const SimilarStacksSettings: React.SFC<Props> = ({
+const SimilarStacksSettings: React.FunctionComponent<Props> = ({
   linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange,
 }) => (
   <div id="settings">

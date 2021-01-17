@@ -8,7 +8,7 @@ type Props = {
   threadDumps: Array<Map<number, Thread>>;
 };
 
-const ThreadsOverview: React.SFC<Props> = ({ dates, isFilteredByStack, threadDumps }: Props) => (
+const ThreadsOverview: React.FunctionComponent<Props> = ({ dates, isFilteredByStack, threadDumps }: Props) => (
   <div id="threads-overview-table-wrapper">
     <table>
       <thead>

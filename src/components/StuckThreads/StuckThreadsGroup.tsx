@@ -14,7 +14,7 @@ type State = {
 export default class StuckThreadsGroup extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { showDetails: false };
+    this.state = { showDetails: true };
   }
 
   private toggleGroup = () => {

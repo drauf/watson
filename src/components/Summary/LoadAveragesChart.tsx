@@ -8,7 +8,7 @@ type Props = {
   threadDumps: ThreadDump[];
 };
 
-const LoadAveragesChart: React.SFC<Props> = ({ threadDumps }: Props) => {
+const LoadAveragesChart: React.FunctionComponent<Props> = ({ threadDumps }: Props) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [];
 

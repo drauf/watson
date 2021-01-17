@@ -4,7 +4,7 @@ import './App.css';
 import Container from './components/Container';
 import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
 
-const App: React.SFC<RouteComponentProps> = () => (
+const App: React.FunctionComponent<RouteComponentProps> = () => (
   <Switch>
     <Route exact path="/" component={FullPageDropzone} />
     <Route path="/:key" component={Container} />

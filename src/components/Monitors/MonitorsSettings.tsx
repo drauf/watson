@@ -8,7 +8,7 @@ type Props = {
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const MonitorsSettings: React.SFC<Props> = ({
+const MonitorsSettings: React.FunctionComponent<Props> = ({
   withOwner, withoutIdle, withoutOwner, onFilterChange,
 }) => (
   <div id="settings">

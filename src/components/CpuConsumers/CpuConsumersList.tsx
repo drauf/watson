@@ -8,7 +8,7 @@ type Props = {
   consumers: CpuConsumer[];
 };
 
-const CpuConsumersList: React.SFC<Props> = ({ limit, dumpsNumber, consumers }) => (
+const CpuConsumersList: React.FunctionComponent<Props> = ({ limit, dumpsNumber, consumers }) => (
   <>
     <span>You can click on a lozenge to open the thread details window.</span>
 
