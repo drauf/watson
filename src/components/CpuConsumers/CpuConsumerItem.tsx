@@ -8,7 +8,7 @@ type Props = {
   consumer: CpuConsumer;
 };
 
-const CpuConsumerItem: React.SFC<Props> = ({ dumpsNumber, consumer }) => {
+const CpuConsumerItem: React.FunctionComponent<Props> = ({ dumpsNumber, consumer }) => {
   const threads: Array<Thread | undefined> = [];
 
   for (let i = 0; i < dumpsNumber; i++) {

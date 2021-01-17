@@ -13,8 +13,9 @@ type Props = RouteComponentProps<any> & {
 
 class Navigation extends React.PureComponent<Props> {
   private onClear = () => {
+    const { history } = this.props;
     clearCurrentThreadDump();
-    this.props.history.push('/');
+    history.push('/');
   }
 
   public render() {

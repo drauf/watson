@@ -5,7 +5,7 @@ type Props = {
   children: ReactNode;
 };
 
-const OutboundLink: React.SFC<Props> = ({ to, children }) => (
+const OutboundLink: React.FunctionComponent<Props> = ({ to, children }) => (
   <a href={to} target="_blank" rel="noopener noreferrer">
     {children}
   </a>

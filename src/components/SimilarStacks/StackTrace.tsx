@@ -5,13 +5,13 @@ type Props = {
   linesToConsider: number;
 };
 
-const StackTrace: React.SFC<Props> = ({ stackTrace, linesToConsider }) => {
+const StackTrace: React.FunctionComponent<Props> = ({ stackTrace, linesToConsider }) => {
   const stack = linesToConsider > 0 ? stackTrace.slice(0, linesToConsider) : stackTrace;
 
   return (
     <ol className="stacktrace">
-      {stack.map((line, index) => (
-        <li key={index}>{line}</li>))}
+      {stack.map((line) => (
+        <li key={line}>{line}</li>))}
     </ol>
   );
 };

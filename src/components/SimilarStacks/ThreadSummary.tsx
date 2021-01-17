@@ -12,6 +12,10 @@ type State = {
 };
 
 export default class ThreadSummary extends React.PureComponent<Props, State> {
+  private static locksReducer(accumulator: string, lockId: string, index: number): string {
+    return (index === 0) ? lockId : `${accumulator}, ${lockId}`;
+  }
+
   constructor(props: Props) {
     super(props);
     this.state = { showDetails: false, showLockOwner: false };
@@ -29,6 +33,13 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     this.setState({ showDetails: false, showLockOwner: false });
   }
 
+  private getLocksHeldString = (thread: Thread): string | null => {
+    if (thread.locksHeld.length === 0) {
+      return null;
+    }
+    return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
+  }
+
   private waitingForRender(thread: Thread, lockOwner: Thread | null) {
     const lockWaitingFor = thread.lockWaitingFor ? thread.lockWaitingFor.id : null;
 
@@ -41,7 +52,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
       return (
         <>
           , awaiting notification on
-          <button onClick={this.toggleLockOwner}>
+          <button type="button" onClick={this.toggleLockOwner}>
             [
             {lockWaitingFor}
             ]
@@ -50,17 +61,6 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
       );
     }
     return `, awaiting notification on [${lockWaitingFor}] without an owner`;
-  }
-
-  private getLocksHeldString = (thread: Thread): string | null => {
-    if (thread.locksHeld.length === 0) {
-      return null;
-    }
-    return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
-  }
-
-  private static locksReducer(accumulator: string, lockId: string, index: number): string {
-    return (index === 0) ? lockId : `${accumulator}, ${lockId}`;
   }
 
   public render() {

@@ -7,7 +7,7 @@ type Props = {
   monitor: Monitor;
 };
 
-const MonitorItem: React.SFC<Props> = ({ monitor }) => {
+const MonitorItem: React.FunctionComponent<Props> = ({ monitor }) => {
   const javaClass = monitor.javaClass
     ? monitor.javaClass.substring(monitor.javaClass.lastIndexOf('.') + 1)
     : 'unknown class';

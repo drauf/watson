@@ -38,17 +38,22 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
 
         {!this.props.threadDumps.some((dump) => dump.threads.length > 0)
           ? <h4 dangerouslySetInnerHTML={{ __html: SimilarStacksPage.NO_THREAD_DUMPS }} />
-          : threadGroups.length === 0
-            ? <h4>{SimilarStacksPage.N0_THREADS_MATCHING}</h4>
-            : threadGroups.map((group, index) => (
-              <SimilarStacksGroup
-                key={index}
-                threadGroup={group}
-                linesToConsider={this.state.linesToConsider}
-              />
-            ))}
+          : this.renderThreadGroups(threadGroups)}
       </div>
     );
+  }
+
+  private renderThreadGroups(threadGroups: Thread[][]) {
+    if (threadGroups.length === 0) {
+      return <h4>{SimilarStacksPage.N0_THREADS_MATCHING}</h4>;
+    }
+    return threadGroups.map((group) => (
+      <SimilarStacksGroup
+        key={group.length}
+        threadGroup={group}
+        linesToConsider={this.state.linesToConsider}
+      />
+    ));
   }
 
   private groupByStackTrace(threadDumps: ThreadDump[], linesToConsider: number) {

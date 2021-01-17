@@ -9,7 +9,7 @@ type Props = {
   onIntegerChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const StuckThreadsSettings: React.SFC<Props> = ({
+const StuckThreadsSettings: React.FunctionComponent<Props> = ({
   maxDifferingLines, minClusterSize, withoutIdle, onFilterChange, onIntegerChange,
 }) => (
   <div id="settings">

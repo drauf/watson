@@ -87,6 +87,7 @@ const renderWaitingFor = (thread: Thread) => (
               <>
                 {' '}
                 owned by
+                {' '}
                 <i>{thread.lockWaitingFor.owner.name}</i>
               </>
             )
@@ -127,7 +128,7 @@ const renderStackTrace = (thread: Thread) => (
   </div>
 );
 
-const ThreadDetailsWindow: React.SFC<Props> = ({ thread, onUnload }) => (
+const ThreadDetailsWindow: React.FunctionComponent<Props> = ({ thread, onUnload }) => (
   <WindowPortal windowTitle={thread.name} className="thread-details" onUnload={onUnload}>
     <div className="details-header">
       {renderName(thread)}

@@ -10,7 +10,7 @@ type Props = {
   threadDumps: ThreadDump[];
 };
 
-const RunningProcessesChart: React.SFC<Props> = ({ threadDumps }) => {
+const RunningProcessesChart: React.FunctionComponent<Props> = ({ threadDumps }) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [];
 
@@ -48,7 +48,7 @@ const RunningProcessesChart: React.SFC<Props> = ({ threadDumps }) => {
   );
 };
 
-const CustomTooltip: React.SFC<TooltipProps> = ({ active, payload, label }) => {
+const CustomTooltip: React.FunctionComponent<TooltipProps> = ({ active, payload, label }) => {
   if (active && payload) {
     const threadNames: string[] = getSortedThreadNames(payload[1].value);
 

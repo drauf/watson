@@ -8,7 +8,7 @@ type Props = {
   onLimitChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const CpuConsumersSettings: React.SFC<Props> = ({
+const CpuConsumersSettings: React.FunctionComponent<Props> = ({
   mode, limit, onModeChange, onLimitChange,
 }) => (
   <div id="settings">

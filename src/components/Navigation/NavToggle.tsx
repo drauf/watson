@@ -6,10 +6,10 @@ type Props = {
   onClick: () => void;
 };
 
-const NavToggle: React.SFC<Props> = ({ open, onClick }) => (
-  <div className={open ? 'nav-toggle open' : 'nav-toggle'} onClick={onClick}>
+const NavToggle: React.FunctionComponent<Props> = ({ open, onClick }) => (
+  <button type="button" className={open ? 'nav-toggle open' : 'nav-toggle'} onClick={onClick}>
     <div id="nav-arrow" />
-  </div>
+  </button>
 );
 
 export default NavToggle;

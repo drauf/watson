@@ -48,6 +48,13 @@
         }
       }
     ],
+    // Turn some a11y issues from errors to warnings
+    "jsx-a11y/click-events-have-key-events": [
+      "warn"
+    ],
+    "jsx-a11y/no-noninteractive-element-interactions": [
+      "warn"
+    ],
     // Use TS types instead of PropTypes
     "react/prop-types": "off",
     // Fix "React was used before it was defined" error

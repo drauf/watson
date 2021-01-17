@@ -48,17 +48,23 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
 
         {this.state.threadDumps.length === 0
           ? <h4 dangerouslySetInnerHTML={{ __html: StuckThreadsPage.NO_THREAD_DUMPS }} />
-          : clusters.length === 0
-            ? <h4>{StuckThreadsPage.N0_THREADS_MATCHING}</h4>
-            : clusters.map((group, index) => (
-              <StuckThreadsGroup
-                key={index}
-                threadGroup={group}
-                maxDifferingLines={this.state.maxDifferingLines}
-              />
-            ))}
+          : this.renderStuckThreads(clusters)}
       </div>
     );
+  }
+
+  private renderStuckThreads(clusters: Thread[][]): React.ReactNode {
+    if (clusters.length === 0) {
+      return <h4>{StuckThreadsPage.N0_THREADS_MATCHING}</h4>;
+    }
+
+    return clusters.map((group) => (
+      <StuckThreadsGroup
+        key={group.length}
+        threadGroup={group}
+        maxDifferingLines={this.state.maxDifferingLines}
+      />
+    ));
   }
 
   private filterThreads = (threadDumps: Array<Map<number, Thread>>): Thread[][] => threadDumps
@@ -69,11 +75,9 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
     const filtered = [];
 
     for (const thread of threadOverTime) {
-      if (this.state.withoutIdle && isIdleThread(thread[1])) {
-        continue;
+      if (!this.state.withoutIdle || !isIdleThread(thread[1])) {
+        filtered.push(thread[1]);
       }
-
-      filtered.push(thread[1]);
     }
 
     return filtered;
