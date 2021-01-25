@@ -44,7 +44,12 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     const { thread } = this.props;
 
     if (!thread) {
-      return <button type="button" className="no-click">n/a</button>;
+      return (
+        <>
+          <button type="button" className="no-click">n/a</button>
+          {' '}
+        </>
+      );
     }
 
     const { showDetails } = this.state;
@@ -55,6 +60,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
       <>
         <button type="button" className={className} onClick={this.handleClick}>{cpuUsage}</button>
         {showDetails && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
+        {' '}
       </>
     );
   }
