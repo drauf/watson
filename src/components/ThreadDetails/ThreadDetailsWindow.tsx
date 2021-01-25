@@ -41,6 +41,7 @@ const renderStatus = (thread: Thread) => {
 const renderRunningFor = (thread: Thread) => (
   <div>
     Running for:
+    {' '}
     {thread.runningFor}
   </div>
 );
