@@ -1601,18 +1601,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/d3-path@^1":
-  version "1.0.9"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-path/-/d3-path-1.0.9.tgz#73526b150d14cd96e701597cbf346cfd1fd4a58c"
-  integrity sha1-c1JrFQ0UzZbnAVl8vzRs/R/UpYw=
-
-"@types/d3-shape@^1":
-  version "1.3.5"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-shape/-/d3-shape-1.3.5.tgz#c0164c1be1429473016f855871d487f806c4e968"
-  integrity sha1-wBZMG+FClHMBb4VYcdSH+AbE6Wg=
-  dependencies:
-    "@types/d3-path" "^1"
-
 "@types/eslint@^7.2.4":
   version "7.2.6"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/eslint/-/eslint-7.2.6.tgz#5e9aff555a975596c03a98b59ecd103decc70c3c"
@@ -1760,14 +1748,6 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
-"@types/recharts@1.8.19":
-  version "1.8.19"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/recharts/-/recharts-1.8.19.tgz#047f72cf4c25df545aa1085fe3a085e58a2483c1"
-  integrity sha1-BH9yz0wl31RaoQhf46CF5Yokg8E=
-  dependencies:
-    "@types/d3-shape" "^1"
-    "@types/react" "*"
-
 "@types/resolve@0.0.8":
   version "0.0.8"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/resolve/-/resolve-0.0.8.tgz#f26074d238e02659e323ce1a13d041eee280e194"
@@ -1835,7 +1815,21 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@4.14.0", "@typescript-eslint/eslint-plugin@^4.5.0":
+"@typescript-eslint/eslint-plugin@4.14.1":
+  version "4.14.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.14.1.tgz#22dd301ce228aaab3416b14ead10b1db3e7d3180"
+  integrity sha1-It0wHOIoqqs0FrFOrRCx2z59MYA=
+  dependencies:
+    "@typescript-eslint/experimental-utils" "4.14.1"
+    "@typescript-eslint/scope-manager" "4.14.1"
+    debug "^4.1.1"
+    functional-red-black-tree "^1.0.1"
+    lodash "^4.17.15"
+    regexpp "^3.0.0"
+    semver "^7.3.2"
+    tsutils "^3.17.1"
+
+"@typescript-eslint/eslint-plugin@^4.5.0":
   version "4.14.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.14.0.tgz#92db8e7c357ed7d69632d6843ca70b71be3a721d"
   integrity sha1-ktuOfDV+19aWMtaEPKcLcb46ch0=
@@ -1861,6 +1855,18 @@
     eslint-scope "^5.0.0"
     eslint-utils "^2.0.0"
 
+"@typescript-eslint/experimental-utils@4.14.1":
+  version "4.14.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/experimental-utils/-/experimental-utils-4.14.1.tgz#a5c945cb24dabb96747180e1cfc8487f8066f471"
+  integrity sha1-pclFyyTau5Z0cYDhz8hIf4Bm9HE=
+  dependencies:
+    "@types/json-schema" "^7.0.3"
+    "@typescript-eslint/scope-manager" "4.14.1"
+    "@typescript-eslint/types" "4.14.1"
+    "@typescript-eslint/typescript-estree" "4.14.1"
+    eslint-scope "^5.0.0"
+    eslint-utils "^2.0.0"
+
 "@typescript-eslint/experimental-utils@^3.10.1":
   version "3.10.1"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/experimental-utils/-/experimental-utils-3.10.1.tgz#e179ffc81a80ebcae2ea04e0332f8b251345a686"
@@ -1872,7 +1878,17 @@
     eslint-scope "^5.0.0"
     eslint-utils "^2.0.0"
 
-"@typescript-eslint/parser@4.14.0", "@typescript-eslint/parser@^4.5.0":
+"@typescript-eslint/parser@4.14.1":
+  version "4.14.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/parser/-/parser-4.14.1.tgz#3bd6c24710cd557d8446625284bcc9c6d52817c6"
+  integrity sha1-O9bCRxDNVX2ERmJShLzJxtUoF8Y=
+  dependencies:
+    "@typescript-eslint/scope-manager" "4.14.1"
+    "@typescript-eslint/types" "4.14.1"
+    "@typescript-eslint/typescript-estree" "4.14.1"
+    debug "^4.1.1"
+
+"@typescript-eslint/parser@^4.5.0":
   version "4.14.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/parser/-/parser-4.14.0.tgz#62d4cd2079d5c06683e9bfb200c758f292c4dee7"
   integrity sha1-YtTNIHnVwGaD6b+yAMdY8pLE3uc=
@@ -1890,6 +1906,14 @@
     "@typescript-eslint/types" "4.14.0"
     "@typescript-eslint/visitor-keys" "4.14.0"
 
+"@typescript-eslint/scope-manager@4.14.1":
+  version "4.14.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/scope-manager/-/scope-manager-4.14.1.tgz#8444534254c6f370e9aa974f035ced7fe713ce02"
+  integrity sha1-hERTQlTG83DpqpdPA1ztf+cTzgI=
+  dependencies:
+    "@typescript-eslint/types" "4.14.1"
+    "@typescript-eslint/visitor-keys" "4.14.1"
+
 "@typescript-eslint/types@3.10.1":
   version "3.10.1"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/types/-/types-3.10.1.tgz#1d7463fa7c32d8a23ab508a803ca2fe26e758727"
@@ -1899,6 +1923,11 @@
   version "4.14.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/types/-/types-4.14.0.tgz#d8a8202d9b58831d6fd9cee2ba12f8a5a5dd44b6"
   integrity sha1-2KggLZtYgx1v2c7iuhL4paXdRLY=
+
+"@typescript-eslint/types@4.14.1":
+  version "4.14.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/types/-/types-4.14.1.tgz#b3d2eb91dafd0fd8b3fce7c61512ac66bd0364aa"
+  integrity sha1-s9Lrkdr9D9iz/OfGFRKsZr0DZKo=
 
 "@typescript-eslint/typescript-estree@3.10.1":
   version "3.10.1"
@@ -1928,6 +1957,20 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
+"@typescript-eslint/typescript-estree@4.14.1":
+  version "4.14.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/typescript-estree/-/typescript-estree-4.14.1.tgz#20d3b8c8e3cdc8f764bdd5e5b0606dd83da6075b"
+  integrity sha1-INO4yOPNyPdkvdXlsGBt2D2mB1s=
+  dependencies:
+    "@typescript-eslint/types" "4.14.1"
+    "@typescript-eslint/visitor-keys" "4.14.1"
+    debug "^4.1.1"
+    globby "^11.0.1"
+    is-glob "^4.0.1"
+    lodash "^4.17.15"
+    semver "^7.3.2"
+    tsutils "^3.17.1"
+
 "@typescript-eslint/visitor-keys@3.10.1":
   version "3.10.1"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/visitor-keys/-/visitor-keys-3.10.1.tgz#cd4274773e3eb63b2e870ac602274487ecd1e931"
@@ -1941,6 +1984,14 @@
   integrity sha1-sQkNnSlVsESy6ikEoiSWhJrL31Q=
   dependencies:
     "@typescript-eslint/types" "4.14.0"
+    eslint-visitor-keys "^2.0.0"
+
+"@typescript-eslint/visitor-keys@4.14.1":
+  version "4.14.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@typescript-eslint/visitor-keys/-/visitor-keys-4.14.1.tgz#e93c2ff27f47ee477a929b970ca89d60a117da91"
+  integrity sha1-6Twv8n9H7kd6kpuXDKidYKEX2pE=
+  dependencies:
+    "@typescript-eslint/types" "4.14.1"
     eslint-visitor-keys "^2.0.0"
 
 "@webassemblyjs/ast@1.9.0":
@@ -9375,10 +9426,10 @@ recharts-scale@^0.4.2:
   dependencies:
     decimal.js-light "^2.4.1"
 
-recharts@2.0.3:
-  version "2.0.3"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/recharts/-/recharts-2.0.3.tgz#70e4e60c3f032e73bf45589509fafcde23117349"
-  integrity sha1-cOTmDD8DLnO/RViVCfr83iMRc0k=
+recharts@2.0.4:
+  version "2.0.4"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/recharts/-/recharts-2.0.4.tgz#0ffaa9437762ed0bf021968af42154777f97c94c"
+  integrity sha1-D/qpQ3di7QvwIZaK9CFUd3+XyUw=
   dependencies:
     classnames "^2.2.5"
     d3-interpolate "^2.0.1"
