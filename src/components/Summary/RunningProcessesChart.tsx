@@ -48,16 +48,22 @@ const RunningProcessesChart: React.FunctionComponent<Props> = ({ threadDumps }) 
   );
 };
 
-const CustomTooltip: React.FunctionComponent<TooltipProps> = ({ active, payload, label }) => {
+const CustomTooltip: React.FunctionComponent<TooltipProps<number, string>> = ({ active, payload, label }) => {
   if (active && payload) {
     const threadNames: string[] = getSortedThreadNames(payload[1].value);
+    const threadsCount: number | undefined = payload[0].value;
 
     return (
       <div className="tooltip ellipsis">
         <p>
-          {`${label} - ${payload[0].value}`}
+          {`${label} - ${threadsCount}`}
           {' '}
-          running processes (from
+          running
+          {' '}
+          {threadsCount === 1 ? 'process' : 'processes'}
+          {' '}
+          (from
+          {' '}
           <i>top</i>
           )
         </p>
