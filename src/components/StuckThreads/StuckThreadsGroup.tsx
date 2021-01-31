@@ -37,6 +37,7 @@ export default class StuckThreadsGroup extends React.PureComponent<Props, State>
           {threadGroup.length}
           {' '}
           similar stack(s) for
+          {' '}
           &quot;
           {thread.name}
           &quot;
