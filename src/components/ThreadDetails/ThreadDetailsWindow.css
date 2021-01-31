@@ -14,7 +14,7 @@
   width: 100%;
   margin: auto;
   padding-bottom: 10px;
-  background-color: #FAFBFC;
+  background-color: var(--color-n10);
 }
 .details-header h3 {
   margin-left: 10px;
@@ -42,7 +42,7 @@
 .stacktrace-textarea {
   width: 100%;
   height: 100%;
-  color: #6B778C;
+  color: var(--color-n200);
   padding: 5px;
   font-size: 12px;
   line-height: 16px;
@@ -51,7 +51,7 @@
 }
 
 .thread-state {
-  color: #344563;
+  color: var(--color-n600);
   border-radius: 3px;
   display: inline-block;
   font-size: 13px;
@@ -66,42 +66,42 @@
   cursor: default;
 }
 .runnable {
-  background: #E3FCEF;
-  color: #006644;
+  background: var(--color-g50);
+  color: var(--color-g500);
 }
 .blocked {
-  background: #FFEBE6;
-  color: #BF2600;
+  background: var(--color-r50);
+  color: var(--color-r500);
 }
 .waiting {
-  background: #EAE6FF;
-  color: #5243AA;
+  background: var(--color-p50);
+  color: var(--color-p400);
 }
 .timed-waiting {
-  background: #FFFAE6;
-  color: #505F79;
+  background: var(--color-y50);
+  color: var(--color-n400);
 }
 .matching {
-  background: #DEEBFF;
-  color: #0747A6;
+  font-weight: 600;
+  border-color: var(--color-n400);
 }
 
 .high {
-  background: #FFEBE6;
-  color: #BF2600;
-  -webkit-text-fill-color: #BF2600;
+  background: var(--color-r50);
+  color: var(--color-r500);
+  -webkit-text-fill-color: var(--color-r500);
 }
 .medium {
-  background: #FFF0B3;
-  color: #42526E;
-  -webkit-text-fill-color: #42526E;
+  background: var(--color-y75);
+  color: var(--color-n500);
+  -webkit-text-fill-color: var(--color-n500);
 }
 .low {
-  background: #DEEBFF;
-  color: #0747A6;
-  -webkit-text-fill-color: #0747A6;
+  background: var(--color-b50);
+  color: var(--color-b500);
+  -webkit-text-fill-color: var(--color-b500);
 }
 .none {
-  color: #172B4D;
-  -webkit-text-fill-color: #172B4D;
+  color: var(--color-n800);
+  -webkit-text-fill-color: var(--color-n800);
 }

@@ -1,3 +1,47 @@
+/* https://atlassian.design/foundations/color */
+:root {
+  /* Primary pallette: B400, N800, N0 */
+
+  /* Neutrals */
+  --color-n900: #091E42;
+  --color-n800: #172B4D;
+  --color-n700: #253858;
+  --color-n600: #344563;
+  --color-n500: #42526E;
+  --color-n400: #505F79;
+  --color-n300: #5E6C84;
+  --color-n200: #6B778C;
+  --color-n100: #7A869A;
+  --color-n40: #DFE1E6;
+  --color-n30: #EBECF0;
+  --color-n20: #F4F5F7;
+  --color-n10: #FAFBFC;
+  --color-n0: #FFFFFF;
+
+  /* Red */
+  --color-r500: #BF2600;
+  --color-r50: #FFEBE6;
+
+  /* Yellow */
+  --color-y75: #FFF0B3;
+  --color-y50: #FFFAE6;
+
+  /* Green */
+  --color-g500: #006644;
+  --color-g50: #E3FCEF;
+
+  /* Blue */
+  --color-b500: #0747A6;
+  --color-b400: #0052CC;
+  --color-b300: #0065FF;
+  --color-b100: #4C9AFF;
+  --color-b50: #DEEBFF;
+
+  /* Purple */
+  --color-p400: #5243AA;
+  --color-p50: #EAE6FF;
+}
+
 html, body {
   height: 100%;
 }
@@ -5,8 +49,8 @@ html, body {
 /* https://atlassian.design/guidelines/product/foundations/typography */
 body {
   margin: 0;
-  background: #fff;
-  color: #172B4D;
+  background: var(--color-n0);
+  color: var(--color-n800);
   font-size: 14px;
   font-weight: 400;
   letter-spacing: -0.005em;
@@ -58,7 +102,7 @@ h6 {
 }
 
 a {
-  color: #0052CC;
+  color: var(--color-b400);
   text-decoration: none;
 }
 a:hover {
@@ -68,17 +112,17 @@ a:hover {
 button {
   all: unset;
   cursor: pointer;
-  color: #0052CC;
-  -webkit-text-fill-color: #0052CC;
+  color: var(--color-b400);
+  -webkit-text-fill-color: var(--color-b400);
 }
 button:hover {
   text-decoration: underline;
 }
 
 input {
-  background-color: #fafbfc;
+  background-color: var(--color-n10);
   transition: background-color .2s ease-in-out,border-color .2s ease-in-out;
-  border: 2px solid #dfe1e6;
+  border: 2px solid var(--color-n40);
   border-radius: 3.01px;
   box-sizing: border-box;
   font-size: inherit;
@@ -94,13 +138,13 @@ input[type="number"] {
   width: 5em;
 }
 input:hover {
-  background-color: #ebecf0;
-  border-color: #dfe1e6;
+  background-color: var(--color-n30);
+  border-color: var(--color-n40);
 }
 input:focus {
-  background-color: #fff;
+  background-color: var(--color-n0);
   outline: none;
-  border-color: #4c9aff;
+  border-color: var(--color-b100);
 }
 
 .chevron {
@@ -109,7 +153,7 @@ input:focus {
   display: inline-block;
   position: relative;
   top: 2px;
-  color: #344563;
+  color: var(--color-n600);
   background: rgba(9,30,66,.08) url(chevron.svg) no-repeat top left;
   border-radius: 3.01px;
   margin-right: 5px;

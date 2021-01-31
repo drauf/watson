@@ -1,6 +1,6 @@
 .nav-toggle {
   width: 10px;
-  background: #fff;
+  background: var(--color-n0);
   height: 100%;
 }
 #nav-arrow {
@@ -12,7 +12,7 @@
 
 /* vertical line */
 .nav-toggle:hover {
-  background: linear-gradient(90deg, #0052CC 30%, #fff 30%);
+  background: linear-gradient(90deg, var(--color-b400) 30%, var(--color-n0) 30%);
   cursor: pointer;
 }
 
@@ -20,7 +20,7 @@
 #nav-arrow:before,
 #nav-arrow:after {
   height: 100vh;
-  background: #0052CC;
+  background: var(--color-b400);
   content: '';
   height: 3px;
   position: absolute;

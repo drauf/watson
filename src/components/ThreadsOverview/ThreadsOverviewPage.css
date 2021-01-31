@@ -29,6 +29,9 @@
   table-layout: fixed;
   text-align: center;
 }
+#thread-overview-legend td {
+  cursor: default;
+}
 
 table {
   position: relative;
@@ -39,47 +42,22 @@ table {
   table-layout: fixed;
 }
 
-/* Hide overflowing text */
 th, td {
+  color: var(--color-n600);
+  border: 1px dashed var(--color-n0);
+  border-radius: 3px;
+  /* Hide overflowing text */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border: 1px solid #fff;
-  border-radius: 3px;
 }
 
-/* Background colors depending on the thread state */
 td {
-  color: #344563;
-  font-weight: 500;
   cursor: pointer;
 }
 td.name {
   font-weight: 700;
   cursor: default;
-}
-td.empty {
-  cursor: default;
-}
-td.runnable {
-  background: #E3FCEF;
-  color: #006644;
-}
-td.blocked {
-  background: #FFEBE6;
-  color: #BF2600;
-}
-td.waiting {
-  background: #EAE6FF;
-  color: #5243AA;
-}
-td.timed-waiting {
-  background: #FFFAE6;
-  color: #505F79;
-}
-td.matching {
-  font-weight: bold;
-  border-color: #172B4D;
 }
 
 /* Tooltips on hover */
@@ -89,8 +67,8 @@ th > span {
   position: absolute;
   z-index: 100;
   border-radius: 3px;
-  background-color: #091E42;
-  color: #fff;
+  background-color: var(--color-n800);
+  color: var(--color-n0);
   font-weight: bold;
   padding: 2px 7px 4px;
 }

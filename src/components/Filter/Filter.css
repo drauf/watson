@@ -4,21 +4,21 @@
   padding: 7px 10px;
   border: 1px solid transparent;
   border-radius: 3px;
-  color: #0052CC;
+  color: var(--color-b400);
 }
 .filters label:hover {
-  border: 1px solid #DFE1E5;
-  color: #0065FF;
+  border: 1px solid var(--color-n40);
+  color: var(--color-b300);
 }
 
 .filters .checked {
-  color: #FFF;
-  background: #253858;
+  color: var(--color-n0);
+  background: var(--color-n700);
 }
 .filters .checked:hover {
   border: 1px solid transparent;
-  color: #091E42;
-  background: #DFE1E5;
+  color: var(--color-n900);
+  background: var(--color-n40);
 }
 
 .filters input {
