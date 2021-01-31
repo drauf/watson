@@ -35,7 +35,7 @@ table {
   width: 99%;
   padding-left: 4px;
   margin: 10px 0 4px;
-  border-spacing: 2px;
+  border-spacing: 0px;
   table-layout: fixed;
 }
 
@@ -44,6 +44,8 @@ th, td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border: 1px solid #fff;
+  border-radius: 3px;
 }
 
 /* Background colors depending on the thread state */
@@ -76,8 +78,8 @@ td.timed-waiting {
   color: #505F79;
 }
 td.matching {
-  background: #DEEBFF;
-  color: #0747A6;
+  font-weight: bold;
+  border-color: #172B4D;
 }
 
 /* Tooltips on hover */

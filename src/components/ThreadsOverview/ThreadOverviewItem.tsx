@@ -28,10 +28,8 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
   }
 
   private getClassName = (isFiltered: boolean, isMatchingFilter: boolean, status: ThreadStatus | undefined) => {
-    if (isFiltered) {
-      return isMatchingFilter ? 'matching' : '';
-    }
-    return status ? status.toString() : '';
+    const statusClass = status ? status.toString() : '';
+    return isFiltered && isMatchingFilter ? `${statusClass} matching` : statusClass;
   }
 
   public render() {
