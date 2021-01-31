@@ -83,7 +83,7 @@
 }
 .matching {
   font-weight: 600;
-  border-color: var(--color-n400);
+  border: 1px dashed var(--color-n400);
 }
 
 .high {

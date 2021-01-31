@@ -44,7 +44,7 @@ table {
 
 th, td {
   color: var(--color-n600);
-  border: 1px dashed var(--color-n0);
+  border: 1px solid var(--color-n0);
   border-radius: 3px;
   /* Hide overflowing text */
   white-space: nowrap;
