@@ -18,6 +18,7 @@ const ThreadsOverviewFilteringSummary: React.FunctionComponent<Props> = ({ isFil
         {matching}
         {' '}
         out of
+        {' '}
         {total}
         {' '}
         (
@@ -36,6 +37,7 @@ const ThreadsOverviewFilteringSummary: React.FunctionComponent<Props> = ({ isFil
         {matching}
         {' '}
         out of
+        {' '}
         {threadsNumber}
         {' '}
         (
