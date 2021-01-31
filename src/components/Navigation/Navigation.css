@@ -1,7 +1,7 @@
 nav {
   width: 0;
-  color: #172B4D;
-  background: #F4F5F7;
+  color: var(--color-n800);
+  background: var(--color-n20);
   transition: all 0.5s ease;
 }
 nav.open {
@@ -9,7 +9,7 @@ nav.open {
 }
 
 #brand-visible {
-  color: #0052CC;
+  color: var(--color-b400);
   padding-left: 30px;
   transform: scale(1);
   transition: all 0.5s ease;
@@ -37,14 +37,14 @@ nav.open li {
 }
 nav.open li:hover {
   cursor: pointer;
-  color: #0052CC;
-  background: #EBECF0;
+  color: var(--color-b400);
+  background: var(--color-n30);
 }
 
 nav a,
 nav button {
-  color: #172B4D;
-  -webkit-text-fill-color: #172B4D;
+  color: var(--color-n800);
+  -webkit-text-fill-color: var(--color-n800);
   font-weight: 500;
 }
 nav a:hover,

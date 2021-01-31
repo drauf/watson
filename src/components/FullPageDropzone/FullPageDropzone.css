@@ -11,9 +11,9 @@
   line-height: 200px;
   text-align: center;
 
-  background: #f4f5f7;
+  background: var(--color-n20);
   border-radius: 5px;
-  border: 2px dashed #0052CC;
+  border: 2px dashed var(--color-b400);
 }
 
 #dropzone-guide {
