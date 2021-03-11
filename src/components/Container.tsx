@@ -16,8 +16,8 @@ type State = {
   navigationOpen: boolean;
 };
 
-class Container extends React.PureComponent<any, State> {
-  constructor(props: any) {
+class Container extends React.PureComponent<unknown, State> {
+  constructor(props: unknown) {
     super(props);
     this.state = { navigationOpen: true };
   }
@@ -26,7 +26,7 @@ class Container extends React.PureComponent<any, State> {
     this.setState((prevState) => ({ navigationOpen: !prevState.navigationOpen }));
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { navigationOpen } = this.state;
 
     return (

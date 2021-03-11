@@ -26,7 +26,7 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
     this.setState({ showDetails: false });
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { thread, maxDifferingLines, showStackTrace } = this.props;
     const { showDetails } = this.state;
     const stack = thread.stackTrace.slice(0, Math.max(maxDifferingLines, 10));

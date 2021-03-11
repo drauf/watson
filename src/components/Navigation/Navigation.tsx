@@ -7,7 +7,7 @@ import OutboundLink from './OutboundLink';
 export const ISSUE_TRACKER_LINK = 'https://github.com/drauf/watson/issues';
 export const SOURCE_CODE_LINK = 'https://github.com/drauf/watson';
 
-type Props = RouteComponentProps<any> & {
+type Props = RouteComponentProps<{key: string}> & {
   open: boolean;
 };
 

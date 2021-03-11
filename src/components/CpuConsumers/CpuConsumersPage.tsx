@@ -3,7 +3,7 @@ import getThreadsOverTime from '../../common/getThreadsOverTime';
 import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import PageWithSettings from '../PageWithSettings/PageWithSettings';
+import PageWithSettings from '../BasePage/PageWithSettings';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumersList from './CpuConsumersList';
 import './CpuConsumersPage.css';
@@ -36,7 +36,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
     };
   }
 
-  public render() {
+  public render(): JSX.Element {
     const consumers = this.calculateCpuUsages(this.state.mode);
 
     return (

@@ -22,5 +22,5 @@ export default class CpuUsage {
     this.epoch = hours * 3600000 + minutes * 60000 + seconds * 1000;
   }
 
-  public getEpoch = () => this.epoch
+  public getEpoch = (): number | null => this.epoch
 }

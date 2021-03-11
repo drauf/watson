@@ -1,6 +1,6 @@
 import React from 'react';
 import ThreadDump from '../../types/ThreadDump';
-import PageWithSettings from '../PageWithSettings/PageWithSettings';
+import PageWithSettings from '../BasePage/PageWithSettings';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeItem from './MonitorOverTimeItem';
@@ -22,7 +22,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
 
   protected PAGE_NAME = 'Monitors';
 
-  public render() {
+  public render(): JSX.Element {
     const monitors = this.getMonitorsOverTime(this.props.threadDumps);
     const filtered = this.filterMonitors(monitors);
 

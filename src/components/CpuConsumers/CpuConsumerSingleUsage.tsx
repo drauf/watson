@@ -16,11 +16,11 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     this.state = { showDetails: false };
   }
 
-  public handleClick = () => {
+  public handleClick = (): void => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   }
 
-  public handleUnload = () => {
+  public handleUnload = (): void => {
     this.setState({ showDetails: false });
   }
 
@@ -40,7 +40,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     return 'none';
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { thread } = this.props;
 
     if (!thread) {

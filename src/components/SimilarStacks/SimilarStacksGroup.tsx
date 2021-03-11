@@ -21,7 +21,7 @@ export default class SimilarStacksGroup extends React.PureComponent<Props, State
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { threadGroup, linesToConsider } = this.props;
     const { showDetails } = this.state;
 

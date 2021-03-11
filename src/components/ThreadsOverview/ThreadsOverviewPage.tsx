@@ -3,7 +3,7 @@ import getThreadsOverTime from '../../common/getThreadsOverTime';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';
-import PageWithSettings from '../PageWithSettings/PageWithSettings';
+import PageWithSettings from '../BasePage/PageWithSettings';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
@@ -44,7 +44,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
 
   private luceneRegex = /^org\.apache\.lucene\./;
 
-  public render() {
+  public render(): JSX.Element {
     const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
     const threadOverTime = getThreadsOverTime(nonEmptyThreadDumps);
     const filteredDumps = this.filterThreads(threadOverTime);
