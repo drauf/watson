@@ -30,7 +30,7 @@ const RunningProcessesChart: React.FunctionComponent<Props> = ({ threadDumps }) 
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>
           <XAxis dataKey="name" />
-          <YAxis type="number" />
+          <YAxis type="number" allowDecimals={false} />
           <CartesianGrid stroke="#DFE1E5" strokeDasharray="5 5" />
           <Tooltip content={<CustomTooltip />} />
           <Line
