@@ -38,5 +38,5 @@ export default class ThreadDump {
 
   private epoch: number | null = null;
 
-  public getEpoch = () => this.epoch
+  public getEpoch = (): number | null => this.epoch
 }

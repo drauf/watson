@@ -24,7 +24,7 @@ export default class WaitingListItem extends React.PureComponent<Props, State> {
     this.setState({ showDetails: false });
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { thread } = this.props;
     const { showDetails } = this.state;
 

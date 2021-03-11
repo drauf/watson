@@ -21,7 +21,7 @@ export default class StuckThreadsGroup extends React.PureComponent<Props, State>
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   }
 
-  public render() {
+  public render(): JSX.Element | null {
     const { threadGroup, maxDifferingLines } = this.props;
     const { showDetails } = this.state;
 

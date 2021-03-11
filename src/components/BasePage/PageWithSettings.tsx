@@ -1,19 +1,7 @@
 import React, { ComponentState } from 'react';
-import { WithThreadDumpsProps } from '../../common/withThreadDumps';
+import Page from './Page';
 
-export default class PageWithSettings<S> extends React.PureComponent<WithThreadDumpsProps, S> {
-  protected static NO_CPU_INFOS = 'You need to load the <i>cpu_info</i> files to see this data.';
-
-  protected static NO_CPU_AND_THREADS_PAIR = 'You need to load matching <i>cpu_info</i> and <i>jira_threads</i> files to see this data.';
-
-  protected static NO_THREAD_DUMPS = 'You need to load the <i>thread_dump</i> files to see this data.';
-
-  protected static N0_THREADS_MATCHING = 'No threads match the selected criteria.';
-
-  protected static N0_MONITORS_MATCHING = 'No monitors match the selected criteria.';
-
-  protected PAGE_NAME = 'Unknown Page';
-
+export default class PageWithSettings<S> extends Page<S> {
   protected handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name } = event.target;
     const isChecked: boolean = event.target.checked;
@@ -33,9 +21,5 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
     const { value } = event.target;
     const newState: ComponentState = { [name]: value };
     this.setState(newState);
-  }
-
-  public render(): JSX.Element | null {
-    return null;
   }
 }

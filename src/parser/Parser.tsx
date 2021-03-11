@@ -20,7 +20,7 @@ export default class Parser {
     this.onFilesParsed = onFilesParsed;
   }
 
-  public parseFiles = (uploaded: File[]) => {
+  public parseFiles = (uploaded: File[]): void => {
     this.cpuUsages = [];
     this.threadDumps = [];
     this.filesToParse = 0;

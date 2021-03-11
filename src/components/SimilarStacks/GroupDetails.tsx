@@ -33,7 +33,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
     return [];
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { threadGroup, linesToConsider } = this.props;
     const { expanded } = this.state;
 

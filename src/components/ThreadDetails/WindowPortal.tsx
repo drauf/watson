@@ -10,7 +10,7 @@ type Props = {
 export default class WindowPortal extends React.PureComponent<Props> {
   private static windows: Array<Window> = [];
 
-  public static copyStyles(sourceDoc: Document, targetDoc: Document) {
+  public static copyStyles(sourceDoc: Document, targetDoc: Document): void {
     Array.from(sourceDoc.styleSheets).forEach((sheet) => {
       const styleSheet = sheet as CSSStyleSheet;
 
@@ -51,7 +51,7 @@ export default class WindowPortal extends React.PureComponent<Props> {
     }
   }
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     window.onunload = this.closeAllExternalWindows;
 
     this.externalWindow = window.open('', '', this.windowFeatures);
@@ -65,20 +65,20 @@ export default class WindowPortal extends React.PureComponent<Props> {
     }
   }
 
-  public componentWillUnmount() {
+  public componentWillUnmount(): void {
     if (this.externalWindow && !this.externalWindow.closed) {
       this.externalWindow.close();
     }
     WindowPortal.windows = WindowPortal.windows.filter((ext) => ext !== this.externalWindow);
   }
 
-  private closeAllExternalWindows = () => {
+  private closeAllExternalWindows = (): void => {
     WindowPortal.windows
       .filter((external) => !external.closed)
       .forEach((external) => external.close());
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { children } = this.props;
     return ReactDOM.createPortal(children, this.container);
   }

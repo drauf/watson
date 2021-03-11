@@ -18,7 +18,7 @@ const HELD_LOCK_PATTERN = /^\s+- <([x0-9a-f]+)> \(a (.*)\)/;
 export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
 
 export default class ThreadDumpParser {
-  public static parseThreadDump(lines: string[], callback: ParseThreadDumpCallback) {
+  public static parseThreadDump(lines: string[], callback: ParseThreadDumpCallback): void {
     const threadDump = ThreadDump.from(matchOne(THREAD_DUMP_DATE_PATTERN, lines.shift() as string));
     lines.forEach((line) => ThreadDumpParser.parseLine(line, threadDump));
     ThreadDumpParser.identifyAnonymousSynchronizers(threadDump.threads);

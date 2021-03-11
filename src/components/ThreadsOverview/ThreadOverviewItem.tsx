@@ -32,7 +32,7 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
     return isFiltered && isMatchingFilter ? `${statusClass} matching` : statusClass;
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { showDetails } = this.state;
     const { thread, isFiltered, isMatchingFilter } = this.props;
 

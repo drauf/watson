@@ -4,7 +4,7 @@ import isIdleThread from '../../common/isIdleThread';
 import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import PageWithSettings from '../PageWithSettings/PageWithSettings';
+import PageWithSettings from '../BasePage/PageWithSettings';
 import StuckThreadsGroup from './StuckThreadsGroup';
 import StuckThreadsSettings from './StuckThreadsSettings';
 
@@ -31,7 +31,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
     };
   }
 
-  public render() {
+  public render(): JSX.Element {
     const threadOverTime = getThreadsOverTime(this.state.threadDumps);
     const filtered = this.filterThreads(threadOverTime);
     const clusters = this.buildClusters(filtered);

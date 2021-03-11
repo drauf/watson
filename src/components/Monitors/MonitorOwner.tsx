@@ -25,7 +25,7 @@ export default class MonitorOwner extends React.PureComponent<Props, State> {
     this.setState({ showOwner: false });
   }
 
-  public render() {
+  public render(): JSX.Element | null {
     const { monitor } = this.props;
 
     if (!monitor.owner) {

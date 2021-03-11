@@ -63,7 +63,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     return `, awaiting notification on [${lockWaitingFor}] without an owner`;
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { thread } = this.props;
     const { showDetails, showLockOwner } = this.state;
     const lockOwner = thread.lockWaitingFor ? thread.lockWaitingFor.owner : null;

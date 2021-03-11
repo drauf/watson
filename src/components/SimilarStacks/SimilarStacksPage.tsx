@@ -2,7 +2,7 @@ import React from 'react';
 import isIdleThread from '../../common/isIdleThread';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import PageWithSettings from '../PageWithSettings/PageWithSettings';
+import PageWithSettings from '../BasePage/PageWithSettings';
 import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
@@ -22,7 +22,7 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
 
   protected PAGE_NAME = 'Similar Stacks';
 
-  public render() {
+  public render(): JSX.Element {
     const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider)
       .filter((group) => group.length >= this.state.minimalGroupSize);
 
