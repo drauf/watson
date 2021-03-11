@@ -26,6 +26,7 @@
 #thread-overview-legend {
   height: 32px;
   width: 90%;
+  padding: 0;
   table-layout: fixed;
   text-align: center;
 }
@@ -35,9 +36,8 @@
 
 table {
   position: relative;
-  width: 99%;
-  padding-left: 4px;
-  margin: 10px 0 4px;
+  width: 100%;
+  padding: 20px 4px 4px;
   border-spacing: 0px;
   table-layout: fixed;
 }
