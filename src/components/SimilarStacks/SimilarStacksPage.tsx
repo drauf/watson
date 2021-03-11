@@ -1,4 +1,3 @@
-import React from 'react';
 import isIdleThread from '../../common/isIdleThread';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';

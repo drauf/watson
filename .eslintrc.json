@@ -33,6 +33,8 @@
     "@typescript-eslint/no-shadow": [
       "error"
     ],
+    // suppress errors for missing 'import React' in files
+    "react/react-in-jsx-scope": "off",
     // Diff to airbnb: Allow use of for…in loops
     "no-restricted-syntax": [
       "error",
@@ -65,7 +67,7 @@
     "no-use-before-define": "off",
     // Allow ++ operator
     "no-plusplus": "off",
-    // Allow printing errors and warning to the console
+    // Allow printing errors and warnings to the console
     "no-console": [
       "error",
       {

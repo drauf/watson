@@ -1,4 +1,3 @@
-import React from 'react';
 import Page from '../BasePage/Page';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
