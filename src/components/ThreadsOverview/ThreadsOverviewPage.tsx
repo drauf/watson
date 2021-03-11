@@ -1,4 +1,3 @@
-import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
