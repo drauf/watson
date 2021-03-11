@@ -22,22 +22,26 @@ class Navigation extends React.PureComponent<Props> {
 
     return (
       <header>
-        <h1>
-          Watson
-        </h1>
+        <div className="header-section">
+          <h1>
+            Watson
+          </h1>
 
-        <nav>
-          <ul>
-            <NavLink to={`/${key}/summary/`}><li>Summary</li></NavLink>
-          </ul>
-          <ul>
-            <NavLink to={`/${key}/cpu-consumers/`}><li>CPU Consumers</li></NavLink>
-            <NavLink to={`/${key}/similar-stacks/`}><li>Similar Stack Traces</li></NavLink>
-            <NavLink to={`/${key}/stuck-threads/`}><li>Stuck Threads Suspects</li></NavLink>
-            <NavLink to={`/${key}/threads-overview/`}><li>Threads Overview</li></NavLink>
-            <NavLink to={`/${key}/monitors/`}><li>Monitors</li></NavLink>
-          </ul>
+          <nav>
+            <ul>
+              <NavLink to={`/${key}/summary/`}><li>Summary</li></NavLink>
+            </ul>
+            <ul>
+              <NavLink to={`/${key}/cpu-consumers/`}><li>CPU consumers</li></NavLink>
+              <NavLink to={`/${key}/similar-stacks/`}><li>Similar stack traces</li></NavLink>
+              <NavLink to={`/${key}/stuck-threads/`}><li>Stuck threads suspects</li></NavLink>
+              <NavLink to={`/${key}/threads-overview/`}><li>Threads overview</li></NavLink>
+              <NavLink to={`/${key}/monitors/`}><li>Monitors</li></NavLink>
+            </ul>
+          </nav>
+        </div>
 
+        <div className="header-section">
           <ul>
             <button type="button" onClick={this.onClear}><li>Load another thread dump</li></button>
           </ul>
@@ -50,7 +54,7 @@ class Navigation extends React.PureComponent<Props> {
               <li>Source code</li>
             </OutboundLink>
           </ul>
-        </nav>
+        </div>
       </header>
     );
   }
