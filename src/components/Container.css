@@ -24,3 +24,9 @@ main {
 #settings input {
   margin-left: 3em;
 }
+
+#error {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
