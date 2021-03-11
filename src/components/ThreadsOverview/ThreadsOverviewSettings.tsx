@@ -19,7 +19,7 @@ const ThreadsOverviewSettings: React.FunctionComponent<Props> = ({
   active, nonJvm, tomcat, nonTomcat,
   database, lucene, usingCpu, nameFilter, stackFilter, onFilterChange, onRegExpChange,
 }: Props) => (
-  <div id="threads-overview-settings">
+  <section id="threads-overview-settings">
     <div className="filters">
       <b>Filters:</b>
 
@@ -94,7 +94,7 @@ const ThreadsOverviewSettings: React.FunctionComponent<Props> = ({
         <b>Stack trace RegExp</b>
       </label>
     </div>
-  </div>
+  </section>
 );
 
 export default ThreadsOverviewSettings;

@@ -27,7 +27,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
     const filtered = this.filterMonitors(monitors);
 
     return (
-      <div id="page">
+      <main>
         <MonitorsSettings
           withOwner={this.state.withOwner}
           withoutIdle={this.state.withoutIdle}
@@ -38,7 +38,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
         {!this.props.threadDumps.some((dump) => dump.threads.length > 0)
           ? <h4 dangerouslySetInnerHTML={{ __html: MonitorsPage.NO_THREAD_DUMPS }} />
           : this.renderMonitors(filtered)}
-      </div>
+      </main>
     );
   }
 

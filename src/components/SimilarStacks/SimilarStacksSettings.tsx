@@ -12,7 +12,7 @@ type Props = {
 const SimilarStacksSettings: React.FunctionComponent<Props> = ({
   linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange,
 }) => (
-  <div id="settings">
+  <section id="settings">
     <div className="filters">
       <b>Filters:</b>
 
@@ -43,7 +43,7 @@ const SimilarStacksSettings: React.FunctionComponent<Props> = ({
       />
       <b>Minimal group size to show</b>
     </label>
-  </div>
+  </section>
 );
 
 export default SimilarStacksSettings;

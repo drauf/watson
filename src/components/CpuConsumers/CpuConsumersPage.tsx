@@ -40,7 +40,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
     const consumers = this.calculateCpuUsages(this.state.mode);
 
     return (
-      <div id="page">
+      <main>
         <CpuConsumersSettings
           mode={this.state.mode}
           limit={this.state.limit}
@@ -57,7 +57,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
               consumers={consumers}
             />
           )}
-      </div>
+      </main>
     );
   }
 

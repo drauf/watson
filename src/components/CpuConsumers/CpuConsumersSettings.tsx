@@ -11,7 +11,7 @@ type Props = {
 const CpuConsumersSettings: React.FunctionComponent<Props> = ({
   mode, limit, onModeChange, onLimitChange,
 }) => (
-  <div id="settings">
+  <section id="settings">
     <div className="filters">
       <b>CPU usage calculation:</b>
 
@@ -56,7 +56,7 @@ const CpuConsumersSettings: React.FunctionComponent<Props> = ({
         <b>Threads to show</b>
       </label>
     </div>
-  </div>
+  </section>
 );
 
 export default CpuConsumersSettings;

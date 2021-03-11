@@ -26,7 +26,7 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
       .filter((group) => group.length >= this.state.minimalGroupSize);
 
     return (
-      <div id="page">
+      <main>
         <SimilarStacksSettings
           linesToConsider={this.state.linesToConsider}
           minimalGroupSize={this.state.minimalGroupSize}
@@ -38,7 +38,7 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
         {!this.props.threadDumps.some((dump) => dump.threads.length > 0)
           ? <h4 dangerouslySetInnerHTML={{ __html: SimilarStacksPage.NO_THREAD_DUMPS }} />
           : this.renderThreadGroups(threadGroups)}
-      </div>
+      </main>
     );
   }
 

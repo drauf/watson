@@ -37,7 +37,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
     const clusters = this.buildClusters(filtered);
 
     return (
-      <div id="page">
+      <main>
         <StuckThreadsSettings
           maxDifferingLines={this.state.maxDifferingLines}
           minClusterSize={this.state.minClusterSize}
@@ -49,7 +49,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
         {this.state.threadDumps.length === 0
           ? <h4 dangerouslySetInnerHTML={{ __html: StuckThreadsPage.NO_THREAD_DUMPS }} />
           : this.renderStuckThreads(clusters)}
-      </div>
+      </main>
     );
   }
 

@@ -11,7 +11,7 @@ type Props = {
 const MonitorsSettings: React.FunctionComponent<Props> = ({
   withOwner, withoutIdle, withoutOwner, onFilterChange,
 }) => (
-  <div id="settings">
+  <section id="settings">
     <div className="filters">
       <b>Filters:</b>
 
@@ -36,7 +36,7 @@ const MonitorsSettings: React.FunctionComponent<Props> = ({
         onChange={onFilterChange}
       />
     </div>
-  </div>
+  </section>
 );
 
 export default MonitorsSettings;

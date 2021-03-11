@@ -1,5 +1,5 @@
 #memory-usages {
-  width: 80%;
+  width: 100%;
   min-height: 300px;
   display: flex;
 }
@@ -9,7 +9,8 @@
 }
 
 .chart {
-  width: 80%;
+  width: 100%;
+  text-align: center;
 }
 
 .tooltip {

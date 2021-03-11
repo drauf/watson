@@ -51,28 +51,31 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     const isFilteredByStack = this.isFilteredByStack();
 
     return (
-      <div id="wide-page">
-        <ThreadsOverviewSettings
-          active={this.state.active}
-          nonJvm={this.state.nonJvm}
-          tomcat={this.state.tomcat}
-          nonTomcat={this.state.nonTomcat}
-          database={this.state.database}
-          lucene={this.state.lucene}
-          usingCpu={this.state.usingCpu}
-          nameFilter={this.state.nameFilter}
-          stackFilter={this.state.stackFilter}
-          onFilterChange={this.handleFilterChange}
-          onRegExpChange={this.handleRegExpChange}
-        />
+      <main className="full-width-page">
+        <section id="heading">
+          <ThreadsOverviewSettings
+            active={this.state.active}
+            nonJvm={this.state.nonJvm}
+            tomcat={this.state.tomcat}
+            nonTomcat={this.state.nonTomcat}
+            database={this.state.database}
+            lucene={this.state.lucene}
+            usingCpu={this.state.usingCpu}
+            nameFilter={this.state.nameFilter}
+            stackFilter={this.state.stackFilter}
+            onFilterChange={this.handleFilterChange}
+            onRegExpChange={this.handleRegExpChange}
+          />
 
-        <ThreadsOverviewFilteringSummary
-          isFilteredByStack={isFilteredByStack}
-          threadsNumber={threadOverTime.length}
-          threadDumps={filteredDumps}
-        />
+          <ThreadsOverviewFilteringSummary
+            isFilteredByStack={isFilteredByStack}
+            threadsNumber={threadOverTime.length}
+            threadDumps={filteredDumps}
+          />
 
-        <ThreadsOverviewLegend />
+          <ThreadsOverviewLegend />
+        </section>
+
         {nonEmptyThreadDumps.length === 0
           ? <h4 dangerouslySetInnerHTML={{ __html: ThreadsOverviewPage.NO_THREAD_DUMPS }} />
           : (
@@ -82,7 +85,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
               threadDumps={filteredDumps}
             />
           )}
-      </div>
+      </main>
     );
   }
 

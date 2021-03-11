@@ -1,39 +1,30 @@
-nav {
-  width: 0;
+header {
+  width: 100%;
+  display: flex;
   color: var(--color-n800);
   background: var(--color-n20);
   transition: all 0.5s ease;
 }
-nav.open {
-  width: 206px;
-}
 
-#brand-visible {
+header h1 {
   color: var(--color-b400);
-  margin: 16px 14px 0;
-  transform: scale(1);
-  transition: all 0.5s ease;
-}
-#brand-hidden {
-  transform: scale(0);
-  transition: all 0.5s ease;
+  margin: 0;
+  font-size: 14px;
 }
 
 nav ul {
+  display: inline-flex;
   padding: 0;
 }
 nav li {
-  transform: scale(0);
-  transition: all 0.5s ease;
-}
-nav.open li {
   width: 190px;
+  display: inline-flex;
   font-size: 14px;
   line-height: 36px;
   padding-left: 16px;
   transform: scale(1);
 }
-nav.open li:hover {
+nav li:hover {
   cursor: pointer;
   color: var(--color-b400);
   background: var(--color-n30);
@@ -44,9 +35,4 @@ nav button {
   color: var(--color-n800);
   -webkit-text-fill-color: var(--color-n800);
   font-weight: 500;
-}
-
-#nav-content-bottom {
-  bottom: 0;
-  position: fixed;
 }
