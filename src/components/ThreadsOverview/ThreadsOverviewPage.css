@@ -1,10 +1,12 @@
+#heading {
+  width: 80%;
+  margin: auto;
+  padding-top: 22px;
+}
+
 #threads-overview-settings {
-  margin-top: 22px;
   line-height: 36px;
   min-height: 83px;
-  width: 90%;
-  display: flex;
-  flex-direction: column;
 }
 #regexp-filters {
   margin-left: 4em;
@@ -19,13 +21,11 @@
 }
 
 #matching-summary {
-  width: 90%;
-  min-height: 20px;
+  min-height: 24px;
 }
 
 #thread-overview-legend {
   height: 32px;
-  width: 90%;
   padding: 0;
   table-layout: fixed;
   text-align: center;

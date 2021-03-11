@@ -12,7 +12,7 @@ type Props = {
 const StuckThreadsSettings: React.FunctionComponent<Props> = ({
   maxDifferingLines, minClusterSize, withoutIdle, onFilterChange, onIntegerChange,
 }) => (
-  <div id="settings">
+  <section id="settings">
     <div className="filters">
       <b>Filters:</b>
 
@@ -44,7 +44,7 @@ const StuckThreadsSettings: React.FunctionComponent<Props> = ({
       />
       <b>Maximum differing lines between dumps</b>
     </label>
-  </div>
+  </section>
 );
 
 export default StuckThreadsSettings;
