@@ -51,7 +51,7 @@ export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent
       const { promisePending, threadDumps } = this.state;
 
       if (promisePending) {
-        return <h4 id="centered">Loading data from cache...</h4>;
+        return <main><h4>Loading data from cache...</h4></main>;
       }
 
       // eslint-disable-next-line react/jsx-props-no-spreading
