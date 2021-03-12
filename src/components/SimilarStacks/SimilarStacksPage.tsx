@@ -1,7 +1,8 @@
 import isIdleThread from '../../common/isIdleThread';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import PageWithSettings from '../BasePage/PageWithSettings';
+import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
+import PageWithSettings from '../PageWithSettings';
 import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
@@ -19,11 +20,13 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
     withoutIdle: true,
   };
 
-  protected PAGE_NAME = 'Similar Stacks';
-
   public render(): JSX.Element {
     const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider)
       .filter((group) => group.length >= this.state.minimalGroupSize);
+
+    if (!this.props.threadDumps.some((dump) => dump.threads.length > 0)) {
+      return <NoThreadDumpsError />;
+    }
 
     return (
       <main>
@@ -35,9 +38,7 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
           onIntegerChange={this.handleIntegerChange}
         />
 
-        {!this.props.threadDumps.some((dump) => dump.threads.length > 0)
-          ? <h4 dangerouslySetInnerHTML={{ __html: SimilarStacksPage.NO_THREAD_DUMPS }} />
-          : this.renderThreadGroups(threadGroups)}
+        {this.renderThreadGroups(threadGroups)}
       </main>
     );
   }
