@@ -1,4 +1,5 @@
-import Page from '../BasePage/Page';
+import React from 'react';
+import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import NoCpuInfosError from '../Errors/NoCpuInfosError';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
@@ -6,20 +7,22 @@ import RunningProcessesChart from './RunningProcessesChart';
 import './SummaryPage.css';
 import SwapUsageChart from './SwapUsageChart';
 
-export default class SummaryPage extends Page {
+export default class SummaryPage extends React.PureComponent<WithThreadDumpsProps> {
   public render = (): JSX.Element => {
-    if (!this.props.threadDumps.some((dump) => !!dump.loadAverages)) {
+    const { threadDumps } = this.props;
+
+    if (!threadDumps.some((dump) => !!dump.loadAverages)) {
       return <NoCpuInfosError />;
     }
 
     return (
       <main>
         <div id="memory-usages">
-          <MemoryUsageChart threadDumps={this.props.threadDumps} />
-          <SwapUsageChart threadDumps={this.props.threadDumps} />
+          <MemoryUsageChart threadDumps={threadDumps} />
+          <SwapUsageChart threadDumps={threadDumps} />
         </div>
-        <LoadAveragesChart threadDumps={this.props.threadDumps} />
-        <RunningProcessesChart threadDumps={this.props.threadDumps} />
+        <LoadAveragesChart threadDumps={threadDumps} />
+        <RunningProcessesChart threadDumps={threadDumps} />
       </main>
     );
   }
