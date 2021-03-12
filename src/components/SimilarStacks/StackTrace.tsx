@@ -9,10 +9,9 @@ const StackTrace: React.FunctionComponent<Props> = ({ stackTrace, linesToConside
   const stack = linesToConsider > 0 ? stackTrace.slice(0, linesToConsider) : stackTrace;
 
   return (
-    <ol className="stacktrace">
-      {stack.map((line) => (
-        <li key={line}>{line}</li>))}
-    </ol>
+    <ul className="stacktrace">
+      {stack.map((line) => <li key={line}>{line}</li>)}
+    </ul>
   );
 };
 
