@@ -4,7 +4,7 @@
 }
 .monitors-container div,
 .monitors-container button {
-  padding: 6px;
+  padding-left: 6px;
   max-width: 100%;
 
   white-space: nowrap;
