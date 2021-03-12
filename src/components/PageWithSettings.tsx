@@ -1,7 +1,7 @@
 import React, { ComponentState } from 'react';
-import Page from './BasePage/Page';
+import { WithThreadDumpsProps } from '../common/withThreadDumps';
 
-export default class PageWithSettings<S> extends Page<S> {
+export default class PageWithSettings<S> extends React.PureComponent<WithThreadDumpsProps, S> {
   protected static N0_THREADS_MATCHING = 'No threads match the selected criteria.';
 
   protected static N0_MONITORS_MATCHING = 'No monitors match the selected criteria.';
