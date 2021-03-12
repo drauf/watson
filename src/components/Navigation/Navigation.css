@@ -28,14 +28,35 @@ header h1 {
 }
 
 header nav {
+  height: 100%;
   display: inline-flex;
+  align-items: center;
 }
 
 header ul {
+  height: 100%;
   display: inline-flex;
+  align-items: center;
   padding-left: 32px;
   overflow: hidden;
 }
+
+header a {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+header a.active {
+  box-sizing: border-box;
+  border-bottom: 3px solid var(--color-b400);
+  padding-top: 3px;
+}
+
+header a:hover,
+header button:hover {
+  text-decoration: none;
+}
+
 header li {
   margin: 0 4px;
   padding: 0 6px;
@@ -52,9 +73,4 @@ header li:hover {
   color: var(--color-b400);
   -webkit-text-fill-color: var(--color-b400);
   background: var(--color-b50);
-}
-
-header a:hover,
-header button:hover {
-  text-decoration: none;
 }

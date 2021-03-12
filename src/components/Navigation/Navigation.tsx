@@ -29,14 +29,12 @@ class Navigation extends React.PureComponent<Props> {
 
           <nav>
             <ul>
-              <NavLink to={`/${key}/summary/`}><li>Summary</li></NavLink>
-            </ul>
-            <ul>
-              <NavLink to={`/${key}/cpu-consumers/`}><li>CPU consumers</li></NavLink>
-              <NavLink to={`/${key}/similar-stacks/`}><li>Similar stack traces</li></NavLink>
-              <NavLink to={`/${key}/stuck-threads/`}><li>Stuck threads suspects</li></NavLink>
-              <NavLink to={`/${key}/threads-overview/`}><li>Threads overview</li></NavLink>
-              <NavLink to={`/${key}/monitors/`}><li>Monitors</li></NavLink>
+              <NavLink to={`/${key}/summary/`} activeClassName="active"><li>Summary</li></NavLink>
+              <NavLink to={`/${key}/cpu-consumers/`} activeClassName="active"><li>CPU consumers</li></NavLink>
+              <NavLink to={`/${key}/similar-stacks/`} activeClassName="active"><li>Similar stack traces</li></NavLink>
+              <NavLink to={`/${key}/stuck-threads/`} activeClassName="active"><li>Stuck threads suspects</li></NavLink>
+              <NavLink to={`/${key}/threads-overview/`} activeClassName="active"><li>Threads overview</li></NavLink>
+              <NavLink to={`/${key}/monitors/`} activeClassName="active"><li>Monitors</li></NavLink>
             </ul>
           </nav>
         </div>
