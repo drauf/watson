@@ -1,6 +1,7 @@
 import React from 'react';
 import ThreadDump from '../../types/ThreadDump';
-import PageWithSettings from '../BasePage/PageWithSettings';
+import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
+import PageWithSettings from '../PageWithSettings';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeItem from './MonitorOverTimeItem';
@@ -20,11 +21,13 @@ export default class MonitorsPage extends PageWithSettings<State> {
     withoutOwner: false,
   };
 
-  protected PAGE_NAME = 'Monitors';
-
   public render(): JSX.Element {
     const monitors = this.getMonitorsOverTime(this.props.threadDumps);
     const filtered = this.filterMonitors(monitors);
+
+    if (!this.props.threadDumps.some((dump) => dump.threads.length > 0)) {
+      return <NoThreadDumpsError />;
+    }
 
     return (
       <main>
@@ -35,9 +38,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
           onFilterChange={this.handleFilterChange}
         />
 
-        {!this.props.threadDumps.some((dump) => dump.threads.length > 0)
-          ? <h4 dangerouslySetInnerHTML={{ __html: MonitorsPage.NO_THREAD_DUMPS }} />
-          : this.renderMonitors(filtered)}
+        {this.renderMonitors(filtered)}
       </main>
     );
   }

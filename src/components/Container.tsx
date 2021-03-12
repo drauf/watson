@@ -5,7 +5,7 @@ import './Container.css';
 import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
 import MonitorsPage from './Monitors/MonitorsPage';
 import Navigation from './Navigation/Navigation';
-import NotFoundError from './NotFoundError';
+import PageNotFoundError from './Errors/PageNotFoundError';
 import SimilarStacksPage from './SimilarStacks/SimilarStacksPage';
 import StuckThreadsPage from './StuckThreads/StuckThreadsPage';
 import SummaryPage from './Summary/SummaryPage';
@@ -22,7 +22,7 @@ const Container: React.FunctionComponent = () => (
       <Route exact path="/:key/stuck-threads/" component={page(StuckThreadsPage)} />
       <Route exact path="/:key/threads-overview/" component={page(ThreadsOverviewPage)} />
       <Route exact path="/:key/monitors/" component={page(MonitorsPage)} />
-      <Route component={page(NotFoundError)} />
+      <Route component={page(PageNotFoundError)} />
     </Switch>
   </>
 );

@@ -2,7 +2,8 @@ import getThreadsOverTime from '../../common/getThreadsOverTime';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';
-import PageWithSettings from '../BasePage/PageWithSettings';
+import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
+import PageWithSettings from '../PageWithSettings';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
 import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
@@ -33,8 +34,6 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     stackFilter: '',
   };
 
-  protected PAGE_NAME = 'Threads Overview';
-
   private jvmRegex = /^Attach Listener|^C[12] CompilerThread|^G1 Concurrent |^G1 Main|^Gang worker#|^GC Daemon|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
 
   private tomcatRegex = /^http(s-jsse)?-[a-z]io-[0-9]+-exec-[0-9]+/;
@@ -49,6 +48,10 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     const filteredDumps = this.filterThreads(threadOverTime);
     const dates = nonEmptyThreadDumps.map((dump) => ThreadDump.getFormattedTime(dump));
     const isFilteredByStack = this.isFilteredByStack();
+
+    if (nonEmptyThreadDumps.length === 0) {
+      return <NoThreadDumpsError />;
+    }
 
     return (
       <main className="full-width-page">
@@ -76,15 +79,11 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
           <ThreadsOverviewLegend />
         </section>
 
-        {nonEmptyThreadDumps.length === 0
-          ? <h4 dangerouslySetInnerHTML={{ __html: ThreadsOverviewPage.NO_THREAD_DUMPS }} />
-          : (
-            <ThreadsOverviewTable
-              dates={dates}
-              isFilteredByStack={isFilteredByStack}
-              threadDumps={filteredDumps}
-            />
-          )}
+        <ThreadsOverviewTable
+          dates={dates}
+          isFilteredByStack={isFilteredByStack}
+          threadDumps={filteredDumps}
+        />
       </main>
     );
   }
