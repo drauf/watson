@@ -16,13 +16,15 @@ main {
 }
 
 #settings {
-  min-height: 80px;
+  padding: 24px 0;
+  line-height: 34px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
 #settings input {
-  margin-left: 3em;
+  margin-left: 24px;
 }
 
 #error {
