@@ -2,6 +2,10 @@ import React, { ComponentState } from 'react';
 import Page from './BasePage/Page';
 
 export default class PageWithSettings<S> extends Page<S> {
+  protected static N0_THREADS_MATCHING = 'No threads match the selected criteria.';
+
+  protected static N0_MONITORS_MATCHING = 'No monitors match the selected criteria.';
+
   protected handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name } = event.target;
     const isChecked: boolean = event.target.checked;

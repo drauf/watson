@@ -4,6 +4,7 @@ import isIdleThread from '../../common/isIdleThread';
 import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
 import StuckThreadsGroup from './StuckThreadsGroup';
 import StuckThreadsSettings from './StuckThreadsSettings';
@@ -16,8 +17,6 @@ type State = {
 };
 
 export default class StuckThreadsPage extends PageWithSettings<State> {
-  protected PAGE_NAME = 'Stuck Threads';
-
   constructor(props: WithThreadDumpsProps) {
     super(props);
 
@@ -36,6 +35,10 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
     const filtered = this.filterThreads(threadOverTime);
     const clusters = this.buildClusters(filtered);
 
+    if (this.state.threadDumps.length === 0) {
+      return <NoThreadDumpsError />;
+    }
+
     return (
       <main>
         <StuckThreadsSettings
@@ -46,9 +49,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
           onIntegerChange={this.handleIntegerChange}
         />
 
-        {this.state.threadDumps.length === 0
-          ? <h4 dangerouslySetInnerHTML={{ __html: StuckThreadsPage.NO_THREAD_DUMPS }} />
-          : this.renderStuckThreads(clusters)}
+        {this.renderStuckThreads(clusters)}
       </main>
     );
   }

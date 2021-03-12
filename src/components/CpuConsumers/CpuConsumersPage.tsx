@@ -3,6 +3,7 @@ import getThreadsOverTime from '../../common/getThreadsOverTime';
 import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import NoCpuInfosAndThreadDumpPairError from '../Errors/NoCpuInfosAndThreadDumpPairError';
 import PageWithSettings from '../PageWithSettings';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumersList from './CpuConsumersList';
@@ -22,8 +23,6 @@ type State = {
 };
 
 export default class CpuConsumersPage extends PageWithSettings<State> {
-  protected PAGE_NAME = 'CPU Consumers';
-
   constructor(props: WithThreadDumpsProps) {
     super(props);
 
@@ -39,6 +38,10 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
   public render(): JSX.Element {
     const consumers = this.calculateCpuUsages(this.state.mode);
 
+    if (!this.state.threadDumps.some((dump) => !!dump.loadAverages)) {
+      return <NoCpuInfosAndThreadDumpPairError />;
+    }
+
     return (
       <main>
         <CpuConsumersSettings
@@ -48,15 +51,11 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
           onLimitChange={this.handleIntegerChange}
         />
 
-        {!this.state.threadDumps.some((dump) => !!dump.loadAverages)
-          ? <h4 dangerouslySetInnerHTML={{ __html: CpuConsumersPage.NO_CPU_AND_THREADS_PAIR }} />
-          : (
-            <CpuConsumersList
-              limit={this.state.limit}
-              dumpsNumber={this.state.threadDumps.length}
-              consumers={consumers}
-            />
-          )}
+        <CpuConsumersList
+          limit={this.state.limit}
+          dumpsNumber={this.state.threadDumps.length}
+          consumers={consumers}
+        />
       </main>
     );
   }
