@@ -1,8 +1,11 @@
 .monitors-container {
+  width: 100%;
   display: flex;
 }
-.monitors-container div {
+.monitors-container div,
+.monitors-container button {
   padding: 6px;
+  max-width: 100%;
 
   white-space: nowrap;
   overflow: hidden;
