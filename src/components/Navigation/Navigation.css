@@ -27,13 +27,16 @@ header h1 {
   color: var(--color-b400);
 }
 
+header nav {
+  display: inline-flex;
+}
+
 header ul {
   display: inline-flex;
   padding-left: 32px;
   overflow: hidden;
 }
 header li {
-  display: inline-flex;
   margin: 0 4px;
   padding: 0 6px;
   line-height: 32px;
@@ -49,4 +52,9 @@ header li:hover {
   color: var(--color-b400);
   -webkit-text-fill-color: var(--color-b400);
   background: var(--color-b50);
+}
+
+header a:hover,
+header button:hover {
+  text-decoration: none;
 }
