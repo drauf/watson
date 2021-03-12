@@ -1,5 +1,5 @@
 import React, { ComponentState } from 'react';
-import Page from './Page';
+import Page from './BasePage/Page';
 
 export default class PageWithSettings<S> extends Page<S> {
   protected handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {

@@ -4,7 +4,7 @@ import isIdleThread from '../../common/isIdleThread';
 import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import PageWithSettings from '../BasePage/PageWithSettings';
+import PageWithSettings from '../PageWithSettings';
 import StuckThreadsGroup from './StuckThreadsGroup';
 import StuckThreadsSettings from './StuckThreadsSettings';
 

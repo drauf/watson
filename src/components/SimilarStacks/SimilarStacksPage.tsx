@@ -1,7 +1,7 @@
 import isIdleThread from '../../common/isIdleThread';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import PageWithSettings from '../BasePage/PageWithSettings';
+import PageWithSettings from '../PageWithSettings';
 import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';

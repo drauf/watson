@@ -1,6 +1,6 @@
 import React from 'react';
 import ThreadDump from '../../types/ThreadDump';
-import PageWithSettings from '../BasePage/PageWithSettings';
+import PageWithSettings from '../PageWithSettings';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeItem from './MonitorOverTimeItem';
