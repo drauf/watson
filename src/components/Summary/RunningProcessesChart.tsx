@@ -23,13 +23,14 @@ const getSortedThreadNames = (payload: unknown): string[] => {
 
 const CustomTooltip: React.FunctionComponent<TooltipProps<number, string>> = ({ active, payload, label }) => {
   if (active && payload) {
+    const time = label as string;
     const threadNames: string[] = getSortedThreadNames(payload[1].value);
-    const threadsCount: number | undefined = payload[0].value;
+    const threadsCount: number = payload[0].value ? payload[0].value : 0;
 
     return (
       <div className="tooltip ellipsis">
         <p>
-          {`${label} - ${threadsCount}`}
+          {`${time} - ${threadsCount}`}
           {' '}
           running
           {' '}

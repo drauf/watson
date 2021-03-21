@@ -91,7 +91,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
         usage = threads.reduce(CpuConsumersPage.reduceMax, 0);
         break;
       default:
-        throw new Error(`Unsupported calculation mode: ${calculationMode}`);
+        throw new Error(`Unsupported calculation mode: ${calculationMode as CpuConsumersMode}`);
     }
 
     return new CpuConsumer(usage, threadsMap);

@@ -7,8 +7,7 @@ let currentThreadDumps: ThreadDump[];
 const lastUsedStorage = localforage.createInstance({ name: 'lastUsed' });
 const threadDumpsStorage = localforage.createInstance({ name: 'threadDumps' });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const logError = (error: any) => {
+const logError = (error: unknown) => {
   console.error(error);
 };
 

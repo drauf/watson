@@ -31,9 +31,9 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     this.setState({ showDetails: false, showLockOwner: false });
   };
 
-  private getLocksHeldString = (thread: Thread): string | null => {
+  private getLocksHeldString = (thread: Thread): string => {
     if (thread.locksHeld.length === 0) {
-      return null;
+      return '';
     }
     return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
   };

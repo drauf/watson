@@ -10,7 +10,7 @@ export default class Thread {
 
   public name: string;
 
-  public status: ThreadStatus | undefined;
+  public status?: ThreadStatus;
 
   public cpuUsage = 0.0;
 
