@@ -4,15 +4,15 @@
 }
 
 #consumers-list button {
-  width: 52px;
-  border-radius: 3px;
   display: inline-block;
-  font-size: 13px;
-  font-weight: bold;
-  line-height: 99%;
-  text-align: center;
+  width: 52px;
   margin-top: 3px;
   padding: 3px;
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 99%;
+  text-align: center;
+  border-radius: 3px;
 }
 
 .no-click {

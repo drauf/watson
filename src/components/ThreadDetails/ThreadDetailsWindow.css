@@ -1,102 +1,115 @@
 .thread-details {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
 }
 
 .details-header {
   padding-bottom: 10px;
   background-color: var(--color-n10);
 }
+
 .details-header h3 {
   padding-left: 10px;
 }
+
 .details-header div {
   padding: 0 16px;
 }
 
 .details-body {
-  width: 100%;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
+
 .details-body div {
   padding: 0 16px;
 }
 
 #stacktrace-container {
-  width: 100%;
-  padding: 0;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding: 0;
 }
+
 #stacktrace-container h5 {
   padding: 0 16px;
 }
+
 #stacktrace-container span {
   width: calc(100% - 32px);
   margin: 0 auto;
   padding: 0 16px;
+  overflow-x: hidden;
   font-size: 12px;
   line-height: 16px;
   white-space: nowrap;
-  overflow-x: hidden;
   text-overflow: ellipsis;
 }
 
 .thread-state {
-  color: var(--color-n600);
-  border-radius: 3px;
   display: inline-block;
-  font-size: 13px;
-  font-weight: bold;
-  line-height: 99%;
-  text-align: center;
   margin: 0;
   padding: 3px 8px;
+  color: var(--color-n600);
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 99%;
+  text-align: center;
+  border-radius: 3px;
 }
 
 .unknown {
   cursor: default;
 }
+
 .runnable {
-  background: var(--color-g50);
   color: var(--color-g500);
+  background: var(--color-g50);
 }
+
 .blocked {
-  background: var(--color-r50);
   color: var(--color-r500);
+  background: var(--color-r50);
 }
+
 .waiting {
-  background: var(--color-p50);
   color: var(--color-p400);
+  background: var(--color-p50);
 }
+
 .timed-waiting {
-  background: var(--color-y50);
   color: var(--color-n400);
+  background: var(--color-y50);
 }
+
 .matching {
   font-weight: 600;
   border: 1px dashed var(--color-n400);
 }
 
 .high {
-  background: var(--color-r50);
   color: var(--color-r500);
+  background: var(--color-r50);
   -webkit-text-fill-color: var(--color-r500);
 }
+
 .medium {
-  background: var(--color-y75);
   color: var(--color-n500);
+  background: var(--color-y75);
   -webkit-text-fill-color: var(--color-n500);
 }
+
 .low {
-  background: var(--color-b50);
   color: var(--color-b500);
+  background: var(--color-b50);
   -webkit-text-fill-color: var(--color-b500);
 }
+
 .none {
   color: var(--color-n800);
   -webkit-text-fill-color: var(--color-n800);
