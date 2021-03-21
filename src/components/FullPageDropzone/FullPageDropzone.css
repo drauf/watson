@@ -1,19 +1,19 @@
 #dropzone {
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
+
 #dropzone h4 {
   width: 600px;
   height: 200px;
   line-height: 200px;
   text-align: center;
-
   background: var(--color-n20);
-  border-radius: 5px;
   border: 2px dashed var(--color-b400);
+  border-radius: 5px;
 }
 
 #dropzone-guide {
@@ -24,11 +24,12 @@
 }
 
 #dropzone-links {
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
+
 #dropzone-links li {
-  padding: 4px;
-  margin: 0 6px;
   display: inline-block;
+  margin: 0 6px;
+  padding: 4px;
 }

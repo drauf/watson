@@ -1,14 +1,15 @@
 main {
-  width: 80%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 80%;
+  margin: 0 auto;
   animation: fadein 400ms;
 }
+
 @keyframes fadein {
   from { opacity: 0; }
-  to   { opacity: 1; }
+  to { opacity: 1; }
 }
 
 .full-width-page {
@@ -16,11 +17,11 @@ main {
 }
 
 #settings {
-  padding: 24px 0;
-  line-height: 34px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  padding: 24px 0;
+  line-height: 34px;
 }
 
 #settings input {
@@ -28,7 +29,7 @@ main {
 }
 
 #error {
-  height: 100%;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }

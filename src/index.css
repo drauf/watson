@@ -3,162 +3,175 @@
   /* Primary pallette: B400, N800, N0 */
 
   /* Neutrals */
-  --color-n900: #091E42;
-  --color-n800: #172B4D;
+  --color-n900: #091e42;
+  --color-n800: #172b4d;
   --color-n700: #253858;
   --color-n600: #344563;
-  --color-n500: #42526E;
-  --color-n400: #505F79;
-  --color-n300: #5E6C84;
-  --color-n200: #6B778C;
-  --color-n100: #7A869A;
-  --color-n40: #DFE1E6;
-  --color-n30: #EBECF0;
-  --color-n20: #F4F5F7;
-  --color-n10: #FAFBFC;
-  --color-n0: #FFFFFF;
+  --color-n500: #42526e;
+  --color-n400: #505f79;
+  --color-n300: #5e6c84;
+  --color-n200: #6b778c;
+  --color-n100: #7a869a;
+  --color-n40: #dfe1e6;
+  --color-n30: #ebecf0;
+  --color-n20: #f4f5f7;
+  --color-n10: #fafbfc;
+  --color-n0: #fff;
 
   /* Red */
-  --color-r500: #BF2600;
-  --color-r50: #FFEBE6;
+  --color-r500: #bf2600;
+  --color-r50: #ffebe6;
 
   /* Yellow */
-  --color-y75: #FFF0B3;
-  --color-y50: #FFFAE6;
+  --color-y75: #fff0b3;
+  --color-y50: #fffae6;
 
   /* Green */
-  --color-g500: #006644;
-  --color-g50: #E3FCEF;
+  --color-g500: #064;
+  --color-g50: #e3fcef;
 
   /* Blue */
-  --color-b500: #0747A6;
-  --color-b400: #0052CC;
-  --color-b300: #0065FF;
-  --color-b100: #4C9AFF;
-  --color-b50: #DEEBFF;
+  --color-b500: #0747a6;
+  --color-b400: #0052cc;
+  --color-b300: #0065ff;
+  --color-b100: #4c9aff;
+  --color-b50: #deebff;
 
   /* Purple */
-  --color-p400: #5243AA;
-  --color-p50: #EAE6FF;
+  --color-p400: #5243aa;
+  --color-p50: #eae6ff;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 /* https://atlassian.design/guidelines/product/foundations/typography */
 body {
   margin: 0;
-  background: var(--color-n0);
   color: var(--color-n800);
-  font-size: 14px;
   font-weight: 400;
-  letter-spacing: -0.005em;
-  line-height: 20px;
+  font-size: 14px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  line-height: 20px;
+  letter-spacing: -0.005em;
+  background: var(--color-n0);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Text size h900 */
 h1 {
-  font-size: 35px;
   font-weight: 500;
-  letter-spacing: -0.01em;
+  font-size: 35px;
   line-height: 40px;
+  letter-spacing: -0.01em;
 }
+
 /* Text size h800 */
 h2 {
-  font-size: 29px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 32px;
   margin-top: 40px;
+  font-weight: 500;
+  font-size: 29px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
 }
+
 /* Text size h600 */
 h4 {
-  font-size: 20px;
   font-weight: 500;
-  letter-spacing: -0.008em;
+  font-size: 20px;
   line-height: 24px;
+  letter-spacing: -0.008em;
 }
+
 /* Text size h400 */
 h5 {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.003em;
-  line-height: 16px;
   margin-top: 16px;
   margin-bottom: 0;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -0.003em;
 }
+
 /* Text size h300 - modified to take less horizontal space and remove uppercasing */
 h6 {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 16px;
   margin-top: 6px;
   margin-bottom: 0;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
 }
 
 a {
   color: var(--color-b400);
   text-decoration: none;
 }
+
 a:hover {
   text-decoration: underline;
 }
 
 button {
-  all: unset;
-  cursor: pointer;
   color: var(--color-b400);
+  cursor: pointer;
+  all: unset;
   -webkit-text-fill-color: var(--color-b400);
 }
+
 button:hover {
   text-decoration: underline;
 }
 
 input {
+  box-sizing: border-box;
+  margin: 0 4px 0 0;
+  padding: 3px 4px;
+  font-size: inherit;
+  vertical-align: baseline;
   background-color: var(--color-n10);
-  transition: background-color .2s ease-in-out,border-color .2s ease-in-out;
   border: 2px solid var(--color-n40);
   border-radius: 3px;
-  box-sizing: border-box;
-  font-size: inherit;
-  padding: 3px 4px;
-  margin: 0 4px 0 0;
-  vertical-align: baseline;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
-input[type="number"], input[type="text"] {
+
+input[type="number"],
+input[type="text"] {
   height: 2.14285714em;
   line-height: 1.4285714285714;
 }
+
 input[type="number"] {
   width: 5em;
 }
+
 input:hover {
   background-color: var(--color-n30);
   border-color: var(--color-n40);
 }
+
 input:focus {
   background-color: var(--color-n0);
-  outline: none;
   border-color: var(--color-b100);
+  outline: none;
 }
 
 .chevron {
-  width: 14px;
-  height: 14px;
-  display: inline-block;
   position: relative;
   top: 2px;
-  color: var(--color-n600);
-  background: rgba(9,30,66,.08) url(chevron.svg) no-repeat top left;
-  border-radius: 3.01px;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
   margin-right: 5px;
-  transition: background-color .1s ease-out;
+  color: var(--color-n600);
+  background: rgba(9, 30, 66, 0.08) url(chevron.svg) no-repeat top left;
+  border-radius: 3.01px;
+  transition: background-color 0.1s ease-out;
 }
+
 .rotate {
   transform: rotate(-90deg);
 }
@@ -166,8 +179,9 @@ input:focus {
 .clickable {
   cursor: pointer;
 }
+
 .ellipsis {
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }

@@ -1,55 +1,57 @@
 header {
-  width: 100%;
-  height: 56px;
   display: flex;
   justify-content: space-between;
-  font-weight: 600;
+  width: 100%;
+  height: 56px;
   color: var(--color-n600);
+  font-weight: 600;
 }
+
 header::after {
-  content: "";
   position: absolute;
-  left: 0;
-  right: 0;
   top: 56px;
+  right: 0;
+  left: 0;
   height: 4px;
-  background: linear-gradient(rgba(9, 30, 66, 0.13) 0px, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px);
+  background: linear-gradient(rgba(9, 30, 66, 0.13) 0, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px);
+  content: "";
 }
 
 .header-section {
-  padding: 0 16px;
   display: flex;
   align-items: center;
+  padding: 0 16px;
 }
 
 header h1 {
-  font-size: 29px;
   color: var(--color-b400);
+  font-size: 29px;
 }
 
 header nav {
-  height: 100%;
   display: inline-flex;
   align-items: center;
+  height: 100%;
 }
 
 header ul {
-  height: 100%;
   display: inline-flex;
   align-items: center;
+  height: 100%;
   padding-left: 32px;
   overflow: hidden;
 }
 
 header a {
-  height: 100%;
   display: inline-flex;
   align-items: center;
+  height: 100%;
 }
+
 header a.active {
   box-sizing: border-box;
-  border-bottom: 3px solid var(--color-b400);
   padding-top: 3px;
+  border-bottom: 3px solid var(--color-b400);
 }
 
 header a:hover,
@@ -60,17 +62,18 @@ header button:hover {
 header li {
   margin: 0 4px;
   padding: 0 6px;
-  line-height: 32px;
-  border-radius: 3px;
-  color: var(--color-n800);
-  -webkit-text-fill-color: var(--color-n800);
   overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--color-n800);
+  line-height: 32px;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  border-radius: 3px;
+  -webkit-text-fill-color: var(--color-n800);
 }
+
 header li:hover {
-  cursor: pointer;
   color: var(--color-b400);
-  -webkit-text-fill-color: var(--color-b400);
   background: var(--color-b50);
+  cursor: pointer;
+  -webkit-text-fill-color: var(--color-b400);
 }

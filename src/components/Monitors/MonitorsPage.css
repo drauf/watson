@@ -1,16 +1,17 @@
 .monitors-container {
-  width: 100%;
   display: flex;
+  width: 100%;
 }
+
 .monitors-container div,
 .monitors-container button {
-  padding-left: 6px;
   max-width: 100%;
-
-  white-space: nowrap;
+  padding-left: 6px;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
+
 .monitors-container .left {
   width: 360px;
   min-width: 360px;

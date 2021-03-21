@@ -1,14 +1,15 @@
 .stacktrace {
   width: 100%;
-  font-family: 'SFMono-Medium', 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', 'Ubuntu Mono', Menlo, Consolas, Courier, monospace;
-  font-size: 12px;
-  line-height: 16px;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-family: 'SFMono-Medium', 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', 'Ubuntu Mono', Menlo, Consolas, Courier, monospace;
+  line-height: 16px;
 }
+
 .stacktrace li {
   max-width: 100%;
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
