@@ -52,6 +52,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
       return (
         <>
           , awaiting notification on
+          {' '}
           <button type="button" onClick={this.toggleLockOwner}>
             [
             {lockWaitingFor}
