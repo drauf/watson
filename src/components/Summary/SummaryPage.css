@@ -1,8 +1,9 @@
 #memory-usages {
+  display: flex;
   width: 100%;
   min-height: 300px;
-  display: flex;
 }
+
 #memory-usages > div {
   width: 50%;
   text-align: center;
@@ -15,7 +16,7 @@
 
 .tooltip {
   max-width: 640px;
-  margin: 0px;
+  margin: 0;
   padding: 0 20px;
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(204, 204, 204);

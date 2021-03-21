@@ -5,17 +5,19 @@
 }
 
 #threads-overview-settings {
-  line-height: 36px;
   min-height: 83px;
+  line-height: 36px;
 }
+
 #regexp-filters {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 90%;
   margin-left: 4em;
   line-height: 42px;
-  width: 90%;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
 }
+
 #regexp-filters label {
   margin-right: 2em;
 }
@@ -27,34 +29,38 @@
 #thread-overview-legend {
   height: 32px;
   padding: 0;
-  table-layout: fixed;
   text-align: center;
-}
-#thread-overview-legend td {
-  cursor: default;
+  table-layout: fixed;
 }
 
 table {
   position: relative;
   width: 100%;
   padding: 20px 4px 4px;
-  border-spacing: 0px;
   table-layout: fixed;
+  border-spacing: 0;
 }
 
-th, td {
+th,
+td {
+  overflow: hidden;
   color: var(--color-n600);
-  border: 1px solid var(--color-n0);
-  border-radius: 3px;
+
   /* Hide overflowing text */
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  border: 1px solid var(--color-n0);
+  border-radius: 3px;
 }
 
 td {
   cursor: pointer;
 }
+
+#thread-overview-legend td {
+  cursor: default;
+}
+
 td.name {
   font-weight: 700;
   cursor: default;
@@ -63,15 +69,16 @@ td.name {
 /* Tooltips on hover */
 td > span,
 th > span {
-  display: none;
   position: absolute;
   z-index: 100;
-  border-radius: 3px;
-  background-color: var(--color-n800);
+  display: none;
+  padding: 2px 7px 4px;
   color: var(--color-n0);
   font-weight: bold;
-  padding: 2px 7px 4px;
+  background-color: var(--color-n800);
+  border-radius: 3px;
 }
+
 td:hover > span,
 th:hover > span {
   display: block;
