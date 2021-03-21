@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import ThreadDump from '../types/ThreadDump';
 import { getThreadDumpsAsync } from './threadDumpsStorageService';
 
-export type WithThreadDumpsProps = RouteComponentProps<{key: string}> & {
+export type WithThreadDumpsProps = RouteComponentProps<{ key: string }> & {
   threadDumps: ThreadDump[];
 };
 
@@ -45,7 +45,7 @@ export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent
       if (contentDiv) {
         contentDiv.scrollTop = 0;
       }
-    }
+    };
 
     public render(): JSX.Element {
       const { promisePending, threadDumps } = this.state;

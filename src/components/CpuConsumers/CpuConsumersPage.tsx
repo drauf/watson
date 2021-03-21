@@ -62,7 +62,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
 
   private handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
     this.setState({ mode: mode as CpuConsumersMode });
-  }
+  };
 
   private calculateCpuUsages(calculationMode: CpuConsumersMode): CpuConsumer[] {
     const consumers: CpuConsumer[] = [];

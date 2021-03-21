@@ -23,22 +23,22 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
 
   private toggleDetails = () => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
-  }
+  };
 
   private toggleLockOwner = () => {
     this.setState((prevState) => ({ showLockOwner: !prevState.showLockOwner }));
-  }
+  };
 
   private handleUnload = () => {
     this.setState({ showDetails: false, showLockOwner: false });
-  }
+  };
 
   private getLocksHeldString = (thread: Thread): string | null => {
     if (thread.locksHeld.length === 0) {
       return null;
     }
     return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
-  }
+  };
 
   private waitingForRender(thread: Thread, lockOwner: Thread | null) {
     const lockWaitingFor = thread.lockWaitingFor ? thread.lockWaitingFor.id : null;

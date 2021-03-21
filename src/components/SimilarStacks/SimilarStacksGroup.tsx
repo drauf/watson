@@ -19,7 +19,7 @@ export default class SimilarStacksGroup extends React.PureComponent<Props, State
 
   private toggleGroup = () => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
-  }
+  };
 
   public render(): JSX.Element {
     const { threadGroup, linesToConsider } = this.props;
