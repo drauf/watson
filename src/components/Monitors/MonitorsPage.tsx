@@ -51,7 +51,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
   };
 
   private getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {
-    const monitorsOverTime: Map<string, MonitorOverTime> = new Map();
+    const monitorsOverTime = new Map<string, MonitorOverTime>();
 
     threadDumps.forEach((threadDump) => {
       threadDump.locks.forEach((lock) => {
