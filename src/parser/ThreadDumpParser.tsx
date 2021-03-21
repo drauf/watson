@@ -76,8 +76,8 @@ export default class ThreadDumpParser {
         case 'waiting on':
         case 'parking to wait for':
         case 'waiting to lock':
-          lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
-          lock.waiting.push(ThreadDumpParser.currentThread);
+          lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className, ThreadDumpParser.currentThread);
+          lock.addWaiting(ThreadDumpParser.currentThread);
           ThreadDumpParser.currentThread.lockWaitingFor = lock;
           return;
 
@@ -87,8 +87,7 @@ export default class ThreadDumpParser {
             // lock is released while waiting for the notification
             return;
           }
-          lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
-          lock.owner = ThreadDumpParser.currentThread;
+          lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className, ThreadDumpParser.currentThread);
           ThreadDumpParser.currentThread.locksHeld.push(lock);
           ThreadDumpParser.currentThread.classicalLocksHeld.push(lock);
           return;
@@ -108,8 +107,7 @@ export default class ThreadDumpParser {
       const lockId: string = lockHeld[0];
       const className: string = lockHeld[1];
 
-      const lock: Lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
-      lock.owner = ThreadDumpParser.currentThread;
+      const lock: Lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className, ThreadDumpParser.currentThread);
       ThreadDumpParser.currentThread.locksHeld.push(lock);
     }
   }
@@ -128,8 +126,7 @@ export default class ThreadDumpParser {
           // this can happen if thread is TIMED_WAITING due to Thread.sleep()
           return;
         }
-        lock.owner = null;
-        lock.waiting.push(thread);
+        lock.addWaiting(thread);
 
         thread.lockWaitingFor = lock;
         thread.locksHeld.splice(thread.locksHeld.indexOf(lock), 1);
@@ -157,13 +154,13 @@ export default class ThreadDumpParser {
     return undefined;
   }
 
-  private static getOrCreateLock(locks: Lock[], id: string, className: string): Lock {
+  private static getOrCreateLock(locks: Lock[], id: string, className: string, owner?: Thread): Lock {
     const existingLock = locks.find((lock) => lock.hasId(id));
     if (existingLock) {
       return existingLock;
     }
 
-    const newLock: Lock = new Lock(id, className);
+    const newLock: Lock = new Lock(id, className, owner);
     locks.push(newLock);
     return newLock;
   }

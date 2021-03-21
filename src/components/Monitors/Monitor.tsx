@@ -7,7 +7,7 @@ export default class Monitor {
 
   public javaClass: string;
 
-  public owner: Thread | null;
+  public owner?: Thread;
 
   public waiting: Thread[];
 
@@ -15,6 +15,6 @@ export default class Monitor {
     this.time = ThreadDump.getFormattedTime(threadDump);
     this.javaClass = lock.className;
     this.owner = lock.owner;
-    this.waiting = lock.waiting;
+    this.waiting = lock.getWaiting();
   }
 }
