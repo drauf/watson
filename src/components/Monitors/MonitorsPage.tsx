@@ -48,10 +48,10 @@ export default class MonitorsPage extends PageWithSettings<State> {
       return <h4>{MonitorsPage.N0_MONITORS_MATCHING}</h4>;
     }
     return filtered.map((monitor) => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />);
-  }
+  };
 
   private getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {
-    const monitorsOverTime: Map<string, MonitorOverTime> = new Map();
+    const monitorsOverTime = new Map<string, MonitorOverTime>();
 
     threadDumps.forEach((threadDump) => {
       threadDump.locks.forEach((lock) => {
@@ -71,7 +71,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
     return Array
       .from(monitorsOverTime.values())
       .sort((m1, m2) => m2.waitingSum - m1.waitingSum);
-  }
+  };
 
   private filterMonitors = (monitors: MonitorOverTime[]) => {
     let filtered = monitors.filter((monitor) => monitor.waitingSum > 0);
@@ -87,9 +87,9 @@ export default class MonitorsPage extends PageWithSettings<State> {
     }
 
     return filtered;
-  }
+  };
 
-  private hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => monitor.owner !== null)
+  private hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => monitor.owner !== null);
 
   private isQueueThread = (monitorOverTime: MonitorOverTime): boolean => {
     for (const monitor of monitorOverTime.monitors) {
@@ -106,5 +106,5 @@ export default class MonitorsPage extends PageWithSettings<State> {
       }
     }
     return true;
-  }
+  };
 }

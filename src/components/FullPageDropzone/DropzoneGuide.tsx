@@ -11,7 +11,7 @@ const stopPropagation = (event: React.MouseEvent) => {
   event.stopPropagation();
 };
 
-const DropzoneGuide: React.SFC = () => (
+const DropzoneGuide: React.FunctionComponent = () => (
   // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
   <div id="dropzone-guide" role="complementary" onClick={stopPropagation}>
     <h5 dangerouslySetInnerHTML={{ __html: header }} />

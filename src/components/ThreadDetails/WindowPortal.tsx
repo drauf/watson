@@ -12,7 +12,7 @@ export default class WindowPortal extends React.PureComponent<Props> {
 
   public static copyStyles(sourceDoc: Document, targetDoc: Document): void {
     Array.from(sourceDoc.styleSheets).forEach((sheet) => {
-      const styleSheet = sheet as CSSStyleSheet;
+      const styleSheet = sheet;
 
       if (styleSheet.cssRules) { // for <style> elements
         const newStyleEl = sourceDoc.createElement('style');
@@ -32,8 +32,7 @@ export default class WindowPortal extends React.PureComponent<Props> {
     });
   }
 
-  private windowFeatures =
-    'width=960,height=700,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
+  private windowFeatures = 'width=960,height=700,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
 
   private externalWindow: Window | null;
 
@@ -76,7 +75,7 @@ export default class WindowPortal extends React.PureComponent<Props> {
     WindowPortal.windows
       .filter((external) => !external.closed)
       .forEach((external) => external.close());
-  }
+  };
 
   public render(): JSX.Element {
     const { children } = this.props;

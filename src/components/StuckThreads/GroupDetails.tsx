@@ -7,19 +7,6 @@ type Props = {
   threadGroup: Thread[];
 };
 
-const GroupDetails: React.FunctionComponent<Props> = ({ maxDifferingLines, threadGroup }) => (
-  <>
-    {threadGroup.map((thread, index, array) => (
-      <ThreadDetails
-        key={thread.runningFor}
-        thread={thread}
-        showStackTrace={shouldShowStackTrace(thread, array[index + 1], maxDifferingLines)}
-        maxDifferingLines={maxDifferingLines}
-      />
-    ))}
-  </>
-);
-
 // Only show the stack trace if it's the last one or the next one is different than current
 const shouldShowStackTrace = (current: Thread, next: Thread | undefined, maxDifferingLines: number): boolean => {
   if (!next) {
@@ -37,5 +24,18 @@ const shouldShowStackTrace = (current: Thread, next: Thread | undefined, maxDiff
   }
   return false;
 };
+
+const GroupDetails: React.FunctionComponent<Props> = ({ maxDifferingLines, threadGroup }) => (
+  <>
+    {threadGroup.map((thread, index, array) => (
+      <ThreadDetails
+        key={thread.runningFor}
+        thread={thread}
+        showStackTrace={shouldShowStackTrace(thread, array[index + 1], maxDifferingLines)}
+        maxDifferingLines={maxDifferingLines}
+      />
+    ))}
+  </>
+);
 
 export default GroupDetails;

@@ -20,7 +20,7 @@ export default class WaitingList extends React.PureComponent<Props, State> {
 
   private toggleExpand = () => {
     this.setState((prevState) => ({ expanded: !prevState.expanded }));
-  }
+  };
 
   public render(): JSX.Element | null {
     const { waiting } = this.props;

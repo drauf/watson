@@ -20,11 +20,11 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
 
   private handleClick = () => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
-  }
+  };
 
   private handleUnload = () => {
     this.setState({ showDetails: false });
-  }
+  };
 
   public render(): JSX.Element {
     const { thread, maxDifferingLines, showStackTrace } = this.props;

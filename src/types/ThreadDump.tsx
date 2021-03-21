@@ -6,7 +6,7 @@ import Thread from './Thread';
 export default class ThreadDump {
   public static getFormattedTime = (threadDump: ThreadDump): string => (threadDump.epoch
     ? new Date(threadDump.epoch).toUTCString().substr(17, 8)
-    : 'unknown time')
+    : 'unknown time');
 
   public static from = (date: string | null): ThreadDump => {
     if (!date) {
@@ -18,13 +18,13 @@ export default class ThreadDump {
     const minutes = parseInt(date.substring(14, 16), 10);
     const seconds = parseInt(date.substring(17), 10);
     return ThreadDump.fromEpoch(hours * 3600000 + minutes * 60000 + seconds * 1000);
-  }
+  };
 
   public static fromEpoch = (epoch: number | null): ThreadDump => {
     const threadDump = new ThreadDump();
     threadDump.epoch = epoch;
     return threadDump;
-  }
+  };
 
   public loadAverages!: LoadAverages | null;
 
@@ -38,5 +38,5 @@ export default class ThreadDump {
 
   private epoch: number | null = null;
 
-  public getEpoch = (): number | null => this.epoch
+  public getEpoch = (): number | null => this.epoch;
 }

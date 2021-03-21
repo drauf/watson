@@ -21,16 +21,16 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
 
   private toggleDetails = () => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
-  }
+  };
 
   private handleUnload = () => {
     this.setState({ showDetails: false });
-  }
+  };
 
   private getClassName = (isFiltered: boolean, isMatchingFilter: boolean, status: ThreadStatus | undefined) => {
     const statusClass = status ? status.toString() : '';
     return isFiltered && isMatchingFilter ? `${statusClass} matching` : statusClass;
-  }
+  };
 
   public render(): JSX.Element {
     const { showDetails } = this.state;

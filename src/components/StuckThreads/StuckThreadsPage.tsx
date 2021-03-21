@@ -70,7 +70,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
 
   private filterThreads = (threadDumps: Array<Map<number, Thread>>): Thread[][] => threadDumps
     .map((threadDump) => this.filterThread(threadDump))
-    .filter((dump) => dump.length > 0)
+    .filter((dump) => dump.length > 0);
 
   private filterThread = (threadOverTime: Map<number, Thread>): Thread[] => {
     const filtered = [];
@@ -82,7 +82,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
     }
 
     return filtered;
-  }
+  };
 
   private buildClusters = (threadDumps: Thread[][]): Thread[][] => {
     const clusters: Thread[][] = [];
@@ -94,7 +94,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
     }
 
     return clusters.sort((c1, c2) => c2.length - c1.length);
-  }
+  };
 
   private getClustersFromThread = (threadOverTime: Thread[]): Thread[][] => {
     const clusters = [];
@@ -114,7 +114,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
 
     clusters.push(currentCluster);
     return clusters;
-  }
+  };
 
   private areThreadsSimilarEnough = (t1: Thread, t2: Thread): boolean => {
     const stack1 = t1.stackTrace;
@@ -132,5 +132,5 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
     }
 
     return true;
-  }
+  };
 }

@@ -14,11 +14,11 @@ class Navigation extends React.PureComponent<Props> {
     const { history } = this.props;
     clearCurrentThreadDump();
     history.push('/');
-  }
+  };
 
   public render() {
     const { match } = this.props;
-    const key: string = match.params.key as string;
+    const { key } = match.params;
 
     return (
       <header>

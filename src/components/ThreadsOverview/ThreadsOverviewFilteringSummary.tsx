@@ -7,6 +7,11 @@ type Props = {
   threadDumps: Array<Map<number, Thread>>;
 };
 
+const matchingCounter = (sum: number, currentThread: Thread): number => sum + (currentThread.matchingFilter ? 1 : 0);
+const matchingInGroupCounter = (sum: number, currentGroup: Map<number, Thread>): number => sum + Array.from(currentGroup.values()).reduce(matchingCounter, 0);
+
+const nonEmptyCounter = (sum: number, currentGroup: Map<number, Thread>): number => sum + Array.from(currentGroup.values()).length;
+
 const ThreadsOverviewFilteringSummary: React.FunctionComponent<Props> = ({ isFilteredByStack, threadsNumber, threadDumps }) => {
   if (isFilteredByStack) {
     const matching = threadDumps.reduce(matchingInGroupCounter, 0);
@@ -49,10 +54,5 @@ const ThreadsOverviewFilteringSummary: React.FunctionComponent<Props> = ({ isFil
 
   return <p id="matching-summary" />;
 };
-
-const matchingInGroupCounter = (sum: number, currentGroup: Map<number, Thread>): number => sum + Array.from(currentGroup.values()).reduce(matchingCounter, 0);
-const matchingCounter = (sum: number, currentThread: Thread): number => sum + (currentThread.matchingFilter ? 1 : 0);
-
-const nonEmptyCounter = (sum: number, currentGroup: Map<number, Thread>): number => sum + Array.from(currentGroup.values()).length;
 
 export default ThreadsOverviewFilteringSummary;

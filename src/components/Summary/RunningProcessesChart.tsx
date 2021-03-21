@@ -10,6 +10,55 @@ type Props = {
   threadDumps: ThreadDump[];
 };
 
+const getSortedThreadNames = (payload: unknown): string[] => {
+  const threads: Thread[] = payload as Thread[];
+
+  return threads
+    .filter((thread) => thread.status === ThreadStatus.RUNNABLE)
+    .filter((thread) => thread.cpuUsage > 0)
+    .sort((a, b) => b.cpuUsage - a.cpuUsage)
+    .slice(0, 10)
+    .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
+};
+
+const CustomTooltip: React.FunctionComponent<TooltipProps<number, string>> = ({ active, payload, label }) => {
+  if (active && payload) {
+    const time = label as string;
+    const threadNames: string[] = getSortedThreadNames(payload[1].value);
+    const threadsCount: number = payload[0].value ? payload[0].value : 0;
+
+    return (
+      <div className="tooltip ellipsis">
+        <p>
+          {`${time} - ${threadsCount}`}
+          {' '}
+          running
+          {' '}
+          {threadsCount === 1 ? 'process' : 'processes'}
+          {' '}
+          (from
+          {' '}
+          <i>top</i>
+          )
+        </p>
+
+        Top 10
+        {' '}
+        <i>jstack</i>
+        {' '}
+        threads:
+        <ol>
+          {threadNames.length > 0
+            ? threadNames.map((name) => <li key={name}>{name}</li>)
+            : <li>none</li>}
+        </ol>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 const RunningProcessesChart: React.FunctionComponent<Props> = ({ threadDumps }) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [];
@@ -46,54 +95,6 @@ const RunningProcessesChart: React.FunctionComponent<Props> = ({ threadDumps }) 
       </ResponsiveContainer>
     </div>
   );
-};
-
-const CustomTooltip: React.FunctionComponent<TooltipProps<number, string>> = ({ active, payload, label }) => {
-  if (active && payload) {
-    const threadNames: string[] = getSortedThreadNames(payload[1].value);
-    const threadsCount: number | undefined = payload[0].value;
-
-    return (
-      <div className="tooltip ellipsis">
-        <p>
-          {`${label} - ${threadsCount}`}
-          {' '}
-          running
-          {' '}
-          {threadsCount === 1 ? 'process' : 'processes'}
-          {' '}
-          (from
-          {' '}
-          <i>top</i>
-          )
-        </p>
-
-        Top 10
-        {' '}
-        <i>jstack</i>
-        {' '}
-        threads:
-        <ol>
-          {threadNames.length > 0
-            ? threadNames.map((name) => <li key={name}>{name}</li>)
-            : <li>none</li>}
-        </ol>
-      </div>
-    );
-  }
-
-  return null;
-};
-
-const getSortedThreadNames = (payload: unknown): string[] => {
-  const threads: Thread[] = payload as Thread[];
-
-  return threads
-    .filter((thread) => thread.status === ThreadStatus.RUNNABLE)
-    .filter((thread) => thread.cpuUsage > 0)
-    .sort((a, b) => b.cpuUsage - a.cpuUsage)
-    .slice(0, 10)
-    .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
 };
 
 export default RunningProcessesChart;

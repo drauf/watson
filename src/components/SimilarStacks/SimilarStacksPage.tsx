@@ -57,7 +57,7 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
   }
 
   private groupByStackTrace(threadDumps: ThreadDump[], linesToConsider: number) {
-    const grouped: Map<string, Thread[]> = new Map();
+    const grouped = new Map<string, Thread[]>();
 
     threadDumps.forEach((threadDump) => {
       threadDump.threads.forEach((thread) => {
