@@ -12,9 +12,7 @@ type State = {
 };
 
 export default class ThreadSummary extends React.PureComponent<Props, State> {
-  private static locksReducer(accumulator: string, lockId: string, index: number): string {
-    return (index === 0) ? lockId : `${accumulator}, ${lockId}`;
-  }
+  private static locksReducer = (previousLocks: string, lockId: string, index: number): string => ((index === 0) ? lockId : `${previousLocks}, ${lockId}`);
 
   constructor(props: Props) {
     super(props);
