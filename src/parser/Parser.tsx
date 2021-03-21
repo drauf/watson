@@ -111,7 +111,7 @@ export default class Parser {
 
   private groupCpuUsagesWithThreadDumps() {
     this.cpuUsages
-      .filter((cpuUsage) => cpuUsage.getEpoch())
+      .filter((cpuUsage) => cpuUsage.epoch)
       .forEach((cpuUsage) => {
         const threadDump: ThreadDump = this.findCorrespondingThreadDump(cpuUsage);
         Parser.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
@@ -135,7 +135,7 @@ export default class Parser {
 
   private findCorrespondingThreadDump(cpuUsage: CpuUsage): ThreadDump {
     const AN_HOUR = 60 * 60 * 1000;
-    const cpuUsageEpoch = cpuUsage.getEpoch();
+    const cpuUsageEpoch = cpuUsage.epoch;
     let closest: ThreadDump | null = null;
     let smallestDiff: number = MAX_TIME_DIFFERENCE_ALLOWED;
 

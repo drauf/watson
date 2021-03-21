@@ -20,13 +20,13 @@ export default class ThreadDump {
     return ThreadDump.fromEpoch(hours * 3600000 + minutes * 60000 + seconds * 1000);
   };
 
-  public static fromEpoch = (epoch: number | null): ThreadDump => {
+  public static fromEpoch = (epoch?: number): ThreadDump => {
     const threadDump = new ThreadDump();
     threadDump.epoch = epoch;
     return threadDump;
   };
 
-  public loadAverages!: LoadAverages | null;
+  public loadAverages?: LoadAverages;
 
   public runningProcesses!: number;
 
@@ -36,7 +36,7 @@ export default class ThreadDump {
 
   public locks: Lock[] = [];
 
-  private epoch: number | null = null;
+  private epoch?: number;
 
-  public getEpoch = (): number | null => this.epoch;
+  public getEpoch = (): number | undefined => this.epoch;
 }
