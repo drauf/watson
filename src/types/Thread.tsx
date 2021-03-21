@@ -16,7 +16,7 @@ export default class Thread {
 
   public runningFor!: string;
 
-  public lockWaitingFor: Lock | null = null;
+  public lockWaitingFor?: Lock;
 
   public locksHeld: Lock[] = [];
 
@@ -26,9 +26,9 @@ export default class Thread {
 
   public matchingFilter = false;
 
-  private epoch: number | null;
+  private epoch?: number;
 
-  constructor(id: number, name: string, epoch: number | null) {
+  constructor(id: number, name: string, epoch?: number) {
     this.id = id;
     this.name = name;
     this.epoch = epoch;

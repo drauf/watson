@@ -17,20 +17,20 @@ export type ParseCpuUsageCallback = (cpuUsage: CpuUsage) => void;
 
 export default class CpuUsageParser {
   public static parseCpuUsage(lines: string[], callback: ParseCpuUsageCallback): void {
-    const cpuUsage: CpuUsage = new CpuUsage(matchOne(CPU_USAGE_TIMESTAMP_PATTERN, lines[0]));
+    const timestamp = matchOne(CPU_USAGE_TIMESTAMP_PATTERN, lines[0]);
 
     // top - 10:25:00 up 3 days, 13:14,  1 user,  load average: 90.75, 97.79, 86.84
-    cpuUsage.loadAverages = CpuUsageParser.parseLoadAverages(lines.shift());
+    const loadAverages = CpuUsageParser.parseLoadAverages(lines.shift());
 
     // Tasks: 466 total,   4 running, 462 sleeping,   0 stopped,   0 zombie
-    cpuUsage.runningProcesses = CpuUsageParser.parseRunningProcesses(lines.shift());
+    const runningProcesses = CpuUsageParser.parseRunningProcesses(lines.shift());
 
     // Cpu(s): 11.4%us,  0.5%sy,  0.0%ni, 87.9%id,  0.0%wa,  0.0%hi,  0.1%si,  0.0%st
     lines.shift(); // ignoring as it's not a useful data for us
 
     // Mem:  65846052k total, 57542808k used,  8303244k free,  1200960k buffers
     // Swap:  2097148k total,        0k used,  2097148k free, 23876776k cached
-    cpuUsage.memoryUsage = CpuUsageParser.parseMemoryUsage(lines.shift(), lines.shift());
+    const memoryUsage = CpuUsageParser.parseMemoryUsage(lines.shift(), lines.shift());
 
     //
     // PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
@@ -38,17 +38,17 @@ export default class CpuUsageParser {
     // 18393 wrtjava   20   0 53.0g  26g 1.2g S  9.7 41.6   4:08.78 java
     // 19084 wrtjava   20   0 53.0g  26g 1.2g S  9.7 41.6   3:07.71 java
     //  ... until <EOT>
-    cpuUsage.threadCpuUsages = CpuUsageParser.parseThreadCpuUsages(lines);
+    const threadCpuUsages = CpuUsageParser.parseThreadCpuUsages(lines);
 
-    callback(cpuUsage);
+    callback(new CpuUsage(timestamp, memoryUsage, runningProcesses, threadCpuUsages, loadAverages));
   }
 
-  private static parseLoadAverages(line?: string): LoadAverages | null {
+  private static parseLoadAverages(line?: string): LoadAverages | undefined {
     const matches: string[] = matchMultipleGroups(LOAD_AVERAGES_PATTERN, line);
 
     if (matches.length !== 3) {
       console.error(`Unable to parse load averages from line: ${line || 'undefined'}`);
-      return null;
+      return undefined;
     }
 
     const loadAverages = new LoadAverages();

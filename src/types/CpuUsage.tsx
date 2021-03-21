@@ -3,24 +3,30 @@ import MemoryUsage from './MemoryUsage';
 import ThreadCpuUsage from './ThreadCpuUsage';
 
 export default class CpuUsage {
-  public runningProcesses!: number;
+  public readonly epoch: number;
 
-  public loadAverages!: LoadAverages | null;
+  public readonly memoryUsage: MemoryUsage;
 
-  public memoryUsage!: MemoryUsage;
+  public readonly runningProcesses: number;
 
-  public threadCpuUsages!: ThreadCpuUsage[];
+  public readonly threadCpuUsages: ThreadCpuUsage[];
 
-  private epoch: number | null;
+  public readonly loadAverages?: LoadAverages;
 
-  constructor(timestamp: string) {
+  private static calculateEpoch(timestamp: string): number {
     // timestamp is in the format of hh:mm:ss, e.g. 09:50:49
     const hours = parseInt(timestamp.substring(0, 2), 10);
     const minutes = parseInt(timestamp.substring(3, 5), 10);
     const seconds = parseInt(timestamp.substring(6), 10);
 
-    this.epoch = hours * 3600000 + minutes * 60000 + seconds * 1000;
+    return hours * 3600000 + minutes * 60000 + seconds * 1000;
   }
 
-  public getEpoch = (): number | null => this.epoch;
+  constructor(timestamp: string, memoryUsage: MemoryUsage, runningProcesses: number, threadCpuUsages: ThreadCpuUsage[], loadAverages?: LoadAverages) {
+    this.epoch = CpuUsage.calculateEpoch(timestamp);
+    this.memoryUsage = memoryUsage;
+    this.runningProcesses = runningProcesses;
+    this.threadCpuUsages = threadCpuUsages;
+    this.loadAverages = loadAverages;
+  }
 }
