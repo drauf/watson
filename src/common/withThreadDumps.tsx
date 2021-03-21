@@ -22,9 +22,7 @@ export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent
       };
 
       const { key } = props.match.params;
-      const threadDumpsPromise = getThreadDumpsAsync(key);
-
-      threadDumpsPromise
+      getThreadDumpsAsync(key)
         .then((threadDumps) => {
           if (threadDumps.length === 0) {
             props.history.push('/');
@@ -33,7 +31,8 @@ export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent
         })
         .then((threadDumps) => {
           this.setState({ threadDumps, promisePending: false });
-        });
+        })
+        .catch((error) => console.error(error));
     }
 
     public componentDidMount() {
