@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "https://drauf.github.io/watson/static/css/main.f6308fe4.chunk.css",
+    "main.css": "https://drauf.github.io/watson/static/css/main.530bf217.chunk.css",
     "main.js": "https://drauf.github.io/watson/static/js/main.3ef61552.chunk.js",
     "main.js.map": "https://drauf.github.io/watson/static/js/main.3ef61552.chunk.js.map",
     "runtime-main.js": "https://drauf.github.io/watson/static/js/runtime-main.4195d3f4.js",
@@ -8,14 +8,14 @@
     "static/js/2.751ccceb.chunk.js": "https://drauf.github.io/watson/static/js/2.751ccceb.chunk.js",
     "static/js/2.751ccceb.chunk.js.map": "https://drauf.github.io/watson/static/js/2.751ccceb.chunk.js.map",
     "index.html": "https://drauf.github.io/watson/index.html",
-    "static/css/main.f6308fe4.chunk.css.map": "https://drauf.github.io/watson/static/css/main.f6308fe4.chunk.css.map",
+    "static/css/main.530bf217.chunk.css.map": "https://drauf.github.io/watson/static/css/main.530bf217.chunk.css.map",
     "static/js/2.751ccceb.chunk.js.LICENSE.txt": "https://drauf.github.io/watson/static/js/2.751ccceb.chunk.js.LICENSE.txt",
     "static/media/index.css": "https://drauf.github.io/watson/static/media/chevron.2f160a8d.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.4195d3f4.js",
     "static/js/2.751ccceb.chunk.js",
-    "static/css/main.f6308fe4.chunk.css",
+    "static/css/main.530bf217.chunk.css",
     "static/js/main.3ef61552.chunk.js"
   ]
 }
