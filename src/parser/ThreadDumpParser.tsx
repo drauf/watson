@@ -139,7 +139,7 @@ export default class ThreadDumpParser {
 
   private static stringToThreadStatus(status: string): ThreadStatus | undefined {
     const key = status as keyof typeof ThreadStatus;
-    const threadStatus = ThreadStatus[key];
+    const threadStatus = ThreadStatus[key] as ThreadStatus;
     if (threadStatus) {
       return threadStatus;
     }
