@@ -1,22 +1,31 @@
 import Thread from './Thread';
 
 export default class Lock {
-  public id: string;
+  public readonly id: string;
 
-  public className: string;
+  public readonly className: string;
 
-  public owner: Thread | null = null;
+  private readonly waiting: Thread[] = [];
 
-  public waiting: Thread[] = [];
+  public readonly owner?: Thread;
 
-  constructor(id: string, className: string) {
+  constructor(id: string, className: string, owner?: Thread) {
     this.id = Lock.parseId(id);
     this.className = className;
+    this.owner = owner;
   }
 
   public hasId(id: string): boolean {
     const parsed = Lock.parseId(id);
     return this.id === parsed;
+  }
+
+  public addWaiting(thread: Thread): void {
+    this.waiting.push(thread);
+  }
+
+  public getWaiting(): Thread[] {
+    return this.waiting.slice();
   }
 
   private static parseId(id: string): string {

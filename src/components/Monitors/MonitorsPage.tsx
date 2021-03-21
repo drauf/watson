@@ -89,12 +89,12 @@ export default class MonitorsPage extends PageWithSettings<State> {
     return filtered;
   };
 
-  private hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => monitor.owner !== null);
+  private hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => !!monitor.owner);
 
   private isQueueThread = (monitorOverTime: MonitorOverTime): boolean => {
     for (const monitor of monitorOverTime.monitors) {
       // if the lock has an owner, it's not a queue thread
-      if (monitor.owner !== null) {
+      if (monitor.owner) {
         return false;
       }
 
