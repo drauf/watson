@@ -169,7 +169,7 @@ export default class Parser {
     threadDump.runningProcesses = cpuUsage.runningProcesses;
     threadDump.memoryUsage = cpuUsage.memoryUsage;
 
-    cpuUsage.threadCpuUsages.forEach((cpu) => {
+    cpuUsage.getThreadCpuUsages().forEach((cpu) => {
       const thread = Parser.findThreadWithId(threadDump, cpu.id);
 
       if (thread) {

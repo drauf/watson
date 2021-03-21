@@ -9,7 +9,7 @@ export default class CpuUsage {
 
   public readonly runningProcesses: number;
 
-  public readonly threadCpuUsages: ThreadCpuUsage[];
+  private readonly threadCpuUsages: ThreadCpuUsage[];
 
   public readonly loadAverages?: LoadAverages;
 
@@ -28,5 +28,9 @@ export default class CpuUsage {
     this.runningProcesses = runningProcesses;
     this.threadCpuUsages = threadCpuUsages;
     this.loadAverages = loadAverages;
+  }
+
+  public getThreadCpuUsages(): ThreadCpuUsage[] {
+    return this.threadCpuUsages.slice();
   }
 }
