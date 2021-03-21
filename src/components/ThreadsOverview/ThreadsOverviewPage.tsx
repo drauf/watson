@@ -90,7 +90,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
 
   private isFilteredByStack = (): boolean => this.state.stackFilter.length > 0
     || this.state.lucene
-    || this.state.database
+    || this.state.database;
 
   private filterThreads = (threadDumps: Array<Map<number, Thread>>) => {
     let filtered = this.filterByActive(threadDumps, this.state.active);
@@ -98,7 +98,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     filtered = this.filterByName(filtered, this.state.nameFilter);
     this.markMatchingStackFilter(filtered, this.state.stackFilter);
     return filtered;
-  }
+  };
 
   private filterByActive = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
     if (!shouldFilter) {
@@ -106,7 +106,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     return threadDumps.filter((threads) => this.isActive(threads));
-  }
+  };
 
   private isActive = (threads: Map<number, Thread>): boolean => {
     let status;
@@ -125,7 +125,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     return false;
-  }
+  };
 
   private isIdleThread = (stackTrace: string[]): boolean => {
     if (!stackTrace || !stackTrace[0]) {
@@ -152,7 +152,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     return false;
-  }
+  };
 
   private filterByCpuUsage = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
     if (!shouldFilter) {
@@ -160,7 +160,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     return threadDumps.filter((threads) => this.isUsingCpu(threads));
-  }
+  };
 
   private isUsingCpu = (threads: Map<number, Thread>): boolean => {
     for (const thread of threads.values()) {
@@ -170,7 +170,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     return false;
-  }
+  };
 
   private filterByName = (threadDumps: Array<Map<number, Thread>>, nameFilter: string) => {
     let userProvided: RegExp;
@@ -187,7 +187,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
       .filter((threads) => (this.state.tomcat ? this.matchesName(threads, this.tomcatRegex) : true))
       .filter((threads) => (this.state.nonTomcat ? !this.matchesName(threads, this.tomcatRegex) : true))
       .filter((threads) => (userProvided ? this.matchesName(threads, userProvided) : true));
-  }
+  };
 
   private matchesName = (threads: Map<number, Thread>, regex: RegExp): boolean => {
     for (const thread of threads.values()) {
@@ -196,7 +196,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
       }
     }
     return false;
-  }
+  };
 
   private markMatchingStackFilter = (threadDumps: Array<Map<number, Thread>>, filter: string) => {
     this.clearAllMatches(threadDumps);
@@ -209,7 +209,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     threadDumps.forEach((threads) => {
       threads.forEach((thread) => this.markIfMatchesAllFilters(thread, filters));
     });
-  }
+  };
 
   private clearAllMatches = (threadDumps: Array<Map<number, Thread>>) => {
     threadDumps.forEach((threads) => {
@@ -217,7 +217,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
         thread.matchingFilter = false;
       });
     });
-  }
+  };
 
   private getStackTraceFilters = (userProvidedFilter: string): RegExp[] => {
     const filters: RegExp[] = [];
@@ -239,7 +239,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     return filters;
-  }
+  };
 
   private markIfMatchesAllFilters = (thread: Thread, filters: RegExp[]) => {
     for (const filter of filters) {
@@ -248,7 +248,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
       }
     }
     thread.matchingFilter = true;
-  }
+  };
 
   private matchesStackTraceFilter = (thread: Thread, filter: RegExp) => {
     for (const line of thread.stackTrace) {
@@ -257,5 +257,5 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
       }
     }
     return false;
-  }
+  };
 }

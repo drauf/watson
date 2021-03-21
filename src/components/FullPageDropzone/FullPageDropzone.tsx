@@ -24,12 +24,12 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
       )}
     </Dropzone>
     /* eslint-enable react/jsx-props-no-spreading */
-  )
+  );
 
   private onDrop = (files: File[]): void => {
     const parser = new Parser(this.onParsed);
     parser.parseFiles(files);
-  }
+  };
 
   private onParsed = (threadDumps: ThreadDump[]): void => {
     const { history } = this.props;
@@ -40,7 +40,7 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
     } else {
       history.push(`/${key}/similar-stacks/`);
     }
-  }
+  };
 }
 
 export default withRouter(FullPageDropzone);

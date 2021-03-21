@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import ThreadDump from '../types/ThreadDump';
 import { getThreadDumpsAsync } from './threadDumpsStorageService';
 
-export type WithThreadDumpsProps = RouteComponentProps<{key: string}> & {
+export type WithThreadDumpsProps = RouteComponentProps<{ key: string }> & {
   threadDumps: ThreadDump[];
 };
 
@@ -22,9 +22,7 @@ export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent
       };
 
       const { key } = props.match.params;
-      const threadDumpsPromise = getThreadDumpsAsync(key);
-
-      threadDumpsPromise
+      getThreadDumpsAsync(key)
         .then((threadDumps) => {
           if (threadDumps.length === 0) {
             props.history.push('/');
@@ -33,7 +31,8 @@ export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent
         })
         .then((threadDumps) => {
           this.setState({ threadDumps, promisePending: false });
-        });
+        })
+        .catch((error) => console.error(error));
     }
 
     public componentDidMount() {
@@ -45,7 +44,7 @@ export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent
       if (contentDiv) {
         contentDiv.scrollTop = 0;
       }
-    }
+    };
 
     public render(): JSX.Element {
       const { promisePending, threadDumps } = this.state;

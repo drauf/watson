@@ -18,7 +18,7 @@ export default class MonitorOverTimeItem extends React.PureComponent<Props, Stat
 
   private toggleCollapse = () => {
     this.setState((prevState) => ({ collapse: !prevState.collapse }));
-  }
+  };
 
   public render(): JSX.Element {
     const { monitor } = this.props;

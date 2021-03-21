@@ -3,7 +3,7 @@ import Thread from '../../types/Thread';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
 type Props = {
-  thread: Thread | undefined;
+  thread?: Thread;
 };
 
 type State = {
@@ -18,13 +18,13 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
 
   public handleClick = (): void => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
-  }
+  };
 
   public handleUnload = (): void => {
     this.setState({ showDetails: false });
-  }
+  };
 
-  private getCpuUsage = (cpuUsage: number): string => `${cpuUsage.toFixed(1)}%`
+  private getCpuUsage = (cpuUsage: number): string => `${cpuUsage.toFixed(1)}%`;
 
   private getClassName = (cpuUsage: number): string => {
     // The numbers here are completely arbitrary
@@ -38,7 +38,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
       return 'low';
     }
     return 'none';
-  }
+  };
 
   public render(): JSX.Element {
     const { thread } = this.props;

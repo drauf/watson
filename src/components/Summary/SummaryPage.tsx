@@ -25,5 +25,5 @@ export default class SummaryPage extends React.PureComponent<WithThreadDumpsProp
         <RunningProcessesChart threadDumps={threadDumps} />
       </main>
     );
-  }
+  };
 }

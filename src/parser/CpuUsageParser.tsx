@@ -47,7 +47,7 @@ export default class CpuUsageParser {
     const matches: string[] = matchMultipleGroups(LOAD_AVERAGES_PATTERN, line);
 
     if (matches.length !== 3) {
-      console.error(`Unable to parse load averages from line: ${line}`);
+      console.error(`Unable to parse load averages from line: ${line || 'undefined'}`);
       return null;
     }
 

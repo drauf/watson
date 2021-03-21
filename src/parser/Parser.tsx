@@ -26,7 +26,7 @@ export default class Parser {
     this.filesToParse = 0;
 
     this.parse(uploaded);
-  }
+  };
 
   private parse(files: File[]) {
     files.forEach((file) => {
@@ -82,21 +82,21 @@ export default class Parser {
 
   private parseCpuUsage = (lines: string[]) => {
     CpuUsageParser.parseCpuUsage(lines.slice(), this.onParsedCpuUsage);
-  }
+  };
 
   private onParsedCpuUsage = (cpuUsage: CpuUsage) => {
     this.cpuUsages.push(cpuUsage);
-  }
+  };
 
   private parseThreadDump = (lines: string[]) => {
     ThreadDumpParser.parseThreadDump(lines.slice(), this.onParsedThreadDump);
-  }
+  };
 
   private onParsedThreadDump = (threadDump: ThreadDump) => {
     if (threadDump.threads.length > 0) {
       this.threadDumps.push(threadDump);
     }
-  }
+  };
 
   private fileParsed() {
     this.filesToParse -= 1;

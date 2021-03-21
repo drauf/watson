@@ -12,9 +12,7 @@ type State = {
 };
 
 export default class ThreadSummary extends React.PureComponent<Props, State> {
-  private static locksReducer(accumulator: string, lockId: string, index: number): string {
-    return (index === 0) ? lockId : `${accumulator}, ${lockId}`;
-  }
+  private static locksReducer = (previousLocks: string, lockId: string, index: number): string => ((index === 0) ? lockId : `${previousLocks}, ${lockId}`);
 
   constructor(props: Props) {
     super(props);
@@ -23,22 +21,22 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
 
   private toggleDetails = () => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
-  }
+  };
 
   private toggleLockOwner = () => {
     this.setState((prevState) => ({ showLockOwner: !prevState.showLockOwner }));
-  }
+  };
 
   private handleUnload = () => {
     this.setState({ showDetails: false, showLockOwner: false });
-  }
+  };
 
-  private getLocksHeldString = (thread: Thread): string | null => {
+  private getLocksHeldString = (thread: Thread): string => {
     if (thread.locksHeld.length === 0) {
-      return null;
+      return '';
     }
     return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
-  }
+  };
 
   private waitingForRender(thread: Thread, lockOwner: Thread | null) {
     const lockWaitingFor = thread.lockWaitingFor ? thread.lockWaitingFor.id : null;
@@ -52,6 +50,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
       return (
         <>
           , awaiting notification on
+          {' '}
           <button type="button" onClick={this.toggleLockOwner}>
             [
             {lockWaitingFor}

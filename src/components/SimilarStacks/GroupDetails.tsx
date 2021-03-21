@@ -22,7 +22,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
 
   private toggleExpand = () => {
     this.setState((prevState) => ({ expanded: !prevState.expanded }));
-  }
+  };
 
   private getStackTrace = (threads: Thread[]): string[] => {
     for (const thread of threads) {
@@ -31,7 +31,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
       }
     }
     return [];
-  }
+  };
 
   public render(): JSX.Element {
     const { threadGroup, linesToConsider } = this.props;

@@ -7,17 +7,20 @@ let currentThreadDumps: ThreadDump[];
 const lastUsedStorage = localforage.createInstance({ name: 'lastUsed' });
 const threadDumpsStorage = localforage.createInstance({ name: 'threadDumps' });
 
-async function getFromStorage(key: string) {
-  const fromStorage = await threadDumpsStorage.getItem<string>(key);
+const logError = (error: unknown) => {
+  console.error(error);
+};
 
-  // update the "Last used" date if the key exists
-  if (fromStorage) {
-    lastUsedStorage.setItem(key, new Date().valueOf());
+const getFromStorage = async (key: string): Promise<ThreadDump[]> => {
+  const fromStorage = await threadDumpsStorage.getItem<string>(key);
+  if (!fromStorage) {
+    return [];
   }
 
-  currentThreadDumps = fromStorage ? parse(fromStorage) : [];
+  currentThreadDumps = parse(fromStorage) as ThreadDump[];
+  lastUsedStorage.setItem(key, new Date().valueOf()).catch(logError);
   return currentThreadDumps;
-}
+};
 
 // Given a key, returns a promise that resolves to the stored thread dumps.
 export const getThreadDumpsAsync = async (key: string): Promise<ThreadDump[]> => {
@@ -34,7 +37,7 @@ export const setThreadDumps = (parsedDumps: ThreadDump[]): string => {
   currentThreadDumps = parsedDumps;
   const stringified = stringify(currentThreadDumps);
   const key = SparkMD5.hash(stringified);
-  threadDumpsStorage.setItem(key, stringified);
+  threadDumpsStorage.setItem(key, stringified).catch(logError);
   return key;
 };
 
@@ -50,8 +53,8 @@ export const clearOldThreadDumps = (): void => {
 
   lastUsedStorage.iterate((date: number, key) => {
     if (date < sevenDaysAgo) {
-      threadDumpsStorage.removeItem(key);
-      lastUsedStorage.removeItem(key);
+      threadDumpsStorage.removeItem(key).catch(logError);
+      lastUsedStorage.removeItem(key).catch(logError);
     }
-  });
+  }).catch(logError);
 };

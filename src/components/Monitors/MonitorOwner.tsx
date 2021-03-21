@@ -19,11 +19,11 @@ export default class MonitorOwner extends React.PureComponent<Props, State> {
   private handleClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     this.setState((prevState) => ({ showOwner: !prevState.showOwner }));
-  }
+  };
 
   private handleUnload = () => {
     this.setState({ showOwner: false });
-  }
+  };
 
   public render(): JSX.Element | null {
     const { monitor } = this.props;

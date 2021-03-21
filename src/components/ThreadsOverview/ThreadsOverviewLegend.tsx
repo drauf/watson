@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ThreadsOverviewLegend: React.SFC = () => (
+const ThreadsOverviewLegend: React.FunctionComponent = () => (
   <table id="thread-overview-legend">
     <tbody>
       <tr>
