@@ -116,14 +116,6 @@ const renderLocksHeld = (thread: Thread) => (
   </div>
 );
 
-const renderStackTrace = (thread: Thread) => (
-  <div id="stacktrace-container">
-    <h5>Stack trace</h5>
-
-    {thread.stackTrace.map((line) => <span style={getLineStyles(line)}>{line}</span>)}
-  </div>
-);
-
 const getLineStyles = (line: string): CSSProperties => {
   // anything Atlassian
   if (line.startsWith('com.atlassian')) {
@@ -160,6 +152,14 @@ const getLineStyles = (line: string): CSSProperties => {
   // most likely 3rd party apps
   return { backgroundColor: '#E3FCEF' };
 };
+
+const renderStackTrace = (thread: Thread) => (
+  <div id="stacktrace-container">
+    <h5>Stack trace</h5>
+
+    {thread.stackTrace.map((line) => <span style={getLineStyles(line)}>{line}</span>)}
+  </div>
+);
 
 const ThreadDetailsWindow: React.FunctionComponent<Props> = ({ thread, onUnload }) => (
   <WindowPortal windowTitle={thread.name} className="thread-details" onUnload={onUnload}>

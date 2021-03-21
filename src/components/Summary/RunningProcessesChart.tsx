@@ -10,42 +10,15 @@ type Props = {
   threadDumps: ThreadDump[];
 };
 
-const RunningProcessesChart: React.FunctionComponent<Props> = ({ threadDumps }) => {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  const data: object[] = [];
+const getSortedThreadNames = (payload: unknown): string[] => {
+  const threads: Thread[] = payload as Thread[];
 
-  threadDumps.forEach((threadDump) => {
-    if (threadDump.loadAverages) {
-      data.push({
-        name: ThreadDump.getFormattedTime(threadDump),
-        runningProcesses: threadDump.runningProcesses,
-        threads: threadDump.threads,
-      });
-    }
-  });
-
-  return (
-    <div className="chart">
-      <h3>Running processes</h3>
-      <ResponsiveContainer width="100%" height={250}>
-        <LineChart data={data}>
-          <XAxis dataKey="name" />
-          <YAxis type="number" allowDecimals={false} />
-          <CartesianGrid stroke="#DFE1E5" strokeDasharray="5 5" />
-          <Tooltip content={<CustomTooltip />} />
-          <Line
-            name="Chart data"
-            dataKey="runningProcesses"
-            stroke="#36B37E"
-          />
-          <Line
-            name="Tooltip data"
-            dataKey="threads"
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  );
+  return threads
+    .filter((thread) => thread.status === ThreadStatus.RUNNABLE)
+    .filter((thread) => thread.cpuUsage > 0)
+    .sort((a, b) => b.cpuUsage - a.cpuUsage)
+    .slice(0, 10)
+    .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
 };
 
 const CustomTooltip: React.FunctionComponent<TooltipProps<number, string>> = ({ active, payload, label }) => {
@@ -85,15 +58,42 @@ const CustomTooltip: React.FunctionComponent<TooltipProps<number, string>> = ({ 
   return null;
 };
 
-const getSortedThreadNames = (payload: unknown): string[] => {
-  const threads: Thread[] = payload as Thread[];
+const RunningProcessesChart: React.FunctionComponent<Props> = ({ threadDumps }) => {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  const data: object[] = [];
 
-  return threads
-    .filter((thread) => thread.status === ThreadStatus.RUNNABLE)
-    .filter((thread) => thread.cpuUsage > 0)
-    .sort((a, b) => b.cpuUsage - a.cpuUsage)
-    .slice(0, 10)
-    .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
+  threadDumps.forEach((threadDump) => {
+    if (threadDump.loadAverages) {
+      data.push({
+        name: ThreadDump.getFormattedTime(threadDump),
+        runningProcesses: threadDump.runningProcesses,
+        threads: threadDump.threads,
+      });
+    }
+  });
+
+  return (
+    <div className="chart">
+      <h3>Running processes</h3>
+      <ResponsiveContainer width="100%" height={250}>
+        <LineChart data={data}>
+          <XAxis dataKey="name" />
+          <YAxis type="number" allowDecimals={false} />
+          <CartesianGrid stroke="#DFE1E5" strokeDasharray="5 5" />
+          <Tooltip content={<CustomTooltip />} />
+          <Line
+            name="Chart data"
+            dataKey="runningProcesses"
+            stroke="#36B37E"
+          />
+          <Line
+            name="Tooltip data"
+            dataKey="threads"
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
 };
 
 export default RunningProcessesChart;
