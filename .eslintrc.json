@@ -24,7 +24,10 @@
   ],
   "rules": {
     "max-len": "off",
-    // Temporarily (hopefully) switch an error to a warning
+    // Switch non-trivial errors to warnings
+    "import/no-cycle": [
+      "warn"
+    ],
     "no-param-reassign": [
       "warn"
     ],
