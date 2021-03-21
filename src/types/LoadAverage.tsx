@@ -1,7 +1,13 @@
 export default class LoadAverages {
-  public oneMinute!: number;
+  public readonly oneMinute: number;
 
-  public fiveMinutes!: number;
+  public readonly fiveMinutes: number;
 
-  public fifteenMinutes!: number;
+  public readonly fifteenMinutes: number;
+
+  constructor(oneMinute: number, fiveMinutes: number, fifteenMinutes: number) {
+    this.oneMinute = oneMinute;
+    this.fiveMinutes = fiveMinutes;
+    this.fifteenMinutes = fifteenMinutes;
+  }
 }

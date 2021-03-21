@@ -51,11 +51,10 @@ export default class CpuUsageParser {
       return undefined;
     }
 
-    const loadAverages = new LoadAverages();
-    loadAverages.oneMinute = parseFloat(matches[0]);
-    loadAverages.fiveMinutes = parseFloat(matches[1]);
-    loadAverages.fifteenMinutes = parseFloat(matches[2]);
-    return loadAverages;
+    const oneMinute = parseFloat(matches[0]);
+    const fiveMinutes = parseFloat(matches[1]);
+    const fifteenMinutes = parseFloat(matches[2]);
+    return new LoadAverages(oneMinute, fiveMinutes, fifteenMinutes);
   }
 
   private static parseRunningProcesses(line?: string): number {
