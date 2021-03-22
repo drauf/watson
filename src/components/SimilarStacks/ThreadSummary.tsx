@@ -38,7 +38,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
   };
 
-  private waitingForRender(thread: Thread, lockOwner: Thread | null) {
+  private waitingForRender(thread: Thread, lockOwner?: Thread) {
     const lockWaitingFor = thread.lockWaitingFor ? thread.lockWaitingFor.id : null;
 
     if (!lockWaitingFor) {
@@ -65,7 +65,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
   public render(): JSX.Element {
     const { thread } = this.props;
     const { showDetails, showLockOwner } = this.state;
-    const lockOwner = thread.lockWaitingFor ? thread.lockWaitingFor.owner : null;
+    const lockOwner = thread.lockWaitingFor ? thread.lockWaitingFor.owner : undefined;
     const locksHeld = this.getLocksHeldString(thread);
 
     return (
