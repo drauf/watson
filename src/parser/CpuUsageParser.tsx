@@ -1,7 +1,7 @@
-import CpuUsage from '../types/CpuUsage';
+import CpuUsage from './CpuUsage';
 import LoadAverages from '../types/LoadAverage';
 import MemoryUsage from '../types/MemoryUsage';
-import ThreadCpuUsage from '../types/ThreadCpuUsage';
+import ThreadCpuUsage from './ThreadCpuUsage';
 import { matchMultipleGroups, matchMultipleTimes, matchOne } from './RegExpUtils';
 import TopColumnOffsets from './TopColumnOffsets';
 
@@ -86,11 +86,10 @@ export default class CpuUsageParser {
       .map((line) => matchMultipleTimes(COLUMN_MATCHER, line))
       .filter((columns) => columns.length >= 11)
       .forEach((columns) => {
-        const threadCpuUsage: ThreadCpuUsage = new ThreadCpuUsage();
-        threadCpuUsage.id = parseInt(columns[offsets.getProcessIdOffset()], 10);
-        threadCpuUsage.cpuUsage = parseFloat(columns[offsets.getCpuUsageOffset()]);
-        threadCpuUsage.runningFor = columns[offsets.getRunningForOffset()];
-        threadCpuUsages.push(threadCpuUsage);
+        const id = parseInt(columns[offsets.getProcessIdOffset()], 10);
+        const cpuUsage = parseFloat(columns[offsets.getCpuUsageOffset()]);
+        const runningFor = columns[offsets.getRunningForOffset()];
+        threadCpuUsages.push(new ThreadCpuUsage(id, cpuUsage, runningFor));
       });
 
     return threadCpuUsages;

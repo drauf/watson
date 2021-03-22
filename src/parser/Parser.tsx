@@ -1,4 +1,4 @@
-import CpuUsage from '../types/CpuUsage';
+import CpuUsage from './CpuUsage';
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
 import CpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './CpuUsageParser';
