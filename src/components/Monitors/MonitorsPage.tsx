@@ -47,7 +47,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
     if (filtered.length === 0) {
       return <h4>{MonitorsPage.N0_MONITORS_MATCHING}</h4>;
     }
-    return filtered.map((monitor) => <MonitorOverTimeItem key={monitor.id} monitor={monitor} />);
+    return filtered.map((monitor) => <MonitorOverTimeItem key={monitor.uniqueId} monitor={monitor} />);
   };
 
   private getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {

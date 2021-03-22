@@ -42,7 +42,7 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
         {showStackTrace && (
           <ol className="stacktrace">
             {stack.map((line) => (
-              <li key={line}>{line}</li>))}
+              <li>{line}</li>))}
           </ol>
         )}
 

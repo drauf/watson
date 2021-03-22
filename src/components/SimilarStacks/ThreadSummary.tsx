@@ -46,7 +46,6 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     }
 
     if (lockOwner) {
-      console.error(thread);
       return (
         <>
           , awaiting notification on

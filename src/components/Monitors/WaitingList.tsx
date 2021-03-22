@@ -42,7 +42,7 @@ export default class WaitingList extends React.PureComponent<Props, State> {
         </b>
         <br />
 
-        {threads.map((thread) => <WaitingListItem thread={thread} key={thread.id} />)}
+        {threads.map((thread) => <WaitingListItem key={thread.uniqueId} thread={thread} />)}
 
         {collapsable > 0
           && (

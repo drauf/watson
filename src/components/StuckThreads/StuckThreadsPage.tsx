@@ -61,7 +61,6 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
 
     return clusters.map((group) => (
       <StuckThreadsGroup
-        key={group.length}
         threadGroup={group}
         maxDifferingLines={this.state.maxDifferingLines}
       />

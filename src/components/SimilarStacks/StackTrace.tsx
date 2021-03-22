@@ -10,7 +10,7 @@ const StackTrace: React.FunctionComponent<Props> = ({ stackTrace, linesToConside
 
   return (
     <ul className="stacktrace">
-      {stack.map((line) => <li key={line}>{line}</li>)}
+      {stack.map((line) => <li>{line}</li>)}
     </ul>
   );
 };

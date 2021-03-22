@@ -35,7 +35,7 @@ export default class MonitorOverTimeItem extends React.PureComponent<Props, Stat
           &gt;
         </h5>
 
-        {!collapse && monitor.monitors.map((item) => <MonitorItem key={item.time} monitor={item} />)}
+        {!collapse && monitor.monitors.map((item) => <MonitorItem key={item.uniqueId} monitor={item} />)}
       </>
     );
   }

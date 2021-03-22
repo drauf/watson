@@ -25,7 +25,7 @@ const ThreadsOverview: React.FunctionComponent<Props> = ({ dates, isFilteredBySt
       <tbody>
         {threadDumps.map((threads) => (
           <ThreadOverviewRow
-            key={(threads.values().next().value as Thread).name}
+            key={(threads.values().next().value as Thread).uniqueId}
             isFiltered={isFilteredByStack}
             total={dates.length}
             threads={threads}

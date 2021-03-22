@@ -1,7 +1,8 @@
 import Lock from './Lock';
 import ThreadStatus from './ThreadStatus';
+import TypeWithUniqueId from './TypeWithUniqueId';
 
-export default class Thread {
+export default class Thread extends TypeWithUniqueId {
   public static getFormattedTime = (thread: Thread): string => (thread.epoch
     ? new Date(thread.epoch).toUTCString().substr(17, 8)
     : '');
@@ -29,6 +30,7 @@ export default class Thread {
   private epoch?: number;
 
   constructor(id: number, name: string, epoch?: number) {
+    super();
     this.id = id;
     this.name = name;
     this.epoch = epoch;

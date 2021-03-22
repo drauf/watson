@@ -23,9 +23,9 @@ const ThreadOverviewRow: React.FunctionComponent<Props> = ({ total, threads, isF
         {threadName}
         <span>{threadName}</span>
       </td>
-      {threadsPadded.map((thread) => (
+      {threadsPadded.map((thread, index) => (
         <ThreadOverviewItem
-          key={thread ? thread.id : -1}
+          key={thread ? thread.uniqueId : `undefined_${index}`}
           thread={thread}
           isFiltered={isFiltered}
           isMatchingFilter={thread ? thread.matchingFilter : false}

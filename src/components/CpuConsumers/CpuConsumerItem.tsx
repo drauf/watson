@@ -8,19 +8,18 @@ type Props = {
   consumer: CpuConsumer;
 };
 
-const formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => {
-  let threadName = '';
-
+const getThreadName = (threads: IterableIterator<Thread>): string => {
   for (const thread of threads) {
     if (thread) {
-      threadName = thread.name;
+      return thread.name;
     }
   }
-
-  return (
-    `${value.toFixed(2)}% - "${threadName}"`
-  );
+  return '';
 };
+
+const formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => (
+  `${value.toFixed(2)}% - "${getThreadName(threads)}"`
+);
 
 const CpuConsumerItem: React.FunctionComponent<Props> = ({ dumpsNumber, consumer }) => {
   const threads: Array<Thread | undefined> = [];
@@ -35,7 +34,7 @@ const CpuConsumerItem: React.FunctionComponent<Props> = ({ dumpsNumber, consumer
         {formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurences.values())}
       </h5>
       <span>
-        {threads.map((thread) => <CpuConsumerSingleUsage thread={thread} key={thread ? thread.id : -1} />)}
+        {threads.map((thread, index) => <CpuConsumerSingleUsage key={thread ? thread.uniqueId : `undefined_${index}`} thread={thread} />)}
       </span>
     </li>
   );
