@@ -18,25 +18,14 @@ const renderName = (thread: Thread) => (
   </h3>
 );
 
-const renderStatus = (thread: Thread) => {
-  if (thread.status === undefined) {
-    return (
-      <div>
-        State:
-        <span className="thread-state unknown">UNKNOWN STATE</span>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      State:
-      <span className={`thread-state ${thread.status}`}>
-        {thread.status.toLocaleUpperCase()}
-      </span>
-    </div>
-  );
-};
+const renderStatus = (thread: Thread) => (
+  <div>
+    State:
+    <span className={`thread-state ${thread.status}`}>
+      {thread.status.toLocaleUpperCase()}
+    </span>
+  </div>
+);
 
 const renderRunningFor = (thread: Thread) => (
   <div>

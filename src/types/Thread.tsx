@@ -7,27 +7,27 @@ export default class Thread extends TypeWithUniqueId {
     ? new Date(thread.epoch).toUTCString().substr(17, 8)
     : '');
 
-  public id: number;
+  public readonly id: number;
 
-  public name: string;
+  public readonly name: string;
 
-  public status?: ThreadStatus;
+  public readonly locksHeld: Lock[] = [];
+
+  public readonly classicalLocksHeld: Lock[] = [];
+
+  public readonly stackTrace: string[] = [];
+
+  public status = ThreadStatus.UNKNOWN as ThreadStatus;
 
   public cpuUsage = 0.0;
 
-  public runningFor!: string;
-
-  public lockWaitingFor?: Lock;
-
-  public locksHeld: Lock[] = [];
-
-  public classicalLocksHeld: Lock[] = [];
-
-  public stackTrace: string[] = [];
+  public runningFor = '0:00.00';
 
   public matchingFilter = false;
 
-  private epoch?: number;
+  public lockWaitingFor?: Lock;
+
+  private readonly epoch?: number;
 
   constructor(id: number, name: string, epoch?: number) {
     super();

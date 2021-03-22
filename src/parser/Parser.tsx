@@ -14,7 +14,7 @@ export default class Parser {
 
   private filesToParse = 0;
 
-  private onFilesParsed: (threadDumps: ThreadDump[]) => void;
+  private readonly onFilesParsed: (threadDumps: ThreadDump[]) => void;
 
   constructor(onFilesParsed: (threadDumps: ThreadDump[]) => void) {
     this.onFilesParsed = onFilesParsed;
@@ -120,16 +120,16 @@ export default class Parser {
 
   private sortThreadDumps() {
     this.threadDumps.sort((t1, t2) => {
-      if (t1.getEpoch() === t2.getEpoch()) {
+      if (t1.epoch === t2.epoch) {
         return 0;
       }
-      if (!t1.getEpoch()) {
+      if (!t1.epoch) {
         return -1;
       }
-      if (!t2.getEpoch()) {
+      if (!t2.epoch) {
         return 1;
       }
-      return (t1.getEpoch() as number) - (t2.getEpoch() as number);
+      return t1.epoch - t2.epoch;
     });
   }
 
@@ -140,9 +140,9 @@ export default class Parser {
     let smallestDiff: number = MAX_TIME_DIFFERENCE_ALLOWED;
 
     this.threadDumps
-      .filter((threadDump) => threadDump.getEpoch())
+      .filter((threadDump) => threadDump.epoch)
       .forEach((threadDump) => {
-        const dumpEpoch = threadDump.getEpoch();
+        const dumpEpoch = threadDump.epoch;
 
         if (!dumpEpoch || !cpuUsageEpoch) {
           return;
@@ -157,7 +157,7 @@ export default class Parser {
       });
 
     if (closest == null) {
-      closest = ThreadDump.fromEpoch(cpuUsageEpoch);
+      closest = new ThreadDump(cpuUsageEpoch);
       this.threadDumps.push(closest);
     }
 

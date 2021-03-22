@@ -1,13 +1,22 @@
 export default class MemoryUsage {
-  public memoryTotal!: number;
+  public readonly memoryTotal: number;
 
-  public memoryUsed!: number;
+  public readonly memoryUsed: number;
 
-  public memoryFree!: number;
+  public readonly memoryFree: number;
 
-  public swapTotal!: number;
+  public readonly swapTotal: number;
 
-  public swapUsed!: number;
+  public readonly swapUsed: number;
 
-  public swapFree!: number;
+  public readonly swapFree: number;
+
+  constructor(memoryTotal: number, memoryUsed: number, memoryFree: number, swapTotal: number, swapUsed: number, swapFree: number) {
+    this.memoryTotal = memoryTotal;
+    this.memoryUsed = memoryUsed;
+    this.memoryFree = memoryFree;
+    this.swapTotal = swapTotal;
+    this.swapUsed = swapUsed;
+    this.swapFree = swapFree;
+  }
 }

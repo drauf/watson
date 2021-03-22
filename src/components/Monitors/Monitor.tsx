@@ -4,13 +4,13 @@ import ThreadDump from '../../types/ThreadDump';
 import TypeWithUniqueId from '../../types/TypeWithUniqueId';
 
 export default class Monitor extends TypeWithUniqueId {
-  public time: string;
+  public readonly time: string;
 
-  public javaClass: string;
+  public readonly javaClass: string;
 
-  public owner?: Thread;
+  public readonly owner?: Thread;
 
-  public waiting: Thread[];
+  public readonly waiting: Thread[];
 
   public constructor(threadDump: ThreadDump, lock: Lock) {
     super();

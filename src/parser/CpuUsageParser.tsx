@@ -40,16 +40,11 @@ export default class CpuUsageParser {
     //  ... until <EOT>
     const threadCpuUsages = CpuUsageParser.parseThreadCpuUsages(lines);
 
-    callback(new CpuUsage(timestamp, memoryUsage, runningProcesses, threadCpuUsages, loadAverages));
+    callback(new CpuUsage(timestamp, loadAverages, runningProcesses, memoryUsage, threadCpuUsages));
   }
 
-  private static parseLoadAverages(line?: string): LoadAverages | undefined {
+  private static parseLoadAverages(line?: string): LoadAverages {
     const matches: string[] = matchMultipleGroups(LOAD_AVERAGES_PATTERN, line);
-
-    if (matches.length !== 3) {
-      console.error(`Unable to parse load averages from line: ${line || 'undefined'}`);
-      return undefined;
-    }
 
     const oneMinute = parseFloat(matches[0]);
     const fiveMinutes = parseFloat(matches[1]);
@@ -62,17 +57,15 @@ export default class CpuUsageParser {
   }
 
   private static parseMemoryUsage(line1?: string, line2?: string): MemoryUsage {
-    const memoryUsage: MemoryUsage = new MemoryUsage();
+    const memoryTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line1), 10);
+    const memoryUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line1), 10);
+    const memoryFree = parseInt(matchOne(FREE_MEMORY_PATTERN, line1), 10);
 
-    memoryUsage.memoryTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line1), 10);
-    memoryUsage.memoryUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line1), 10);
-    memoryUsage.memoryFree = parseInt(matchOne(FREE_MEMORY_PATTERN, line1), 10);
+    const swapTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line2), 10);
+    const swapUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line2), 10);
+    const swapFree = parseInt(matchOne(FREE_MEMORY_PATTERN, line2), 10);
 
-    memoryUsage.swapTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line2), 10);
-    memoryUsage.swapUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line2), 10);
-    memoryUsage.swapFree = parseInt(matchOne(FREE_MEMORY_PATTERN, line2), 10);
-
-    return memoryUsage;
+    return new MemoryUsage(memoryTotal, memoryUsed, memoryFree, swapTotal, swapUsed, swapFree);
   }
 
   private static parseThreadCpuUsages(lines: string[]): ThreadCpuUsage[] {

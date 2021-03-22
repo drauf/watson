@@ -5,13 +5,13 @@ import ThreadCpuUsage from './ThreadCpuUsage';
 export default class CpuUsage {
   public readonly epoch: number;
 
-  public readonly memoryUsage: MemoryUsage;
+  public readonly loadAverages: LoadAverages;
 
   public readonly runningProcesses: number;
 
-  private readonly threadCpuUsages: ThreadCpuUsage[];
+  public readonly memoryUsage: MemoryUsage;
 
-  public readonly loadAverages?: LoadAverages;
+  private readonly threadCpuUsages: ThreadCpuUsage[];
 
   private static calculateEpoch(timestamp: string): number {
     // timestamp is in the format of hh:mm:ss, e.g. 09:50:49
@@ -22,12 +22,12 @@ export default class CpuUsage {
     return hours * 3600000 + minutes * 60000 + seconds * 1000;
   }
 
-  constructor(timestamp: string, memoryUsage: MemoryUsage, runningProcesses: number, threadCpuUsages: ThreadCpuUsage[], loadAverages?: LoadAverages) {
+  constructor(timestamp: string, loadAverages: LoadAverages, runningProcesses: number, memoryUsage: MemoryUsage, threadCpuUsages: ThreadCpuUsage[]) {
     this.epoch = CpuUsage.calculateEpoch(timestamp);
-    this.memoryUsage = memoryUsage;
-    this.runningProcesses = runningProcesses;
-    this.threadCpuUsages = threadCpuUsages;
     this.loadAverages = loadAverages;
+    this.runningProcesses = runningProcesses;
+    this.memoryUsage = memoryUsage;
+    this.threadCpuUsages = threadCpuUsages;
   }
 
   public getThreadCpuUsages(): ThreadCpuUsage[] {
