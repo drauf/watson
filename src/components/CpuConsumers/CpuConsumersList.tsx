@@ -14,7 +14,7 @@ const CpuConsumersList: React.FunctionComponent<Props> = ({ limit, dumpsNumber, 
 
     <ul id="consumers-list">
       {consumers.slice(0, limit).map((consumer) => (
-        <CpuConsumerItem key={consumer.calculatedValue} dumpsNumber={dumpsNumber} consumer={consumer} />
+        <CpuConsumerItem key={consumer.uniqueId} dumpsNumber={dumpsNumber} consumer={consumer} />
       ))}
     </ul>
   </>

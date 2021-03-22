@@ -47,7 +47,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
     return (
       <>
         <ul>
-          {threads.map((thread) => <ThreadSummary key={thread.id} thread={thread} />)}
+          {threads.map((thread) => <ThreadSummary key={thread.uniqueId} thread={thread} />)}
 
           {collapsable > 0
             && (

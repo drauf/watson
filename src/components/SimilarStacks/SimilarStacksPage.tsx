@@ -49,7 +49,6 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
     }
     return threadGroups.map((group) => (
       <SimilarStacksGroup
-        key={group.length}
         threadGroup={group}
         linesToConsider={this.state.linesToConsider}
       />

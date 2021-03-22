@@ -5,7 +5,7 @@ export default class Lock {
 
   public readonly className: string;
 
-  private readonly waiting: Thread[] = [];
+  public readonly waiting: Thread[] = [];
 
   public readonly owner?: Thread;
 
@@ -22,10 +22,6 @@ export default class Lock {
 
   public addWaiting(thread: Thread): void {
     this.waiting.push(thread);
-  }
-
-  public getWaiting(): Thread[] {
-    return this.waiting.slice();
   }
 
   private static parseId(id: string): string {

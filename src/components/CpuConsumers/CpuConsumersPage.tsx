@@ -29,7 +29,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
     const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
 
     this.state = {
-      limit: 100,
+      limit: 40,
       mode: CpuConsumersMode.Mean,
       threadDumps: nonEmptyThreadDumps,
     };

@@ -29,7 +29,7 @@ const GroupDetails: React.FunctionComponent<Props> = ({ maxDifferingLines, threa
   <>
     {threadGroup.map((thread, index, array) => (
       <ThreadDetails
-        key={thread.runningFor}
+        key={thread.uniqueId}
         thread={thread}
         showStackTrace={shouldShowStackTrace(thread, array[index + 1], maxDifferingLines)}
         maxDifferingLines={maxDifferingLines}
