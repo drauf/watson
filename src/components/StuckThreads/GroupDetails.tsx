@@ -26,7 +26,7 @@ const shouldShowStackTrace = (current: Thread, next: Thread | undefined, maxDiff
 };
 
 const GroupDetails: React.FunctionComponent<Props> = ({ maxDifferingLines, threadGroup }) => (
-  <>
+  <div className="group-details">
     {threadGroup.map((thread, index, array) => (
       <ThreadDetails
         key={thread.uniqueId}
@@ -35,7 +35,7 @@ const GroupDetails: React.FunctionComponent<Props> = ({ maxDifferingLines, threa
         maxDifferingLines={maxDifferingLines}
       />
     ))}
-  </>
+  </div>
 );
 
 export default GroupDetails;
