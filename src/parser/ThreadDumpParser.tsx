@@ -44,7 +44,7 @@ export default class ThreadDumpParser {
     const tid = parseInt(matchOne(TID_PATTERN, header), 16);
     const id = nid !== 0 ? nid : tid;
 
-    ThreadDumpParser.currentThread = new Thread(id, name, threadDump.getEpoch());
+    ThreadDumpParser.currentThread = new Thread(id, name, threadDump.epoch);
     threadDump.threads.push(ThreadDumpParser.currentThread);
   }
 
@@ -119,7 +119,7 @@ export default class ThreadDumpParser {
 
     threads
       .filter((thread) => !thread.lockWaitingFor)
-      .filter((thread) => thread.status !== undefined && validStatuses.includes(thread.status))
+      .filter((thread) => validStatuses.includes(thread.status))
       .forEach((thread) => {
         const lock: Lock = thread.classicalLocksHeld[0];
         if (!lock) {
@@ -134,7 +134,7 @@ export default class ThreadDumpParser {
       });
   }
 
-  private static stringToThreadStatus(status: string): ThreadStatus | undefined {
+  private static stringToThreadStatus(status: string): ThreadStatus {
     const key = status as keyof typeof ThreadStatus;
     const threadStatus = ThreadStatus[key] as ThreadStatus;
     if (threadStatus) {
@@ -151,7 +151,7 @@ export default class ThreadDumpParser {
       return ThreadStatus.TIMED_WAITING;
     }
 
-    return undefined;
+    return ThreadStatus.UNKNOWN;
   }
 
   private static getOrCreateLock(locks: Lock[], id: string, className: string, owner?: Thread): Lock {

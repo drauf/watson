@@ -4,39 +4,31 @@ import MemoryUsage from './MemoryUsage';
 import Thread from './Thread';
 
 export default class ThreadDump {
-  public static getFormattedTime = (threadDump: ThreadDump): string => (threadDump.epoch
-    ? new Date(threadDump.epoch).toUTCString().substr(17, 8)
-    : 'unknown time');
+  public static getFormattedTime = (threadDump: ThreadDump): string => (
+    new Date(threadDump.epoch).toUTCString().substr(17, 8)
+  );
 
-  public static from = (date: string | null): ThreadDump => {
-    if (!date) {
-      return new ThreadDump();
-    }
-
+  public static from = (date: string): ThreadDump => {
     // we can't use new Date(date).valueOf() due to Safari not understanding the date format
     const hours = parseInt(date.substring(11, 13), 10);
     const minutes = parseInt(date.substring(14, 16), 10);
     const seconds = parseInt(date.substring(17), 10);
-    return ThreadDump.fromEpoch(hours * 3600000 + minutes * 60000 + seconds * 1000);
+    return new ThreadDump(hours * 3600000 + minutes * 60000 + seconds * 1000);
   };
 
-  public static fromEpoch = (epoch?: number): ThreadDump => {
-    const threadDump = new ThreadDump();
-    threadDump.epoch = epoch;
-    return threadDump;
-  };
+  public readonly epoch: number;
 
-  public loadAverages?: LoadAverages;
+  public readonly threads: Thread[] = [];
+
+  public readonly locks: Lock[] = [];
 
   public runningProcesses!: number;
 
   public memoryUsage!: MemoryUsage;
 
-  public threads: Thread[] = [];
+  public loadAverages!: LoadAverages;
 
-  public locks: Lock[] = [];
-
-  private epoch?: number;
-
-  public getEpoch = (): number | undefined => this.epoch;
+  constructor(epoch: number) {
+    this.epoch = epoch;
+  }
 }
