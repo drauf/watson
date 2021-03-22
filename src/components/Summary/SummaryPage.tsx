@@ -17,12 +17,12 @@ export default class SummaryPage extends React.PureComponent<WithThreadDumpsProp
 
     return (
       <main>
+        <RunningProcessesChart threadDumps={threadDumps} />
         <div id="memory-usages">
           <MemoryUsageChart threadDumps={threadDumps} />
           <SwapUsageChart threadDumps={threadDumps} />
         </div>
         <LoadAveragesChart threadDumps={threadDumps} />
-        <RunningProcessesChart threadDumps={threadDumps} />
       </main>
     );
   };
