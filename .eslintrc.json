@@ -31,12 +31,14 @@
     "no-param-reassign": [
       "warn"
     ],
-    // Fix "X is already declared in the upper scope" for TS enums
-    "no-shadow": "off",
-    "@typescript-eslint/no-shadow": [
-      "error"
+    // Turn some a11y issues from errors to warnings
+    "jsx-a11y/click-events-have-key-events": [
+      "warn"
     ],
-    // suppress errors for missing 'import React' in files
+    "jsx-a11y/no-noninteractive-element-interactions": [
+      "warn"
+    ],
+    // Suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
     // Diff to airbnb: Allow use of for…in loops
     "no-restricted-syntax": [
@@ -57,17 +59,8 @@
         }
       }
     ],
-    // Turn some a11y issues from errors to warnings
-    "jsx-a11y/click-events-have-key-events": [
-      "warn"
-    ],
-    "jsx-a11y/no-noninteractive-element-interactions": [
-      "warn"
-    ],
     // Use TS types instead of PropTypes
     "react/prop-types": "off",
-    // Fix "React was used before it was defined" error
-    "no-use-before-define": "off",
     // Allow ++ operator
     "no-plusplus": "off",
     // Allow printing errors and warnings to the console
@@ -81,13 +74,6 @@
       }
     ],
     // Make .tsx files work properly
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "tsx": "never"
-      }
-    ],
     "react/jsx-filename-extension": [
       1,
       {
@@ -102,9 +88,7 @@
       "node": {
         "extensions": [
           ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
+          ".ts"
         ]
       }
     }
