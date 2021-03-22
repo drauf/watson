@@ -1,0 +1,13 @@
+.group-details {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.group-details button {
+  min-width: 68px;
+  margin: 6px 0 0;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+}

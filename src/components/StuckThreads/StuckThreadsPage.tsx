@@ -8,6 +8,7 @@ import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
 import StuckThreadsGroup from './StuckThreadsGroup';
 import StuckThreadsSettings from './StuckThreadsSettings';
+import './StuckThreadsPage.css';
 
 type State = {
   maxDifferingLines: number;

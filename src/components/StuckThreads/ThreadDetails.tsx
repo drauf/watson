@@ -33,11 +33,9 @@ export default class ThreadDetails extends React.PureComponent<Props, State> {
 
     return (
       <>
-        <h6>
-          <button type="button" onClick={this.handleClick}>
-            {Thread.getFormattedTime(thread)}
-          </button>
-        </h6>
+        <button type="button" onClick={this.handleClick}>
+          {Thread.getFormattedTime(thread)}
+        </button>
 
         {showStackTrace && (
           <ol className="stacktrace">
