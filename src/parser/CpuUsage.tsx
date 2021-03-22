@@ -1,5 +1,5 @@
-import LoadAverages from './LoadAverage';
-import MemoryUsage from './MemoryUsage';
+import LoadAverages from '../types/LoadAverage';
+import MemoryUsage from '../types/MemoryUsage';
 import ThreadCpuUsage from './ThreadCpuUsage';
 
 export default class CpuUsage {
