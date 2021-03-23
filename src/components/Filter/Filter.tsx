@@ -8,18 +8,22 @@ type Props = {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const Filter: React.FunctionComponent<Props> = ({
-  name, displayName, checked, onChange,
-}) => (
-  <label className={checked ? 'checked' : ''}>
-    <input
-      type="checkbox"
-      name={name}
-      checked={checked}
-      onChange={onChange}
-    />
-    {displayName}
-  </label>
-);
+export default class Filter extends React.PureComponent<Props> {
+  public render(): JSX.Element {
+    const {
+      name, displayName, checked, onChange,
+    } = this.props;
 
-export default Filter;
+    return (
+      <label className={checked ? 'checked' : ''}>
+        <input
+          type="checkbox"
+          name={name}
+          checked={checked}
+          onChange={onChange}
+        />
+        {displayName}
+      </label>
+    );
+  }
+}
