@@ -4,11 +4,11 @@ import TypeWithUniqueId from '../../types/TypeWithUniqueId';
 export default class CpuConsumer extends TypeWithUniqueId {
   public readonly calculatedValue: number;
 
-  public readonly threadOccurences: Map<number, Thread>;
+  public readonly threadOccurrences: Map<number, Thread>;
 
-  constructor(calculatedValue: number, threadOccurences: Map<number, Thread>) {
+  constructor(calculatedValue: number, threadOccurrences: Map<number, Thread>) {
     super();
     this.calculatedValue = calculatedValue;
-    this.threadOccurences = threadOccurences;
+    this.threadOccurrences = threadOccurrences;
   }
 }
