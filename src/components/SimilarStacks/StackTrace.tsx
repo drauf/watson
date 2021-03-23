@@ -5,14 +5,15 @@ type Props = {
   linesToConsider: number;
 };
 
-const StackTrace: React.FunctionComponent<Props> = ({ stackTrace, linesToConsider }) => {
-  const stack = linesToConsider > 0 ? stackTrace.slice(0, linesToConsider) : stackTrace;
+export default class StackTrace extends React.PureComponent<Props> {
+  public render(): JSX.Element {
+    const { stackTrace, linesToConsider } = this.props;
+    const stack = linesToConsider > 0 ? stackTrace.slice(0, linesToConsider) : stackTrace;
 
-  return (
-    <ul className="stacktrace">
-      {stack.map((line) => <li>{line}</li>)}
-    </ul>
-  );
-};
-
-export default StackTrace;
+    return (
+      <ul className="stacktrace">
+        {stack.map((line) => <li>{line}</li>)}
+      </ul>
+    );
+  }
+}

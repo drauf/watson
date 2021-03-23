@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 import { clearCurrentThreadDump } from '../../common/threadDumpsStorageService';
-import './Navigation.css';
 import OutboundLink from './OutboundLink';
+import './Navigation.css';
 
 export const ISSUE_TRACKER_LINK = 'https://github.com/drauf/watson/issues';
 export const SOURCE_CODE_LINK = 'https://github.com/drauf/watson';

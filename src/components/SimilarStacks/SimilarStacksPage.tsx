@@ -43,7 +43,7 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
     );
   }
 
-  private renderThreadGroups(threadGroups: Thread[][]) {
+  private renderThreadGroups = (threadGroups: Thread[][]) => {
     if (threadGroups.length === 0) {
       return <h4>{SimilarStacksPage.N0_THREADS_MATCHING}</h4>;
     }
@@ -53,9 +53,9 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
         linesToConsider={this.state.linesToConsider}
       />
     ));
-  }
+  };
 
-  private groupByStackTrace(threadDumps: ThreadDump[], linesToConsider: number) {
+  private groupByStackTrace = (threadDumps: ThreadDump[], linesToConsider: number) => {
     const grouped = new Map<string, Thread[]>();
 
     threadDumps.forEach((threadDump) => {
@@ -77,9 +77,9 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
     });
 
     return Array.from(grouped.values()).sort((t1, t2) => t2.length - t1.length);
-  }
+  };
 
-  private getStackTrace(thread: Thread, linesToConsider: number): string | null {
+  private getStackTrace = (thread: Thread, linesToConsider: number): string | null => {
     if (this.state.withoutIdle && isIdleThread(thread)) {
       return null;
     }
@@ -89,5 +89,5 @@ export default class SimilarStacksPage extends PageWithSettings<State> {
     }
 
     return thread.stackTrace.slice(0, linesToConsider).toString();
-  }
+  };
 }

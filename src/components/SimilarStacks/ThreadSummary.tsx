@@ -38,7 +38,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
   };
 
-  private waitingForRender(thread: Thread, lockOwner?: Thread) {
+  private waitingForRender = (thread: Thread, lockOwner?: Thread) => {
     const lockWaitingFor = thread.lockWaitingFor ? thread.lockWaitingFor.id : null;
 
     if (!lockWaitingFor) {
@@ -59,7 +59,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
       );
     }
     return `, awaiting notification on [${lockWaitingFor}] without an owner`;
-  }
+  };
 
   public render(): JSX.Element {
     const { thread } = this.props;
