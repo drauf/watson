@@ -7,24 +7,24 @@ type Props = {
   monitor: Monitor;
 };
 
-const MonitorItem: React.FunctionComponent<Props> = ({ monitor }) => {
-  const javaClass = monitor.javaClass
-    ? monitor.javaClass.substring(monitor.javaClass.lastIndexOf('.') + 1)
-    : 'unknown class';
+export default class MonitorItem extends React.PureComponent<Props> {
+  public render(): JSX.Element {
+    const { monitor } = this.props;
+    const javaClass = monitor.javaClass
+      ? monitor.javaClass.substring(monitor.javaClass.lastIndexOf('.') + 1)
+      : 'unknown class';
 
-  return (
-    <div className="monitors-container">
-      <div className="left">
-        <b>{monitor.time}</b>
-        <br />
-        {javaClass}
+    return (
+      <div className="monitors-container">
+        <div className="left">
+          <h5>{monitor.time}</h5>
+          {javaClass}
+        </div>
+        <div>
+          <MonitorOwner monitor={monitor} />
+          <WaitingList waiting={monitor.waiting} />
+        </div>
       </div>
-      <div>
-        <MonitorOwner monitor={monitor} />
-        <WaitingList waiting={monitor.waiting} />
-      </div>
-    </div>
-  );
-};
-
-export default MonitorItem;
+    );
+  }
+}
