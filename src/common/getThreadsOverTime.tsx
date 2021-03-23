@@ -11,13 +11,13 @@ export default function getThreadsOverTime(threadDumps: ThreadDump[]): Array<Map
 
   threadDumps.forEach((threadDump, dumpNumber) => {
     threadDump.threads.forEach((thread) => {
-      let threadOccurences = threadsOverTime.get(thread.id);
-      if (!threadOccurences) {
-        threadOccurences = new Map<number, Thread>();
+      let threadOccurrences = threadsOverTime.get(thread.id);
+      if (!threadOccurrences) {
+        threadOccurrences = new Map<number, Thread>();
       }
 
-      threadOccurences.set(dumpNumber, thread);
-      threadsOverTime.set(thread.id, threadOccurences);
+      threadOccurrences.set(dumpNumber, thread);
+      threadsOverTime.set(thread.id, threadOccurrences);
     });
   });
 
