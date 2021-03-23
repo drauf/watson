@@ -9,41 +9,45 @@ type Props = {
   onIntegerChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const SimilarStacksSettings: React.FunctionComponent<Props> = ({
-  linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange,
-}) => (
-  <section id="settings">
-    <div className="filters">
-      <b>Filters:</b>
+export default class SimilarStacksSettings extends React.PureComponent<Props> {
+  public render(): JSX.Element {
+    const {
+      linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange,
+    } = this.props;
 
-      <Filter
-        name="withoutIdle"
-        displayName="Without Idle"
-        checked={withoutIdle}
-        onChange={onFilterChange}
-      />
-    </div>
+    return (
+      <section id="settings">
+        <div className="filters">
+          <b>Filters:</b>
 
-    <label>
-      <input
-        type="number"
-        name="linesToConsider"
-        value={linesToConsider}
-        onChange={onIntegerChange}
-      />
-      <b>Stack trace lines to compare</b>
-    </label>
+          <Filter
+            name="withoutIdle"
+            displayName="Without Idle"
+            checked={withoutIdle}
+            onChange={onFilterChange}
+          />
+        </div>
 
-    <label>
-      <input
-        type="number"
-        name="minimalGroupSize"
-        value={minimalGroupSize}
-        onChange={onIntegerChange}
-      />
-      <b>Minimal group size to show</b>
-    </label>
-  </section>
-);
+        <label>
+          <input
+            type="number"
+            name="linesToConsider"
+            value={linesToConsider}
+            onChange={onIntegerChange}
+          />
+          <b>Stack trace lines to compare</b>
+        </label>
 
-export default SimilarStacksSettings;
+        <label>
+          <input
+            type="number"
+            name="minimalGroupSize"
+            value={minimalGroupSize}
+            onChange={onIntegerChange}
+          />
+          <b>Minimal group size to show</b>
+        </label>
+      </section>
+    );
+  }
+}
