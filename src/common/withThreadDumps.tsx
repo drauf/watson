@@ -13,7 +13,7 @@ type State = {
 };
 
 export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent: React.ComponentType<P>): React.ComponentType<P> => {
-  class WithThreadDumps extends React.Component<P, State> {
+  class WithThreadDumps extends React.PureComponent<P, State> {
     constructor(props: P) {
       super(props);
       this.state = {
@@ -40,9 +40,9 @@ export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent
     }
 
     private scrollToTop = () => {
-      const contentDiv = document.getElementById('content');
-      if (contentDiv) {
-        contentDiv.scrollTop = 0;
+      const rootDiv = document.getElementById('root');
+      if (rootDiv) {
+        rootDiv.scrollTop = 0;
       }
     };
 
