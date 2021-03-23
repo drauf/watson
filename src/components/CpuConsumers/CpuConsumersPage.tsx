@@ -7,14 +7,9 @@ import NoCpuInfosAndThreadDumpPairError from '../Errors/NoCpuInfosAndThreadDumpP
 import PageWithSettings from '../PageWithSettings';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumersList from './CpuConsumersList';
-import './CpuConsumersPage.css';
 import CpuConsumersSettings from './CpuConsumersSettings';
-
-export enum CpuConsumersMode {
-  Mean,
-  Median,
-  Max,
-}
+import CpuConsumersMode from './CpuConsumersMode';
+import './CpuConsumersPage.css';
 
 type State = {
   mode: CpuConsumersMode;
@@ -64,7 +59,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
     this.setState({ mode: mode as CpuConsumersMode });
   };
 
-  private calculateCpuUsages(calculationMode: CpuConsumersMode): CpuConsumer[] {
+  private calculateCpuUsages = (calculationMode: CpuConsumersMode): CpuConsumer[] => {
     const consumers: CpuConsumer[] = [];
     const threadsOverTime = getThreadsOverTime(this.state.threadDumps);
 
@@ -74,7 +69,7 @@ export default class CpuConsumersPage extends PageWithSettings<State> {
     consumers.sort((a, b) => b.calculatedValue - a.calculatedValue);
 
     return consumers;
-  }
+  };
 
   private calculateUsageFor = (threadsMap: Map<number, Thread>, calculationMode: CpuConsumersMode) => {
     const threads = Array.from(threadsMap.values());
