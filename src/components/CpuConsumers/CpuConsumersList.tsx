@@ -8,16 +8,16 @@ type Props = {
   consumers: CpuConsumer[];
 };
 
-const CpuConsumersList: React.FunctionComponent<Props> = ({ limit, dumpsNumber, consumers }) => (
-  <>
-    <span>You can click on a lozenge to open the thread details window.</span>
+export default class CpuConsumersList extends React.PureComponent<Props> {
+  public render(): JSX.Element {
+    const { limit, dumpsNumber, consumers } = this.props;
 
-    <ul id="consumers-list">
-      {consumers.slice(0, limit).map((consumer) => (
-        <CpuConsumerItem key={consumer.uniqueId} dumpsNumber={dumpsNumber} consumer={consumer} />
-      ))}
-    </ul>
-  </>
-);
-
-export default CpuConsumersList;
+    return (
+      <ul id="consumers-list">
+        {consumers.slice(0, limit).map((consumer) => (
+          <CpuConsumerItem key={consumer.uniqueId} dumpsNumber={dumpsNumber} consumer={consumer} />
+        ))}
+      </ul>
+    );
+  }
+}
