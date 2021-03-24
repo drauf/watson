@@ -12,36 +12,38 @@ type Props = {
   threadDumps: ThreadDump[];
 };
 
-const MemoryUsageChart: React.FunctionComponent<Props> = ({ threadDumps }) => {
-  const memoryUsages: MemoryUsage[] = threadDumps
-    .map((threadDump) => threadDump.memoryUsage)
-    .filter((memoryUsage) => !!memoryUsage);
+export default class MemoryUsageChart extends React.PureComponent<Props> {
+  public render(): JSX.Element {
+    const { threadDumps } = this.props;
 
-  const freeMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryFree, 0) / memoryUsages.length;
-  const usedMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryUsed, 0) / memoryUsages.length;
+    const memoryUsages: MemoryUsage[] = threadDumps
+      .map((threadDump) => threadDump.memoryUsage)
+      .filter((memoryUsage) => !!memoryUsage);
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  const data: object[] = [
-    { name: 'Used memory', value: usedMemoryAvg },
-    { name: 'Free memory', value: freeMemoryAvg },
-  ];
+    const freeMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryFree, 0) / memoryUsages.length;
+    const usedMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryUsed, 0) / memoryUsages.length;
 
-  return (
-    <div>
-      <h3>Memory usage</h3>
-      <ResponsiveContainer width="100%" height={250}>
-        <PieChart>
-          <Pie data={data} dataKey="value" nameKey="name">
-            {
-              data.map((_, index) => <Cell key={COLORS[index]} fill={COLORS[index]} />)
-            }
-          </Pie>
-          <Tooltip formatter={labelFormatter} />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
-  );
-};
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    const data: object[] = [
+      { name: 'Used memory', value: usedMemoryAvg },
+      { name: 'Free memory', value: freeMemoryAvg },
+    ];
 
-export default MemoryUsageChart;
+    return (
+      <div>
+        <h3>Memory usage</h3>
+        <ResponsiveContainer width="100%" height={250}>
+          <PieChart>
+            <Pie data={data} dataKey="value" nameKey="name">
+              {
+                data.map((_, index) => <Cell key={COLORS[index]} fill={COLORS[index]} />)
+              }
+            </Pie>
+            <Tooltip formatter={labelFormatter} />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  }
+}
