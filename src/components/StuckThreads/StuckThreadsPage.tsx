@@ -55,7 +55,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
     );
   }
 
-  private renderStuckThreads(clusters: Thread[][]): React.ReactNode {
+  private renderStuckThreads = (clusters: Thread[][]): React.ReactNode => {
     if (clusters.length === 0) {
       return <h4>{StuckThreadsPage.N0_THREADS_MATCHING}</h4>;
     }
@@ -66,7 +66,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
         maxDifferingLines={this.state.maxDifferingLines}
       />
     ));
-  }
+  };
 
   private filterThreads = (threadDumps: Array<Map<number, Thread>>): Thread[][] => threadDumps
     .map((threadDump) => this.filterThread(threadDump))
