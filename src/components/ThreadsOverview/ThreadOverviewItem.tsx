@@ -45,7 +45,7 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
       <>
         <td className={className} onClick={this.toggleDetails}>
           {thread.stackTrace[0]}
-          <span>{thread.stackTrace[0]}</span>
+          {thread.stackTrace[0] && <span>{thread.stackTrace[0]}</span>}
         </td>
 
         {showDetails && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
