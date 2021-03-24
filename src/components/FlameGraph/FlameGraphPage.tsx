@@ -18,23 +18,53 @@ export default class FlameGraphPage extends React.PureComponent<WithThreadDumpsP
 
   public componentDidMount(): void {
     const { threadDumps } = this.props;
+    // todo: filter out non-active threads before passing them down
     const chartData: StackFrame = this.calculateChartData(threadDumps);
     this.setState({ chartData });
   }
 
-  private calculateChartData = (threadDumps: ThreadDump[]): StackFrame => (
-    {
-      name: 'name',
-      value: 200,
-      children: [
-        {
-          name: 'child',
-          value: 100,
-          children: [],
-        },
-      ],
+  private processLine = (previousFrame: StackFrame, line: string): StackFrame => {
+    const existingFrame = previousFrame.children.find((frame) => frame.name === line);
+    if (existingFrame) {
+      existingFrame.value += 1;
+      return existingFrame;
     }
-  );
+
+    const newFrame = {
+      name: line,
+      value: 1,
+      children: [],
+    };
+
+    previousFrame.children.push(newFrame);
+    return newFrame;
+  };
+
+  private processStackTrace = (root: StackFrame, stackTrace: string[]): void => {
+    let previousFrame = root;
+
+    for (const line of stackTrace) {
+      // todo: collapse "boring" lines to make chart's height manageable
+      const currentFrame = this.processLine(previousFrame, line);
+      previousFrame = currentFrame;
+    }
+  };
+
+  private calculateChartData = (threadDumps: ThreadDump[]): StackFrame => {
+    const root = {
+      name: 'root',
+      value: 0,
+      children: [],
+    };
+
+    threadDumps.forEach((threadDump) => (
+      threadDump.threads.forEach((thread) => (
+        this.processStackTrace(root, thread.stackTrace)
+      ))
+    ));
+
+    return root;
+  };
 
   public render(): JSX.Element {
     const { threadDumps } = this.props;
