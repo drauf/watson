@@ -1,9 +1,10 @@
 import React from 'react';
-import * as d3 from 'd3';
-import { flamegraph, StackFrame } from 'd3-flame-graph';
+import { StackFrame } from 'd3-flame-graph';
 import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import ThreadDump from '../../types/ThreadDump';
+import FlameGraph from './FlameGraph';
+import './FlameGraphPage.css';
 
 type State = {
   chartData?: StackFrame;
@@ -19,22 +20,6 @@ export default class FlameGraphPage extends React.PureComponent<WithThreadDumpsP
     const { threadDumps } = this.props;
     const chartData: StackFrame = this.calculateChartData(threadDumps);
     this.setState({ chartData });
-  }
-
-  public componentDidUpdate(): void {
-    const { chartData } = this.state;
-
-    // to check: color mapper, search
-    const chart = flamegraph()
-      .width(1600)
-      .sort(true)
-      .inverted(true)
-      .setDetailsElement(document.getElementById('details'));
-
-    d3.select('#chart')
-      .datum(chartData)
-      .attr('width', 600)
-      .call(chart);
   }
 
   private calculateChartData = (threadDumps: ThreadDump[]): StackFrame => (
@@ -68,8 +53,7 @@ export default class FlameGraphPage extends React.PureComponent<WithThreadDumpsP
 
     return (
       <main>
-        <div id="details" />
-        <div id="chart" />
+        <FlameGraph chartData={chartData} />
       </main>
     );
   }
