@@ -23,8 +23,6 @@ export default class Thread extends TypeWithUniqueId {
 
   public runningFor = '0:00.00';
 
-  public matchingFilter = false;
-
   public lockWaitingFor?: Lock;
 
   private readonly epoch?: number;

@@ -5,12 +5,12 @@ import ThreadOverviewItem from './ThreadOverviewItem';
 type Props = {
   total: number;
   threads: Map<number, Thread>;
-  isFiltered: boolean;
+  matchingStackFilter: Set<number>;
 };
 
 export default class ThreadOverviewRow extends React.PureComponent<Props> {
   public render(): JSX.Element {
-    const { total, threads, isFiltered } = this.props;
+    const { total, threads, matchingStackFilter } = this.props;
 
     const threadsPadded: Array<Thread | undefined> = [];
     for (let i = 0; i < total; i++) {
@@ -30,8 +30,7 @@ export default class ThreadOverviewRow extends React.PureComponent<Props> {
           <ThreadOverviewItem
             key={thread ? thread.uniqueId : `undefined_${index}`}
             thread={thread}
-            isFiltered={isFiltered}
-            isMatchingFilter={thread ? thread.matchingFilter : false}
+            isMatchingStackFilter={thread ? matchingStackFilter.has(thread.uniqueId) : false}
           />
         ))}
       </tr>
