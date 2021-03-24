@@ -25,9 +25,9 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
   public render(): JSX.Element {
     const { dumpsNumber, consumer } = this.props;
 
-    const threads: Array<Thread | undefined> = [];
+    const threadsPadded: Array<Thread | undefined> = [];
     for (let i = 0; i < dumpsNumber; i++) {
-      threads.push(consumer.threadOccurrences.get(i));
+      threadsPadded.push(consumer.threadOccurrences.get(i));
     }
 
     return (
@@ -36,7 +36,7 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
           {this.formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurrences.values())}
         </h5>
         <span>
-          {threads.map((thread, index) => (
+          {threadsPadded.map((thread, index) => (
             <CpuConsumerSingleUsage key={thread ? thread.uniqueId : `undefined_${index}`} thread={thread} />
           ))}
         </span>
