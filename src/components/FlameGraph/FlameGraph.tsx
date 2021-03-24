@@ -23,6 +23,7 @@ export default class FlameGraph extends React.PureComponent<Props> {
   }
 
   public render(): JSX.Element {
+    // todo: make details float over the chart
     return (
       <>
         <div id="flame-chart-details" />

@@ -6,6 +6,8 @@ import FlameGraph from './FlameGraph';
 import PageWithSettings from '../PageWithSettings';
 import FlameGraphSettings from './FlameGraphSettings';
 import './FlameGraphPage.css';
+import Thread from '../../types/Thread';
+import isIdleThread from '../../common/isIdleThread';
 
 type State = {
   withoutIdle: boolean;
@@ -46,20 +48,32 @@ export default class FlameGraphPage extends PageWithSettings<State> {
     }
   };
 
-  private calculateChartData = (threadDumps: ThreadDump[]): StackFrame => {
+  private calculateChartData = (threads: Thread[]): StackFrame => {
     const root = {
       name: 'root',
       value: 0,
       children: [],
     };
 
-    threadDumps.forEach((threadDump) => (
-      threadDump.threads.forEach((thread) => (
-        this.processStackTrace(root, thread.stackTrace)
-      ))
+    threads.forEach((thread) => (
+      this.processStackTrace(root, thread.stackTrace)
     ));
 
     return root;
+  };
+
+  private filterThreads = (threadDumps: ThreadDump[]): Thread[] => {
+    const threads: Thread[] = [];
+
+    for (const threadDump of threadDumps) {
+      for (const thread of threadDump.threads) {
+        if (!this.state.withoutIdle || !isIdleThread(thread)) {
+          threads.push(thread);
+        }
+      }
+    }
+
+    return threads;
   };
 
   public render(): JSX.Element {
@@ -68,8 +82,8 @@ export default class FlameGraphPage extends PageWithSettings<State> {
       return <NoThreadDumpsError />;
     }
 
-    // todo: filter out non-active threads before passing them down
-    const chartData: StackFrame = this.calculateChartData(threadDumps);
+    const filteredThreads = this.filterThreads(threadDumps);
+    const chartData: StackFrame = this.calculateChartData(filteredThreads);
 
     return (
       <main>
