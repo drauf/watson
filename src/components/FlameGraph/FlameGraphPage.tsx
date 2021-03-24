@@ -9,6 +9,7 @@ import './FlameGraphPage.css';
 import Thread from '../../types/Thread';
 import isIdleThread from '../../common/isIdleThread';
 
+// todo: additional filtering options
 type State = {
   withoutIdle: boolean;
 };
@@ -41,8 +42,7 @@ export default class FlameGraphPage extends PageWithSettings<State> {
   private processStackTrace = (root: StackFrame, stackTrace: string[]): void => {
     let previousFrame = root;
 
-    for (const line of stackTrace) {
-      // todo: collapse "boring" lines to make chart's height manageable
+    for (const line of stackTrace.reverse()) {
       const currentFrame = this.processLine(previousFrame, line);
       previousFrame = currentFrame;
     }
