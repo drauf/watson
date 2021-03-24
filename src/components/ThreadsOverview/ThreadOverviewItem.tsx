@@ -5,8 +5,7 @@ import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
 type Props = {
   thread?: Thread;
-  isFiltered: boolean;
-  isMatchingFilter: boolean;
+  isMatchingStackFilter: boolean;
 };
 
 type State = {
@@ -27,20 +26,20 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
     this.setState({ showDetails: false });
   };
 
-  private getClassName = (isFiltered: boolean, isMatchingFilter: boolean, status: ThreadStatus) => {
+  private getClassName = (isMatchingStackFilter: boolean, status: ThreadStatus) => {
     const statusClass = status.toString();
-    return isFiltered && isMatchingFilter ? `${statusClass} matching` : statusClass;
+    return isMatchingStackFilter ? `${statusClass} matching` : statusClass;
   };
 
   public render(): JSX.Element {
     const { showDetails } = this.state;
-    const { thread, isFiltered, isMatchingFilter } = this.props;
+    const { thread, isMatchingStackFilter } = this.props;
 
     if (!thread) {
       return <td className="unknown" />;
     }
 
-    const className = this.getClassName(isFiltered, isMatchingFilter, thread.status);
+    const className = this.getClassName(isMatchingStackFilter, thread.status);
 
     return (
       <>

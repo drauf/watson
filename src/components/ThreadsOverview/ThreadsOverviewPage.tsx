@@ -46,6 +46,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
     const threadOverTime = getThreadsOverTime(nonEmptyThreadDumps);
     const filteredDumps = this.filterThreads(threadOverTime);
+    const matchingStackFilter = this.getThreadsMatchingStackFilter(filteredDumps, this.state.stackFilter);
     const dates = nonEmptyThreadDumps.map((dump) => ThreadDump.getFormattedTime(dump));
     const isFilteredByStack = this.isFilteredByStack();
 
@@ -74,6 +75,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
             isFilteredByStack={isFilteredByStack}
             threadsNumber={threadOverTime.length}
             threadDumps={filteredDumps}
+            matchingStackFilter={matchingStackFilter}
           />
 
           <ThreadsOverviewLegend />
@@ -81,8 +83,8 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
 
         <ThreadsOverviewTable
           dates={dates}
-          isFilteredByStack={isFilteredByStack}
           threadDumps={filteredDumps}
+          matchingStackFilter={matchingStackFilter}
         />
       </main>
     );
@@ -96,7 +98,6 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     let filtered = this.filterByActive(threadDumps, this.state.active);
     filtered = this.filterByCpuUsage(filtered, this.state.usingCpu);
     filtered = this.filterByName(filtered, this.state.nameFilter);
-    this.markMatchingStackFilter(filtered, this.state.stackFilter);
     return filtered;
   };
 
@@ -198,25 +199,19 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     return false;
   };
 
-  private markMatchingStackFilter = (threadDumps: Array<Map<number, Thread>>, filter: string) => {
-    this.clearAllMatches(threadDumps);
+  private getThreadsMatchingStackFilter = (threadDumps: Array<Map<number, Thread>>, filter: string): Set<number> => {
+    const matchingThreadIds = new Set<number>();
 
     const filters = this.getStackTraceFilters(filter);
     if (filters.length === 0) {
-      return;
+      return matchingThreadIds;
     }
 
     threadDumps.forEach((threads) => {
-      threads.forEach((thread) => this.markIfMatchesAllFilters(thread, filters));
+      threads.forEach((thread) => this.addIfMatchesAllFilters(matchingThreadIds, thread, filters));
     });
-  };
 
-  private clearAllMatches = (threadDumps: Array<Map<number, Thread>>) => {
-    threadDumps.forEach((threads) => {
-      threads.forEach((thread) => {
-        thread.matchingFilter = false;
-      });
-    });
+    return matchingThreadIds;
   };
 
   private getStackTraceFilters = (userProvidedFilter: string): RegExp[] => {
@@ -241,13 +236,13 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     return filters;
   };
 
-  private markIfMatchesAllFilters = (thread: Thread, filters: RegExp[]) => {
+  private addIfMatchesAllFilters = (matchingThreadIds: Set<number>, thread: Thread, filters: RegExp[]) => {
     for (const filter of filters) {
       if (!this.matchesStackTraceFilter(thread, filter)) {
         return;
       }
     }
-    thread.matchingFilter = true;
+    matchingThreadIds.add(thread.uniqueId);
   };
 
   private matchesStackTraceFilter = (thread: Thread, filter: RegExp) => {

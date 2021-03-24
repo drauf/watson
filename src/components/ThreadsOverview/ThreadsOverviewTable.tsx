@@ -4,13 +4,13 @@ import ThreadOverviewRow from './ThreadOverviewRow';
 
 type Props = {
   dates: Array<string | null>;
-  isFilteredByStack: boolean;
   threadDumps: Array<Map<number, Thread>>;
+  matchingStackFilter: Set<number>;
 };
 
 export default class ThreadsOverview extends React.PureComponent<Props> {
   public render(): JSX.Element {
-    const { dates, isFilteredByStack, threadDumps } = this.props;
+    const { dates, threadDumps, matchingStackFilter } = this.props;
 
     return (
       <div id="threads-overview-table-wrapper">
@@ -30,9 +30,9 @@ export default class ThreadsOverview extends React.PureComponent<Props> {
             {threadDumps.map((threads) => (
               <ThreadOverviewRow
                 key={(threads.values().next().value as Thread).uniqueId}
-                isFiltered={isFilteredByStack}
                 total={dates.length}
                 threads={threads}
+                matchingStackFilter={matchingStackFilter}
               />
             ))}
           </tbody>
