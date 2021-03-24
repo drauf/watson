@@ -1,19 +1,24 @@
-import React from 'react';
 import { StackFrame } from 'd3-flame-graph';
 import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import ThreadDump from '../../types/ThreadDump';
 import FlameGraph from './FlameGraph';
+import PageWithSettings from '../PageWithSettings';
+import FlameGraphSettings from './FlameGraphSettings';
 import './FlameGraphPage.css';
 
 type State = {
-  chartData?: StackFrame;
+  withoutIdle: boolean;
+  search: string;
 };
 
-export default class FlameGraphPage extends React.PureComponent<WithThreadDumpsProps, State> {
+export default class FlameGraphPage extends PageWithSettings<State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      withoutIdle: true,
+      search: '',
+    };
   }
 
   private processLine = (previousFrame: StackFrame, line: string): StackFrame => {
@@ -70,6 +75,13 @@ export default class FlameGraphPage extends React.PureComponent<WithThreadDumpsP
 
     return (
       <main>
+        <FlameGraphSettings
+          withoutIdle={this.state.withoutIdle}
+          search={this.state.search}
+          onFilterChange={this.handleFilterChange}
+          onSearchChange={this.handleTextChange}
+        />
+
         <FlameGraph chartData={chartData} />
       </main>
     );
