@@ -9,7 +9,6 @@ import './FlameGraphPage.css';
 
 type State = {
   withoutIdle: boolean;
-  search: string;
 };
 
 export default class FlameGraphPage extends PageWithSettings<State> {
@@ -17,7 +16,6 @@ export default class FlameGraphPage extends PageWithSettings<State> {
     super(props);
     this.state = {
       withoutIdle: true,
-      search: '',
     };
   }
 
@@ -77,9 +75,7 @@ export default class FlameGraphPage extends PageWithSettings<State> {
       <main>
         <FlameGraphSettings
           withoutIdle={this.state.withoutIdle}
-          search={this.state.search}
           onFilterChange={this.handleFilterChange}
-          onSearchChange={this.handleTextChange}
         />
 
         <FlameGraph chartData={chartData} />

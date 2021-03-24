@@ -3,15 +3,13 @@ import Filter from '../Filter/Filter';
 
 type Props = {
   withoutIdle: boolean;
-  search: string;
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
-  onSearchChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 export default class FlameGraphSettings extends React.PureComponent<Props> {
   public render(): JSX.Element {
     const {
-      withoutIdle, search, onFilterChange, onSearchChange,
+      withoutIdle, onFilterChange,
     } = this.props;
 
     return (
@@ -26,16 +24,6 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
             onChange={onFilterChange}
           />
         </div>
-
-        <label>
-          <input
-            type="text"
-            name="search"
-            value={search}
-            onChange={onSearchChange}
-          />
-          <b>Search</b>
-        </label>
       </section>
     );
   }

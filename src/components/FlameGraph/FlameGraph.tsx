@@ -10,7 +10,7 @@ export default class FlameGraph extends React.PureComponent<Props> {
   public componentDidMount(): void {
     const { chartData } = this.props;
 
-    // todo: color mapper, search, dynamic width
+    // todo: color mapper, dynamic width
     const chart = flamegraph()
       .width(1600)
       .sort(true)
