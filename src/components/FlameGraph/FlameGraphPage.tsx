@@ -16,13 +16,6 @@ export default class FlameGraphPage extends React.PureComponent<WithThreadDumpsP
     this.state = {};
   }
 
-  public componentDidMount(): void {
-    const { threadDumps } = this.props;
-    // todo: filter out non-active threads before passing them down
-    const chartData: StackFrame = this.calculateChartData(threadDumps);
-    this.setState({ chartData });
-  }
-
   private processLine = (previousFrame: StackFrame, line: string): StackFrame => {
     const existingFrame = previousFrame.children.find((frame) => frame.name === line);
     if (existingFrame) {
@@ -72,14 +65,8 @@ export default class FlameGraphPage extends React.PureComponent<WithThreadDumpsP
       return <NoThreadDumpsError />;
     }
 
-    const { chartData } = this.state;
-    if (!chartData) {
-      return (
-        <main id="centered">
-          <h4>Calculating chart data...</h4>
-        </main>
-      );
-    }
+    // todo: filter out non-active threads before passing them down
+    const chartData: StackFrame = this.calculateChartData(threadDumps);
 
     return (
       <main>
