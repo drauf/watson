@@ -1,18 +1,20 @@
 import React from 'react';
 
-const ThreadsOverviewLegend: React.FunctionComponent = () => (
-  <table id="thread-overview-legend">
-    <tbody>
-      <tr>
-        <td className="runnable">Runnable</td>
-        <td className="blocked">Blocked</td>
-        <td className="waiting">Waiting</td>
-        <td className="timed-waiting">Timed waiting</td>
-        <td />
-        <td className="matching">Matching filter</td>
-      </tr>
-    </tbody>
-  </table>
-);
-
-export default ThreadsOverviewLegend;
+export default class ThreadsOverviewLegend extends React.PureComponent {
+  public render(): JSX.Element {
+    return (
+      <table id="thread-overview-legend">
+        <tbody>
+          <tr>
+            <td className="runnable">Runnable</td>
+            <td className="blocked">Blocked</td>
+            <td className="waiting">Waiting</td>
+            <td className="timed-waiting">Timed waiting</td>
+            <td />
+            <td className="matching">Matching filter</td>
+          </tr>
+        </tbody>
+      </table>
+    );
+  }
+}

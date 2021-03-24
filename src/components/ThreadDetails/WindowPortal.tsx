@@ -10,7 +10,7 @@ type Props = {
 export default class WindowPortal extends React.PureComponent<Props> {
   private static windows: Array<Window> = [];
 
-  public static copyStyles(sourceDoc: Document, targetDoc: Document): void {
+  public static copyStyles = (sourceDoc: Document, targetDoc: Document): void => {
     Array.from(sourceDoc.styleSheets).forEach((sheet) => {
       const styleSheet = sheet;
 
@@ -30,13 +30,13 @@ export default class WindowPortal extends React.PureComponent<Props> {
         targetDoc.head.appendChild(newLinkEl);
       }
     });
-  }
+  };
 
-  private windowFeatures = 'width=960,height=700,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
+  private readonly windowFeatures = 'width=960,height=700,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
+
+  private readonly container: HTMLElement;
 
   private externalWindow: Window | null;
-
-  private container: HTMLElement;
 
   constructor(props: Props) {
     super(props);

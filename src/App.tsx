@@ -4,11 +4,13 @@ import './App.css';
 import Container from './components/Container';
 import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
 
-const App: React.FunctionComponent<RouteComponentProps> = () => (
-  <Switch>
-    <Route exact path="/" component={FullPageDropzone} />
-    <Route path="/:key" component={Container} />
-  </Switch>
-);
-
-export default App;
+export default class App extends React.PureComponent<RouteComponentProps> {
+  public render(): JSX.Element {
+    return (
+      <Switch>
+        <Route exact path="/" component={FullPageDropzone} />
+        <Route path="/:key" component={Container} />
+      </Switch>
+    );
+  }
+}
