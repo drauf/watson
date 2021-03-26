@@ -2403,29 +2403,220 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/d3-array@*":
+  version "2.9.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-array/-/d3-array-2.9.0.tgz#fb6c3d7d7640259e68771cd90cc5db5ac1a1a012"
+  integrity sha1-+2w9fXZAJZ5odxzZDMXbWsGhoBI=
+
+"@types/d3-axis@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-axis/-/d3-axis-2.0.0.tgz#a3e7534d3c399c20ba42ec3093dd2a385659366e"
+  integrity sha1-o+dTTTw5nCC6Quwwk90qOFZZNm4=
+  dependencies:
+    "@types/d3-selection" "*"
+
+"@types/d3-brush@*":
+  version "2.1.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-brush/-/d3-brush-2.1.0.tgz#c51ad1ab93887b23be7637d2100540f1df0dac00"
+  integrity sha1-xRrRq5OIeyO+djfSEAVA8d8NrAA=
+  dependencies:
+    "@types/d3-selection" "*"
+
+"@types/d3-chord@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-chord/-/d3-chord-2.0.0.tgz#8d7085e2828418f2c5087e512f276559499bacfd"
+  integrity sha1-jXCF4oKEGPLFCH5RLydlWUmbrP0=
+
+"@types/d3-color@*":
+  version "2.0.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-color/-/d3-color-2.0.1.tgz#570ea7f8b853461301804efa52bd790a640a26db"
+  integrity sha1-Vw6n+LhTRhMBgE76Ur15CmQKJts=
+
+"@types/d3-contour@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-contour/-/d3-contour-2.0.0.tgz#6e079f281b29a8df3fcbd3ec193f2cf1d0b4a584"
+  integrity sha1-bgefKBspqN8/y9PsGT8s8dC0pYQ=
+  dependencies:
+    "@types/d3-array" "*"
+    "@types/geojson" "*"
+
+"@types/d3-delaunay@*":
+  version "5.3.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-delaunay/-/d3-delaunay-5.3.0.tgz#416169bb5c67a510c87b55d092a404fcab49def3"
+  integrity sha1-QWFpu1xnpRDIe1XQkqQE/KtJ3vM=
+
+"@types/d3-dispatch@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-dispatch/-/d3-dispatch-2.0.0.tgz#1f8803041b73b81f2c751e026b7bb63dd5f24ce0"
+  integrity sha1-H4gDBBtzuB8sdR4Ca3u2PdXyTOA=
+
+"@types/d3-drag@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-drag/-/d3-drag-2.0.0.tgz#ef66acc422576fbe10b8bd66af45a9fb8525199a"
+  integrity sha1-72asxCJXb74QuL1mr0Wp+4UlGZo=
+  dependencies:
+    "@types/d3-selection" "*"
+
+"@types/d3-dsv@*":
+  version "2.0.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-dsv/-/d3-dsv-2.0.1.tgz#44ce09b025cf365d27cbe11fc13cd10954369627"
+  integrity sha1-RM4JsCXPNl0ny+EfwTzRCVQ2lic=
+
+"@types/d3-ease@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-ease/-/d3-ease-2.0.0.tgz#798cbd9908d26cfe9f1a295a3a75164da9a3666e"
+  integrity sha1-eYy9mQjSbP6fGilaOnUWTamjZm4=
+
+"@types/d3-fetch@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-fetch/-/d3-fetch-2.0.0.tgz#580846256ed0011b36a08ebb36924e0dff70e27e"
+  integrity sha1-WAhGJW7QARs2oI67NpJODf9w4n4=
+  dependencies:
+    "@types/d3-dsv" "*"
+
+"@types/d3-force@*":
+  version "2.1.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-force/-/d3-force-2.1.1.tgz#a18b6f029d056eb0f8f84a09471e6228e4469b14"
+  integrity sha1-oYtvAp0FbrD4+EoJRx5iKORGmxQ=
+
+"@types/d3-format@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-format/-/d3-format-2.0.0.tgz#607d261cb268f0a027f100575491031539a40ee6"
+  integrity sha1-YH0mHLJo8KAn8QBXVJEDFTmkDuY=
+
+"@types/d3-geo@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-geo/-/d3-geo-2.0.0.tgz#6f179512343c2d30e06acde190abfacf44b2d264"
+  integrity sha1-bxeVEjQ8LTDgas3hkKv6z0Sy0mQ=
+  dependencies:
+    "@types/geojson" "*"
+
+"@types/d3-hierarchy@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-hierarchy/-/d3-hierarchy-2.0.0.tgz#92079d9dbcec1dfe2736fb050a8bf916e5850a1c"
+  integrity sha1-kgednbzsHf4nNvsFCov5FuWFChw=
+
+"@types/d3-interpolate@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-interpolate/-/d3-interpolate-2.0.0.tgz#325029216dc722c1c68c33ccda759f1209d35823"
+  integrity sha1-MlApIW3HIsHGjDPM2nWfEgnTWCM=
+  dependencies:
+    "@types/d3-color" "*"
+
+"@types/d3-path@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-path/-/d3-path-2.0.0.tgz#dcc7f5ecadf52b0c0c39f6c1def3733195e4b199"
+  integrity sha1-3Mf17K31KwwMOfbB3vNzMZXksZk=
+
 "@types/d3-path@^1":
   version "1.0.9"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-path/-/d3-path-1.0.9.tgz#73526b150d14cd96e701597cbf346cfd1fd4a58c"
   integrity sha1-c1JrFQ0UzZbnAVl8vzRs/R/UpYw=
 
-"@types/d3-scale@^3.0.0":
+"@types/d3-polygon@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-polygon/-/d3-polygon-2.0.0.tgz#8b1df0a1358016e62c4961b01e8dc8e5ab4c64e5"
+  integrity sha1-ix3woTWAFuYsSWGwHo3I5atMZOU=
+
+"@types/d3-quadtree@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-quadtree/-/d3-quadtree-2.0.0.tgz#b17e953dc061e083966075bba0d3a9a259812150"
+  integrity sha1-sX6VPcBh4IOWYHW7oNOpolmBIVA=
+
+"@types/d3-random@*":
+  version "2.2.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-random/-/d3-random-2.2.0.tgz#fc44cabb966917459490b758f31f5359adeabe5b"
+  integrity sha1-/ETKu5ZpF0WUkLdY8x9TWa3qvls=
+
+"@types/d3-scale-chromatic@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-scale-chromatic/-/d3-scale-chromatic-2.0.0.tgz#8d4a6f07cbbf2a9f2a4bec9c9476c27ed76a96ea"
+  integrity sha1-jUpvB8u/Kp8qS+yclHbCftdqluo=
+
+"@types/d3-scale@*", "@types/d3-scale@^3.0.0":
   version "3.2.2"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-scale/-/d3-scale-3.2.2.tgz#5e28d0b1c599328aaec6094219f10a2570be6d74"
   integrity sha1-XijQscWZMoquxglCGfEKJXC+bXQ=
   dependencies:
     "@types/d3-time" "*"
 
-"@types/d3-shape@^2.0.0":
+"@types/d3-selection@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-selection/-/d3-selection-2.0.0.tgz#59df94a8e47ed1050a337d4ffb4d4d213aa590a8"
+  integrity sha1-Wd+UqOR+0QUKM31P+01NITqlkKg=
+
+"@types/d3-shape@*", "@types/d3-shape@^2.0.0":
   version "2.0.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-shape/-/d3-shape-2.0.0.tgz#61aa065726f3c2641aedc59c3603475ab11aeb2f"
   integrity sha1-YaoGVybzwmQa7cWcNgNHWrEa6y8=
   dependencies:
     "@types/d3-path" "^1"
 
+"@types/d3-time-format@*":
+  version "3.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-time-format/-/d3-time-format-3.0.0.tgz#913e984362a59792dc8d8b122dd17625991eade2"
+  integrity sha1-kT6YQ2Kll5LcjYsSLdF2JZkereI=
+
 "@types/d3-time@*":
   version "2.0.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-time/-/d3-time-2.0.0.tgz#831dd093db91f16b83ba980e194bb8e4bcef44d6"
   integrity sha1-gx3Qk9uR8WuDupgOGUu45LzvRNY=
+
+"@types/d3-timer@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-timer/-/d3-timer-2.0.0.tgz#9901bb02af38798764674df17d66b07329705632"
+  integrity sha1-mQG7Aq84eYdkZ03xfWawcylwVjI=
+
+"@types/d3-transition@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-transition/-/d3-transition-2.0.0.tgz#6f073f0b567c13b7a3dcd1d54214c89f48c5a873"
+  integrity sha1-bwc/C1Z8E7ej3NHVQhTIn0jFqHM=
+  dependencies:
+    "@types/d3-selection" "*"
+
+"@types/d3-zoom@*":
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-zoom/-/d3-zoom-2.0.0.tgz#ef8b87464e8ebc7c66b70f6383d1ae841e78e7fc"
+  integrity sha1-74uHRk6OvHxmtw9jg9GuhB545/w=
+  dependencies:
+    "@types/d3-interpolate" "*"
+    "@types/d3-selection" "*"
+
+"@types/d3@6.3.0":
+  version "6.3.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3/-/d3-6.3.0.tgz#28d1bfd4e5ef6a38535d8ef0884d452192719528"
+  integrity sha1-KNG/1OXvajhTXY7wiE1FIZJxlSg=
+  dependencies:
+    "@types/d3-array" "*"
+    "@types/d3-axis" "*"
+    "@types/d3-brush" "*"
+    "@types/d3-chord" "*"
+    "@types/d3-color" "*"
+    "@types/d3-contour" "*"
+    "@types/d3-delaunay" "*"
+    "@types/d3-dispatch" "*"
+    "@types/d3-drag" "*"
+    "@types/d3-dsv" "*"
+    "@types/d3-ease" "*"
+    "@types/d3-fetch" "*"
+    "@types/d3-force" "*"
+    "@types/d3-format" "*"
+    "@types/d3-geo" "*"
+    "@types/d3-hierarchy" "*"
+    "@types/d3-interpolate" "*"
+    "@types/d3-path" "*"
+    "@types/d3-polygon" "*"
+    "@types/d3-quadtree" "*"
+    "@types/d3-random" "*"
+    "@types/d3-scale" "*"
+    "@types/d3-scale-chromatic" "*"
+    "@types/d3-selection" "*"
+    "@types/d3-shape" "*"
+    "@types/d3-time" "*"
+    "@types/d3-time-format" "*"
+    "@types/d3-timer" "*"
+    "@types/d3-transition" "*"
+    "@types/d3-zoom" "*"
 
 "@types/eslint@^7.2.6":
   version "7.2.7"
@@ -2444,6 +2635,11 @@
   version "0.0.39"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
   integrity sha1-4Xfmme4bjCLSMXTKqnQiZEOJUJ8=
+
+"@types/geojson@*":
+  version "7946.0.7"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/geojson/-/geojson-7946.0.7.tgz#c8fa532b60a0042219cdf173ca21a975ef0666ad"
+  integrity sha1-yPpTK2CgBCIZzfFzyiGpde8GZq0=
 
 "@types/glob@^7.1.1":
   version "7.1.3"
@@ -4369,7 +4565,7 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^2.18.0, commander@^2.20.0:
+commander@2, commander@^2.18.0, commander@^2.20.0:
   version "2.20.3"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha1-/UhehMA+tIgcIHIrpIA16FMa6zM=
@@ -4881,6 +5077,18 @@ cyclist@^1.0.1:
   resolved "https://packages.atlassian.com/api/npm/npm-remote/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
+d3-array@2, d3-array@>=2.5:
+  version "2.12.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-array/-/d3-array-2.12.0.tgz#68a74d153e52d6bf4608d9f6388cca48b42a4c3f"
+  integrity sha1-aKdNFT5S1r9GCNn2OIzKSLQqTD8=
+  dependencies:
+    internmap "^1.0.0"
+
+d3-array@^1.2.0, d3-array@^1.2.4:
+  version "1.2.4"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-array/-/d3-array-1.2.4.tgz#635ce4d5eea759f6f605863dbcfc30edc737f71f"
+  integrity sha1-Y1zk1e6nWfb2BYY9vPww7cc39x8=
+
 d3-array@^2.3.0:
   version "2.11.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-array/-/d3-array-2.11.0.tgz#5ed6a2869bc7d471aec8df9ff6ed9fef798facc4"
@@ -4888,29 +5096,195 @@ d3-array@^2.3.0:
   dependencies:
     internmap "^1.0.0"
 
-"d3-color@1 - 2":
+d3-axis@2:
+  version "2.1.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-axis/-/d3-axis-2.1.0.tgz#978db534092711117d032fad5d733d206307f6a0"
+  integrity sha1-l421NAknERF9Ay+tXXM9IGMH9qA=
+
+d3-brush@2:
+  version "2.1.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-brush/-/d3-brush-2.1.0.tgz#adadfbb104e8937af142e9a6e2028326f0471065"
+  integrity sha1-ra37sQTok3rxQumm4gKDJvBHEGU=
+  dependencies:
+    d3-dispatch "1 - 2"
+    d3-drag "2"
+    d3-interpolate "1 - 2"
+    d3-selection "2"
+    d3-transition "2"
+
+d3-chord@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-chord/-/d3-chord-2.0.0.tgz#32491b5665391180560f738e5c1ccd1e3c47ebae"
+  integrity sha1-MkkbVmU5EYBWD3OOXBzNHjxH664=
+  dependencies:
+    d3-path "1 - 2"
+
+d3-collection@1:
+  version "1.0.7"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-collection/-/d3-collection-1.0.7.tgz#349bd2aa9977db071091c13144d5e4f16b5b310e"
+  integrity sha1-NJvSqpl32wcQkcExRNXk8WtbMQ4=
+
+d3-color@1:
+  version "1.4.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-color/-/d3-color-1.4.1.tgz#c52002bf8846ada4424d55d97982fef26eb3bc8a"
+  integrity sha1-xSACv4hGraRCTVXZeYL+8m6zvIo=
+
+"d3-color@1 - 2", d3-color@2:
   version "2.0.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-color/-/d3-color-2.0.0.tgz#8d625cab42ed9b8f601a1760a389f7ea9189d62e"
   integrity sha1-jWJcq0Ltm49gGhdgo4n36pGJ1i4=
 
-"d3-format@1 - 2":
+d3-contour@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-contour/-/d3-contour-2.0.0.tgz#80ee834988563e3bea9d99ddde72c0f8c089ea40"
+  integrity sha1-gO6DSYhWPjvqnZnd3nLA+MCJ6kA=
+  dependencies:
+    d3-array "2"
+
+d3-delaunay@5:
+  version "5.3.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-delaunay/-/d3-delaunay-5.3.0.tgz#b47f05c38f854a4e7b3cea80e0bb12e57398772d"
+  integrity sha1-tH8Fw4+FSk57POqA4LsS5XOYdy0=
+  dependencies:
+    delaunator "4"
+
+d3-dispatch@1, d3-dispatch@^1.0.6:
+  version "1.0.6"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-dispatch/-/d3-dispatch-1.0.6.tgz#00d37bcee4dd8cd97729dd893a0ac29caaba5d58"
+  integrity sha1-ANN7zuTdjNl3Kd2JOgrCnKq6XVg=
+
+"d3-dispatch@1 - 2", d3-dispatch@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-dispatch/-/d3-dispatch-2.0.0.tgz#8a18e16f76dd3fcaef42163c97b926aa9b55e7cf"
+  integrity sha1-ihjhb3bdP8rvQhY8l7kmqptV588=
+
+d3-drag@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-drag/-/d3-drag-2.0.0.tgz#9eaf046ce9ed1c25c88661911c1d5a4d8eb7ea6d"
+  integrity sha1-nq8EbOntHCXIhmGRHB1aTY636m0=
+  dependencies:
+    d3-dispatch "1 - 2"
+    d3-selection "2"
+
+"d3-dsv@1 - 2", d3-dsv@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-dsv/-/d3-dsv-2.0.0.tgz#b37b194b6df42da513a120d913ad1be22b5fe7c5"
+  integrity sha1-s3sZS230LaUToSDZE60b4itf58U=
+  dependencies:
+    commander "2"
+    iconv-lite "0.4"
+    rw "1"
+
+d3-ease@1, d3-ease@^1.0.5:
+  version "1.0.7"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-ease/-/d3-ease-1.0.7.tgz#9a834890ef8b8ae8c558b2fe55bd57f5993b85e2"
+  integrity sha1-moNIkO+LiujFWLL+Vb1X9Zk7heI=
+
+"d3-ease@1 - 2", d3-ease@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-ease/-/d3-ease-2.0.0.tgz#fd1762bfca00dae4bacea504b1d628ff290ac563"
+  integrity sha1-/Rdiv8oA2uS6zqUEsdYo/ykKxWM=
+
+d3-fetch@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-fetch/-/d3-fetch-2.0.0.tgz#ecd7ef2128d9847a3b41b548fec80918d645c064"
+  integrity sha1-7NfvISjZhHo7QbVI/sgJGNZFwGQ=
+  dependencies:
+    d3-dsv "1 - 2"
+
+d3-flame-graph@2.2.2:
+  version "2.2.2"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-flame-graph/-/d3-flame-graph-2.2.2.tgz#af700ec250e3f1cb06768fd922bf8eefa6daef52"
+  integrity sha1-r3AOwlDj8csGdo/ZIr+O76ba71I=
+  dependencies:
+    d3-array "^1.2.4"
+    d3-dispatch "^1.0.6"
+    d3-ease "^1.0.5"
+    d3-format "^1.4.1"
+    d3-hierarchy "^1.1.8"
+    d3-scale "^2.2.2"
+    d3-selection "^1.4.0"
+    d3-transition "^1.2.0"
+
+d3-force@2:
+  version "2.1.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-force/-/d3-force-2.1.1.tgz#f20ccbf1e6c9e80add1926f09b51f686a8bc0937"
+  integrity sha1-8gzL8ebJ6ArdGSbwm1H2hqi8CTc=
+  dependencies:
+    d3-dispatch "1 - 2"
+    d3-quadtree "1 - 2"
+    d3-timer "1 - 2"
+
+d3-format@1, d3-format@^1.4.1:
+  version "1.4.5"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-format/-/d3-format-1.4.5.tgz#374f2ba1320e3717eb74a9356c67daee17a7edb4"
+  integrity sha1-N08roTIONxfrdKk1bGfa7hen7bQ=
+
+"d3-format@1 - 2", d3-format@2:
   version "2.0.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-format/-/d3-format-2.0.0.tgz#a10bcc0f986c372b729ba447382413aabf5b0767"
   integrity sha1-oQvMD5hsNytym6RHOCQTqr9bB2c=
 
-"d3-interpolate@1.2.0 - 2", d3-interpolate@^2.0.1:
+d3-geo@2:
+  version "2.0.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-geo/-/d3-geo-2.0.1.tgz#2437fdfed3fe3aba2812bd8f30609cac83a7ee39"
+  integrity sha1-JDf9/tP+OrooEr2PMGCcrIOn7jk=
+  dependencies:
+    d3-array ">=2.5"
+
+d3-hierarchy@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-hierarchy/-/d3-hierarchy-2.0.0.tgz#dab88a58ca3e7a1bc6cab390e89667fcc6d20218"
+  integrity sha1-2riKWMo+ehvGyrOQ6JZn/MbSAhg=
+
+d3-hierarchy@^1.1.8:
+  version "1.1.9"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-hierarchy/-/d3-hierarchy-1.1.9.tgz#2f6bee24caaea43f8dc37545fa01628559647a83"
+  integrity sha1-L2vuJMqupD+Nw3VF+gFihVlkeoM=
+
+d3-interpolate@1:
+  version "1.4.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-interpolate/-/d3-interpolate-1.4.0.tgz#526e79e2d80daa383f9e0c1c1c7dcc0f0583e987"
+  integrity sha1-Um554tgNqjg/ngwcHH3MDwWD6Yc=
+  dependencies:
+    d3-color "1"
+
+"d3-interpolate@1 - 2", "d3-interpolate@1.2.0 - 2", d3-interpolate@2, d3-interpolate@^2.0.1:
   version "2.0.1"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-interpolate/-/d3-interpolate-2.0.1.tgz#98be499cfb8a3b94d4ff616900501a64abc91163"
   integrity sha1-mL5JnPuKO5TU/2FpAFAaZKvJEWM=
   dependencies:
     d3-color "1 - 2"
 
-"d3-path@1 - 2":
+"d3-path@1 - 2", d3-path@2:
   version "2.0.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-path/-/d3-path-2.0.0.tgz#55d86ac131a0548adae241eebfb56b4582dd09d8"
   integrity sha1-VdhqwTGgVIra4kHuv7VrRYLdCdg=
 
-d3-scale@^3.2.3:
+d3-polygon@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-polygon/-/d3-polygon-2.0.0.tgz#13608ef042fbec625ba1598327564f03c0396d8e"
+  integrity sha1-E2CO8EL77GJboVmDJ1ZPA8A5bY4=
+
+"d3-quadtree@1 - 2", d3-quadtree@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-quadtree/-/d3-quadtree-2.0.0.tgz#edbad045cef88701f6fee3aee8e93fb332d30f9d"
+  integrity sha1-7brQRc74hwH2/uOu6Ok/szLTD50=
+
+d3-random@2:
+  version "2.2.2"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-random/-/d3-random-2.2.2.tgz#5eebd209ef4e45a2b362b019c1fb21c2c98cbb6e"
+  integrity sha1-XuvSCe9ORaKzYrAZwfshwsmMu24=
+
+d3-scale-chromatic@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-scale-chromatic/-/d3-scale-chromatic-2.0.0.tgz#c13f3af86685ff91323dc2f0ebd2dabbd72d8bab"
+  integrity sha1-wT86+GaF/5EyPcLw69Lau9cti6s=
+  dependencies:
+    d3-color "1 - 2"
+    d3-interpolate "1 - 2"
+
+d3-scale@3, d3-scale@^3.2.3:
   version "3.2.3"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-scale/-/d3-scale-3.2.3.tgz#be380f57f1f61d4ff2e6cbb65a40593a51649cfd"
   integrity sha1-vjgPV/H2HU/y5su2WkBZOlFknP0=
@@ -4921,6 +5295,35 @@ d3-scale@^3.2.3:
     d3-time "1 - 2"
     d3-time-format "2 - 3"
 
+d3-scale@^2.2.2:
+  version "2.2.2"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-scale/-/d3-scale-2.2.2.tgz#4e880e0b2745acaaddd3ede26a9e908a9e17b81f"
+  integrity sha1-TogOCydFrKrd0+3iap6Qip4XuB8=
+  dependencies:
+    d3-array "^1.2.0"
+    d3-collection "1"
+    d3-format "1"
+    d3-interpolate "1"
+    d3-time "1"
+    d3-time-format "2"
+
+d3-selection@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-selection/-/d3-selection-2.0.0.tgz#94a11638ea2141b7565f883780dabc7ef6a61066"
+  integrity sha1-lKEWOOohQbdWX4g3gNq8fvamEGY=
+
+d3-selection@^1.1.0, d3-selection@^1.4.0:
+  version "1.4.2"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-selection/-/d3-selection-1.4.2.tgz#dcaa49522c0dbf32d6c1858afc26b6094555bc5c"
+  integrity sha1-3KpJUiwNvzLWwYWK/Ca2CUVVvFw=
+
+d3-shape@2:
+  version "2.1.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-shape/-/d3-shape-2.1.0.tgz#3b6a82ccafbc45de55b57fcf956c584ded3b666f"
+  integrity sha1-O2qCzK+8Rd5VtX/PlWxYTe07Zm8=
+  dependencies:
+    d3-path "1 - 2"
+
 d3-shape@^2.0.0:
   version "2.0.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-shape/-/d3-shape-2.0.0.tgz#2331b62fa784a2a1daac47a7233cfd69301381fd"
@@ -4928,17 +5331,109 @@ d3-shape@^2.0.0:
   dependencies:
     d3-path "1 - 2"
 
-"d3-time-format@2 - 3":
+d3-time-format@2:
+  version "2.3.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-time-format/-/d3-time-format-2.3.0.tgz#107bdc028667788a8924ba040faf1fbccd5a7850"
+  integrity sha1-EHvcAoZneIqJJLoED68fvM1aeFA=
+  dependencies:
+    d3-time "1"
+
+"d3-time-format@2 - 3", d3-time-format@3:
   version "3.0.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-time-format/-/d3-time-format-3.0.0.tgz#df8056c83659e01f20ac5da5fdeae7c08d5f1bb6"
   integrity sha1-34BWyDZZ4B8grF2l/ernwI1fG7Y=
   dependencies:
     d3-time "1 - 2"
 
-"d3-time@1 - 2":
+d3-time@1:
+  version "1.1.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-time/-/d3-time-1.1.0.tgz#b1e19d307dae9c900b7e5b25ffc5dcc249a8a0f1"
+  integrity sha1-seGdMH2unJALflsl/8XcwkmooPE=
+
+"d3-time@1 - 2", d3-time@2:
   version "2.0.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-time/-/d3-time-2.0.0.tgz#ad7c127d17c67bd57a4c61f3eaecb81108b1e0ab"
   integrity sha1-rXwSfRfGe9V6TGHz6uy4EQix4Ks=
+
+d3-timer@1:
+  version "1.0.10"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-timer/-/d3-timer-1.0.10.tgz#dfe76b8a91748831b13b6d9c793ffbd508dd9de5"
+  integrity sha1-3+dripF0iDGxO22ceT/71QjdneU=
+
+"d3-timer@1 - 2", d3-timer@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-timer/-/d3-timer-2.0.0.tgz#055edb1d170cfe31ab2da8968deee940b56623e6"
+  integrity sha1-BV7bHRcM/jGrLaiWje7pQLVmI+Y=
+
+d3-transition@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-transition/-/d3-transition-2.0.0.tgz#366ef70c22ef88d1e34105f507516991a291c94c"
+  integrity sha1-Nm73DCLviNHjQQX1B1FpkaKRyUw=
+  dependencies:
+    d3-color "1 - 2"
+    d3-dispatch "1 - 2"
+    d3-ease "1 - 2"
+    d3-interpolate "1 - 2"
+    d3-timer "1 - 2"
+
+d3-transition@^1.2.0:
+  version "1.3.2"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-transition/-/d3-transition-1.3.2.tgz#a98ef2151be8d8600543434c1ca80140ae23b398"
+  integrity sha1-qY7yFRvo2GAFQ0NMHKgBQK4js5g=
+  dependencies:
+    d3-color "1"
+    d3-dispatch "1"
+    d3-ease "1"
+    d3-interpolate "1"
+    d3-selection "^1.1.0"
+    d3-timer "1"
+
+d3-zoom@2:
+  version "2.0.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-zoom/-/d3-zoom-2.0.0.tgz#f04d0afd05518becce879d04709c47ecd93fba54"
+  integrity sha1-8E0K/QVRi+zOh50EcJxH7Nk/ulQ=
+  dependencies:
+    d3-dispatch "1 - 2"
+    d3-drag "2"
+    d3-interpolate "1 - 2"
+    d3-selection "2"
+    d3-transition "2"
+
+d3@6.6.0:
+  version "6.6.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/d3/-/d3-6.6.0.tgz#0722c03b0ad5a479b54080c00e5daa6b809a83c7"
+  integrity sha1-ByLAOwrVpHm1QIDADl2qa4Cag8c=
+  dependencies:
+    d3-array "2"
+    d3-axis "2"
+    d3-brush "2"
+    d3-chord "2"
+    d3-color "2"
+    d3-contour "2"
+    d3-delaunay "5"
+    d3-dispatch "2"
+    d3-drag "2"
+    d3-dsv "2"
+    d3-ease "2"
+    d3-fetch "2"
+    d3-force "2"
+    d3-format "2"
+    d3-geo "2"
+    d3-hierarchy "2"
+    d3-interpolate "2"
+    d3-path "2"
+    d3-polygon "2"
+    d3-quadtree "2"
+    d3-random "2"
+    d3-scale "3"
+    d3-scale-chromatic "2"
+    d3-selection "2"
+    d3-shape "2"
+    d3-time "2"
+    d3-time-format "3"
+    d3-timer "2"
+    d3-transition "2"
+    d3-zoom "2"
 
 d@1, d@^1.0.1:
   version "1.0.1"
@@ -5094,6 +5589,11 @@ del@^4.1.1:
     p-map "^2.0.0"
     pify "^4.0.1"
     rimraf "^2.6.3"
+
+delaunator@4:
+  version "4.0.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/delaunator/-/delaunator-4.0.1.tgz#3d779687f57919a7a418f8ab947d3bddb6846957"
+  integrity sha1-PXeWh/V5GaekGPirlH073baEaVc=
 
 delayed-stream@~1.0.0:
   version "1.0.0"
@@ -6998,7 +7498,7 @@ humanize-url@^1.0.0:
     normalize-url "^1.0.0"
     strip-url-auth "^1.0.0"
 
-iconv-lite@0.4.24:
+iconv-lite@0.4, iconv-lite@0.4.24:
   version "0.4.24"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   integrity sha1-ICK0sl+93CHS9SSXSkdKr+czkIs=
@@ -11612,6 +12112,11 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   integrity sha1-6Eg5bwV9Ij8kOGkkYY4laUFh7Ec=
   dependencies:
     aproba "^1.1.1"
+
+rw@1:
+  version "1.3.3"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/rw/-/rw-1.3.3.tgz#3f862dfa91ab766b14885ef4d01124bfda074fb4"
+  integrity sha1-P4Yt+pGrdmsUiF700BEkv9oHT7Q=
 
 safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"

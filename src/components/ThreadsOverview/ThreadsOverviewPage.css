@@ -72,7 +72,7 @@ th > span {
   position: absolute;
   z-index: 100;
   display: none;
-  padding: 2px 7px 4px;
+  padding: 2px 7px;
   color: var(--color-n0);
   font-weight: bold;
   background-color: var(--color-n800);

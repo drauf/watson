@@ -3,7 +3,7 @@ import React from 'react';
 export default class NoThreadDumpsError extends React.PureComponent {
   public render(): JSX.Element {
     return (
-      <main id="error">
+      <main id="centered">
         <h4>
           You need to load at least one file containing
           {' '}
