@@ -1,4 +1,5 @@
 import React, { CSSProperties } from 'react';
+import getColorForStackLine from '../../common/getColorForStackLine';
 import Thread from '../../types/Thread';
 
 type Props = {
@@ -52,42 +53,7 @@ export default class ThreadDetailsBody extends React.PureComponent<Props> {
     </div>
   );
 
-  private getLineStyles = (line: string): CSSProperties => {
-    // anything Atlassian
-    if (line.startsWith('com.atlassian')) {
-      return { backgroundColor: '#DEEBFF' };
-    }
-
-    // database and Lucene
-    if (line.startsWith('com.microsoft.sqlserver')
-      || line.startsWith('com.mysql.jdbc')
-      || line.startsWith('oracle.jdbc')
-      || line.startsWith('org.apache.lucene')
-      || line.startsWith('org.ofbiz')
-      || line.startsWith('org.postgresql')) {
-      return { backgroundColor: '#FFFAE6' };
-    }
-
-    // "Boring" third parties
-    if (line.startsWith('com.google')
-      || line.startsWith('com.sun')
-      || line.startsWith('io.atlassian')
-      || line.startsWith('java.')
-      || line.startsWith('javax.')
-      || line.startsWith('net.java')
-      || line.startsWith('org.apache')
-      || line.startsWith('org.codehaus')
-      || line.startsWith('org.eclipse')
-      || line.startsWith('org.mozilla')
-      || line.startsWith('org.springframework')
-      || line.startsWith('sun.')
-      || line.startsWith('webwork')) {
-      return { backgroundColor: '#DFE1E6' };
-    }
-
-    // most likely 3rd party apps
-    return { backgroundColor: '#E3FCEF' };
-  };
+  private getLineStyles = (line: string): CSSProperties => ({ backgroundColor: getColorForStackLine(line) });
 
   private renderStackTrace = (thread: Thread) => (
     <div id="stacktrace-container">

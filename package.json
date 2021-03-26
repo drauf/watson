@@ -1,9 +1,20 @@
 {
   "name": "watson",
   "version": "0.1.0",
-  "private": true,
+  "description": "Watson is a web-based, offline Java thread dump analyzer",
+  "author": "Daniel Rauf <danielrauf@gmail.com> (https://github.com/drauf/)",
+  "license": "MIT",
   "homepage": "https://drauf.github.io/watson/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drauf/watson.git"
+  },
+  "bugs": {
+    "url": "https://github.com/drauf/watson/issues"
+  },
   "dependencies": {
+    "d3": "6.6.0",
+    "d3-flame-graph": "2.2.2",
     "flatted": "3.1.1",
     "gh-pages": "3.1.0",
     "localforage": "1.9.0",
@@ -16,6 +27,7 @@
     "spark-md5": "3.0.1"
   },
   "devDependencies": {
+    "@types/d3": "6.3.0",
     "@types/jest": "26.0.21",
     "@types/node": "14.14.35",
     "@types/react": "17.0.3",
@@ -48,6 +60,11 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!d3-flame-graph)"
     ]
   },
   "browserslist": [

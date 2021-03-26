@@ -20,7 +20,7 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
     this.setState(newState);
   };
 
-  protected handleRegExpChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+  protected handleTextChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name } = event.target;
     const { value } = event.target;
     const newState: ComponentState = { [name]: value };

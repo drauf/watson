@@ -68,7 +68,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
             nameFilter={this.state.nameFilter}
             stackFilter={this.state.stackFilter}
             onFilterChange={this.handleFilterChange}
-            onRegExpChange={this.handleRegExpChange}
+            onRegExpChange={this.handleTextChange}
           />
 
           <ThreadsOverviewFilteringSummary

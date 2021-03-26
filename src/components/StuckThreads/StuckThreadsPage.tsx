@@ -36,7 +36,7 @@ export default class StuckThreadsPage extends PageWithSettings<State> {
     const filtered = this.filterThreads(threadOverTime);
     const clusters = this.buildClusters(filtered);
 
-    if (this.state.threadDumps.length === 0) {
+    if (!this.state.threadDumps.some((dump) => dump.threads.length > 0)) {
       return <NoThreadDumpsError />;
     }
 
