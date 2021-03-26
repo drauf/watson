@@ -30,6 +30,7 @@ export default class FlameGraph extends React.PureComponent<Props> {
       .width(window.innerWidth - 36)
       .sort(true)
       .inverted(true)
+      .minFrameSize(5)
       .setColorMapper((node: Node) => (getColorForStackLine(node.data.name)));
 
     d3.select('#flame-graph')
