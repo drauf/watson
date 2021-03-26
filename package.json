@@ -62,11 +62,11 @@
       "react-app/jest"
     ]
   },
- "jest": {
-   "transformIgnorePatterns": [
-     "node_modules/(?!d3-flame-graph)"
-   ]
- },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!d3-flame-graph)"
+    ]
+  },
   "browserslist": [
     "last 2 chrome versions",
     "last 2 edge versions",
