@@ -85,17 +85,12 @@ export default class FlameGraphPage extends PageWithSettings<State> {
     const filteredThreads = this.filterThreads(threadDumps);
     const chartData: StackFrame = this.calculateChartData(filteredThreads);
 
-    // todo: make details float over the chart
     return (
       <main className="full-width-page">
-        <section id="heading">
-          <FlameGraphSettings
-            withoutIdle={this.state.withoutIdle}
-            onFilterChange={this.handleFilterChange}
-          />
-
-          <div id="flame-chart-details" />
-        </section>
+        <FlameGraphSettings
+          withoutIdle={this.state.withoutIdle}
+          onFilterChange={this.handleFilterChange}
+        />
 
         <FlameGraph chartData={chartData} />
       </main>

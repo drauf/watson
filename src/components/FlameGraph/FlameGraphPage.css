@@ -1,3 +1,19 @@
-#flame-chart-details {
-  min-height: 24px;
+#flame-graph-settings {
+  width: 80%;
+  margin: auto;
+  padding: 22px 0;
+  line-height: 34px;
+}
+
+.d3-flame-graph-tip {
+  margin-top: 12px;
+  padding: 2px 7px;
+  color: var(--color-n0);
+  font-weight: bold;
+  background-color: var(--color-n800);
+  border-radius: 3px;
+}
+
+svg div {
+  cursor: pointer;
 }

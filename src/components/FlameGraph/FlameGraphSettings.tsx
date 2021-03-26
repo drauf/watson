@@ -13,7 +13,7 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
     } = this.props;
 
     return (
-      <section id="settings">
+      <section id="flame-graph-settings">
         <div className="filters">
           <b>Filters:</b>
 
