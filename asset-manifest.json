@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "https://drauf.github.io/watson/static/css/main.053f8502.chunk.css",
-    "main.js": "https://drauf.github.io/watson/static/js/main.1768df37.chunk.js",
-    "main.js.map": "https://drauf.github.io/watson/static/js/main.1768df37.chunk.js.map",
+    "main.js": "https://drauf.github.io/watson/static/js/main.fa805e06.chunk.js",
+    "main.js.map": "https://drauf.github.io/watson/static/js/main.fa805e06.chunk.js.map",
     "runtime-main.js": "https://drauf.github.io/watson/static/js/runtime-main.4195d3f4.js",
     "runtime-main.js.map": "https://drauf.github.io/watson/static/js/runtime-main.4195d3f4.js.map",
     "static/js/2.ffd2b9e1.chunk.js": "https://drauf.github.io/watson/static/js/2.ffd2b9e1.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.4195d3f4.js",
     "static/js/2.ffd2b9e1.chunk.js",
     "static/css/main.053f8502.chunk.css",
-    "static/js/main.1768df37.chunk.js"
+    "static/js/main.fa805e06.chunk.js"
   ]
 }
