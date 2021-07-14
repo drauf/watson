@@ -9,7 +9,6 @@ import './FlameGraphPage.css';
 import Thread from '../../types/Thread';
 import isIdleThread from '../../common/isIdleThread';
 
-// todo: additional filtering options
 type State = {
   withoutIdle: boolean;
 };
@@ -56,7 +55,7 @@ export default class FlameGraphPage extends PageWithSettings<State> {
     };
 
     threads.forEach((thread) => (
-      this.processStackTrace(root, thread.stackTrace)
+      this.processStackTrace(root, [...thread.stackTrace])
     ));
 
     return root;
