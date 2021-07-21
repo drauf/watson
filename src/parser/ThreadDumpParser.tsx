@@ -76,7 +76,7 @@ export default class ThreadDumpParser {
         case 'waiting on':
         case 'parking to wait for':
         case 'waiting to lock':
-          lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className, ThreadDumpParser.currentThread);
+          lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
           lock.addWaiting(ThreadDumpParser.currentThread);
           ThreadDumpParser.currentThread.lockWaitingFor = lock;
           return;
@@ -157,6 +157,9 @@ export default class ThreadDumpParser {
   private static getOrCreateLock(locks: Lock[], id: string, className: string, owner?: Thread): Lock {
     const existingLock = locks.find((lock) => lock.hasId(id));
     if (existingLock) {
+      if (owner) {
+        existingLock.setOwner(owner);
+      }
       return existingLock;
     }
 
