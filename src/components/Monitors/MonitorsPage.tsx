@@ -59,6 +59,11 @@ export default class MonitorsPage extends PageWithSettings<State> {
 
         let monitorOverTime = monitorsOverTime.get(lock.id);
         if (!monitorOverTime) {
+          // hide unnecessary noise from the page
+          if (monitor.waiting.length === 1 && monitor.waiting[0] === monitor.owner) {
+            return;
+          }
+
           monitorOverTime = new MonitorOverTime(lock.id);
           monitorsOverTime.set(lock.id, monitorOverTime);
         }
