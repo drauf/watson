@@ -7,7 +7,7 @@ export default class Lock {
 
   public readonly waiting: Thread[] = [];
 
-  public readonly owner?: Thread;
+  public owner?: Thread;
 
   constructor(id: string, className: string, owner?: Thread) {
     this.id = Lock.parseId(id);
@@ -22,6 +22,10 @@ export default class Lock {
 
   public addWaiting(thread: Thread): void {
     this.waiting.push(thread);
+  }
+
+  public setOwner(owner: Thread): void {
+    this.owner = owner;
   }
 
   private static parseId(id: string): string {
