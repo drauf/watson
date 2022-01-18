@@ -6,6 +6,8 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
 
   protected static N0_MONITORS_MATCHING = 'No monitors match the selected criteria.';
 
+  // for some reason eslint thinks properties below are unused
+  // eslint-disable-next-line react/no-unused-class-component-methods
   protected handleFilterChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name } = event.target;
     const isChecked: boolean = event.target.checked;
@@ -13,6 +15,7 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
     this.setState(newState as S);
   };
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   protected handleIntegerChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name } = event.target;
     const value: number = parseInt(event.target.value ? event.target.value : '0', 10);
@@ -20,6 +23,7 @@ export default class PageWithSettings<S> extends React.PureComponent<WithThreadD
     this.setState(newState as S);
   };
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   protected handleTextChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name } = event.target;
     const { value } = event.target;

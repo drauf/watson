@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis,
 } from 'recharts';
@@ -21,7 +20,7 @@ const getSortedThreadNames = (payload: unknown): string[] => {
     .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
 };
 
-const CustomTooltip: React.FunctionComponent<TooltipProps<number, string>> = ({ active, payload, label }) => {
+function CustomTooltip({ active, payload, label }: TooltipProps<number, string>): JSX.Element | null {
   if (active && payload) {
     const time = label as string;
     const threadNames: string[] = getSortedThreadNames(payload[1].value);
@@ -57,9 +56,9 @@ const CustomTooltip: React.FunctionComponent<TooltipProps<number, string>> = ({ 
   }
 
   return null;
-};
+}
 
-const RunningProcessesChart: React.FunctionComponent<Props> = ({ threadDumps }) => {
+function RunningProcessesChart({ threadDumps }: Props): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [];
 
@@ -95,6 +94,6 @@ const RunningProcessesChart: React.FunctionComponent<Props> = ({ threadDumps }) 
       </ResponsiveContainer>
     </div>
   );
-};
+}
 
 export default RunningProcessesChart;
