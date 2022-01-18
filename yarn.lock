@@ -1765,6 +1765,11 @@
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-color/-/d3-color-3.0.2.tgz#53f2d6325f66ee79afd707c05ac849e8ae0edbb0"
   integrity sha1-U/LWMl9m7nmv1wfAWshJ6K4O27A=
 
+"@types/d3-color@^2":
+  version "2.0.3"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-color/-/d3-color-2.0.3.tgz#8bc4589073c80e33d126345542f588056511fe82"
+  integrity sha512-+0EtEjBfKEDtH9Rk3u3kLOUXM5F+iZK+WvASPb0MhIZl8J8NUvGeZRwKCXl+P3HkYx5TdU4YtcibpqHkSR9n7w==
+
 "@types/d3-contour@*":
   version "3.0.1"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-contour/-/d3-contour-3.0.1.tgz#9ff4e2fd2a3910de9c5097270a7da8a6ef240017"
@@ -1835,6 +1840,13 @@
   integrity sha1-59F/pKWDCtVv4izjtPrIVBqVctw=
   dependencies:
     "@types/d3-color" "*"
+
+"@types/d3-interpolate@^2.0.0":
+  version "2.0.2"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/d3-interpolate/-/d3-interpolate-2.0.2.tgz#78eddf7278b19e48e8652603045528d46897aba0"
+  integrity sha512-lElyqlUfIPyWG/cD475vl6msPL4aMU7eJvx1//Q177L8mdXoVPFl1djIESF2FKnc0NyaHvQlJpWwKJYwAhUoCw==
+  dependencies:
+    "@types/d3-color" "^2"
 
 "@types/d3-path@*":
   version "3.0.0"
@@ -4509,7 +4521,7 @@ d3-interpolate@1:
   dependencies:
     d3-color "1"
 
-"d3-interpolate@1 - 2", "d3-interpolate@1.2.0 - 2", d3-interpolate@2, d3-interpolate@^2.0.1:
+"d3-interpolate@1 - 2", "d3-interpolate@1.2.0 - 2", d3-interpolate@2, d3-interpolate@^2.0.0:
   version "2.0.1"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-interpolate/-/d3-interpolate-2.0.1.tgz#98be499cfb8a3b94d4ff616900501a64abc91163"
   integrity sha1-mL5JnPuKO5TU/2FpAFAaZKvJEWM=
@@ -4544,7 +4556,7 @@ d3-scale-chromatic@2:
     d3-color "1 - 2"
     d3-interpolate "1 - 2"
 
-d3-scale@3, d3-scale@^3.2.3:
+d3-scale@3, d3-scale@^3.0.0:
   version "3.3.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/d3-scale/-/d3-scale-3.3.0.tgz#28c600b29f47e5b9cd2df9749c206727966203f3"
   integrity sha1-KMYAsp9H5bnNLfl0nCBnJ5ZiA/M=
@@ -10536,12 +10548,7 @@ react-error-overlay@^6.0.9:
   resolved "https://packages.atlassian.com/api/npm/npm-remote/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha1-PHQwEMk1lgjDdezWvHbzXZOZWwo=
 
-react-is@16.10.2:
-  version "16.10.2"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/react-is/-/react-is-16.10.2.tgz#984120fd4d16800e9a738208ab1fba422d23b5ab"
-  integrity sha1-mEEg/U0WgA6ac4IIqx+6Qi0jtas=
-
-react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
+react-is@^16.10.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=
@@ -10774,20 +10781,21 @@ recharts-scale@^0.4.4:
   dependencies:
     decimal.js-light "^2.4.1"
 
-recharts@2.1.2:
-  version "2.1.2"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/recharts/-/recharts-2.1.2.tgz#ceeb01e53fb46da0d946a1e0f82d783ddf5b9d06"
-  integrity sha1-zusB5T+0baDZRqHg+C14Pd9bnQY=
+recharts@2.1.8:
+  version "2.1.8"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/recharts/-/recharts-2.1.8.tgz#ca8774fcec5f5d7ec15dedd638db9ee12faf1c09"
+  integrity sha512-Wi7ufdDGyvy/BPf1za1Ok7VeWB2KtEejaewO9ulmlUhvn5l5RPS4AOkrUfhtMRTTjgJ4K6AbWMDpwtDjczUHJA==
   dependencies:
+    "@types/d3-interpolate" "^2.0.0"
     "@types/d3-scale" "^3.0.0"
     "@types/d3-shape" "^2.0.0"
     classnames "^2.2.5"
-    d3-interpolate "^2.0.1"
-    d3-scale "^3.2.3"
+    d3-interpolate "^2.0.0"
+    d3-scale "^3.0.0"
     d3-shape "^2.0.0"
     eventemitter3 "^4.0.1"
     lodash "^4.17.19"
-    react-is "16.10.2"
+    react-is "^16.10.2"
     react-resize-detector "^6.6.3"
     react-smooth "^2.0.0"
     recharts-scale "^0.4.4"
