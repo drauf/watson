@@ -8,7 +8,7 @@ import './SummaryPage.css';
 import SwapUsageChart from './SwapUsageChart';
 
 export default class SummaryPage extends React.PureComponent<WithThreadDumpsProps> {
-  public render = (): JSX.Element => {
+  public render(): JSX.Element {
     const { threadDumps } = this.props;
 
     if (!threadDumps.some((dump) => !!dump.loadAverages)) {
@@ -25,5 +25,5 @@ export default class SummaryPage extends React.PureComponent<WithThreadDumpsProp
         <LoadAveragesChart threadDumps={threadDumps} />
       </main>
     );
-  };
+  }
 }

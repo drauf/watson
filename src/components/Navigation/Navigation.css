@@ -13,7 +13,13 @@ header::after {
   right: 0;
   left: 0;
   height: 4px;
-  background: linear-gradient(rgba(9, 30, 66, 0.13) 0, rgba(9, 30, 66, 0.13) 1px, rgba(9, 30, 66, 0.08) 1px, rgba(9, 30, 66, 0) 4px);
+  background:
+    linear-gradient(
+      rgba(9 30 66 / 13%) 0,
+      rgba(9 30 66 / 13%) 1px,
+      rgba(9 30 66 / 8%) 1px,
+      rgba(9 30 66 / 0%) 4px
+    );
   content: "";
 }
 

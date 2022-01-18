@@ -16,7 +16,7 @@ class Navigation extends React.PureComponent<Props> {
     history.push('/');
   };
 
-  public render() {
+  public render(): JSX.Element {
     const { match } = this.props;
     const { key } = match.params;
 

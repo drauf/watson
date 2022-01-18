@@ -25,20 +25,14 @@
   ],
   "rules": {
     "max-len": "off",
+    // Temporarily (🤞) disable this new rule from eslint 8
+    "class-methods-use-this": "warn",
     // Switch non-trivial errors to warnings
-    "import/no-cycle": [
-      "warn"
-    ],
-    "no-param-reassign": [
-      "warn"
-    ],
+    "import/no-cycle": "warn",
+    "no-param-reassign": "warn",
     // Turn some a11y issues from errors to warnings
-    "jsx-a11y/click-events-have-key-events": [
-      "warn"
-    ],
-    "jsx-a11y/no-noninteractive-element-interactions": [
-      "warn"
-    ],
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "warn",
     // Suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
     // Diff to airbnb: Allow use of for…in loops

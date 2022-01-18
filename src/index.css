@@ -53,7 +53,17 @@ body {
   color: var(--color-n800);
   font-weight: 400;
   font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
   line-height: 20px;
   letter-spacing: -0.005em;
   background: var(--color-n0);
@@ -130,8 +140,8 @@ input {
 
 input[type="number"],
 input[type="text"] {
-  height: 2.14285714em;
-  line-height: 1.4285714285714;
+  height: 2.1429em;
+  line-height: 1.4286;
 }
 
 input[type="number"] {
@@ -157,7 +167,7 @@ input:focus {
   height: 14px;
   margin-right: 5px;
   color: var(--color-n600);
-  background: rgba(9, 30, 66, 0.08) url(chevron.svg) no-repeat top left;
+  background: rgba(9 30 66 / 8%) url("chevron.svg") no-repeat top left;
   border-radius: 3.01px;
   transition: background-color 0.1s ease-out;
 }
