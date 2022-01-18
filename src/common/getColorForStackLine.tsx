@@ -1,7 +1,7 @@
-export default function getColorForStackLine(line: string): string {
+export default function getColorForStackLine(line: string, fade = false): string {
   // anything Atlassian
   if (line.startsWith('com.atlassian')) {
-    return '#DEEBFF';
+    return fade ? '#C8D4E6' : '#DEEBFF';
   }
 
   // database and Lucene
@@ -11,7 +11,7 @@ export default function getColorForStackLine(line: string): string {
     || line.startsWith('org.apache.lucene')
     || line.startsWith('org.ofbiz')
     || line.startsWith('org.postgresql')) {
-    return '#FFFAE6';
+    return fade ? '#E6E2CF' : '#FFFAE6';
   }
 
   // "Boring" third parties
@@ -28,9 +28,9 @@ export default function getColorForStackLine(line: string): string {
     || line.startsWith('org.springframework')
     || line.startsWith('sun.')
     || line.startsWith('webwork')) {
-    return '#DFE1E6';
+    return fade ? '#C7C8CD' : '#DFE1E6';
   }
 
   // most likely 3rd party apps
-  return '#E3FCEF';
+  return fade ? '#CDE4D8' : '#E3FCEF';
 }
