@@ -15,7 +15,7 @@
   "dependencies": {
     "d3": "6.7.0",
     "d3-flame-graph": "2.2.2",
-    "flatted": "3.2.2",
+    "flatted": "3.2.4",
     "gh-pages": "3.2.3",
     "localforage": "1.10.0",
     "react": "17.0.2",

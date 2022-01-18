@@ -6002,15 +6002,20 @@ flat-cache@^3.0.4:
     flatted "^3.1.0"
     rimraf "^3.0.2"
 
-flatted@3.2.2, flatted@^3.1.0:
-  version "3.2.2"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/flatted/-/flatted-3.2.2.tgz#64bfed5cb68fe3ca78b3eb214ad97b63bedce561"
-  integrity sha1-ZL/tXLaP48p4s+shStl7Y77c5WE=
+flatted@3.2.4:
+  version "3.2.4"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/flatted/-/flatted-3.2.4.tgz#28d9969ea90661b5134259f312ab6aa7929ac5e2"
+  integrity sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==
 
 flatted@^2.0.0:
   version "2.0.2"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha1-RXWyHivO50NKqb5mL0t7X5wrUTg=
+
+flatted@^3.1.0:
+  version "3.2.2"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/flatted/-/flatted-3.2.2.tgz#64bfed5cb68fe3ca78b3eb214ad97b63bedce561"
+  integrity sha1-ZL/tXLaP48p4s+shStl7Y77c5WE=
 
 flatten@^1.0.2:
   version "1.0.3"
