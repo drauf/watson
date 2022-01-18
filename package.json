@@ -65,7 +65,7 @@
   },
   "jest": {
     "transformIgnorePatterns": [
-      "node_modules/(?!d3-flame-graph|d3|delaunator|internmap|robust-predicates)"
+      "node_modules/(?!d3|delaunator|internmap|robust-predicates)"
     ]
   },
   "browserslist": [
