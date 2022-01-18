@@ -2,12 +2,16 @@ import React from 'react';
 import { select } from 'd3';
 import { flamegraph, StackFrame } from 'd3-flame-graph';
 import getColorForStackLine from '../../common/getColorForStackLine';
+import tooltip from './FlameGraphTooltip';
+
+type NodeData = {
+  name: string,
+  value: number,
+  fade: boolean
+};
 
 type Node = {
-  data: {
-    name: string,
-    value: number
-  }
+  data: NodeData
 };
 
 type Props = {
@@ -31,7 +35,10 @@ export default class FlameGraph extends React.PureComponent<Props> {
       .sort(true)
       .inverted(true)
       .minFrameSize(5)
-      .setColorMapper((node: Node) => (getColorForStackLine(node.data.name)));
+      .tooltip(tooltip)
+      .setColorMapper((node: Node) => (getColorForStackLine(node.data.name, node.data.fade)));
+
+    console.warn(chart.tooltip());
 
     select('#flame-graph')
       .datum(chartData)
