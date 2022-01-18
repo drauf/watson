@@ -1,5 +1,5 @@
 import React from 'react';
-import * as d3 from 'd3';
+import { select } from 'd3';
 import { flamegraph, StackFrame } from 'd3-flame-graph';
 import getColorForStackLine from '../../common/getColorForStackLine';
 
@@ -33,7 +33,7 @@ export default class FlameGraph extends React.PureComponent<Props> {
       .minFrameSize(5)
       .setColorMapper((node: Node) => (getColorForStackLine(node.data.name)));
 
-    d3.select('#flame-graph')
+    select('#flame-graph')
       .datum(chartData)
       .call(chart);
   };
