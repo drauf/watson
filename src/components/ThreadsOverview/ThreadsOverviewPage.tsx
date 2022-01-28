@@ -95,21 +95,21 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     || this.state.database;
 
   private filterThreads = (threadDumps: Array<Map<number, Thread>>) => {
-    let filtered = this.filterByActive(threadDumps, this.state.active);
-    filtered = this.filterByCpuUsage(filtered, this.state.usingCpu);
+    let filtered = ThreadsOverviewPage.filterByActive(threadDumps, this.state.active);
+    filtered = ThreadsOverviewPage.filterByCpuUsage(filtered, this.state.usingCpu);
     filtered = this.filterByName(filtered, this.state.nameFilter);
     return filtered;
   };
 
-  private filterByActive = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
+  private static filterByActive = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
     if (!shouldFilter) {
       return threadDumps;
     }
 
-    return threadDumps.filter((threads) => this.isActive(threads));
+    return threadDumps.filter((threads) => ThreadsOverviewPage.isActive(threads));
   };
 
-  private isActive = (threads: Map<number, Thread>): boolean => {
+  private static isActive = (threads: Map<number, Thread>): boolean => {
     let status;
     for (const thread of threads.values()) {
       // Status changed, so the thread is active
@@ -120,7 +120,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
       // Otherwise the thread is active if it's blocked or runnable and not idle
       status = thread.status;
       if (status === ThreadStatus.BLOCKED
-        || (status === ThreadStatus.RUNNABLE && !this.isIdleThread(thread.stackTrace))) {
+        || (status === ThreadStatus.RUNNABLE && !ThreadsOverviewPage.isIdleThread(thread.stackTrace))) {
         return true;
       }
     }
@@ -128,7 +128,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     return false;
   };
 
-  private isIdleThread = (stackTrace: string[]): boolean => {
+  private static isIdleThread = (stackTrace: string[]): boolean => {
     if (!stackTrace || !stackTrace[0]) {
       return true;
     }
@@ -155,15 +155,15 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     return false;
   };
 
-  private filterByCpuUsage = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
+  private static filterByCpuUsage = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
     if (!shouldFilter) {
       return threadDumps;
     }
 
-    return threadDumps.filter((threads) => this.isUsingCpu(threads));
+    return threadDumps.filter((threads) => ThreadsOverviewPage.isUsingCpu(threads));
   };
 
-  private isUsingCpu = (threads: Map<number, Thread>): boolean => {
+  private static isUsingCpu = (threads: Map<number, Thread>): boolean => {
     for (const thread of threads.values()) {
       if (thread.cpuUsage > 30) {
         return true;
@@ -184,13 +184,13 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     return threadDumps
-      .filter((threads) => (this.state.nonJvm ? !this.matchesName(threads, this.jvmRegex) : true))
-      .filter((threads) => (this.state.tomcat ? this.matchesName(threads, this.tomcatRegex) : true))
-      .filter((threads) => (this.state.nonTomcat ? !this.matchesName(threads, this.tomcatRegex) : true))
-      .filter((threads) => (userProvided ? this.matchesName(threads, userProvided) : true));
+      .filter((threads) => (this.state.nonJvm ? !ThreadsOverviewPage.matchesName(threads, this.jvmRegex) : true))
+      .filter((threads) => (this.state.tomcat ? ThreadsOverviewPage.matchesName(threads, this.tomcatRegex) : true))
+      .filter((threads) => (this.state.nonTomcat ? !ThreadsOverviewPage.matchesName(threads, this.tomcatRegex) : true))
+      .filter((threads) => (userProvided ? ThreadsOverviewPage.matchesName(threads, userProvided) : true));
   };
 
-  private matchesName = (threads: Map<number, Thread>, regex: RegExp): boolean => {
+  private static matchesName = (threads: Map<number, Thread>, regex: RegExp): boolean => {
     for (const thread of threads.values()) {
       if (regex.test(thread.name)) {
         return true;
@@ -208,7 +208,7 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     }
 
     threadDumps.forEach((threads) => {
-      threads.forEach((thread) => this.addIfMatchesAllFilters(matchingThreadIds, thread, filters));
+      threads.forEach((thread) => ThreadsOverviewPage.addIfMatchesAllFilters(matchingThreadIds, thread, filters));
     });
 
     return matchingThreadIds;
@@ -236,16 +236,16 @@ export default class ThreadsOverviewPage extends PageWithSettings<State> {
     return filters;
   };
 
-  private addIfMatchesAllFilters = (matchingThreadIds: Set<number>, thread: Thread, filters: RegExp[]) => {
+  private static addIfMatchesAllFilters = (matchingThreadIds: Set<number>, thread: Thread, filters: RegExp[]) => {
     for (const filter of filters) {
-      if (!this.matchesStackTraceFilter(thread, filter)) {
+      if (!ThreadsOverviewPage.matchesStackTraceFilter(thread, filter)) {
         return;
       }
     }
     matchingThreadIds.add(thread.uniqueId);
   };
 
-  private matchesStackTraceFilter = (thread: Thread, filter: RegExp) => {
+  private static matchesStackTraceFilter = (thread: Thread, filter: RegExp) => {
     for (const line of thread.stackTrace) {
       if (filter.test(line)) {
         return true;

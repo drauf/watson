@@ -19,6 +19,13 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     this.state = { showDetails: false, showLockOwner: false };
   }
 
+  private static getLocksHeldString = (thread: Thread): string => {
+    if (thread.locksHeld.length === 0) {
+      return '';
+    }
+    return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
+  };
+
   private toggleDetails = () => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   };
@@ -29,13 +36,6 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
 
   private handleUnload = () => {
     this.setState({ showDetails: false, showLockOwner: false });
-  };
-
-  private getLocksHeldString = (thread: Thread): string => {
-    if (thread.locksHeld.length === 0) {
-      return '';
-    }
-    return thread.locksHeld.map((lock) => lock.id).reduce(ThreadSummary.locksReducer);
   };
 
   private waitingForRender = (thread: Thread, lockOwner?: Thread) => {
@@ -65,7 +65,7 @@ export default class ThreadSummary extends React.PureComponent<Props, State> {
     const { thread } = this.props;
     const { showDetails, showLockOwner } = this.state;
     const lockOwner = thread.lockWaitingFor ? thread.lockWaitingFor.owner : undefined;
-    const locksHeld = this.getLocksHeldString(thread);
+    const locksHeld = ThreadSummary.getLocksHeldString(thread);
 
     return (
       <li>

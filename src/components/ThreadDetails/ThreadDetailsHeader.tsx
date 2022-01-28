@@ -6,7 +6,7 @@ type Props = {
 };
 
 export default class ThreadDetailsHeader extends React.PureComponent<Props> {
-  private renderName = (thread: Thread) => (
+  private static renderName = (thread: Thread) => (
     <h3>
       {Thread.getFormattedTime(thread)}
       {' '}
@@ -16,7 +16,7 @@ export default class ThreadDetailsHeader extends React.PureComponent<Props> {
     </h3>
   );
 
-  private renderStatus = (thread: Thread) => (
+  private static renderStatus = (thread: Thread) => (
     <div>
       State:
       <span className={`thread-state ${thread.status}`}>
@@ -25,7 +25,7 @@ export default class ThreadDetailsHeader extends React.PureComponent<Props> {
     </div>
   );
 
-  private getCpuUsageClassName = (cpuUsage: number): string => {
+  private static getCpuUsageClassName = (cpuUsage: number): string => {
     // The numbers here are completely arbitrary
     if (cpuUsage > 78) {
       return 'high';
@@ -39,17 +39,17 @@ export default class ThreadDetailsHeader extends React.PureComponent<Props> {
     return 'none';
   };
 
-  private renderCpuUsage = (thread: Thread) => (
+  private static renderCpuUsage = (thread: Thread) => (
     <div>
       CPU usage:
-      <span className={`thread-state ${this.getCpuUsageClassName(thread.cpuUsage)}`}>
+      <span className={`thread-state ${ThreadDetailsHeader.getCpuUsageClassName(thread.cpuUsage)}`}>
         {thread.cpuUsage.toFixed(1)}
         %
       </span>
     </div>
   );
 
-  private renderRunningFor = (thread: Thread) => (
+  private static renderRunningFor = (thread: Thread) => (
     <div>
       Running for:
       {' '}
@@ -62,10 +62,10 @@ export default class ThreadDetailsHeader extends React.PureComponent<Props> {
 
     return (
       <div className="details-header">
-        {this.renderName(thread)}
-        {this.renderStatus(thread)}
-        {this.renderCpuUsage(thread)}
-        {this.renderRunningFor(thread)}
+        {ThreadDetailsHeader.renderName(thread)}
+        {ThreadDetailsHeader.renderStatus(thread)}
+        {ThreadDetailsHeader.renderCpuUsage(thread)}
+        {ThreadDetailsHeader.renderRunningFor(thread)}
       </div>
     );
   }

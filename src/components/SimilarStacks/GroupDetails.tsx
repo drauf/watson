@@ -20,11 +20,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
     this.state = { expanded: false };
   }
 
-  private toggleExpand = () => {
-    this.setState((prevState) => ({ expanded: !prevState.expanded }));
-  };
-
-  private getStackTrace = (threads: Thread[]): string[] => {
+  private static getStackTrace = (threads: Thread[]): string[] => {
     for (const thread of threads) {
       if (thread) {
         return thread.stackTrace;
@@ -33,11 +29,15 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
     return [];
   };
 
+  private toggleExpand = () => {
+    this.setState((prevState) => ({ expanded: !prevState.expanded }));
+  };
+
   public render(): JSX.Element {
     const { threadGroup, linesToConsider } = this.props;
     const { expanded } = this.state;
 
-    const stackTrace = this.getStackTrace(threadGroup);
+    const stackTrace = GroupDetails.getStackTrace(threadGroup);
     const sortedByName = threadGroup.sort((t1, t2) => t1.name.localeCompare(t2.name));
     const collapsable = sortedByName.length - GroupDetails.THREADS_TO_SHOW_WHEN_COLLAPSED;
     const threads = expanded

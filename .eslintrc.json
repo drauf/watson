@@ -25,8 +25,6 @@
   ],
   "rules": {
     "max-len": "off",
-    // Temporarily (🤞) disable this new rule from eslint 8
-    "class-methods-use-this": "warn",
     // Switch non-trivial errors to warnings
     "import/no-cycle": "warn",
     "no-param-reassign": "warn",

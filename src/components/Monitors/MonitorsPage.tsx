@@ -22,7 +22,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
   };
 
   public render(): JSX.Element {
-    const monitors = this.getMonitorsOverTime(this.props.threadDumps);
+    const monitors = MonitorsPage.getMonitorsOverTime(this.props.threadDumps);
     const filtered = this.filterMonitors(monitors);
 
     if (!this.props.threadDumps.some((dump) => dump.threads.length > 0)) {
@@ -38,19 +38,19 @@ export default class MonitorsPage extends PageWithSettings<State> {
           onFilterChange={this.handleFilterChange}
         />
 
-        {this.renderMonitors(filtered)}
+        {MonitorsPage.renderMonitors(filtered)}
       </main>
     );
   }
 
-  private renderMonitors = (filtered: MonitorOverTime[]): React.ReactNode => {
+  private static renderMonitors = (filtered: MonitorOverTime[]): React.ReactNode => {
     if (filtered.length === 0) {
       return <h4>{MonitorsPage.N0_MONITORS_MATCHING}</h4>;
     }
     return filtered.map((monitor) => <MonitorOverTimeItem key={monitor.uniqueId} monitor={monitor} />);
   };
 
-  private getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {
+  private static getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {
     const monitorsOverTime = new Map<string, MonitorOverTime>();
 
     threadDumps.forEach((threadDump) => {
@@ -82,21 +82,21 @@ export default class MonitorsPage extends PageWithSettings<State> {
     let filtered = monitors.filter((monitor) => monitor.waitingSum > 0);
 
     if (this.state.withoutIdle) {
-      filtered = filtered.filter((monitor) => !this.isQueueThread(monitor));
+      filtered = filtered.filter((monitor) => !MonitorsPage.isQueueThread(monitor));
     }
     if (this.state.withOwner) {
-      filtered = filtered.filter((monitor) => this.hasAnyOwner(monitor));
+      filtered = filtered.filter((monitor) => MonitorsPage.hasAnyOwner(monitor));
     }
     if (this.state.withoutOwner) {
-      filtered = filtered.filter((monitor) => !this.hasAnyOwner(monitor));
+      filtered = filtered.filter((monitor) => !MonitorsPage.hasAnyOwner(monitor));
     }
 
     return filtered;
   };
 
-  private hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => !!monitor.owner);
+  private static hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => !!monitor.owner);
 
-  private isQueueThread = (monitorOverTime: MonitorOverTime): boolean => {
+  private static isQueueThread = (monitorOverTime: MonitorOverTime): boolean => {
     for (const monitor of monitorOverTime.monitors) {
       // if the lock has an owner, it's not a queue thread
       if (monitor.owner) {

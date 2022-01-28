@@ -21,7 +21,7 @@ export default class FlameGraphPage extends PageWithSettings<State> {
     };
   }
 
-  private processLine = (previousFrame: StackFrame, line: string): StackFrame => {
+  private static processLine = (previousFrame: StackFrame, line: string): StackFrame => {
     const existingFrame = previousFrame.children.find((frame) => frame.name === line);
     if (existingFrame) {
       existingFrame.value += 1;
@@ -38,16 +38,16 @@ export default class FlameGraphPage extends PageWithSettings<State> {
     return newFrame;
   };
 
-  private processStackTrace = (root: StackFrame, stackTrace: string[]): void => {
+  private static processStackTrace = (root: StackFrame, stackTrace: string[]): void => {
     let previousFrame = root;
 
     for (const line of stackTrace.reverse()) {
-      const currentFrame = this.processLine(previousFrame, line);
+      const currentFrame = FlameGraphPage.processLine(previousFrame, line);
       previousFrame = currentFrame;
     }
   };
 
-  private calculateChartData = (threads: Thread[]): StackFrame => {
+  private static calculateChartData = (threads: Thread[]): StackFrame => {
     const root = {
       name: 'root',
       value: 0,
@@ -55,7 +55,7 @@ export default class FlameGraphPage extends PageWithSettings<State> {
     };
 
     threads.forEach((thread) => (
-      this.processStackTrace(root, [...thread.stackTrace])
+      FlameGraphPage.processStackTrace(root, [...thread.stackTrace])
     ));
 
     return root;
@@ -82,7 +82,7 @@ export default class FlameGraphPage extends PageWithSettings<State> {
     }
 
     const filteredThreads = this.filterThreads(threadDumps);
-    const chartData: StackFrame = this.calculateChartData(filteredThreads);
+    const chartData: StackFrame = FlameGraphPage.calculateChartData(filteredThreads);
 
     return (
       <main className="full-width-page">

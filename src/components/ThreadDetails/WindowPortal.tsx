@@ -32,6 +32,12 @@ export default class WindowPortal extends React.PureComponent<Props> {
     });
   };
 
+  private static closeAllExternalWindows = (): void => {
+    WindowPortal.windows
+      .filter((external) => !external.closed)
+      .forEach((external) => external.close());
+  };
+
   private readonly windowFeatures = 'width=960,height=700,titlebar=0,menubar=0,location=0,toolbar=0,status=0';
 
   private readonly container: HTMLElement;
@@ -51,7 +57,7 @@ export default class WindowPortal extends React.PureComponent<Props> {
   }
 
   public componentDidMount(): void {
-    window.onunload = this.closeAllExternalWindows;
+    window.onunload = WindowPortal.closeAllExternalWindows;
 
     this.externalWindow = window.open('', '', this.windowFeatures);
     if (this.externalWindow) {
@@ -70,12 +76,6 @@ export default class WindowPortal extends React.PureComponent<Props> {
     }
     WindowPortal.windows = WindowPortal.windows.filter((ext) => ext !== this.externalWindow);
   }
-
-  private closeAllExternalWindows = (): void => {
-    WindowPortal.windows
-      .filter((external) => !external.closed)
-      .forEach((external) => external.close());
-  };
 
   public render(): JSX.Element {
     const { children } = this.props;

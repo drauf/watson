@@ -9,11 +9,11 @@ type Props = {
 };
 
 export default class CpuConsumerItem extends React.PureComponent<Props> {
-  private formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => (
-    `${value.toFixed(2)}% - "${this.getThreadName(threads)}"`
+  private static formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => (
+    `${value.toFixed(2)}% - "${CpuConsumerItem.getThreadName(threads)}"`
   );
 
-  private getThreadName = (threads: IterableIterator<Thread>): string => {
+  private static getThreadName = (threads: IterableIterator<Thread>): string => {
     for (const thread of threads) {
       if (thread) {
         return thread.name;
@@ -33,7 +33,7 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
     return (
       <li>
         <h5 className="ellipsis">
-          {this.formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurrences.values())}
+          {CpuConsumerItem.formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurrences.values())}
         </h5>
         <span>
           {threadsPadded.map((thread, index) => (
