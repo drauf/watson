@@ -18,17 +18,17 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
     this.state = { showDetails: false };
   }
 
+  private static getClassName = (isMatchingStackFilter: boolean, status: ThreadStatus) => {
+    const statusClass = status.toString();
+    return isMatchingStackFilter ? `${statusClass} matching` : statusClass;
+  };
+
   private toggleDetails = () => {
     this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
   };
 
   private handleUnload = () => {
     this.setState({ showDetails: false });
-  };
-
-  private getClassName = (isMatchingStackFilter: boolean, status: ThreadStatus) => {
-    const statusClass = status.toString();
-    return isMatchingStackFilter ? `${statusClass} matching` : statusClass;
   };
 
   public render(): JSX.Element {
@@ -39,7 +39,7 @@ export default class ThreadOverviewItem extends React.PureComponent<Props, State
       return <td className="unknown" />;
     }
 
-    const className = this.getClassName(isMatchingStackFilter, thread.status);
+    const className = ThreadOverviewItem.getClassName(isMatchingStackFilter, thread.status);
 
     return (
       <>

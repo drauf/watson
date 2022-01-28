@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default class ThreadDetailsBody extends React.PureComponent<Props> {
-  private renderWaitingFor = (thread: Thread) => (
+  private static renderWaitingFor = (thread: Thread) => (
     <div>
       <h5>Waiting for</h5>
 
@@ -35,7 +35,7 @@ export default class ThreadDetailsBody extends React.PureComponent<Props> {
     </div>
   );
 
-  private renderLocksHeld = (thread: Thread) => (
+  private static renderLocksHeld = (thread: Thread) => (
     <div>
       <h5>Locks held</h5>
 
@@ -53,13 +53,13 @@ export default class ThreadDetailsBody extends React.PureComponent<Props> {
     </div>
   );
 
-  private getLineStyles = (line: string): CSSProperties => ({ backgroundColor: getColorForStackLine(line) });
+  private static getLineStyles = (line: string): CSSProperties => ({ backgroundColor: getColorForStackLine(line) });
 
-  private renderStackTrace = (thread: Thread) => (
+  private static renderStackTrace = (thread: Thread) => (
     <div id="stacktrace-container">
       <h5>Stack trace</h5>
 
-      {thread.stackTrace.map((line) => <span style={this.getLineStyles(line)}>{line}</span>)}
+      {thread.stackTrace.map((line) => <span style={ThreadDetailsBody.getLineStyles(line)}>{line}</span>)}
     </div>
   );
 
@@ -68,9 +68,9 @@ export default class ThreadDetailsBody extends React.PureComponent<Props> {
 
     return (
       <div className="details-body">
-        {this.renderWaitingFor(thread)}
-        {this.renderLocksHeld(thread)}
-        {this.renderStackTrace(thread)}
+        {ThreadDetailsBody.renderWaitingFor(thread)}
+        {ThreadDetailsBody.renderLocksHeld(thread)}
+        {ThreadDetailsBody.renderStackTrace(thread)}
       </div>
     );
   }

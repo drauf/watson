@@ -5,14 +5,14 @@ import OutboundLink from '../Navigation/OutboundLink';
 export default class DropzoneGuide extends React.PureComponent {
   private static GATHER_DATA_LINK = 'https://github.com/drauf/watson/blob/master/README.md#gathering-thread-dumps';
 
-  private stopPropagation = (event: React.MouseEvent) => {
+  private static stopPropagation = (event: React.MouseEvent) => {
     // prevent opening the dropzone popup when clicking on the navigation links
     event.stopPropagation();
   };
 
   public render(): JSX.Element {
     return (
-      <div id="dropzone-guide" role="complementary" onClick={this.stopPropagation}>
+      <div id="dropzone-guide" role="complementary" onClick={DropzoneGuide.stopPropagation}>
         <h5>
           For the full experience, you should gather thread dumps along with
           {' '}

@@ -24,9 +24,9 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     this.setState({ showDetails: false });
   };
 
-  private getCpuUsage = (cpuUsage: number): string => `${cpuUsage.toFixed(1)}%`;
+  private static getCpuUsage = (cpuUsage: number): string => `${cpuUsage.toFixed(1)}%`;
 
-  private getClassName = (cpuUsage: number): string => {
+  private static getClassName = (cpuUsage: number): string => {
     // The numbers here are completely arbitrary
     if (cpuUsage > 78) {
       return 'high';
@@ -53,8 +53,8 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     }
 
     const { showDetails } = this.state;
-    const cpuUsage = this.getCpuUsage(thread.cpuUsage);
-    const className = this.getClassName(thread.cpuUsage);
+    const cpuUsage = CpuConsumerSingleUsage.getCpuUsage(thread.cpuUsage);
+    const className = CpuConsumerSingleUsage.getClassName(thread.cpuUsage);
 
     return (
       <>

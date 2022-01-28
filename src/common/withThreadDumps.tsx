@@ -14,6 +14,13 @@ type State = {
 
 export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent: React.ComponentType<P>): React.ComponentType<P> => {
   class WithThreadDumps extends React.PureComponent<P, State> {
+    private static scrollToTop = () => {
+      const rootDiv = document.getElementById('root');
+      if (rootDiv) {
+        rootDiv.scrollTop = 0;
+      }
+    };
+
     constructor(props: P) {
       super(props);
       this.state = {
@@ -36,15 +43,8 @@ export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent
     }
 
     public componentDidMount() {
-      this.scrollToTop();
+      WithThreadDumps.scrollToTop();
     }
-
-    private scrollToTop = () => {
-      const rootDiv = document.getElementById('root');
-      if (rootDiv) {
-        rootDiv.scrollTop = 0;
-      }
-    };
 
     public render(): JSX.Element {
       const { promisePending, threadDumps } = this.state;
