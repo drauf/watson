@@ -3,7 +3,7 @@ import { ISSUE_TRACKER_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
 import OutboundLink from '../Navigation/OutboundLink';
 
 export default class DropzoneGuide extends React.PureComponent {
-  private static GATHER_DATA_LINK = 'https://github.com/drauf/watson/blob/master/README.md#gathering-thread-dumps';
+  private static GATHER_DATA_LINK = 'https://bitbucket.org/atlassianlabs/atlassian-support/src/master/';
 
   private static stopPropagation = (event: React.MouseEvent) => {
     // prevent opening the dropzone popup when clicking on the navigation links
@@ -14,22 +14,20 @@ export default class DropzoneGuide extends React.PureComponent {
     return (
       <div id="dropzone-guide" role="complementary" onClick={DropzoneGuide.stopPropagation}>
         <h5>
-          For the full experience, you should gather thread dumps along with
+          Watson works fully inside your browser. No files will leave your machine.
+        </h5>
+
+        <p>
+          For full functionality, gather thread dumps and
           {' '}
           <i>top</i>
           {' '}
-          outputs.
-        </h5>
-        <span>
-          See:
+          outputs, e.g. with the
           {' '}
           <OutboundLink to={DropzoneGuide.GATHER_DATA_LINK}>
-            How to gather data
+            Atlassian Support scripts
           </OutboundLink>
-        </span>
-
-        <p>
-          Watson works fully offline. No files will leave your machine.
+          .
         </p>
 
         <ul id="dropzone-links">
