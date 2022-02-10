@@ -13,6 +13,7 @@ export default class DropzoneGuide extends React.PureComponent {
 
   public render(): JSX.Element {
     return (
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
       <div id="dropzone-guide" role="complementary" onClick={DropzoneGuide.stopPropagation}>
         <h5>
           Watson works fully inside your browser. No files will leave your machine.
