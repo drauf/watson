@@ -44,7 +44,6 @@ header ul {
   display: inline-flex;
   align-items: center;
   height: 100%;
-  padding-left: 32px;
   overflow: hidden;
 }
 
