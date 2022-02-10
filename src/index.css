@@ -117,12 +117,12 @@ a:hover {
 
 button {
   color: var(--color-b400);
-  cursor: pointer;
   all: unset;
   -webkit-text-fill-color: var(--color-b400);
 }
 
 button:hover {
+  cursor: pointer;
   text-decoration: underline;
 }
 
