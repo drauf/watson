@@ -4,7 +4,7 @@ import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
-import MonitorOverTimeItem from './MonitorOverTimeItem';
+import MonitorOverTimeGroup from './MonitorOverTimeItem';
 import './MonitorsPage.css';
 import MonitorsSettings from './MonitorsSettings';
 
@@ -47,7 +47,7 @@ export default class MonitorsPage extends PageWithSettings<State> {
     if (filtered.length === 0) {
       return <h4>{MonitorsPage.N0_MONITORS_MATCHING}</h4>;
     }
-    return filtered.map((monitor) => <MonitorOverTimeItem key={monitor.uniqueId} monitor={monitor} />);
+    return filtered.map((monitor) => <MonitorOverTimeGroup key={monitor.uniqueId} monitor={monitor} />);
   };
 
   private static getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {

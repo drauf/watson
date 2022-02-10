@@ -1,4 +1,5 @@
 import React from 'react';
+import CollapsableGroup from '../CollapsableGroup';
 import MonitorItem from './MonitorItem';
 import MonitorOverTime from './MonitorOverTime';
 
@@ -6,37 +7,21 @@ type Props = {
   monitor: MonitorOverTime;
 };
 
-type State = {
-  collapse: boolean;
-};
-
-export default class MonitorOverTimeItem extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { collapse: false };
-  }
-
-  private toggleCollapse = () => {
-    this.setState((prevState) => ({ collapse: !prevState.collapse }));
-  };
-
+export default class MonitorOverTimeGroup extends React.PureComponent<Props> {
   public render(): JSX.Element {
     const { monitor } = this.props;
-    const { collapse } = this.state;
 
-    return (
+    const header = (
       <>
-        <h5 className="clickable ellipsis" onClick={this.toggleCollapse}>
-          <span className={collapse ? 'chevron rotate' : 'chevron'} />
-          {monitor.waitingSum}
-          {' '}
-          thread(s) waiting for &lt;
-          {monitor.id}
-          &gt;
-        </h5>
-
-        {!collapse && monitor.monitors.map((item) => <MonitorItem key={item.uniqueId} monitor={item} />)}
+        {monitor.waitingSum}
+        {' '}
+        thread(s) waiting for &lt;
+        {monitor.id}
+        &gt;
       </>
     );
+    const content = (monitor.monitors.map((item) => <MonitorItem key={item.uniqueId} monitor={item} />));
+
+    return <CollapsableGroup header={header} content={content} />;
   }
 }

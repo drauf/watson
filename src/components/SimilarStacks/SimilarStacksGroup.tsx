@@ -1,5 +1,6 @@
 import React from 'react';
 import Thread from '../../types/Thread';
+import CollapsableGroup from '../CollapsableGroup';
 import GroupDetails from './GroupDetails';
 
 type Props = {
@@ -7,40 +8,19 @@ type Props = {
   linesToConsider: number;
 };
 
-type State = {
-  showDetails: boolean;
-};
-
-export default class SimilarStacksGroup extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { showDetails: true };
-  }
-
-  private toggleGroup = () => {
-    this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
-  };
-
+export default class SimilarStacksGroup extends React.PureComponent<Props> {
   public render(): JSX.Element {
     const { threadGroup, linesToConsider } = this.props;
-    const { showDetails } = this.state;
 
-    return (
+    const header = (
       <>
-        <h5 className="clickable ellipsis" onClick={this.toggleGroup}>
-          <span className={showDetails ? 'chevron' : 'chevron rotate'} />
-          {threadGroup.length}
-          {' '}
-          thread(s) with this stack:
-        </h5>
-
-        {showDetails && (
-          <GroupDetails
-            threadGroup={threadGroup}
-            linesToConsider={linesToConsider}
-          />
-        )}
+        {threadGroup.length}
+        {' '}
+        thread(s) with this stack:
       </>
     );
+    const content = <GroupDetails threadGroup={threadGroup} linesToConsider={linesToConsider} />;
+
+    return <CollapsableGroup header={header} content={content} />;
   }
 }
