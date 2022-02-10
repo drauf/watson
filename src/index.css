@@ -121,9 +121,14 @@ button {
   -webkit-text-fill-color: var(--color-b400);
 }
 
+.default-color {
+  color: var(--color-n800);
+  -webkit-text-fill-color: var(--color-n800);
+}
+
 button:hover {
-  cursor: pointer;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 input {
@@ -174,10 +179,6 @@ input:focus {
 
 .rotate {
   transform: rotate(-90deg);
-}
-
-.clickable {
-  cursor: pointer;
 }
 
 .ellipsis {

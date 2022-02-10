@@ -1,5 +1,6 @@
 import React from 'react';
 import Thread from '../../types/Thread';
+import CollapsableGroup from '../CollapsableGroup';
 import GroupDetails from './GroupDetails';
 
 type Props = {
@@ -7,49 +8,28 @@ type Props = {
   maxDifferingLines: number;
 };
 
-type State = {
-  showDetails: boolean;
-};
-
-export default class StuckThreadsGroup extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { showDetails: true };
-  }
-
-  private toggleGroup = () => {
-    this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
-  };
-
+export default class StuckThreadsGroup extends React.PureComponent<Props> {
   public render(): JSX.Element | null {
     const { threadGroup, maxDifferingLines } = this.props;
-    const { showDetails } = this.state;
 
     if (threadGroup.length === 0) {
       return null;
     }
 
     const thread = threadGroup[0];
-    return (
+    const header = (
       <>
-        <h5 className="clickable ellipsis" onClick={this.toggleGroup}>
-          <span className={showDetails ? 'chevron' : 'chevron rotate'} />
-          {threadGroup.length}
-          {' '}
-          similar stack(s) for
-          {' '}
-          &quot;
-          {thread.name}
-          &quot;
-        </h5>
-
-        {showDetails && (
-          <GroupDetails
-            threadGroup={threadGroup}
-            maxDifferingLines={maxDifferingLines}
-          />
-        )}
+        {threadGroup.length}
+        {' '}
+        similar stack(s) for
+        {' '}
+        &quot;
+        {thread.name}
+        &quot;
       </>
     );
+    const content = <GroupDetails threadGroup={threadGroup} maxDifferingLines={maxDifferingLines} />;
+
+    return <CollapsableGroup header={header} content={content} />;
   }
 }
