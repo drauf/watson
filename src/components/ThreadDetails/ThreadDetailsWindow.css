@@ -65,26 +65,31 @@
 
 .unknown {
   cursor: default;
+  -webkit-text-fill-color: var(--color-n800);
 }
 
 .runnable {
   color: var(--color-g500);
   background: var(--color-g50);
+  -webkit-text-fill-color: var(--color-g500);
 }
 
 .blocked {
   color: var(--color-r500);
   background: var(--color-r50);
+  -webkit-text-fill-color: var(--color-r500);
 }
 
 .waiting {
   color: var(--color-p400);
   background: var(--color-p50);
+  -webkit-text-fill-color: var(--color-p400);
 }
 
 .timed-waiting {
   color: var(--color-n400);
   background: var(--color-y50);
+  -webkit-text-fill-color: var(--color-n400);
 }
 
 .matching {
