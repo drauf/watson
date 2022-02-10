@@ -4,6 +4,8 @@ import OutboundLink from './OutboundLink';
 export default class DropzoneGuide extends React.PureComponent {
   private static GATHER_DATA_LINK = 'https://bitbucket.org/atlassianlabs/atlassian-support/src/master/';
 
+  private static SLACK_CONNECT_DOCS_LINK = 'https://slack.com/help/articles/1500001422062-Use-Slack-Connect-to-start-a-DM-with-someone-at-another-company#send-an-invitation';
+
   private static stopPropagation = (event: React.MouseEvent) => {
     // prevent opening the dropzone popup when clicking on the navigation links
     event.stopPropagation();
@@ -29,6 +31,15 @@ export default class DropzoneGuide extends React.PureComponent {
           .
         </p>
 
+        <p>
+          Best-effort support -
+          {' '}
+          <OutboundLink to={DropzoneGuide.SLACK_CONNECT_DOCS_LINK}>
+            DM me on Slack
+          </OutboundLink>
+          {' '}
+          at drauf at atlassian.com
+        </p>
       </div>
     );
   }
