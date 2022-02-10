@@ -1,6 +1,5 @@
 import React from 'react';
-import { ISSUE_TRACKER_LINK, SOURCE_CODE_LINK } from '../Navigation/Navigation';
-import OutboundLink from '../Navigation/OutboundLink';
+import OutboundLink from './OutboundLink';
 
 export default class DropzoneGuide extends React.PureComponent {
   private static GATHER_DATA_LINK = 'https://bitbucket.org/atlassianlabs/atlassian-support/src/master/';
@@ -30,18 +29,6 @@ export default class DropzoneGuide extends React.PureComponent {
           .
         </p>
 
-        <ul id="dropzone-links">
-          <li>
-            <OutboundLink to={ISSUE_TRACKER_LINK}>
-              Issue tracker
-            </OutboundLink>
-          </li>
-          <li>
-            <OutboundLink to={SOURCE_CODE_LINK}>
-              Source code
-            </OutboundLink>
-          </li>
-        </ul>
       </div>
     );
   }
