@@ -38,8 +38,6 @@ export default class FlameGraph extends React.PureComponent<Props> {
       .tooltip(tooltip)
       .setColorMapper((node: Node) => (getColorForStackLine(node.data.name, node.data.fade)));
 
-    console.warn(chart.tooltip());
-
     select('#flame-graph')
       .datum(chartData)
       .call(chart);
