@@ -10,8 +10,10 @@ type NodeData = {
   fade: boolean
 };
 
-type Node = {
-  data: NodeData
+export type Node = {
+  data: NodeData,
+  parent: Node | null,
+  value: number
 };
 
 type Props = {
