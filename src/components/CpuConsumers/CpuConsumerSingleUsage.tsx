@@ -3,7 +3,7 @@ import Thread from '../../types/Thread';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
 type Props = {
-  thread?: Thread;
+  thread: Thread | undefined;
 };
 
 type State = {

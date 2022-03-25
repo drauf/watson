@@ -4,7 +4,7 @@ import ThreadStatus from '../../types/ThreadStatus';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 
 type Props = {
-  thread?: Thread;
+  thread: Thread | undefined;
   isMatchingStackFilter: boolean;
 };
 
