@@ -77,7 +77,7 @@ export default class CpuUsageParser {
       .slice(2)
       .filter((line) => line)
       .map((line) => matchMultipleTimes(COLUMN_MATCHER, line))
-      .filter((columns) => columns.length >= 11)
+      .filter((columns) => columns.length >= offsets.getMaxIndex())
       .forEach((columns) => {
         const id = parseInt(columns[offsets.getProcessIdOffset()], 10);
         const cpuUsage = parseFloat(columns[offsets.getCpuUsageOffset()]);
