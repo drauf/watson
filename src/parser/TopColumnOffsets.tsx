@@ -28,4 +28,8 @@ export default class TopColumnOffsets {
   public setRunningForOffset(offset: number): void {
     this.runningFor = offset;
   }
+
+  public getMaxIndex() {
+    return Math.max(this.id, this.cpuUsage, this.runningFor);
+  }
 }
