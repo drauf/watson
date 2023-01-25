@@ -3293,14 +3293,9 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001317:
-  version "1.0.30001320"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/caniuse-lite/-/caniuse-lite-1.0.30001320.tgz#8397391bec389b8ccce328636499b7284ee13285"
-  integrity sha512-MWPzG54AGdo3nWx7zHZTefseM5Y1ccM7hlQKHRqJkPozUaw3hNbBTMmLn16GG2FUzjR13Cr3NPfhIieX5PzXDA==
-
-caniuse-lite@^1.0.30001400, caniuse-lite@^1.0.30001426:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001317, caniuse-lite@^1.0.30001400, caniuse-lite@^1.0.30001426:
   version "1.0.30001448"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/caniuse-lite/-/caniuse-lite-1.0.30001448.tgz#ca7550b1587c92a392a2b377cd9c508b3b4395bf"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/caniuse-lite/-/caniuse-lite-1.0.30001448.tgz"
   integrity sha512-tq2YI+MJnooG96XpbTRYkBxLxklZPOdLmNIOdIhvf7SNJan6u5vCKum8iT7ZfCt70m1GPkuC7P3TtX6UuhupuA==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
