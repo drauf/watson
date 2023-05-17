@@ -1,0 +1,33 @@
+#consumers-jfr-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#consumers-jfr-list table {
+  table-layout: auto;
+}
+
+#consumers-jfr-list table td {
+  min-width: 50px;
+}
+
+#consumers-jfr-list table td:not(:first-child) {
+  text-align: center;
+}
+
+#consumers-jfr-list table th:not(:first-child) {
+  text-align: center;
+}
+
+#consumers-jfr-list button {
+  display: inline-block;
+  width: 52px;
+  margin-top: 3px;
+  padding: 3px;
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 99%;
+  text-align: center;
+  border-radius: 3px;
+}

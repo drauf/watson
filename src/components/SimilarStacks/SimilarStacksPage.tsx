@@ -6,6 +6,7 @@ import PageWithSettings from '../PageWithSettings';
 import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
+import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 
 type State = {
   linesToConsider: number;
@@ -13,7 +14,7 @@ type State = {
   withoutIdle: boolean;
 };
 
-export default class SimilarStacksPage extends PageWithSettings<State> {
+export default class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public state: State = {
     linesToConsider: 40,
     minimalGroupSize: 2,

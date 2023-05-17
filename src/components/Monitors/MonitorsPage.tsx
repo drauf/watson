@@ -7,6 +7,7 @@ import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeGroup from './MonitorOverTimeItem';
 import './MonitorsPage.css';
 import MonitorsSettings from './MonitorsSettings';
+import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 
 type State = {
   withOwner: boolean;
@@ -14,7 +15,7 @@ type State = {
   withoutOwner: boolean;
 };
 
-export default class MonitorsPage extends PageWithSettings<State> {
+export default class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public state: State = {
     withOwner: false,
     withoutIdle: true,
