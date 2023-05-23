@@ -10,7 +10,7 @@ type State = {
   showDetails: boolean;
 };
 
-export default class CpuConsumerSingleUsage extends React.PureComponent<Props, State> {
+export default class CpuConsumerOsSingleUsage extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { showDetails: false };
@@ -53,8 +53,8 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props, S
     }
 
     const { showDetails } = this.state;
-    const cpuUsage = CpuConsumerSingleUsage.getCpuUsage(thread.cpuUsage);
-    const className = CpuConsumerSingleUsage.getClassName(thread.cpuUsage);
+    const cpuUsage = CpuConsumerOsSingleUsage.getCpuUsage(thread.cpuUsage);
+    const className = CpuConsumerOsSingleUsage.getClassName(thread.cpuUsage);
 
     return (
       <>

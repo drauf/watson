@@ -1,14 +1,14 @@
 import React from 'react';
-import CpuConsumersMode from './CpuConsumersMode';
+import CpuConsumersOsMode from './CpuConsumersOsMode';
 
 type Props = {
-  mode: CpuConsumersMode;
+  mode: CpuConsumersOsMode;
   limit: number;
   onModeChange: (mode: number) => React.ChangeEventHandler<HTMLInputElement>;
   onLimitChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-export default class CpuConsumersSettings extends React.PureComponent<Props> {
+export default class CpuConsumersOsSettings extends React.PureComponent<Props> {
   public render(): JSX.Element {
     const {
       mode, limit, onModeChange, onLimitChange,
@@ -19,29 +19,29 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
         <div className="filters">
           <b>CPU usage calculation:</b>
 
-          <label className={mode === CpuConsumersMode.Mean ? 'checked' : ''}>
+          <label className={mode === CpuConsumersOsMode.Mean ? 'checked' : ''}>
             <input
               type="checkbox"
-              checked={mode === CpuConsumersMode.Mean}
-              onChange={onModeChange(CpuConsumersMode.Mean)}
+              checked={mode === CpuConsumersOsMode.Mean}
+              onChange={onModeChange(CpuConsumersOsMode.Mean)}
             />
             Mean
           </label>
 
-          <label className={mode === CpuConsumersMode.Median ? 'checked' : ''}>
+          <label className={mode === CpuConsumersOsMode.Median ? 'checked' : ''}>
             <input
               type="checkbox"
-              checked={mode === CpuConsumersMode.Median}
-              onChange={onModeChange(CpuConsumersMode.Median)}
+              checked={mode === CpuConsumersOsMode.Median}
+              onChange={onModeChange(CpuConsumersOsMode.Median)}
             />
             Median
           </label>
 
-          <label className={mode === CpuConsumersMode.Max ? 'checked' : ''}>
+          <label className={mode === CpuConsumersOsMode.Max ? 'checked' : ''}>
             <input
               type="checkbox"
-              checked={mode === CpuConsumersMode.Max}
-              onChange={onModeChange(CpuConsumersMode.Max)}
+              checked={mode === CpuConsumersOsMode.Max}
+              onChange={onModeChange(CpuConsumersOsMode.Max)}
             />
             Max
           </label>

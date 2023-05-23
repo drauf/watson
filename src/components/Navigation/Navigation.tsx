@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
-import { clearCurrentThreadDump } from '../../common/threadDumpsStorageService';
+import { clearCurrentData } from '../../common/threadDumpsStorageService';
 import './Navigation.css';
 
 type Props = RouteComponentProps<{ key: string }>;
@@ -8,7 +8,7 @@ type Props = RouteComponentProps<{ key: string }>;
 class Navigation extends React.PureComponent<Props> {
   private onClear = () => {
     const { history } = this.props;
-    clearCurrentThreadDump();
+    clearCurrentData();
     history.push('/');
   };
 
@@ -26,7 +26,8 @@ class Navigation extends React.PureComponent<Props> {
           <nav>
             <ul>
               <NavLink to={`/${key}/summary/`} activeClassName="active"><li>Summary</li></NavLink>
-              <NavLink to={`/${key}/cpu-consumers/`} activeClassName="active"><li>CPU consumers</li></NavLink>
+              <NavLink to={`/${key}/cpu-consumers-os/`} activeClassName="active"><li>CPU consumers (OS)</li></NavLink>
+              <NavLink to={`/${key}/cpu-consumers-jfr/`} activeClassName="active"><li>CPU consumers (JFR)</li></NavLink>
               <NavLink to={`/${key}/similar-stacks/`} activeClassName="active"><li>Similar stacks</li></NavLink>
               <NavLink to={`/${key}/stuck-threads/`} activeClassName="active"><li>Stuck threads</li></NavLink>
               <NavLink to={`/${key}/monitors/`} activeClassName="active"><li>Monitors</li></NavLink>

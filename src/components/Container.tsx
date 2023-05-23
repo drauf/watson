@@ -1,8 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { withThreadDumps as page } from '../common/withThreadDumps';
+import { withCpuConsumersJfrData as jfrPage } from '../common/withCpuConsumersJfrData';
 import './Container.css';
-import CpuConsumersPage from './CpuConsumers/CpuConsumersPage';
+import CpuConsumersOsPage from './CpuConsumersOs/CpuConsumersOsPage';
+import CpuConsumersJfrPage from './CpuConsumersJfr/CpuConsumersJfrPage';
 import MonitorsPage from './Monitors/MonitorsPage';
 import Navigation from './Navigation/Navigation';
 import PageNotFoundError from './Errors/PageNotFoundError';
@@ -20,7 +22,8 @@ export default class Container extends React.PureComponent {
 
         <Switch>
           <Route exact path="/:key/summary/" component={page(SummaryPage)} />
-          <Route exact path="/:key/cpu-consumers/" component={page(CpuConsumersPage)} />
+          <Route exact path="/:key/cpu-consumers-os/" component={page(CpuConsumersOsPage)} />
+          <Route exact path="/:key/cpu-consumers-jfr/" component={jfrPage(CpuConsumersJfrPage)} />
           <Route exact path="/:key/similar-stacks/" component={page(SimilarStacksPage)} />
           <Route exact path="/:key/stuck-threads/" component={page(StuckThreadsPage)} />
           <Route exact path="/:key/monitors/" component={page(MonitorsPage)} />

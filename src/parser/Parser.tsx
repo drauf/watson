@@ -1,22 +1,26 @@
-import CpuUsage from './CpuUsage';
+import CpuUsage from './cpuusage/os/CpuUsage';
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
-import CpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './CpuUsageParser';
+import CpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './cpuusage/os/CpuUsageParser';
 import { matchOne } from './RegExpUtils';
 import ThreadDumpParser, { THREAD_DUMP_DATE_PATTERN } from './ThreadDumpParser';
+import CpuUsageJfrParser, { CPU_USAGE_JFR_FIRST_LINE_PATTERN } from './cpuusage/jfr/CpuUsageJfrParser';
+import CpuUsageJfr from './cpuusage/jfr/CpuUsageJfr';
 
 const MAX_TIME_DIFFERENCE_ALLOWED = 10000;
 
 export default class Parser {
   private cpuUsages: CpuUsage[] = [];
 
+  private cpuUsagesJfr: CpuUsageJfr[] = [];
+
   private threadDumps: ThreadDump[] = [];
 
   private filesToParse = 0;
 
-  private readonly onFilesParsed: (threadDumps: ThreadDump[]) => void;
+  private readonly onFilesParsed: (threadDumps: ThreadDump[], cpuUsageJfr: CpuUsageJfr[]) => void;
 
-  constructor(onFilesParsed: (threadDumps: ThreadDump[]) => void) {
+  constructor(onFilesParsed: (threadDumps: ThreadDump[], cpuUsagesJfr: CpuUsageJfr[]) => void) {
     this.onFilesParsed = onFilesParsed;
   }
 
@@ -43,6 +47,8 @@ export default class Parser {
 
         if (matchOne(CPU_USAGE_TIMESTAMP_PATTERN, firstLine)) {
           this.parseCpuUsage(lines);
+        } else if (matchOne(CPU_USAGE_JFR_FIRST_LINE_PATTERN, firstLine)) {
+          this.parseCpuJfrUsage(file.name, lines);
         } else {
           this.splitThreadDumps(lines);
         }
@@ -84,8 +90,16 @@ export default class Parser {
     CpuUsageParser.parseCpuUsage(lines.slice(), this.onParsedCpuUsage);
   };
 
+  private parseCpuJfrUsage = (fileName: string, lines: string[]) => {
+    CpuUsageJfrParser.parseCpuUsage(fileName, lines.slice(), this.onParsedCpuUsageJfr);
+  };
+
   private onParsedCpuUsage = (cpuUsage: CpuUsage) => {
     this.cpuUsages.push(cpuUsage);
+  };
+
+  private onParsedCpuUsageJfr = (cpuUsageJfr: CpuUsageJfr) => {
+    this.cpuUsagesJfr.push(cpuUsageJfr);
   };
 
   private parseThreadDump = (lines: string[]) => {
@@ -105,7 +119,7 @@ export default class Parser {
     if (!this.filesToParse) {
       this.groupCpuUsagesWithThreadDumps();
       this.sortThreadDumps();
-      this.onFilesParsed(this.threadDumps);
+      this.onFilesParsed(this.threadDumps, this.cpuUsagesJfr);
     }
   }
 

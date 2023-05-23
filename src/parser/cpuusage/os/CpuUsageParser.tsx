@@ -1,8 +1,8 @@
 import CpuUsage from './CpuUsage';
-import LoadAverages from '../types/LoadAverage';
-import MemoryUsage from '../types/MemoryUsage';
+import LoadAverages from '../../../types/LoadAverage';
+import MemoryUsage from '../../../types/MemoryUsage';
 import ThreadCpuUsage from './ThreadCpuUsage';
-import { matchMultipleGroups, matchMultipleTimes, matchOne } from './RegExpUtils';
+import { matchMultipleGroups, matchMultipleTimes, matchOne } from '../../RegExpUtils';
 import TopColumnOffsets from './TopColumnOffsets';
 
 export const CPU_USAGE_TIMESTAMP_PATTERN = /^top - ([0-9]{2}:[0-9]{2}:[0-9]{2})/;

@@ -1,11 +1,12 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { setThreadDumps } from '../../common/threadDumpsStorageService';
+import { setParsedData } from '../../common/threadDumpsStorageService';
 import Parser from '../../parser/Parser';
 import ThreadDump from '../../types/ThreadDump';
 import DropzoneGuide from './DropzoneGuide';
 import './FullPageDropzone.css';
+import CpuUsageJfr from '../../parser/cpuusage/jfr/CpuUsageJfr';
 
 class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
   private onDrop = (files: File[]): void => {
@@ -13,9 +14,9 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
     parser.parseFiles(files);
   };
 
-  private onParsed = (threadDumps: ThreadDump[]): void => {
+  private onParsed = (threadDumps: ThreadDump[], cpuUsageJfrList: CpuUsageJfr[]): void => {
     const { history } = this.props;
-    const key = setThreadDumps(threadDumps);
+    const key = setParsedData(threadDumps, cpuUsageJfrList);
 
     if (threadDumps.some((dump) => !!dump.loadAverages)) {
       history.push(`/${key}/summary/`);

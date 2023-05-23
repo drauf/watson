@@ -9,6 +9,7 @@ import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
 import ThreadsOverviewSettings from './ThreadsOverviewSettings';
 import ThreadsOverviewTable from './ThreadsOverviewTable';
+import { WithThreadDumpsProps } from '../../common/withThreadDumps';
 
 type State = {
   nonJvm: boolean;
@@ -21,7 +22,7 @@ type State = {
   stackFilter: string;
 };
 
-export default class ThreadsOverviewPage extends PageWithSettings<State> {
+export default class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public state = {
     active: true,
     nonJvm: true,

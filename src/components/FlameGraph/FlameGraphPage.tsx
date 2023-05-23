@@ -13,7 +13,7 @@ type State = {
   withoutIdle: boolean;
 };
 
-export default class FlameGraphPage extends PageWithSettings<State> {
+export default class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
     this.state = {

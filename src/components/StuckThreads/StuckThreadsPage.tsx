@@ -17,7 +17,7 @@ type State = {
   withoutIdle: boolean;
 };
 
-export default class StuckThreadsPage extends PageWithSettings<State> {
+export default class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
 
