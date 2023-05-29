@@ -20,6 +20,7 @@ export default function getColorForStackLine(line: string, fade = false): string
     || line.startsWith('io.atlassian')
     || line.startsWith('java.')
     || line.startsWith('javax.')
+    || line.startsWith('jdk.')
     || line.startsWith('net.java')
     || line.startsWith('org.apache')
     || line.startsWith('org.codehaus')
