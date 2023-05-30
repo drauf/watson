@@ -24,6 +24,12 @@ test.describe('Stuck threads', () => {
         await expect(pageWithData).toHaveScreenshot();
     });
 
+    test('shows empty state', async ({ pageWithData }) => {
+        await pageWithData.getByRole('spinbutton', { name: MIN_STACKS }).fill('2137');
+
+        await expect(pageWithData).toHaveScreenshot();
+    });
+
     test('can fold sections', async ({ pageWithData }) => {
         await pageWithData.getByText('Without Idle').uncheck();
         const buttons = (await pageWithData.locator('main').getByRole('button').all()).slice(0, 10);

@@ -20,6 +20,12 @@ test.describe('Similar stacks', () => {
         await pageWithData.getByRole('spinbutton', { name: 'Minimal group size to show' }).fill('600');
 
         await expect(pageWithData).toHaveScreenshot();
+    });    
+    
+    test('shows empty state', async ({ pageWithData }) => {
+        await pageWithData.getByRole('spinbutton', { name: 'Minimal group size to show' }).fill('2137');
+
+        await expect(pageWithData).toHaveScreenshot();
     });
 
     test('can fold sections', async ({ pageWithData }) => {
