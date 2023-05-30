@@ -29,16 +29,13 @@
   },
   "devDependencies": {
     "@babel/core": "7.17.8",
-    "@babel/plugin-syntax-flow": "7.16.7",
-    "@babel/plugin-transform-react-jsx": "7.17.3",
     "@playwright/test": "1.34.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.3",
     "@svgr/webpack": "5.5.0",
     "@types/d3": "7.1.0",
     "@types/jest": "27.4.1",
     "@types/node": "17.0.23",
-    "@types/react": "17.0.43",
-    "@types/react-dom": "17.0.14",
+    "@types/react-dom": "17.0.20",
     "@types/react-router-dom": "5.3.3",
     "@types/spark-md5": "3.0.2",
     "@typescript-eslint/eslint-plugin": "5.16.0",
@@ -59,12 +56,10 @@
     "eslint": "8.11.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "16.1.4",
-    "eslint-config-react-app": "7.0.1",
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-react": "7.29.4",
     "eslint-plugin-react-hooks": "4.3.0",
-    "eslint-webpack-plugin": "3.1.1",
     "file-loader": "6.2.0",
     "fs-extra": "10.0.0",
     "html-webpack-plugin": "5.5.0",
@@ -84,7 +79,6 @@
     "resolve-url-loader": "4.0.0",
     "semver": "7.3.5",
     "source-map-loader": "3.0.0",
-    "spark-md5": "3.0.2",
     "style-loader": "3.3.1",
     "stylelint": "14.6.1",
     "stylelint-config-rational-order": "0.1.2",
@@ -105,12 +99,6 @@
     "test:e2e": "yarn playwright test",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "jest": {
     "roots": [
@@ -169,5 +157,6 @@
     "presets": [
       "react-app"
     ]
-  }
+  },
+  "packageManager": "yarn@3.5.1"
 }
