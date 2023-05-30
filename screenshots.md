@@ -4,6 +4,7 @@
 ![Home page](e2e/main-page.spec.tsx-snapshots/main-page-loads-1-boring-example---safari---1680x1050-darwin.png)
 
 ## Summary
+Displays running processes, memory and swag usage, and load averages, based on top outputs.
 ![Summary page](e2e/main-page.spec.tsx-snapshots/main-page-redirects-after-uploading-files-1-boring-example---safari---1680x1050-darwin.png)
 
 ## Threads overview
@@ -17,7 +18,7 @@
 ![Waiting for lock without owner](e2e/similar-stacks.spec.tsx-snapshots/Similar-stacks-opens-thread-details-1-boring-example---safari---1680x1050-darwin.png)
 
 ## Flame graph
-![Flame graph](e2e/flame-graph.spec.tsx-snapshots/Flame-graph-allows-zooming-1-boring-example---safari---1680x1050-darwin.png)
+![Flame graph](e2e/flame-graph.spec.tsx-snapshots/Flame-graph-loads-1-boring-example---safari---1680x1050-darwin.png)
 ![Flame graph after zooming](e2e/flame-graph.spec.tsx-snapshots/Flame-graph-allows-zooming-1-boring-example---safari---1680x1050-darwin.png)
 
 ## CPU consumers
@@ -30,7 +31,6 @@
 ![Similar stack traces page with folded items](e2e/similar-stacks.spec.tsx-snapshots/Similar-stacks-can-fold-sections-1-boring-example---safari---1680x1050-darwin.png)
 
 ## Stuck threads
-![Stuck threads](e2e/stuck-threads.spec.tsx-snapshots/Stuck-threads-loads-1-boring-example---safari---1680x1050-darwin.png)
 ![Stuck threads with filters](e2e/stuck-threads.spec.tsx-snapshots/Stuck-threads-has-working-filters-1-boring-example---safari---1680x1050-darwin.png)
 
 ## Monitors
