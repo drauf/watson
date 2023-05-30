@@ -12,11 +12,11 @@ test.describe('Threads overview', () => {
     test('loads', async ({ pageWithData }) => {
         expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
         expect(await pageWithData.getByText('Non-JVM').isChecked()).toBeTruthy();
-        expect(await pageWithData.getByText('Tomcat', { exact: true }).isChecked()).toBeTruthy();
-        expect(await pageWithData.getByText('Non-Tomcat').isChecked()).toBeTruthy();
-        expect(await pageWithData.getByText('Database').isChecked()).toBeTruthy();
-        expect(await pageWithData.getByText('Lucene', { exact: true }).isChecked()).toBeTruthy();
-        expect(await pageWithData.getByText('Using >30% CPU').isChecked()).toBeTruthy();
+        expect(await pageWithData.getByText('Tomcat', { exact: true }).isChecked()).toBeFalsy();
+        expect(await pageWithData.getByText('Non-Tomcat').isChecked()).toBeFalsy();
+        expect(await pageWithData.getByText('Database').isChecked()).toBeFalsy();
+        expect(await pageWithData.getByText('Lucene', { exact: true }).isChecked()).toBeFalsy();
+        expect(await pageWithData.getByText('Using >30% CPU').isChecked()).toBeFalsy();
         expect(await pageWithData.getByRole('textbox', { name: NAME_REGEXP }).inputValue()).toBe('');
         expect(await pageWithData.getByRole('textbox', { name: STACK_REGEXP }).inputValue()).toBe('');
 
