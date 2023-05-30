@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from './e2e-common';
 
-test.describe('Stuck stacks', () => {
+test.describe('Stuck threads', () => {
     const MIN_STACKS = 'Minimal similar stacks to consider a thread stuck';
     const MAX_LINES = 'Maximum differing lines between dumps';
 
