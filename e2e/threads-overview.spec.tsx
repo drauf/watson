@@ -52,4 +52,13 @@ test.describe('Threads overview', () => {
         await pageWithData.getByRole('textbox', { name: STACK_REGEXP }).fill('(jdk)|(sun)');
         await expect(pageWithData).toHaveScreenshot();
     });
+
+    test('opens thread details', async ({ context, pageWithData }) => {
+        const [details] = await Promise.all([
+            context.waitForEvent('page'),
+            pageWithData.getByRole('button', { name: 'java.lang.reflect' }).click()
+        ]);
+
+        await expect(details).toHaveScreenshot();
+    });
 });

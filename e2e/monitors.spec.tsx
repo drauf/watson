@@ -35,4 +35,13 @@ test.describe('Monitors', () => {
 
         await expect(pageWithData).toHaveScreenshot();
     });
+
+    test('opens thread details', async ({ context, pageWithData }) => {
+        const [details] = await Promise.all([
+            context.waitForEvent('page'),
+            pageWithData.locator('.monitors-container').getByRole('button').first().click()
+        ]);
+
+        await expect(details).toHaveScreenshot();
+    });
 });
