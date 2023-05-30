@@ -1,11 +1,11 @@
-To update snapshots for the CI:
+To update snapshots used in CI (**execute from the parent directory**):
 ```
 docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.34.3-jammy /bin/bash
-npm install
-npx playwright test --update-snapshots
+yarn install
+yarn playwright test --update-snapshots
 ```
 
-To update snapshots for your local OS (**execute from the parent directory**):
+To update snapshots used on your local OS (**execute from the parent directory**):
 ```
 yarn playwright test --update-snapshots
 ```
