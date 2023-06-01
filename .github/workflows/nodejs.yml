@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     container:
@@ -36,7 +36,8 @@ jobs:
         retention-days: 30
 
   deploy:
-    needs: build
+    needs: test
+    if: github.ref_name == 'main'
 
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
