@@ -11,6 +11,12 @@ Watson is a JVM thread dump and CPU usage analyzer.
 
 It combines the best features of other popular Java TDAs and optionally hides a lot of noise, like idle Tomcat threads waiting for work.
 
+## Gathering thread dumps
+
+To fully leverage Watson, you should capture Java thread dump **and** top outputs.
+
+The easiest way to do this is to use [Atlassian Support scripts](https://bitbucket.org/atlassianlabs/atlassian-support/src/master/).
+
 ## Screenshots
 
 [Open markdown file with screenshots](screenshots.md)
