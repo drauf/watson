@@ -9,8 +9,7 @@ on:
       - main
 
 jobs:
-  test:
-
+  build:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:next-jammy
@@ -34,17 +33,12 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
-
-  deploy:
-    needs: test
-    if: github.ref_name == 'main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Build static page for deployment
-        run: yarn predeploy
-      - name: Deploy to GH Pages 🚀
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+    - name: Build static page for deployment
+      if: github.ref_name == 'main'
+      run: yarn predeploy
+    - name: Deploy to GH Pages 🚀
+      if: github.ref_name == 'main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: build
