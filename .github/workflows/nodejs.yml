@@ -36,7 +36,7 @@ jobs:
     - name: Run Playwright tests
       run: yarn playwright test
     - uses: actions/upload-artifact@v3
-      if: always()
+      if: failure()
       with:
         name: playwright-report
         path: playwright-report/
