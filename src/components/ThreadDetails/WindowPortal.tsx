@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
 type Props = {
   windowTitle: string;
   className: string;
   onUnload: () => void;
+  children: ReactNode;
 };
 
 export default class WindowPortal extends React.PureComponent<Props> {
