@@ -13,12 +13,7 @@ It combines the best features of other popular Java TDAs and optionally hides a 
 
 ## Screenshots
 
-![Home page](screenshots/home-page.png)
-![Summary page](screenshots/summary.png)
-![CPU consumers page](screenshots/cpu-consumers.png)
-![Similar stack traces page](screenshots/similar-stack-traces.png)
-![Threads overview page](screenshots/threads-overview.png)
-![Monitors page](screenshots/monitors.png)
+[Open markdown file with screenshots](screenshots.md)
 
 ## Development
 

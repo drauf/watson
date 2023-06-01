@@ -12,22 +12,25 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
+    container:
+      image: mcr.microsoft.com/playwright:next-jammy
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}    
-    - run: npm install -g yarn
+    - uses: actions/checkout@v3
     - name: yarn lint and test
       run: |
-        yarn
+        yarn install
         yarn lint
         yarn test
       env:
         CI: true
+    - name: Install Playwright Browsers
+      run: yarn playwright install --with-deps
+    - name: Run Playwright tests
+      run: HOME=/root yarn playwright test
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
