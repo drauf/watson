@@ -12,21 +12,14 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
+    container:
+      image: mcr.microsoft.com/playwright:next-jammy
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}    
-    - run: npm install -g yarn
     - name: yarn lint and test
       run: |
-        yarn
+        yarn install
         yarn lint
         yarn test
       env:
