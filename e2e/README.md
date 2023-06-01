@@ -1,6 +1,6 @@
 To update snapshots used in CI (**execute from the parent directory**):
 ```
-docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.34.3-jammy /bin/bash
+docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:next-jammy /bin/bash
 yarn install
 yarn playwright test --update-snapshots
 ```
