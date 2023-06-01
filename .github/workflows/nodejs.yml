@@ -27,7 +27,7 @@ jobs:
     - name: Install Playwright Browsers
       run: yarn playwright install --with-deps
     - name: Run Playwright tests
-      run: yarn playwright test
+      run: HOME=/root yarn playwright test
     - uses: actions/upload-artifact@v3
       if: failure()
       with:
