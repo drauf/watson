@@ -6,7 +6,7 @@ test.describe('Flame graph', () => {
         await page.getByText('root').isVisible();
         // the condition above happens a little too early, so we add a little bit of extra wait time
         // yes, I know this sucks, but I'm too lazy to find a proper way to achieve this
-        await page.waitForTimeout(200);
+        await page.waitForTimeout(750);
     };
 
     test.beforeEach(async ({ pageWithData }) => {
