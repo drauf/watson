@@ -16,64 +16,62 @@ import { cpuUsageJfrListLoader } from './common/withCpuConsumersJfrData';
 
 const router = createHashRouter([
   {
-    path: "/",
+    path: '/',
     element: <FullPageDropzone />,
   },
   {
-    path: ":threadDumpsHash/*",
+    path: ':threadDumpsHash/*',
     element: <Container />,
     errorElement: <FullPageDropzone />, // todo: proper error page
     children: [
       {
-        path: "summary",
+        path: 'summary',
         element: <SummaryPage />,
         loader: threadDumpsLoader,
       },
       {
-        path: "cpu-consumers-os",
+        path: 'cpu-consumers-os',
         element: <CpuConsumersOsPage />,
         loader: threadDumpsLoader,
       },
       {
-        path: "cpu-consumers-jfr",
+        path: 'cpu-consumers-jfr',
         element: <CpuConsumersJfrPage />,
         loader: cpuUsageJfrListLoader,
       },
       {
-        path: "similar-stacks",
+        path: 'similar-stacks',
         element: <SimilarStacksPage />,
         loader: threadDumpsLoader,
       },
       {
-        path: "stuck-threads",
+        path: 'stuck-threads',
         element: <StuckThreadsPage />,
         loader: threadDumpsLoader,
       },
       {
-        path: "monitors",
+        path: 'monitors',
         element: <MonitorsPage />,
         loader: threadDumpsLoader,
       },
       {
-        path: "flame-graph",
+        path: 'flame-graph',
         element: <FlameGraphPage />,
         loader: threadDumpsLoader,
       },
       {
-        path: "threads-overview",
+        path: 'threads-overview',
         element: <ThreadsOverviewPage />,
         loader: threadDumpsLoader,
       },
       {
-        path: "*",
+        path: '*',
         element: <PageNotFoundError />,
       },
-    ]
-  }
+    ],
+  },
 ]);
 
-const App: React.FC = () => {
-  return <RouterProvider router={router} />
+export default function App() {
+  return <RouterProvider router={router} />;
 }
-
-export default App;
