@@ -6,7 +6,7 @@ import PageWithSettings from '../PageWithSettings';
 import SimilarStacksGroup from './SimilarStacksGroup';
 import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
-import { WithThreadDumpsProps } from '../../common/withThreadDumps';
+import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 
 type State = {
   linesToConsider: number;
@@ -14,7 +14,7 @@ type State = {
   withoutIdle: boolean;
 };
 
-export default class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
+class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public state: State = {
     linesToConsider: 40,
     minimalGroupSize: 2,
@@ -92,3 +92,5 @@ export default class SimilarStacksPage extends PageWithSettings<WithThreadDumpsP
     return thread.stackTrace.slice(0, linesToConsider).toString();
   };
 }
+
+export default withThreadDumps(SimilarStacksPage);

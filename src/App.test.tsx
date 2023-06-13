@@ -1,16 +1,14 @@
-import ReactDOM from 'react-dom';
-import { MemoryRouter as Router, Route, withRouter } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
+import React from 'react';
 import App from './App';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
+  const root = createRoot(div);
 
-  ReactDOM.render(
-    <Router>
-      <Route component={withRouter(App)} />
-    </Router>,
-    div,
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
   );
-
-  ReactDOM.unmountComponentAtNode(div);
 });

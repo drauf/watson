@@ -1,5 +1,5 @@
 import PageWithSettings from '../PageWithSettings';
-import { WithThreadCpuUsageProps } from '../../common/withCpuConsumersJfrData';
+import { WithThreadCpuUsageProps, withCpuConsumersJfrData } from '../../common/withCpuConsumersJfrData';
 import CpuUsageJfr from '../../parser/cpuusage/jfr/CpuUsageJfr';
 import NoCpuConsumersJfrDataError from '../Errors/NoCpuConsumersJfrDataError';
 import CpuConsumersJfrList from './CpuConsumersJfrList';
@@ -9,7 +9,7 @@ type State = {
   cpuUsageJfrList: CpuUsageJfr[];
 };
 
-export default class CpuConsumersJfrPage extends PageWithSettings<WithThreadCpuUsageProps, State> {
+class CpuConsumersJfrPage extends PageWithSettings<WithThreadCpuUsageProps, State> {
   constructor(props: WithThreadCpuUsageProps) {
     super(props);
 
@@ -32,3 +32,5 @@ export default class CpuConsumersJfrPage extends PageWithSettings<WithThreadCpuU
     );
   }
 }
+
+export default withCpuConsumersJfrData(CpuConsumersJfrPage);

@@ -1,56 +1,26 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import ThreadDump from '../types/ThreadDump';
 import { getThreadDumpsAsync } from './threadDumpsStorageService';
+import { useLoaderData } from 'react-router-dom';
 
-export type WithThreadDumpsProps = RouteComponentProps<{ key: string }> & {
+export type WithThreadDumpsProps = {
   threadDumps: ThreadDump[];
 };
 
-type State = {
-  promisePending: boolean;
-  threadDumps: ThreadDump[];
-};
+export async function threadDumpsLoader({ params }: any): Promise<WithThreadDumpsProps> {
+  const threadDumps = await getThreadDumpsAsync(params.threadDumpsHash);
+  return { threadDumps };
+}
 
-export const withThreadDumps = <P extends WithThreadDumpsProps>(WrappedComponent: React.ComponentType<P>): React.ComponentType<P> => {
-  class WithThreadDumps extends React.PureComponent<P, State> {
-    private static scrollToTop = () => {
-      const rootDiv = document.getElementById('root');
-      if (rootDiv) {
-        rootDiv.scrollTop = 0;
-      }
-    };
+export function useThreadDumps(): ThreadDump[] {
+  const { threadDumps } = useLoaderData() as WithThreadDumpsProps;
+  return threadDumps;
+}
 
-    constructor(props: P) {
-      super(props);
-      this.state = {
-        promisePending: true,
-        threadDumps: [],
-      };
-
-      const { key } = props.match.params;
-      getThreadDumpsAsync(key)
-        .then((threadDumps) => {
-          this.setState({ threadDumps, promisePending: false });
-        })
-        .catch((error) => console.error(error));
-    }
-
-    public componentDidMount() {
-      WithThreadDumps.scrollToTop();
-    }
-
-    public render(): JSX.Element {
-      const { promisePending, threadDumps } = this.state;
-
-      if (promisePending) {
-        return <main id="centered"><h4>Loading data from cache...</h4></main>;
-      }
-
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      return <WrappedComponent {...this.props} threadDumps={threadDumps} />;
-    }
+export const withThreadDumps = (WrappedComponent: React.ComponentType<WithThreadDumpsProps>): React.ComponentType => {
+  const WithThreadDumps: React.FC = () => {
+    const threadDumps = useThreadDumps();
+    return <WrappedComponent threadDumps={threadDumps} />;
   }
-
   return WithThreadDumps;
 };
