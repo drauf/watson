@@ -1,39 +1,16 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
+import ThreadDetails from '../ThreadDetails/ThreadDetails';
 
 type Props = {
   thread: Thread;
 };
 
-type State = {
-  showDetails: boolean;
-};
+const WaitingListItem: React.FC<Props> = ({ thread }) => (
+  <>
+    <ThreadDetails text={thread.name} className="waiting-for-lock" thread={thread} />
+    <br />
+  </>
+);
 
-export default class WaitingListItem extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { showDetails: false };
-  }
-
-  private handleClick = () => {
-    this.setState((prevState) => ({ showDetails: !prevState.showDetails }));
-  };
-
-  private handleUnload = () => {
-    this.setState({ showDetails: false });
-  };
-
-  public render(): JSX.Element {
-    const { thread } = this.props;
-    const { showDetails } = this.state;
-
-    return (
-      <>
-        <button type="button" onClick={this.handleClick}>{thread.name}</button>
-        {showDetails && <ThreadDetailsWindow thread={thread} onUnload={this.handleUnload} />}
-        <br />
-      </>
-    );
-  }
-}
+export default React.memo(WaitingListItem);

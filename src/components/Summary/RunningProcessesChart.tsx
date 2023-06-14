@@ -20,7 +20,7 @@ const getSortedThreadNames = (payload: unknown): string[] => {
     .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
 };
 
-function CustomTooltip({ active, payload, label }: TooltipProps<number, string>): JSX.Element | null {
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>): JSX.Element | null => {
   if (active && payload) {
     const time = label as string;
     const threadNames: string[] = getSortedThreadNames(payload[1].value);
@@ -56,9 +56,9 @@ function CustomTooltip({ active, payload, label }: TooltipProps<number, string>)
   }
 
   return null;
-}
+};
 
-function RunningProcessesChart({ threadDumps }: Props): JSX.Element {
+const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [];
 
@@ -94,6 +94,6 @@ function RunningProcessesChart({ threadDumps }: Props): JSX.Element {
       </ResponsiveContainer>
     </div>
   );
-}
+};
 
 export default RunningProcessesChart;

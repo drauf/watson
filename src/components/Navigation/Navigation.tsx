@@ -1,50 +1,66 @@
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import React from 'react';
-import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';
 import './Navigation.css';
 
-type Props = RouteComponentProps<{ key: string }>;
+type LinkProps = {
+  hash: string;
+  pageLink: string;
+  displayName: string;
+};
 
-class Navigation extends React.PureComponent<Props> {
-  private onClear = () => {
-    const { history } = this.props;
-    clearCurrentData();
-    history.push('/');
-  };
+const StyledNavLink: React.FC<LinkProps> = (props: LinkProps) => {
+  const { hash, pageLink, displayName: name } = props;
+  return (
+    <NavLink to={`/${hash}/${pageLink}`} className={({ isActive }) => (isActive ? ' active' : '')}>
+      <li>{name}</li>
+    </NavLink>
+  );
+};
 
-  public render(): JSX.Element {
-    const { match } = this.props;
-    const { key } = match.params;
-
-    return (
-      <header>
-        <div className="header-section">
-          <h1>
-            Watson
-          </h1>
-
-          <nav>
-            <ul>
-              <NavLink to={`/${key}/summary/`} activeClassName="active"><li>Summary</li></NavLink>
-              <NavLink to={`/${key}/cpu-consumers-os/`} activeClassName="active"><li>CPU consumers (OS)</li></NavLink>
-              <NavLink to={`/${key}/cpu-consumers-jfr/`} activeClassName="active"><li>CPU consumers (JFR)</li></NavLink>
-              <NavLink to={`/${key}/similar-stacks/`} activeClassName="active"><li>Similar stacks</li></NavLink>
-              <NavLink to={`/${key}/stuck-threads/`} activeClassName="active"><li>Stuck threads</li></NavLink>
-              <NavLink to={`/${key}/monitors/`} activeClassName="active"><li>Monitors</li></NavLink>
-              <NavLink to={`/${key}/flame-graph/`} activeClassName="active"><li>Flame graph</li></NavLink>
-              <NavLink to={`/${key}/threads-overview/`} activeClassName="active"><li>Threads overview</li></NavLink>
-            </ul>
-          </nav>
-        </div>
-
-        <div className="header-section">
-          <ul>
-            <button type="button" onClick={this.onClear}><li>Clear current data</li></button>
-          </ul>
-        </div>
-      </header>
-    );
+const Navigation: React.FC = () => {
+  const hash = useParams().threadDumpsHash;
+  if (hash === undefined) {
+    throw new Error('threadDumpsHash is undefined');
   }
-}
+  const navigate = useNavigate();
 
-export default withRouter(Navigation);
+  return (
+    <header>
+      <div className="header-section">
+        <h1>
+          Watson
+        </h1>
+
+        <nav>
+          <ul>
+            <StyledNavLink hash={hash} pageLink="summary" displayName="Summary" />
+            <StyledNavLink hash={hash} pageLink="cpu-consumers-os" displayName="CPU consumers (OS)" />
+            <StyledNavLink hash={hash} pageLink="cpu-consumers-jfr" displayName="CPU consumers (JFR)" />
+            <StyledNavLink hash={hash} pageLink="similar-stacks" displayName="Similar stacks" />
+            <StyledNavLink hash={hash} pageLink="stuck-threads" displayName="Stuck threads" />
+            <StyledNavLink hash={hash} pageLink="monitors" displayName="Monitors" />
+            <StyledNavLink hash={hash} pageLink="flame-graph" displayName="Flame graph" />
+            <StyledNavLink hash={hash} pageLink="threads-overview" displayName="Threads overview" />
+          </ul>
+        </nav>
+      </div>
+
+      <div className="header-section">
+        <ul>
+          <button
+            type="button"
+            onClick={() => {
+              clearCurrentData();
+              navigate('/');
+            }}
+          >
+            <li>Clear current data</li>
+          </button>
+        </ul>
+      </div>
+    </header>
+  );
+};
+
+export default Navigation;

@@ -9,7 +9,7 @@ import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
 import ThreadsOverviewSettings from './ThreadsOverviewSettings';
 import ThreadsOverviewTable from './ThreadsOverviewTable';
-import { WithThreadDumpsProps } from '../../common/withThreadDumps';
+import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 
 type State = {
   nonJvm: boolean;
@@ -22,7 +22,7 @@ type State = {
   stackFilter: string;
 };
 
-export default class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
+class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public state = {
     active: true,
     nonJvm: true,
@@ -255,3 +255,5 @@ export default class ThreadsOverviewPage extends PageWithSettings<WithThreadDump
     return false;
   };
 }
+
+export default withThreadDumps(ThreadsOverviewPage);
