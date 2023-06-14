@@ -23,7 +23,7 @@ function useCpuUsageJfrList(): CpuUsageJfr[] {
 }
 
 export const withCpuConsumersJfrData = (WrappedComponent: React.ComponentType<WithThreadCpuUsageProps>): React.ComponentType => {
-  const WithCpuConsumersJfrData: React.FC = function WithCpuConsumersJfrData() {
+  const WithCpuConsumersJfrData: React.FC = () => {
     const cpuUsageJfrList = useCpuUsageJfrList();
     return <WrappedComponent cpuUsageJfrList={cpuUsageJfrList} />;
   };

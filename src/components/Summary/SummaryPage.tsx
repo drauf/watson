@@ -1,3 +1,4 @@
+import React from 'react';
 import NoCpuInfosError from '../Errors/NoCpuInfosError';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
@@ -6,7 +7,7 @@ import './SummaryPage.css';
 import SwapUsageChart from './SwapUsageChart';
 import { useThreadDumps } from '../../common/withThreadDumps';
 
-export default function SummaryPage() {
+const SummaryPage: React.FC = () => {
   const threadDumps = useThreadDumps();
 
   if (!threadDumps.some((dump) => !!dump.loadAverages)) {
@@ -23,4 +24,6 @@ export default function SummaryPage() {
       <LoadAveragesChart threadDumps={threadDumps} />
     </main>
   );
-}
+};
+
+export default SummaryPage;

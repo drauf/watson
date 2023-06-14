@@ -13,8 +13,8 @@ type State = {
   hasLoadAverages: boolean;
 };
 
-export default class FullPageDropzone extends React.PureComponent<any, State> {
-  constructor(props: any) {
+export default class FullPageDropzone extends React.PureComponent<unknown, State> {
+  constructor(props: unknown) {
     super(props);
     this.state = {
       parsedDataKey: undefined,

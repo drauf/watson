@@ -72,6 +72,6 @@ const router = createHashRouter([
   },
 ]);
 
-export default function App() {
-  return <RouterProvider router={router} />;
-}
+const App = () => <RouterProvider router={router} />;
+
+export default App;

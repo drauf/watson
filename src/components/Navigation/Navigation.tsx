@@ -1,4 +1,5 @@
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';
 import './Navigation.css';
 
@@ -8,17 +9,20 @@ type LinkProps = {
   displayName: string;
 };
 
-function StyledNavLink(props: LinkProps) {
+const StyledNavLink: React.FC<LinkProps> = (props: LinkProps) => {
   const { hash, pageLink, displayName: name } = props;
   return (
     <NavLink to={`/${hash}/${pageLink}`} className={({ isActive }) => (isActive ? ' active' : '')}>
       <li>{name}</li>
     </NavLink>
   );
-}
+};
 
-export default function Navigation() {
-  const hash = useParams().threadDumpsHash!;
+const Navigation: React.FC = () => {
+  const hash = useParams().threadDumpsHash;
+  if (hash === undefined) {
+    throw new Error('threadDumpsHash is undefined');
+  }
   const navigate = useNavigate();
 
   return (
@@ -57,4 +61,6 @@ export default function Navigation() {
       </div>
     </header>
   );
-}
+};
+
+export default Navigation;

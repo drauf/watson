@@ -23,7 +23,7 @@ export function useThreadDumps(): ThreadDump[] {
 }
 
 export const withThreadDumps = (WrappedComponent: React.ComponentType<WithThreadDumpsProps>): React.ComponentType => {
-  const WithThreadDumps: React.FC = function WithThreadDumps() {
+  const WithThreadDumps: React.FC = () => {
     const threadDumps = useThreadDumps();
     return <WrappedComponent threadDumps={threadDumps} />;
   };

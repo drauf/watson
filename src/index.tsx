@@ -6,10 +6,12 @@ import App from './App';
 
 clearOldData();
 
-const domNode = document.getElementById('root')!;
-const root = createRoot(domNode);
+const domNode = document.getElementById('root');
+if (domNode === null) {
+  throw new Error('Root element not found');
+}
 
-root.render(
+createRoot(domNode).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
