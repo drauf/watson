@@ -22,9 +22,8 @@ export default class ThreadOverviewRow extends React.PureComponent<Props> {
 
     return (
       <tr>
-        <td className="name">
+        <td className="name" data-tooltip={threadName}>
           {threadName}
-          <span>{threadName}</span>
         </td>
         {threadsPadded.map((thread, index) => (
           <ThreadOverviewItem

@@ -24,7 +24,7 @@ export default class ThreadOverviewItem extends React.PureComponent<Props> {
     const className = ThreadOverviewItem.getClassName(isMatchingStackFilter, thread.status);
 
     return (
-      <td>
+      <td data-tooltip={thread.stackTrace[0]}>
         <ThreadDetails text={thread.stackTrace[0]} className={className} thread={thread} />
       </td>
     );

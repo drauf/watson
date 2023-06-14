@@ -21,7 +21,6 @@ export default class ThreadsOverview extends React.PureComponent<Props> {
               {dates.map((date) => (
                 <th key={date}>
                   {date}
-                  <span>{date}</span>
                 </th>
               ))}
             </tr>

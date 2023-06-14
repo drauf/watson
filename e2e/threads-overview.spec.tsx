@@ -61,4 +61,19 @@ test.describe('Threads overview', () => {
 
         await expect(details).toHaveScreenshot();
     });
+
+    test('shows thread name on hover', async ({ pageWithData }) => {
+        await pageWithData.getByText('http-nio-').first().hover();
+        await expect(pageWithData).toHaveScreenshot();
+    });
+
+    test('shows first stack trace line on hover', async ({ pageWithData }) => {
+        await pageWithData.getByRole('button', { name: 'java.lang.reflect' }).first().hover();
+        await expect(pageWithData).toHaveScreenshot();
+    });
+
+    test('does not show popup when hovering over legend', async ({ pageWithData }) => {
+        await pageWithData.getByText('Timed waiting').hover();
+        await expect(pageWithData).toHaveScreenshot();
+    });
 });
