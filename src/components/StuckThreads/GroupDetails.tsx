@@ -1,6 +1,6 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import ThreadDetails from './ThreadDetails';
+import SingleThreadDetails from './SingleThreadDetails';
 
 type Props = {
   maxDifferingLines: number;
@@ -32,7 +32,7 @@ export default class GroupDetails extends React.PureComponent<Props> {
     return (
       <div className="group-details">
         {threadGroup.map((thread, index, array) => (
-          <ThreadDetails
+          <SingleThreadDetails
             key={thread.uniqueId}
             thread={thread}
             showStackTrace={GroupDetails.shouldShowStackTrace(thread, array[index + 1], maxDifferingLines)}

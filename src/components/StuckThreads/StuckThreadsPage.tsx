@@ -1,7 +1,7 @@
 import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import isIdleThread from '../../common/isIdleThread';
-import { WithThreadDumpsProps } from '../../common/withThreadDumps';
+import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
@@ -17,7 +17,7 @@ type State = {
   withoutIdle: boolean;
 };
 
-export default class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
+class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
 
@@ -134,3 +134,5 @@ export default class StuckThreadsPage extends PageWithSettings<WithThreadDumpsPr
     return true;
   };
 }
+
+export default withThreadDumps(StuckThreadsPage);

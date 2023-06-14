@@ -1,6 +1,6 @@
 import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
-import { WithThreadDumpsProps } from '../../common/withThreadDumps';
+import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import NoCpuInfosAndThreadDumpPairError from '../Errors/NoCpuInfosAndThreadDumpPairError';
@@ -17,7 +17,7 @@ type State = {
   threadDumps: ThreadDump[];
 };
 
-export default class CpuConsumersOsPage extends PageWithSettings<WithThreadDumpsProps, State> {
+class CpuConsumersOsPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
 
@@ -104,3 +104,5 @@ export default class CpuConsumersOsPage extends PageWithSettings<WithThreadDumps
     return (values[lowMiddle].cpuUsage + values[highMiddle].cpuUsage) / 2;
   };
 }
+
+export default withThreadDumps(CpuConsumersOsPage);

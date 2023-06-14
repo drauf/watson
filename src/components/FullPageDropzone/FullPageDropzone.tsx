@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { setParsedData } from '../../common/threadDumpsStorageService';
 import Parser from '../../parser/Parser';
 import ThreadDump from '../../types/ThreadDump';
@@ -8,24 +8,44 @@ import DropzoneGuide from './DropzoneGuide';
 import './FullPageDropzone.css';
 import CpuUsageJfr from '../../parser/cpuusage/jfr/CpuUsageJfr';
 
-class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
+type State = {
+  parsedDataKey: string | undefined;
+  hasLoadAverages: boolean;
+};
+
+export default class FullPageDropzone extends React.PureComponent<unknown, State> {
+  constructor(props: unknown) {
+    super(props);
+    this.state = {
+      parsedDataKey: undefined,
+      hasLoadAverages: false,
+    };
+  }
+
   private onDrop = (files: File[]): void => {
     const parser = new Parser(this.onParsed);
     parser.parseFiles(files);
   };
 
   private onParsed = (threadDumps: ThreadDump[], cpuUsageJfrList: CpuUsageJfr[]): void => {
-    const { history } = this.props;
     const key = setParsedData(threadDumps, cpuUsageJfrList);
-
-    if (threadDumps.some((dump) => !!dump.loadAverages)) {
-      history.push(`/${key}/summary/`);
-    } else {
-      history.push(`/${key}/similar-stacks/`);
-    }
+    this.setState({ parsedDataKey: key, hasLoadAverages: threadDumps.some((dump) => !!dump.loadAverages) });
   };
 
   public render(): JSX.Element {
+    const { parsedDataKey, hasLoadAverages } = this.state;
+
+    if (parsedDataKey) {
+      if (hasLoadAverages) {
+        return (
+          <Navigate to={`/${parsedDataKey}/summary`} />
+        );
+      }
+      return (
+        <Navigate to={`/${parsedDataKey}/similar-stacks`} />
+      );
+    }
+
     return (
       <>
         <div className="announcement">
@@ -54,5 +74,3 @@ class FullPageDropzone extends React.PureComponent<RouteComponentProps> {
     );
   }
 }
-
-export default withRouter(FullPageDropzone);

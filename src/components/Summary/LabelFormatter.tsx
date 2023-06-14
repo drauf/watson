@@ -1,5 +1,3 @@
-import React from 'react';
-
 const round = (value: number): string => value.toFixed(2);
 
 const convert = (value: number): string => {
@@ -11,6 +9,6 @@ const convert = (value: number): string => {
 
 // perform a "best effort" conversion to GBs
 export default function
-labelFormatter(value: string | number | Array<string | number>): React.ReactNode {
+labelFormatter(value: string | number | Array<string | number>): string {
   return convert(value as number);
 }

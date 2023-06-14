@@ -61,20 +61,22 @@ td.name {
 }
 
 /* Tooltips on hover */
-td span,
-th span {
+td::after {
   position: absolute;
   z-index: 100;
   display: none;
   padding: 2px 7px;
   color: var(--color-n0);
-  -webkit-text-fill-color: var(--color-n0);
   font-weight: bold;
   background-color: var(--color-n800);
   border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  content: attr(data-tooltip);
+  -webkit-text-fill-color: var(--color-n0);
 }
 
-td:hover span,
-th:hover span {
+#threads-overview-table-wrapper td:hover::after {
   display: block;
+  opacity: 1;
 }

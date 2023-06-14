@@ -1,5 +1,5 @@
 import { StackFrame } from 'd3-flame-graph';
-import { WithThreadDumpsProps } from '../../common/withThreadDumps';
+import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import ThreadDump from '../../types/ThreadDump';
 import FlameGraph from './FlameGraph';
@@ -13,7 +13,7 @@ type State = {
   withoutIdle: boolean;
 };
 
-export default class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
+class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
     this.state = {
@@ -96,3 +96,5 @@ export default class FlameGraphPage extends PageWithSettings<WithThreadDumpsProp
     );
   }
 }
+
+export default withThreadDumps(FlameGraphPage);

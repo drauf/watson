@@ -1,17 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { HashRouter as Router, Route } from 'react-router-dom';
-import App from './App';
+import { createRoot } from 'react-dom/client';
 import { clearOldData } from './common/threadDumpsStorageService';
 import './index.css';
+import App from './App';
 
 clearOldData();
 
-ReactDOM.render(
+const domNode = document.getElementById('root');
+if (domNode === null) {
+  throw new Error('Root element not found');
+}
+
+createRoot(domNode).render(
   <React.StrictMode>
-    <Router>
-      <Route component={App} />
-    </Router>
+    <App />
   </React.StrictMode>,
-  document.getElementById('root'),
 );
