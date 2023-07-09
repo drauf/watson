@@ -81,7 +81,7 @@
     "semver": "7.5.2",
     "source-map-loader": "4.0.1",
     "style-loader": "3.3.3",
-    "stylelint": "15.6.2",
+    "stylelint": "15.10.1",
     "stylelint-config-rational-order": "0.1.2",
     "stylelint-config-standard": "33.0.0",
     "stylelint-order": "6.0.3",
