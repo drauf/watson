@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Thread from '../../types/Thread';
 import ThreadDetailsWindow from './ThreadDetailsWindow';
 
@@ -46,11 +46,12 @@ export default class ThreadDetails extends React.PureComponent<Props> {
     if (newWindow) {
       this.windows.add(newWindow);
       newWindow.document.title = thread.name;
-      ReactDOM.render(<ThreadDetailsWindow thread={thread} />, newWindow.document.body);
+      const root = createRoot(newWindow.document.body);
+      root.render(<ThreadDetailsWindow thread={thread} />);
       copyStyles(document, newWindow.document);
 
       newWindow.addEventListener('beforeunload', () => {
-        ReactDOM.unmountComponentAtNode(newWindow.document.body);
+        root.unmount();
         this.windows.delete(newWindow);
       });
     }
