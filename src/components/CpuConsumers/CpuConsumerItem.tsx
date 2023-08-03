@@ -1,16 +1,16 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import CpuConsumerOs from './CpuConsumerOs';
-import CpuConsumerOsSingleUsage from './CpuConsumerOsSingleUsage';
+import CpuConsumer from './CpuConsumer';
+import CpuConsumerSingleUsage from './CpuConsumerSingleUsage';
 
 type Props = {
   dumpsNumber: number;
-  consumer: CpuConsumerOs;
+  consumer: CpuConsumer;
 };
 
-export default class CpuConsumerOsItem extends React.PureComponent<Props> {
+export default class CpuConsumerItem extends React.PureComponent<Props> {
   private static formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => (
-    `${value.toFixed(2)}% - "${CpuConsumerOsItem.getThreadName(threads)}"`
+    `${value.toFixed(2)}% - "${CpuConsumerItem.getThreadName(threads)}"`
   );
 
   private static getThreadName = (threads: IterableIterator<Thread>): string => {
@@ -33,11 +33,11 @@ export default class CpuConsumerOsItem extends React.PureComponent<Props> {
     return (
       <li>
         <h5 className="ellipsis">
-          {CpuConsumerOsItem.formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurrences.values())}
+          {CpuConsumerItem.formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurrences.values())}
         </h5>
         <span>
           {threadsPadded.map((thread, index) => (
-            <CpuConsumerOsSingleUsage key={thread ? thread.uniqueId : `undefined_${index}`} thread={thread} />
+            <CpuConsumerSingleUsage key={thread ? thread.uniqueId : `undefined_${index}`} thread={thread} />
           ))}
         </span>
       </li>

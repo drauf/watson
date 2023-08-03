@@ -1,7 +1,7 @@
 import Thread from '../../types/Thread';
 import TypeWithUniqueId from '../../types/TypeWithUniqueId';
 
-export default class CpuConsumerOs extends TypeWithUniqueId {
+export default class CpuConsumer extends TypeWithUniqueId {
   public readonly calculatedValue: number;
 
   public readonly threadOccurrences: Map<number, Thread>;

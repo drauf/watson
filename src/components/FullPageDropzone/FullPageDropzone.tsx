@@ -6,11 +6,10 @@ import Parser from '../../parser/Parser';
 import ThreadDump from '../../types/ThreadDump';
 import DropzoneGuide from './DropzoneGuide';
 import './FullPageDropzone.css';
-import CpuUsageJfr from '../../parser/cpuusage/jfr/CpuUsageJfr';
 
 type State = {
   parsedDataKey: string | undefined;
-  hasLoadAverages: boolean;
+  hasCpuUsageInfo: boolean;
 };
 
 export default class FullPageDropzone extends React.PureComponent<unknown, State> {
@@ -18,7 +17,7 @@ export default class FullPageDropzone extends React.PureComponent<unknown, State
     super(props);
     this.state = {
       parsedDataKey: undefined,
-      hasLoadAverages: false,
+      hasCpuUsageInfo: false,
     };
   }
 
@@ -27,16 +26,16 @@ export default class FullPageDropzone extends React.PureComponent<unknown, State
     parser.parseFiles(files);
   };
 
-  private onParsed = (threadDumps: ThreadDump[], cpuUsageJfrList: CpuUsageJfr[]): void => {
-    const key = setParsedData(threadDumps, cpuUsageJfrList);
-    this.setState({ parsedDataKey: key, hasLoadAverages: threadDumps.some((dump) => !!dump.loadAverages) });
+  private onParsed = (threadDumps: ThreadDump[]): void => {
+    const key = setParsedData(threadDumps);
+    this.setState({ parsedDataKey: key, hasCpuUsageInfo: threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage > 0))});
   };
 
   public render(): JSX.Element {
-    const { parsedDataKey, hasLoadAverages } = this.state;
+    const { parsedDataKey, hasCpuUsageInfo } = this.state;
 
     if (parsedDataKey) {
-      if (hasLoadAverages) {
+      if (hasCpuUsageInfo) {
         return (
           <Navigate to={`/${parsedDataKey}/summary`} />
         );

@@ -6,7 +6,7 @@ type Props = {
   thread: Thread | undefined;
 };
 
-export default class CpuConsumerOsSingleUsage extends React.PureComponent<Props> {
+export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
   private static getCpuUsage = (cpuUsage: number): string => `${cpuUsage.toFixed(1)}%`;
 
   private static getClassName = (cpuUsage: number): string => {
@@ -35,8 +35,8 @@ export default class CpuConsumerOsSingleUsage extends React.PureComponent<Props>
       );
     }
 
-    const cpuUsage = CpuConsumerOsSingleUsage.getCpuUsage(thread.cpuUsage);
-    const className = CpuConsumerOsSingleUsage.getClassName(thread.cpuUsage);
+    const cpuUsage = CpuConsumerSingleUsage.getCpuUsage(thread.cpuUsage);
+    const className = CpuConsumerSingleUsage.getClassName(thread.cpuUsage);
 
     return (
       <>

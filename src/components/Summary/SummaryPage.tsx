@@ -10,7 +10,7 @@ import { useThreadDumps } from '../../common/withThreadDumps';
 const SummaryPage: React.FC = () => {
   const threadDumps = useThreadDumps();
 
-  if (!threadDumps.some((dump) => !!dump.loadAverages)) {
+  if (!threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage > 0))) {
     return <NoCpuInfosError />;
   }
 

@@ -5,14 +5,12 @@ import Container from './components/Container';
 import PageNotFoundError from './components/Errors/PageNotFoundError';
 import SummaryPage from './components/Summary/SummaryPage';
 import { threadDumpsLoader } from './common/withThreadDumps';
-import CpuConsumersOsPage from './components/CpuConsumersOs/CpuConsumersOsPage';
+import CpuConsumersPage from './components/CpuConsumers/CpuConsumersPage';
 import SimilarStacksPage from './components/SimilarStacks/SimilarStacksPage';
 import StuckThreadsPage from './components/StuckThreads/StuckThreadsPage';
 import MonitorsPage from './components/Monitors/MonitorsPage';
 import FlameGraphPage from './components/FlameGraph/FlameGraphPage';
 import ThreadsOverviewPage from './components/ThreadsOverview/ThreadsOverviewPage';
-import CpuConsumersJfrPage from './components/CpuConsumersJfr/CpuConsumersJfrPage';
-import { cpuUsageJfrListLoader } from './common/withCpuConsumersJfrData';
 
 const router = createHashRouter([
   {
@@ -30,14 +28,9 @@ const router = createHashRouter([
         loader: threadDumpsLoader,
       },
       {
-        path: 'cpu-consumers-os',
-        element: <CpuConsumersOsPage />,
+        path: 'cpu-consumers',
+        element: <CpuConsumersPage />,
         loader: threadDumpsLoader,
-      },
-      {
-        path: 'cpu-consumers-jfr',
-        element: <CpuConsumersJfrPage />,
-        loader: cpuUsageJfrListLoader,
       },
       {
         path: 'similar-stacks',

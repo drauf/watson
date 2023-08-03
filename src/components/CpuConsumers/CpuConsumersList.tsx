@@ -1,21 +1,21 @@
 import React from 'react';
-import CpuConsumerOs from './CpuConsumerOs';
-import CpuConsumerOsItem from './CpuConsumerOsItem';
+import CpuConsumer from './CpuConsumer';
+import CpuConsumerItem from './CpuConsumerItem';
 
 type Props = {
   limit: number;
   dumpsNumber: number;
-  consumers: CpuConsumerOs[];
+  consumers: CpuConsumer[];
 };
 
-export default class CpuConsumersOsList extends React.PureComponent<Props> {
+export default class CpuConsumersList extends React.PureComponent<Props> {
   public render(): JSX.Element {
     const { limit, dumpsNumber, consumers } = this.props;
 
     return (
       <ul id="consumers-list">
         {consumers.slice(0, limit).map((consumer) => (
-          <CpuConsumerOsItem key={consumer.uniqueId} dumpsNumber={dumpsNumber} consumer={consumer} />
+          <CpuConsumerItem key={consumer.uniqueId} dumpsNumber={dumpsNumber} consumer={consumer} />
         ))}
       </ul>
     );

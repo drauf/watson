@@ -63,7 +63,7 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
   const data: object[] = [];
 
   threadDumps.forEach((threadDump) => {
-    if (threadDump.loadAverages) {
+    if (threadDump.threads.some((thread) => thread.cpuUsage > 0)) {
       data.push({
         name: ThreadDump.getFormattedTime(threadDump),
         runningProcesses: threadDump.runningProcesses,

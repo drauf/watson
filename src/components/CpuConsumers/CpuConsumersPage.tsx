@@ -5,19 +5,19 @@ import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import NoCpuInfosAndThreadDumpPairError from '../Errors/NoCpuInfosAndThreadDumpPairError';
 import PageWithSettings from '../PageWithSettings';
-import CpuConsumerOs from './CpuConsumerOs';
-import CpuConsumersOsList from './CpuConsumersOsList';
-import CpuConsumersOsSettings from './CpuConsumersOsSettings';
-import CpuConsumersOsMode from './CpuConsumersOsMode';
-import './CpuConsumersOsPage.css';
+import CpuConsumer from './CpuConsumer';
+import CpuConsumersList from './CpuConsumersList';
+import CpuConsumersSettings from './CpuConsumersSettings';
+import CpuConsumersMode from './CpuConsumersMode';
+import './CpuConsumersPage.css';
 
 type State = {
-  mode: CpuConsumersOsMode;
+  mode: CpuConsumersMode;
   limit: number;
   threadDumps: ThreadDump[];
 };
 
-class CpuConsumersOsPage extends PageWithSettings<WithThreadDumpsProps, State> {
+class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
 
@@ -25,7 +25,7 @@ class CpuConsumersOsPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
     this.state = {
       limit: 40,
-      mode: CpuConsumersOsMode.Mean,
+      mode: CpuConsumersMode.Mean,
       threadDumps: nonEmptyThreadDumps,
     };
   }
@@ -33,20 +33,20 @@ class CpuConsumersOsPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public render(): JSX.Element {
     const consumers = this.calculateCpuUsages(this.state.mode);
 
-    if (!this.state.threadDumps.some((dump) => !!dump.loadAverages)) {
+    if (!this.state.threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage > 0))) {
       return <NoCpuInfosAndThreadDumpPairError />;
     }
 
     return (
       <main>
-        <CpuConsumersOsSettings
+        <CpuConsumersSettings
           mode={this.state.mode}
           limit={this.state.limit}
           onModeChange={this.handleModeChange}
           onLimitChange={this.handleIntegerChange}
         />
 
-        <CpuConsumersOsList
+        <CpuConsumersList
           limit={this.state.limit}
           dumpsNumber={this.state.threadDumps.length}
           consumers={consumers}
@@ -56,11 +56,11 @@ class CpuConsumersOsPage extends PageWithSettings<WithThreadDumpsProps, State> {
   }
 
   private handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
-    this.setState({ mode: mode as CpuConsumersOsMode });
+    this.setState({ mode: mode as CpuConsumersMode });
   };
 
-  private calculateCpuUsages = (calculationMode: CpuConsumersOsMode): CpuConsumerOs[] => {
-    const consumers: CpuConsumerOs[] = [];
+  private calculateCpuUsages = (calculationMode: CpuConsumersMode): CpuConsumer[] => {
+    const consumers: CpuConsumer[] = [];
     const threadsOverTime = getThreadsOverTime(this.state.threadDumps);
 
     for (const threads of threadsOverTime) {
@@ -71,25 +71,25 @@ class CpuConsumersOsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     return consumers;
   };
 
-  private calculateUsageFor = (threadsMap: Map<number, Thread>, calculationMode: CpuConsumersOsMode) => {
+  private calculateUsageFor = (threadsMap: Map<number, Thread>, calculationMode: CpuConsumersMode) => {
     const threads = Array.from(threadsMap.values());
 
     let usage = 0;
     switch (calculationMode) {
-      case CpuConsumersOsMode.Mean:
-        usage = threads.reduce(CpuConsumersOsPage.reduceSum, 0) / this.state.threadDumps.length;
+      case CpuConsumersMode.Mean:
+        usage = threads.reduce(CpuConsumersPage.reduceSum, 0) / this.state.threadDumps.length;
         break;
-      case CpuConsumersOsMode.Median:
-        usage = CpuConsumersOsPage.calculateMedian(threads);
+      case CpuConsumersMode.Median:
+        usage = CpuConsumersPage.calculateMedian(threads);
         break;
-      case CpuConsumersOsMode.Max:
-        usage = threads.reduce(CpuConsumersOsPage.reduceMax, 0);
+      case CpuConsumersMode.Max:
+        usage = threads.reduce(CpuConsumersPage.reduceMax, 0);
         break;
       default:
-        throw new Error(`Unsupported calculation mode: ${calculationMode as CpuConsumersOsMode}`);
+        throw new Error(`Unsupported calculation mode: ${calculationMode as CpuConsumersMode}`);
     }
 
-    return new CpuConsumerOs(usage, threadsMap);
+    return new CpuConsumer(usage, threadsMap);
   };
 
   private static reduceSum = (sum: number, currentThread: Thread): number => sum + currentThread.cpuUsage;
@@ -105,4 +105,4 @@ class CpuConsumersOsPage extends PageWithSettings<WithThreadDumpsProps, State> {
   };
 }
 
-export default withThreadDumps(CpuConsumersOsPage);
+export default withThreadDumps(CpuConsumersPage);

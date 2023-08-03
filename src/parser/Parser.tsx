@@ -1,26 +1,23 @@
-import CpuUsage from './cpuusage/os/CpuUsage';
+import CpuUsage from './cpuusage/CpuUsage';
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
-import CpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './cpuusage/os/CpuUsageParser';
+import TopCpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './cpuusage/os/TopCpuUsageParser';
 import { matchOne } from './RegExpUtils';
 import ThreadDumpParser, { THREAD_DUMP_DATE_PATTERN } from './ThreadDumpParser';
 import CpuUsageJfrParser, { CPU_USAGE_JFR_FIRST_LINE_PATTERN } from './cpuusage/jfr/CpuUsageJfrParser';
-import CpuUsageJfr from './cpuusage/jfr/CpuUsageJfr';
 
 const MAX_TIME_DIFFERENCE_ALLOWED = 10000;
 
 export default class Parser {
   private cpuUsages: CpuUsage[] = [];
 
-  private cpuUsagesJfr: CpuUsageJfr[] = [];
-
   private threadDumps: ThreadDump[] = [];
 
   private filesToParse = 0;
 
-  private readonly onFilesParsed: (threadDumps: ThreadDump[], cpuUsageJfr: CpuUsageJfr[]) => void;
+  private readonly onFilesParsed: (threadDumps: ThreadDump[]) => void;
 
-  constructor(onFilesParsed: (threadDumps: ThreadDump[], cpuUsagesJfr: CpuUsageJfr[]) => void) {
+  constructor(onFilesParsed: (threadDumps: ThreadDump[]) => void) {
     this.onFilesParsed = onFilesParsed;
   }
 
@@ -46,9 +43,9 @@ export default class Parser {
         }
 
         if (matchOne(CPU_USAGE_TIMESTAMP_PATTERN, firstLine)) {
-          this.parseCpuUsage(lines);
+          this.parseTopCpuUsage(lines);
         } else if (matchOne(CPU_USAGE_JFR_FIRST_LINE_PATTERN, firstLine)) {
-          this.parseCpuJfrUsage(file.name, lines);
+          this.parseJfrCpuUsage(file.name, lines);
         } else {
           this.splitThreadDumps(lines);
         }
@@ -86,20 +83,16 @@ export default class Parser {
     }
   }
 
-  private parseCpuUsage = (lines: string[]) => {
-    CpuUsageParser.parseCpuUsage(lines.slice(), this.onParsedCpuUsage);
+  private parseTopCpuUsage = (lines: string[]) => {
+    TopCpuUsageParser.parseCpuUsage(lines.slice(), this.onParsedCpuUsage);
   };
 
-  private parseCpuJfrUsage = (fileName: string, lines: string[]) => {
-    CpuUsageJfrParser.parseCpuUsage(fileName, lines.slice(), this.onParsedCpuUsageJfr);
+  private parseJfrCpuUsage = (fileName: string, lines: string[]) => {
+    CpuUsageJfrParser.parseCpuUsage(fileName, lines.slice(), this.onParsedCpuUsage);
   };
 
   private onParsedCpuUsage = (cpuUsage: CpuUsage) => {
     this.cpuUsages.push(cpuUsage);
-  };
-
-  private onParsedCpuUsageJfr = (cpuUsageJfr: CpuUsageJfr) => {
-    this.cpuUsagesJfr.push(cpuUsageJfr);
   };
 
   private parseThreadDump = (lines: string[]) => {
@@ -119,7 +112,7 @@ export default class Parser {
     if (!this.filesToParse) {
       this.groupCpuUsagesWithThreadDumps();
       this.sortThreadDumps();
-      this.onFilesParsed(this.threadDumps, this.cpuUsagesJfr);
+      this.onFilesParsed(this.threadDumps);
     }
   }
 
@@ -187,7 +180,7 @@ export default class Parser {
       const thread = Parser.findThreadWithId(threadDump, cpu.id);
 
       if (thread) {
-        thread.cpuUsage = cpu.cpuUsage;
+        thread.cpuUsage = cpu.getCpuUsage();
         thread.runningFor = cpu.runningFor;
       }
     });

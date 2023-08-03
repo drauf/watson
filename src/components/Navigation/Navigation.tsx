@@ -35,8 +35,7 @@ const Navigation: React.FC = () => {
         <nav>
           <ul>
             <StyledNavLink hash={hash} pageLink="summary" displayName="Summary" />
-            <StyledNavLink hash={hash} pageLink="cpu-consumers-os" displayName="CPU consumers (OS)" />
-            <StyledNavLink hash={hash} pageLink="cpu-consumers-jfr" displayName="CPU consumers (JFR)" />
+            <StyledNavLink hash={hash} pageLink="cpu-consumers" displayName="CPU consumers" />
             <StyledNavLink hash={hash} pageLink="similar-stacks" displayName="Similar stacks" />
             <StyledNavLink hash={hash} pageLink="stuck-threads" displayName="Stuck threads" />
             <StyledNavLink hash={hash} pageLink="monitors" displayName="Monitors" />

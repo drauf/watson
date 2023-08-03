@@ -18,7 +18,7 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
 
     const memoryUsages: MemoryUsage[] = threadDumps
       .map((threadDump) => threadDump.memoryUsage)
-      .filter((memoryUsage) => !!memoryUsage);
+      .filter((memoryUsage) => memoryUsage !== undefined) as MemoryUsage[];
 
     const freeMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryFree, 0) / memoryUsages.length;
     const usedMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryUsed, 0) / memoryUsages.length;
