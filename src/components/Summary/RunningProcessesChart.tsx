@@ -14,8 +14,8 @@ const getSortedThreadNames = (payload: unknown): string[] => {
 
   return threads
     .filter((thread) => thread.status === ThreadStatus.RUNNABLE)
-    .filter((thread) => thread.cpuUsage > 0)
-    .sort((a, b) => b.cpuUsage - a.cpuUsage)
+    .filter((thread) => thread.cpuUsage !== '0.00')
+    .sort((a, b) => parseFloat(b.cpuUsage) - parseFloat(a.cpuUsage))
     .slice(0, 10)
     .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
 };
@@ -63,7 +63,7 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
   const data: object[] = [];
 
   threadDumps.forEach((threadDump) => {
-    if (threadDump.threads.some((thread) => thread.cpuUsage > 0)) {
+    if (threadDump.threads.some((thread) => thread.cpuUsage !== '0.00')) {
       data.push({
         name: ThreadDump.getFormattedTime(threadDump),
         runningProcesses: threadDump.runningProcesses,

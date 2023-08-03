@@ -14,11 +14,11 @@ export default class ThreadCpuUsage {
     this.runningFor = runningFor;
   }
 
-  public getCpuUsage(): number {
+  public getCpuUsage(): string {
     if (this.cpuSystemMode === undefined) {
-      return this.cpuUserMode;
+      return this.cpuUserMode.toFixed(2);
     }
 
-    return this.cpuUserMode + this.cpuSystemMode;
+    return (this.cpuUserMode + this.cpuSystemMode).toFixed(2);
   }
 }

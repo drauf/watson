@@ -7,17 +7,19 @@ type Props = {
 };
 
 export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
-  private static getCpuUsage = (cpuUsage: number): string => `${cpuUsage.toFixed(1)}%`;
+  private static getCpuUsage = (cpuUsage: string): string => `${cpuUsage}%`;
 
-  private static getClassName = (cpuUsage: number): string => {
+  private static getClassName = (cpuUsage: string): string => {
+    const cpuUsageNumber = parseFloat(cpuUsage);
+
     // The numbers here are completely arbitrary
-    if (cpuUsage > 78) {
+    if (cpuUsageNumber > 78) {
       return 'high';
     }
-    if (cpuUsage > 42) {
+    if (cpuUsageNumber > 42) {
       return 'medium';
     }
-    if (cpuUsage > 10) {
+    if (cpuUsageNumber > 10) {
       return 'low';
     }
     return 'none';

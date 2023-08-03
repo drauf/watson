@@ -1,9 +1,9 @@
 import { expect } from '@playwright/test';
 import { test } from './e2e-common';
 
-test.describe('CPU consumers OS', () => {
+test.describe('CPU consumers', () => {
     test.beforeEach(async ({ pageWithData }) => {
-        await pageWithData.getByText('CPU consumers (OS)').click();
+        await pageWithData.getByText('CPU consumers').click();
     });
 
     test('loads', async ({ pageWithData }) => {
