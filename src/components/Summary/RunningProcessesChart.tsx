@@ -72,6 +72,15 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
     }
   });
 
+  if (data.length === 0) {
+    return (
+      <div className="chart">
+        <h3>Running processes</h3>
+        <p>No data</p>
+      </div>
+    );
+  }
+
   return (
     <div className="chart">
       <h3>Running processes</h3>

@@ -20,6 +20,15 @@ export default class SwapUsageChart extends React.PureComponent<Props> {
       .map((threadDump) => threadDump.memoryUsage)
       .filter((memoryUsage) => memoryUsage !== undefined) as MemoryUsage[];
 
+    if (memoryUsages.length === 0) {
+      return (
+        <div className="chart">
+          <h3>Swap usage</h3>
+          <p>No data</p>
+        </div>
+      );
+    }
+
     const freeSwapAvg = memoryUsages.reduce((a, b) => a + b.swapFree, 0) / memoryUsages.length;
     const usedSwapAvg = memoryUsages.reduce((a, b) => a + b.swapUsed, 0) / memoryUsages.length;
 
