@@ -2,10 +2,8 @@ import { parse, stringify } from 'flatted';
 import localforage from 'localforage';
 import SparkMD5 from 'spark-md5';
 import ThreadDump from '../types/ThreadDump';
-import CpuUsageJfr from '../parser/cpuusage/jfr/CpuUsageJfr';
 
 let currentThreadDumps: ThreadDump[];
-let currentCpuUsageJfrList: CpuUsageJfr[];
 const lastUsedStorage = localforage.createInstance({ name: 'lastUsed' });
 const threadDumpsStorage = localforage.createInstance({ name: 'threadDumps' });
 const cpuUsageJfrListStorage = localforage.createInstance({ name: 'cpuUsageJfrList' });
@@ -25,17 +23,6 @@ const getFromStorage = async (key: string): Promise<ThreadDump[]> => {
   return currentThreadDumps;
 };
 
-const getCpuUsageJfrFromStorage = async (key: string): Promise<CpuUsageJfr[]> => {
-  const fromStorage = await cpuUsageJfrListStorage.getItem<string>(key);
-  if (!fromStorage) {
-    return [];
-  }
-
-  currentCpuUsageJfrList = parse(fromStorage) as CpuUsageJfr[];
-  lastUsedStorage.setItem(key, new Date().valueOf()).catch(logError);
-  return currentCpuUsageJfrList;
-};
-
 // Given a key, returns a promise that resolves to the stored thread dumps.
 export const getThreadDumpsAsync = async (key: string): Promise<ThreadDump[]> => {
   if (currentThreadDumps === undefined) {
@@ -45,23 +32,13 @@ export const getThreadDumpsAsync = async (key: string): Promise<ThreadDump[]> =>
   return currentThreadDumps;
 };
 
-export const getCpuUsageJfrAsync = async (key: string): Promise<CpuUsageJfr[]> => {
-  if (currentCpuUsageJfrList === undefined || currentCpuUsageJfrList.length === 0) {
-    return getCpuUsageJfrFromStorage(key);
-  }
-
-  return currentCpuUsageJfrList;
-};
-
 // Stores thread dumps in persistent storage for subsequent page loads.
 // Returns a key that can be used to retrieve the thread dumps.
-export const setParsedData = (parsedDumps: ThreadDump[], cpuUsageJfrList: CpuUsageJfr[]): string => {
+export const setParsedData = (parsedDumps: ThreadDump[]): string => {
   currentThreadDumps = parsedDumps;
   const stringifiedThreadDumps = stringify(currentThreadDumps);
-  const stringifiedCpuUsageJfrList = stringify(cpuUsageJfrList);
-  const key = SparkMD5.hash(stringifiedThreadDumps + stringifiedCpuUsageJfrList);
+  const key = SparkMD5.hash(stringifiedThreadDumps);
   threadDumpsStorage.setItem(key, stringifiedThreadDumps).catch(logError);
-  cpuUsageJfrListStorage.setItem(key, stringifiedCpuUsageJfrList).catch(logError);
   return key;
 };
 
@@ -69,7 +46,6 @@ export const setParsedData = (parsedDumps: ThreadDump[], cpuUsageJfrList: CpuUsa
 // Does not modify data storage.
 export const clearCurrentData = (): void => {
   currentThreadDumps = [];
-  currentCpuUsageJfrList = [];
 };
 
 // Clears all persisted thread dumps & JFR cpu usage not used in the last 7 days.

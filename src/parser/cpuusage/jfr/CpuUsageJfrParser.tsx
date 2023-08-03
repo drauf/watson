@@ -1,27 +1,26 @@
 import { matchMultipleGroups, matchMultipleTimes } from '../../RegExpUtils';
-import CpuUsageJfr from './CpuUsageJfr';
-import ThreadCpuUsageJfr from './ThreadCpuUsageJfr';
 import CpuUsageJfrTopColumnOffsets from './CpuUsageJfrTopColumnOffsets';
+import { ParseCpuUsageCallback } from '../os/TopCpuUsageParser';
+import CpuUsage from '../CpuUsage';
+import ThreadCpuUsage from '../ThreadCpuUsage';
 
 export const CPU_USAGE_JFR_FIRST_LINE_PATTERN = /^(JVM_THREAD_ID\s*OS_THREAD_ID\s*%CPU_USER_MODE\s*%CPU_SYSTEM_MODE\s*SYSTEM_TIME\s*THREAD_NAME)/;
 const HEADER_COLUMN_MATCHER = /([^\s]+)[\s\n]*/g;
 const DATA_COLUMN_MATCHER = /^\s*(\d+)\s*(\d+)\s*(\d+\.\d+%)\s*(\d+\.\d+%)\s+(\d+:\d+\.\d+)\s+(.*)\n?/;
 
-export type ParseCpuUsageJfrCallback = (cpuUsage: CpuUsageJfr) => void;
-
 export default class CpuUsageJfrParser {
-  public static parseCpuUsage(fileName: string, lines: string[], callback: ParseCpuUsageJfrCallback): void {
+  public static parseCpuUsage(fileName: string, lines: string[], callback: ParseCpuUsageCallback): void {
     // JVM_THREAD_ID OS_THREAD_ID %CPU_USER_MODE %CPU_SYSTEM_MODE  SYSTEM_TIME THREAD_NAME
     //           486         3315         24.84%            0.05%     16:39.04 Caesium-1-3
     //             7         3275         17.16%            0.22%     16:38.55 C2 CompilerThread1
     //             7         3381         13.06%            0.89%     16:38.58 C2 CompilerThread1
     const threadCpuUsages = CpuUsageJfrParser.parseThreadCpuUsages(lines);
 
-    callback(new CpuUsageJfr(fileName, threadCpuUsages));
+    callback(CpuUsage.fromJfr(fileName, threadCpuUsages.length, threadCpuUsages));
   }
 
-  private static parseThreadCpuUsages(lines: string[]): ThreadCpuUsageJfr[] {
-    const threadCpuUsages: ThreadCpuUsageJfr[] = [];
+  private static parseThreadCpuUsages(lines: string[]): ThreadCpuUsage[] {
+    const threadCpuUsages: ThreadCpuUsage[] = [];
 
     const offsets: CpuUsageJfrTopColumnOffsets = this.getColumnOffsets(lines[0]);
 
@@ -30,13 +29,11 @@ export default class CpuUsageJfrParser {
       .map((line) => matchMultipleGroups(DATA_COLUMN_MATCHER, line))
       .filter((columns) => columns.length >= offsets.getMaxIndex())
       .forEach((columns) => {
-        const jvmThreadId = columns[offsets.getJvmThreadIdOffset()];
-        const osThreadId = columns[offsets.getOsThreadIdOffset()];
-        const cpuUserMode = columns[offsets.getCpuUserModeOffset()];
-        const cpuSystemMode = columns[offsets.getCpuSystemModeOffset()];
+        const osThreadId = parseInt(columns[offsets.getOsThreadIdOffset()], 10);
+        const cpuUserMode = parseFloat(columns[offsets.getCpuUserModeOffset()]);
+        const cpuSystemMode = parseFloat(columns[offsets.getCpuSystemModeOffset()]);
         const systemTime = columns[offsets.getSystemTimeOffset()];
-        const threadName = columns[offsets.getThreadNameOffset()];
-        threadCpuUsages.push(new ThreadCpuUsageJfr(jvmThreadId, osThreadId, threadName, cpuUserMode, cpuSystemMode, systemTime));
+        threadCpuUsages.push(new ThreadCpuUsage(osThreadId, systemTime, cpuUserMode, cpuSystemMode));
       });
 
     return threadCpuUsages;

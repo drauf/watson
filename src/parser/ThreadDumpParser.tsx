@@ -76,6 +76,7 @@ export default class ThreadDumpParser {
         case 'waiting on':
         case 'parking to wait for':
         case 'waiting to lock':
+        case 'waiting to re-lock in wait()':
           lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
           lock.addWaiting(ThreadDumpParser.currentThread);
           ThreadDumpParser.currentThread.lockWaitingFor = lock;

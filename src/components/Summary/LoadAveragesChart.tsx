@@ -25,6 +25,15 @@ export default class LoadAveragesChart extends React.PureComponent<Props> {
       }
     });
 
+    if (data.length === 0) {
+      return (
+        <div className="chart">
+          <h3>Load averages</h3>
+          <p>No data</p>
+        </div>
+      );
+    }
+
     return (
       <div className="chart">
         <h3>Load averages</h3>

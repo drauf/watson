@@ -24,9 +24,9 @@ export default class ThreadDump {
 
   public runningProcesses!: number;
 
-  public memoryUsage!: MemoryUsage;
+  public memoryUsage?: MemoryUsage;
 
-  public loadAverages!: LoadAverages;
+  public loadAverages?: LoadAverages;
 
   constructor(epoch: number) {
     this.epoch = epoch;
