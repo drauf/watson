@@ -19,7 +19,7 @@ export default class Thread extends TypeWithUniqueId {
 
   public status = ThreadStatus.UNKNOWN as ThreadStatus;
 
-  public cpuUsage = 0.0;
+  public cpuUsage = '0.00';
 
   public runningFor = '0:00.00';
 
