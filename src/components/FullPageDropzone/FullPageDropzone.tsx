@@ -28,7 +28,7 @@ export default class FullPageDropzone extends React.PureComponent<unknown, State
 
   private onParsed = (threadDumps: ThreadDump[]): void => {
     const key = setParsedData(threadDumps);
-    this.setState({ parsedDataKey: key, hasCpuUsageInfo: threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage > 0))});
+    this.setState({ parsedDataKey: key, hasCpuUsageInfo: threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage > 0)) });
   };
 
   public render(): JSX.Element {
