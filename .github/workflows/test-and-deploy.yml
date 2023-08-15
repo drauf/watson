@@ -3,7 +3,7 @@ name: Test and deploy to Pages
 on:
   # Runs on pushes targeting the default branch and pull requests
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
 
   # Allows to run this workflow manually from the Actions tab
@@ -28,7 +28,7 @@ jobs:
     - name: Setup Node 20
       uses: actions/setup-node@v3
       with:
-        node-version: "20"
+        node-version: '20'
         
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
@@ -68,7 +68,7 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref_name == "main"
+    if: github.ref == 'refs/heads/main'
     
     environment:
       name: github-pages
@@ -77,7 +77,7 @@ jobs:
     # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
     # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
     concurrency:
-      group: "pages"
+      group: 'pages'
       cancel-in-progress: false
       
     steps:
