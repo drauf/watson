@@ -16,7 +16,6 @@
     "d3": "7.8.5",
     "d3-flame-graph": "4.1.3",
     "flatted": "3.2.7",
-    "gh-pages": "6.0.0",
     "localforage": "1.10.0",
     "prop-types": "15.8.1",
     "react": "18.2.0",
@@ -29,124 +28,44 @@
   },
   "devDependencies": {
     "@babel/core": "7.22.10",
-    "@playwright/test": "1.37.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.5.11",
-    "@svgr/webpack": "8.0.1",
+    "@playwright/test": "1.37.1",
+    "@testing-library/react": "14.0.0",
     "@types/d3": "7.4.0",
-    "@types/jest": "29.5.3",
-    "@types/node": "20.5.0",
+    "@types/node": "20.5.1",
     "@types/react-dom": "18.2.7",
     "@types/react-router-dom": "5.3.3",
     "@types/spark-md5": "3.0.2",
     "@typescript-eslint/eslint-plugin": "6.4.0",
     "@typescript-eslint/parser": "6.4.0",
-    "autoprefixer": "10.4.15",
-    "babel-jest": "29.6.2",
-    "babel-loader": "9.1.3",
-    "babel-plugin-named-asset-import": "0.3.8",
-    "babel-preset-react-app": "10.0.1",
-    "bfj": "7.0.2",
+    "@vitejs/plugin-react-swc": "3.3.2",
+    "@vitest/coverage-v8": "0.34.2",
     "browserslist": "4.21.10",
-    "camelcase": "8.0.0",
-    "case-sensitive-paths-webpack-plugin": "2.4.0",
-    "css-loader": "6.8.1",
-    "css-minimizer-webpack-plugin": "5.0.1",
-    "dotenv": "16.3.1",
-    "dotenv-expand": "10.0.0",
     "eslint": "8.47.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "17.1.0",
-    "eslint-plugin-import": "2.28.0",
+    "eslint-plugin-import": "2.28.1",
     "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-react": "7.33.1",
+    "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "file-loader": "6.2.0",
-    "fs-extra": "11.1.1",
-    "html-webpack-plugin": "5.5.3",
-    "jest": "29.6.2",
-    "jest-environment-jsdom": "29.6.2",
-    "jest-resolve": "29.6.2",
-    "jest-watch-typeahead": "2.2.2",
-    "mini-css-extract-plugin": "2.7.6",
-    "postcss": "8.4.27",
-    "postcss-flexbugs-fixes": "5.0.2",
-    "postcss-loader": "7.3.3",
-    "postcss-normalize": "10.0.1",
-    "postcss-preset-env": "9.1.1",
-    "prompts": "2.4.2",
-    "react-dev-utils": "12.0.1",
-    "react-refresh": "0.14.0",
-    "resolve": "1.22.4",
-    "resolve-url-loader": "5.0.0",
-    "semver": "7.5.4",
-    "source-map-loader": "4.0.1",
-    "style-loader": "3.3.3",
-    "stylelint": "15.10.2",
+    "jsdom": "22.1.0",
+    "stylelint": "15.10.3",
     "stylelint-config-rational-order": "0.1.2",
     "stylelint-config-standard": "34.0.0",
     "stylelint-order": "6.0.3",
-    "terser-webpack-plugin": "5.3.9",
     "typescript": "5.1.6",
-    "webpack": "5.88.2",
-    "webpack-dev-server": "4.15.1",
-    "webpack-manifest-plugin": "5.0.0",
-    "workbox-webpack-plugin": "7.0.0"
+    "vite": "4.4.9",
+    "vite-tsconfig-paths": "4.2.0",
+    "vitest": "0.34.2"
   },
   "scripts": {
-    "lint": "eslint 'src/**/*.tsx' && stylelint 'src/**/*.css'",
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "test:e2e": "yarn playwright test",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
-    ],
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "setupFilesAfterEnv": [],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
-    ],
-    "testEnvironment": "jsdom",
-    "transform": {
-      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!d3|delaunator|internmap|robust-predicates)"
-    ],
-    "modulePaths": [],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ],
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ],
-    "resetMocks": true
+    "start": "vite",
+    "build": "tsc -p tsconfig.prod.json && vite build",
+    "serve": "vite preview",
+    "lint": "eslint --fix 'src/**/*.tsx' && stylelint --fix 'src/**/*.css'",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage --watch=false",
+    "test:e2e": "playwright test",
+    "predeploy": "yarn build"
   },
   "browserslist": [
     "last 2 chrome versions",
@@ -154,10 +73,5 @@
     "last 2 firefox versions",
     "last 2 safari versions"
   ],
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
   "packageManager": "yarn@3.5.1"
 }
