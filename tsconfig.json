@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
+    "types": ["vite/client", "vitest/globals"],
     "lib": [
       "dom",
       "dom.iterable",
