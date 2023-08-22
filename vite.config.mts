@@ -6,12 +6,9 @@ import { configDefaults } from 'vitest/dist/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    base: '/',
+    base: '/watson/',
     server: {
         port: 3000,
-    },
-    build: {
-        outDir: 'build'
     },
     test: {
         globals: true,
