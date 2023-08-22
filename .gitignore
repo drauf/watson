@@ -14,7 +14,7 @@
 .eslintcache
 
 # production
-/build
+/dist
 
 # misc
 .idea
