@@ -29,6 +29,7 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
       );
     }
 
+    const memoryUnit = memoryUsages[0].memoryUnit;
     const freeMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryFree, 0) / memoryUsages.length;
     const usedMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryUsed, 0) / memoryUsages.length;
 
@@ -48,7 +49,7 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
                 data.map((_, index) => <Cell key={COLORS[index]} fill={COLORS[index]} />)
               }
             </Pie>
-            <Tooltip formatter={labelFormatter} />
+            <Tooltip formatter={(value) => labelFormatter(value, memoryUnit)} />
             <Legend />
           </PieChart>
         </ResponsiveContainer>
