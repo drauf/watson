@@ -4,13 +4,14 @@ import MemoryUsage from '../../../types/MemoryUsage';
 import ThreadCpuUsage from '../ThreadCpuUsage';
 import { matchMultipleGroups, matchMultipleTimes, matchOne } from '../../RegExpUtils';
 import TopColumnOffsets from './TopColumnOffsets';
+import MemoryUnit from '../../../types/MemoryUnit';
 
 export const CPU_USAGE_TIMESTAMP_PATTERN = /^top - ([0-9]{2}:[0-9]{2}:[0-9]{2})/;
 const LOAD_AVERAGES_PATTERN = / load average: ([0-9.]+), ([0-9.]+), ([0-9.]+)/;
 const RUNNING_PROCESSES_PATTERN = /([0-9.]+) running/;
 const TOTAL_MEMORY_PATTERN = /([0-9.]+)k?[ +]total/;
-const USED_MEMORY_PATTERN = /([0-9.]+)k? used/;
-const FREE_MEMORY_PATTERN = /([0-9.]+)k? free/;
+const USED_MEMORY_PATTERN = /([0-9.]+)k?[ +]used/;
+const FREE_MEMORY_PATTERN = /([0-9.]+)k?[ +]free/;
 const COLUMN_MATCHER = /([^\s]+) +/g;
 
 export type ParseCpuUsageCallback = (cpuUsage: CpuUsage) => void;
@@ -60,12 +61,13 @@ export default class TopCpuUsageParser {
     const memoryTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line1), 10);
     const memoryUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line1), 10);
     const memoryFree = parseInt(matchOne(FREE_MEMORY_PATTERN, line1), 10);
+    const memoryUnit = line1?.includes(MemoryUnit.MiB) ? MemoryUnit.MiB : MemoryUnit.KiB;
 
     const swapTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line2), 10);
     const swapUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line2), 10);
     const swapFree = parseInt(matchOne(FREE_MEMORY_PATTERN, line2), 10);
 
-    return new MemoryUsage(memoryTotal, memoryUsed, memoryFree, swapTotal, swapUsed, swapFree);
+    return new MemoryUsage(memoryTotal, memoryUsed, memoryFree, swapTotal, swapUsed, swapFree, memoryUnit);
   }
 
   private static parseThreadCpuUsages(lines: string[]): ThreadCpuUsage[] {

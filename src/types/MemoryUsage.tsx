@@ -1,3 +1,5 @@
+import MemoryUnit from "./MemoryUnit";
+
 export default class MemoryUsage {
   public readonly memoryTotal: number;
 
@@ -11,12 +13,15 @@ export default class MemoryUsage {
 
   public readonly swapFree: number;
 
-  constructor(memoryTotal: number, memoryUsed: number, memoryFree: number, swapTotal: number, swapUsed: number, swapFree: number) {
+  public readonly memoryUnit: MemoryUnit;
+
+  constructor(memoryTotal: number, memoryUsed: number, memoryFree: number, swapTotal: number, swapUsed: number, swapFree: number, memoryUnit: MemoryUnit) {
     this.memoryTotal = memoryTotal;
     this.memoryUsed = memoryUsed;
     this.memoryFree = memoryFree;
     this.swapTotal = swapTotal;
     this.swapUsed = swapUsed;
     this.swapFree = swapFree;
+    this.memoryUnit = memoryUnit;
   }
 }
