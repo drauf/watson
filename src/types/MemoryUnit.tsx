@@ -1,6 +1,6 @@
 enum MemoryUnit {
   MiB = 'MiB',
-  KiB = 'KiB'
+  KiB = 'KiB',
 }
 
 export default MemoryUnit;
