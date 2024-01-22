@@ -1,4 +1,4 @@
-import MemoryUnit from "../../types/MemoryUnit";
+import MemoryUnit from '../../types/MemoryUnit';
 
 const round = (value: number): string => value.toFixed(2);
 

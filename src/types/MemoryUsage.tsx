@@ -1,4 +1,4 @@
-import MemoryUnit from "./MemoryUnit";
+import MemoryUnit from './MemoryUnit';
 
 export default class MemoryUsage {
   public readonly memoryTotal: number;
