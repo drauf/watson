@@ -29,7 +29,7 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
       );
     }
 
-    const memoryUnit = memoryUsages[0].memoryUnit;
+    const { memoryUnit } = memoryUsages[0];
     const freeMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryFree, 0) / memoryUsages.length;
     const usedMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryUsed, 0) / memoryUsages.length;
 
