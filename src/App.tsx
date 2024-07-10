@@ -11,11 +11,12 @@ import StuckThreadsPage from './components/StuckThreads/StuckThreadsPage';
 import MonitorsPage from './components/Monitors/MonitorsPage';
 import FlameGraphPage from './components/FlameGraph/FlameGraphPage';
 import ThreadsOverviewPage from './components/ThreadsOverview/ThreadsOverviewPage';
+import Index from './components/Index/Index';
 
 const router = createHashRouter([
   {
     path: '/',
-    element: <FullPageDropzone />,
+    element: <Index />,
   },
   {
     path: ':threadDumpsHash/*',
