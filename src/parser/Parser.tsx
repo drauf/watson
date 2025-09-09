@@ -173,10 +173,13 @@ export default class Parser {
 
   private static groupCpuUsageWithThreadDump(threadDump: ThreadDump, cpuUsage: CpuUsage): void {
     if (cpuUsage.loadAverages !== undefined) {
+      // eslint-disable-next-line no-param-reassign
       threadDump.loadAverages = cpuUsage.loadAverages;
     }
+    // eslint-disable-next-line no-param-reassign
     threadDump.runningProcesses = cpuUsage.runningProcesses;
     if (cpuUsage.memoryUsage !== undefined) {
+      // eslint-disable-next-line no-param-reassign
       threadDump.memoryUsage = cpuUsage.memoryUsage;
     }
 

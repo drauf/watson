@@ -129,6 +129,7 @@ export default class ThreadDumpParser {
         }
         lock.addWaiting(thread);
 
+        // eslint-disable-next-line no-param-reassign
         thread.lockWaitingFor = lock;
         thread.locksHeld.splice(thread.locksHeld.indexOf(lock), 1);
         thread.classicalLocksHeld.splice(thread.classicalLocksHeld.indexOf(lock), 1);
