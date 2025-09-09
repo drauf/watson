@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class StuckThreadsGroup extends React.PureComponent<Props> {
-  public render(): JSX.Element | null {
+  public override render(): JSX.Element | null {
     const { threadGroup, maxDifferingLines } = this.props;
 
     if (threadGroup.length === 0) {

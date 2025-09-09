@@ -26,7 +26,7 @@ export default class GroupDetails extends React.PureComponent<Props> {
     return false;
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { maxDifferingLines, threadGroup } = this.props;
 
     return (

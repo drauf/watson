@@ -6,7 +6,7 @@ type Props = {
 };
 
 export default class StackTrace extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { stackTrace, linesToConsider } = this.props;
     const stack = linesToConsider > 0 ? stackTrace.slice(0, linesToConsider) : stackTrace;
 

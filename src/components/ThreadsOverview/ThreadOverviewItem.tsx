@@ -14,7 +14,7 @@ export default class ThreadOverviewItem extends React.PureComponent<Props> {
     return isMatchingStackFilter ? `${statusClass} matching` : statusClass;
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { thread, isMatchingStackFilter } = this.props;
 
     if (!thread) {

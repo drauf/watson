@@ -33,7 +33,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
     this.setState((prevState) => ({ expanded: !prevState.expanded }));
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { threadGroup, linesToConsider } = this.props;
     const { expanded } = this.state;
 

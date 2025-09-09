@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default class MonitorItem extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { monitor } = this.props;
     const javaClass = monitor.javaClass
       ? monitor.javaClass.substring(monitor.javaClass.lastIndexOf('.') + 1)

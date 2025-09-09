@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class CpuConsumersList extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { limit, dumpsNumber, consumers } = this.props;
 
     return (

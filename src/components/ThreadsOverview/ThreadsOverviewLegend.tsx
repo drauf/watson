@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class ThreadsOverviewLegend extends React.PureComponent {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     return (
       <table id="thread-overview-legend">
         <tbody>
