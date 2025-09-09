@@ -10,7 +10,7 @@ export default class ThreadsOverviewLegend extends React.PureComponent {
             <td className="blocked">Blocked</td>
             <td className="waiting">Waiting</td>
             <td className="timed-waiting">Timed waiting</td>
-            <td />
+            <td aria-hidden="true" />
             <td className="matching">Matching filter</td>
           </tr>
         </tbody>
