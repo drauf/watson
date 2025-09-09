@@ -19,7 +19,7 @@ export default class CollapsableGroup extends React.PureComponent<Props, State> 
     this.setState((prevState) => ({ collapse: !prevState.collapse }));
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { header, content } = this.props;
     const { collapse } = this.state;
 

@@ -25,7 +25,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
     return 'none';
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { thread } = this.props;
 
     if (!thread) {

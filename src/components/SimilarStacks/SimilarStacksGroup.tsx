@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class SimilarStacksGroup extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { threadGroup, linesToConsider } = this.props;
 
     const header = (

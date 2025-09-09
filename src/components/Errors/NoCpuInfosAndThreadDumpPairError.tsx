@@ -1,7 +1,11 @@
 import React from 'react';
 
-export default class NoCpuInfosAndThreadDumpPairError extends React.PureComponent {
-  public render(): JSX.Element {
+interface Props {
+  // This component doesn't receive any props
+}
+
+export default class NoCpuInfosAndThreadDumpPairError extends React.PureComponent<Props> {
+  public override render(): JSX.Element {
     return (
       <main id="centered">
         <h4>

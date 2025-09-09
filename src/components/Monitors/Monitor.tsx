@@ -16,7 +16,9 @@ export default class Monitor extends TypeWithUniqueId {
     super();
     this.time = ThreadDump.getFormattedTime(threadDump);
     this.javaClass = lock.className;
-    this.owner = lock.owner;
+    if (lock.owner !== undefined) {
+      this.owner = lock.owner;
+    }
     this.waiting = lock.waiting;
   }
 }

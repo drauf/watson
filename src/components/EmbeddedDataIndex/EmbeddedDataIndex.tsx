@@ -27,7 +27,7 @@ export default class EmbeddedDataIndex extends React.PureComponent<Props, State>
     };
   }
 
-  async componentDidMount(): Promise<void> {
+  override async componentDidMount(): Promise<void> {
     const { b64zip } = this.state;
     const zipBytes = atob(b64zip);
     const zipFile = new File([new Uint8Array(zipBytes.split('').map((c) => c.charCodeAt(0)))], 'embedded.zip');
@@ -52,7 +52,7 @@ export default class EmbeddedDataIndex extends React.PureComponent<Props, State>
     }));
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { parsedDataKey, hasCpuUsageInfo, loadingEmbeddedData } = this.state;
     if (loadingEmbeddedData) {
       return <h1>Loading...</h1>;

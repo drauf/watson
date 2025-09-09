@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default class SimilarStacksSettings extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const {
       linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange,
     } = this.props;

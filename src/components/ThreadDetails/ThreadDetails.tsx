@@ -34,7 +34,7 @@ const copyStyles = (sourceDoc: Document, targetDoc: Document): void => {
 export default class ThreadDetails extends React.PureComponent<Props> {
   private readonly windows: Set<Window> = new Set();
 
-  public componentWillUnmount() {
+  public override componentWillUnmount() {
     for (const window of this.windows) {
       window.close();
     }
@@ -62,7 +62,7 @@ export default class ThreadDetails extends React.PureComponent<Props> {
     this.openNewWindow();
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { text, className } = this.props;
 
     return (

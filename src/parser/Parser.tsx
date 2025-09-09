@@ -172,9 +172,13 @@ export default class Parser {
   }
 
   private static groupCpuUsageWithThreadDump(threadDump: ThreadDump, cpuUsage: CpuUsage): void {
-    threadDump.loadAverages = cpuUsage.loadAverages;
+    if (cpuUsage.loadAverages !== undefined) {
+      threadDump.loadAverages = cpuUsage.loadAverages;
+    }
     threadDump.runningProcesses = cpuUsage.runningProcesses;
-    threadDump.memoryUsage = cpuUsage.memoryUsage;
+    if (cpuUsage.memoryUsage !== undefined) {
+      threadDump.memoryUsage = cpuUsage.memoryUsage;
+    }
 
     cpuUsage.getThreadCpuUsages().forEach((cpu) => {
       const thread = Parser.findThreadWithId(threadDump, cpu.id);

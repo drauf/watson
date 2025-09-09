@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class MonitorsSettings extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const {
       withOwner, withoutIdle, withoutOwner, onFilterChange,
     } = this.props;

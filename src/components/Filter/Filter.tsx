@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class Filter extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const {
       name, displayName, checked, onChange,
     } = this.props;

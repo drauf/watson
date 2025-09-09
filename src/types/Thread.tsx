@@ -31,6 +31,8 @@ export default class Thread extends TypeWithUniqueId {
     super();
     this.id = id;
     this.name = name;
-    this.epoch = epoch;
+    if (epoch !== undefined) {
+      this.epoch = epoch;
+    }
   }
 }

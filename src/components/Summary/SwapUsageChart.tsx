@@ -13,12 +13,12 @@ type Props = {
 };
 
 export default class SwapUsageChart extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { threadDumps } = this.props;
 
     const memoryUsages: MemoryUsage[] = threadDumps
       .map((threadDump) => threadDump.memoryUsage)
-      .filter((memoryUsage) => memoryUsage !== undefined) as MemoryUsage[];
+      .filter((memoryUsage) => memoryUsage !== undefined);
 
     if (memoryUsages.length === 0) {
       return (

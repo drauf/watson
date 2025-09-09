@@ -19,7 +19,7 @@ const StyledNavLink: React.FC<LinkProps> = (props: LinkProps) => {
 };
 
 const Navigation: React.FC = () => {
-  const hash = useParams().threadDumpsHash;
+  const hash = useParams()['threadDumpsHash'];
   if (hash === undefined) {
     throw new Error('threadDumpsHash is undefined');
   }

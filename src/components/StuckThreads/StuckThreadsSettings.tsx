@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default class StuckThreadsSettings extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const {
       maxDifferingLines, minClusterSize, withoutIdle, onFilterChange, onIntegerChange,
     } = this.props;

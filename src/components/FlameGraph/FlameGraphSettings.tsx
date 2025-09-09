@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default class FlameGraphSettings extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const {
       withoutIdle, onFilterChange,
     } = this.props;

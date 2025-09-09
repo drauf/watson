@@ -41,9 +41,13 @@ export default class CpuUsage {
 
   private constructor(epoch: number, runningProcesses: number, threadCpuUsages: ThreadCpuUsage[], loadAverages?: LoadAverages, memoryUsage?: MemoryUsage) {
     this.epoch = epoch;
-    this.loadAverages = loadAverages;
+    if (loadAverages !== undefined) {
+      this.loadAverages = loadAverages;
+    }
     this.runningProcesses = runningProcesses;
-    this.memoryUsage = memoryUsage;
+    if (memoryUsage !== undefined) {
+      this.memoryUsage = memoryUsage;
+    }
     this.threadCpuUsages = threadCpuUsages;
   }
 

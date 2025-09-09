@@ -10,7 +10,9 @@ export default class ThreadCpuUsage {
   constructor(id: number, runningFor: string, cpuUserMode: number, cpuSystemMode?: number) {
     this.id = id;
     this.cpuUserMode = cpuUserMode;
-    this.cpuSystemMode = cpuSystemMode;
+    if (cpuSystemMode !== undefined) {
+      this.cpuSystemMode = cpuSystemMode;
+    }
     this.runningFor = runningFor;
   }
 

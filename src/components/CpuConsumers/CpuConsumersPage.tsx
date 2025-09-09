@@ -30,7 +30,7 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
     };
   }
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const consumers = this.calculateCpuUsages(this.state.mode);
 
     if (!this.state.threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage !== '0.00'))) {

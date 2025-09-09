@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class SingleThreadDetails extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { thread, maxDifferingLines, showStackTrace } = this.props;
     const stack = thread.stackTrace.slice(0, Math.max(maxDifferingLines, 10));
 

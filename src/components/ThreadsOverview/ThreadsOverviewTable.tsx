@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class ThreadsOverview extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { dates, threadDumps, matchingStackFilter } = this.props;
 
     return (

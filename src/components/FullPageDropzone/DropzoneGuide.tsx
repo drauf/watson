@@ -1,7 +1,11 @@
 import React from 'react';
 import OutboundLink from './OutboundLink';
 
-export default class DropzoneGuide extends React.PureComponent {
+interface Props {
+  // This component doesn't receive any props
+}
+
+export default class DropzoneGuide extends React.PureComponent<Props> {
   private static SUPPORT_ZIP_GUIDE_LINK = 'https://confluence.atlassian.com/support/create-a-support-zip-790796819.html';
 
   private static GATHER_DATA_LINK = 'https://bitbucket.org/atlassianlabs/atlassian-support/src/master/';
@@ -17,7 +21,7 @@ export default class DropzoneGuide extends React.PureComponent {
     event.stopPropagation();
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
       <div

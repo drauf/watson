@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class ThreadOverviewRow extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { total, threads, matchingStackFilter } = this.props;
 
     const threadsPadded: Array<Thread | undefined> = [];

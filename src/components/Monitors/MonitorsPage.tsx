@@ -16,13 +16,13 @@ type State = {
 };
 
 class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
-  public state: State = {
+  public override state: State = {
     withOwner: false,
     withoutIdle: true,
     withoutOwner: false,
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const monitors = MonitorsPage.getMonitorsOverTime(this.props.threadDumps);
     const filtered = this.filterMonitors(monitors);
 

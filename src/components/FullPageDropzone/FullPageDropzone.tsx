@@ -7,13 +7,17 @@ import ThreadDump from '../../types/ThreadDump';
 import DropzoneGuide from './DropzoneGuide';
 import './FullPageDropzone.css';
 
+interface Props {
+  // This component doesn't receive any props
+}
+
 type State = {
   parsedDataKey: string | undefined;
   hasCpuUsageInfo: boolean;
 };
 
-export default class FullPageDropzone extends React.PureComponent<unknown, State> {
-  constructor(props: unknown) {
+export default class FullPageDropzone extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       parsedDataKey: undefined,
@@ -31,7 +35,7 @@ export default class FullPageDropzone extends React.PureComponent<unknown, State
     this.setState({ parsedDataKey: key, hasCpuUsageInfo: threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage !== '0.00')) });
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { parsedDataKey, hasCpuUsageInfo } = this.state;
 
     if (parsedDataKey) {

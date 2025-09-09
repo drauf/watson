@@ -12,7 +12,9 @@ export default class Lock {
   constructor(id: string, className: string, owner?: Thread) {
     this.id = Lock.parseId(id);
     this.className = className;
-    this.owner = owner;
+    if (owner !== undefined) {
+      this.owner = owner;
+    }
   }
 
   public hasId(id: string): boolean {
