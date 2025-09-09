@@ -42,7 +42,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-yarn-
 
-    - run: yarn install --immutable
+    - run: YARN_ENABLE_HARDENED_MODE=0 yarn install --immutable
     - run: yarn lint
     - run: yarn test
 
