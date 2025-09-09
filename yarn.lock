@@ -823,6 +823,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rolldown/pluginutils@npm:1.0.0-beta.27":
+  version: 1.0.0-beta.27
+  resolution: "@rolldown/pluginutils@npm:1.0.0-beta.27::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40rolldown%2Fpluginutils%2F-%2Fpluginutils-1.0.0-beta.27.tgz"
+  checksum: 10c0/9658f235b345201d4f6bfb1f32da9754ca164f892d1cb68154fe5f53c1df42bd675ecd409836dff46884a7847d6c00bdc38af870f7c81e05bba5c2645eb4ab9c
+  languageName: node
+  linkType: hard
+
 "@rollup/rollup-android-arm-eabi@npm:4.50.1":
   version: 4.50.1
   resolution: "@rollup/rollup-android-arm-eabi@npm:4.50.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40rollup%2Frollup-android-arm-eabi%2F-%2Frollup-android-arm-eabi-4.50.1.tgz"
@@ -1047,7 +1054,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.3.61":
+"@swc/core@npm:^1.12.11":
   version: 1.13.5
   resolution: "@swc/core@npm:1.13.5::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40swc%2Fcore%2F-%2Fcore-1.13.5.tgz"
   dependencies:
@@ -1530,6 +1537,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/prop-types@npm:*":
+  version: 15.7.15
+  resolution: "@types/prop-types@npm:15.7.15::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40types%2Fprop-types%2F-%2Fprop-types-15.7.15.tgz"
+  checksum: 10c0/b59aad1ad19bf1733cf524fd4e618196c6c7690f48ee70a327eb450a42aab8e8a063fbe59ca0a5701aebe2d92d582292c0fb845ea57474f6a15f6994b0e260b2
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:18.2.7":
   version: 18.2.7
   resolution: "@types/react-dom@npm:18.2.7::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40types%2Freact-dom%2F-%2Freact-dom-18.2.7.tgz"
@@ -1575,6 +1589,16 @@ __metadata:
   dependencies:
     csstype: "npm:^3.0.2"
   checksum: 10c0/e35912b43da0caaab5252444bab87a31ca22950cde2822b3b3dc32e39c2d42dad1a4cf7b5dde9783aa2d007f0b2cba6ab9563fc6d2dbcaaa833b35178118767c
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:18.3.12":
+  version: 18.3.12
+  resolution: "@types/react@npm:18.3.12::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40types%2Freact%2F-%2Freact-18.3.12.tgz"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 10c0/8bae8d9a41619804561574792e29112b413044eb0d53746dde2b9720c1f9a59f71c895bbd7987cd8ce9500b00786e53bc032dced38cddf42910458e145675290
   languageName: node
   linkType: hard
 
@@ -1749,14 +1773,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react-swc@npm:3.3.2":
-  version: 3.3.2
-  resolution: "@vitejs/plugin-react-swc@npm:3.3.2::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40vitejs%2Fplugin-react-swc%2F-%2Fplugin-react-swc-3.3.2.tgz"
+"@vitejs/plugin-react-swc@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@vitejs/plugin-react-swc@npm:3.11.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40vitejs%2Fplugin-react-swc%2F-%2Fplugin-react-swc-3.11.0.tgz"
   dependencies:
-    "@swc/core": "npm:^1.3.61"
+    "@rolldown/pluginutils": "npm:1.0.0-beta.27"
+    "@swc/core": "npm:^1.12.11"
   peerDependencies:
-    vite: ^4
-  checksum: 10c0/8544023de3dc605d00f66db10de085b2a90887111657db87dd192e02ffc1e4a191b09d58180b4ba498858f01e8861d15e216d744e0f6dfad2550065999890fb2
+    vite: ^4 || ^5 || ^6 || ^7
+  checksum: 10c0/0d12ee81f8c8acb74b35e7acfc45d23ecc2714ab3a0f6060e4bd900a6a739dd5a9be9c6bc842388f3c406f475f2a83e7ff3ade04ec6df9172faa1242e4faa424
   languageName: node
   linkType: hard
 
@@ -6742,7 +6767,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-gyp@npm:latest":
+"node-gyp@npm:11.4.2, node-gyp@npm:latest":
   version: 11.4.2
   resolution: "node-gyp@npm:11.4.2::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fnode-gyp%2F-%2Fnode-gyp-11.4.2.tgz"
   dependencies:
@@ -8169,21 +8194,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.27.1":
-  version: 3.29.5
-  resolution: "rollup@npm:3.29.5::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Frollup%2F-%2Frollup-3.29.5.tgz"
-  dependencies:
-    fsevents: "npm:~2.3.2"
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    rollup: dist/bin/rollup
-  checksum: 10c0/a1fa26f21f0d6cf93b6d05ea284ad5854905b585f28a14c27d439b0f9b859cba13ea25f376303d86770e59b4686bedc52b4706e57442514f0414c6fd3c5b8e71
-  languageName: node
-  linkType: hard
-
-"rollup@npm:^4.13.0":
+"rollup@npm:4.50.1, rollup@npm:^4.13.0":
   version: 4.50.1
   resolution: "rollup@npm:4.50.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Frollup%2F-%2Frollup-4.50.1.tgz"
   dependencies:
@@ -8258,6 +8269,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 10c0/2029282826d5fb4e308be261b2c28329a4d2bd34304cc3960da69fd21d5acccd0267d6770b1656ffc8f166203ef7e865b4583d5f842a519c8ef059ac71854205
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^3.27.1":
+  version: 3.29.5
+  resolution: "rollup@npm:3.29.5::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Frollup%2F-%2Frollup-3.29.5.tgz"
+  dependencies:
+    fsevents: "npm:~2.3.2"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 10c0/a1fa26f21f0d6cf93b6d05ea284ad5854905b585f28a14c27d439b0f9b859cba13ea25f376303d86770e59b4686bedc52b4706e57442514f0414c6fd3c5b8e71
   languageName: node
   linkType: hard
 
@@ -10018,12 +10043,13 @@ __metadata:
     "@testing-library/react": "npm:14.0.0"
     "@types/d3": "npm:7.4.0"
     "@types/node": "npm:20.5.1"
+    "@types/react": "npm:18.3.12"
     "@types/react-dom": "npm:18.2.7"
     "@types/react-router-dom": "npm:5.3.3"
     "@types/spark-md5": "npm:3.0.2"
     "@typescript-eslint/eslint-plugin": "npm:6.4.0"
     "@typescript-eslint/parser": "npm:6.4.0"
-    "@vitejs/plugin-react-swc": "npm:3.3.2"
+    "@vitejs/plugin-react-swc": "npm:3.11.0"
     "@vitest/coverage-v8": "npm:0.34.2"
     browserslist: "npm:4.21.10"
     d3: "npm:7.8.5"
@@ -10039,6 +10065,7 @@ __metadata:
     jsdom: "npm:22.1.0"
     jszip: "npm:3.10.1"
     localforage: "npm:1.10.0"
+    node-gyp: "npm:11.4.2"
     prop-types: "npm:15.8.1"
     react: "npm:18.2.0"
     react-app-polyfill: "npm:3.0.0"
@@ -10046,6 +10073,7 @@ __metadata:
     react-dropzone: "npm:14.2.3"
     react-router-dom: "npm:6.15.0"
     recharts: "npm:2.7.3"
+    rollup: "npm:4.50.1"
     spark-md5: "npm:3.0.2"
     stylelint: "npm:15.10.3"
     stylelint-config-rational-order: "npm:0.1.2"
