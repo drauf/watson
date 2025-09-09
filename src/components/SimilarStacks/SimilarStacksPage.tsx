@@ -15,13 +15,13 @@ type State = {
 };
 
 class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
-  public state: State = {
+  public override state: State = {
     linesToConsider: 40,
     minimalGroupSize: 2,
     withoutIdle: true,
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider)
       .filter((group) => group.length >= this.state.minimalGroupSize);
 

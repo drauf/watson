@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class CpuConsumersSettings extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const {
       mode, limit, onModeChange, onLimitChange,
     } = this.props;

@@ -6,7 +6,7 @@ type Props = {
 };
 
 export default class OutboundLink extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { to, children } = this.props;
 
     return (

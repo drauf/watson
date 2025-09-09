@@ -22,7 +22,7 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
     return '';
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { dumpsNumber, consumer } = this.props;
 
     const threadsPadded: Array<Thread | undefined> = [];

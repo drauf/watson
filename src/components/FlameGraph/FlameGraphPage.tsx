@@ -75,7 +75,7 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     return threads;
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { threadDumps } = this.props;
     if (!threadDumps.some((dump) => dump.threads.length > 0)) {
       return <NoThreadDumpsError />;

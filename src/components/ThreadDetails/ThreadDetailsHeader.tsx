@@ -59,7 +59,7 @@ export default class ThreadDetailsHeader extends React.PureComponent<Props> {
     </div>
   );
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { thread } = this.props;
 
     return (

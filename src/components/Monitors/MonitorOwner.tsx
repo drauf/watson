@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default class MonitorOwner extends React.PureComponent<Props> {
-  public render(): JSX.Element | null {
+  public override render(): JSX.Element | null {
     const { monitor } = this.props;
 
     if (!monitor.owner) {

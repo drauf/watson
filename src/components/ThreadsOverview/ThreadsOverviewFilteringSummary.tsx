@@ -50,7 +50,7 @@ export default class ThreadsOverviewFilteringSummary extends React.PureComponent
     );
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const {
       isFilteredByStack, threadsNumber, threadDumps, matchingStackFilter,
     } = this.props;

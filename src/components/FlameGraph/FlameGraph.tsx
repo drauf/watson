@@ -21,11 +21,11 @@ type Props = {
 };
 
 export default class FlameGraph extends React.PureComponent<Props> {
-  public componentDidMount(): void {
+  public override componentDidMount(): void {
     this.renderChart();
   }
 
-  public componentDidUpdate(): void {
+  public override componentDidUpdate(): void {
     this.renderChart();
   }
 
@@ -45,7 +45,7 @@ export default class FlameGraph extends React.PureComponent<Props> {
       .call(chart);
   };
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     return <section id="flame-graph" />;
   }
 }

@@ -23,7 +23,7 @@ type State = {
 };
 
 class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
-  public state = {
+  public override state = {
     active: true,
     nonJvm: true,
     tomcat: false,
@@ -43,7 +43,7 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
 
   private luceneRegex = /^org\.apache\.lucene\./;
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
     const threadOverTime = getThreadsOverTime(nonEmptyThreadDumps);
     const filteredDumps = this.filterThreads(threadOverTime);

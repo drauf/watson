@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default class LoadAveragesChart extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const { threadDumps } = this.props;
 
     // eslint-disable-next-line @typescript-eslint/ban-types

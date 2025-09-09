@@ -31,7 +31,7 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     };
   }
 
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const threadOverTime = getThreadsOverTime(this.state.threadDumps);
     const filtered = this.filterThreads(threadOverTime);
     const clusters = this.buildClusters(filtered);

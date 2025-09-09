@@ -16,7 +16,7 @@ type Props = {
 };
 
 export default class ThreadsOverviewSettings extends React.PureComponent<Props> {
-  public render(): JSX.Element {
+  public override render(): JSX.Element {
     const {
       active,
       nonJvm,
