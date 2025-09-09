@@ -18,7 +18,7 @@ export default class ThreadOverviewItem extends React.PureComponent<Props> {
     const { thread, isMatchingStackFilter } = this.props;
 
     if (!thread) {
-      return <td className="unknown" />;
+      return <td className="unknown" aria-label="Unknown thread" />;
     }
 
     const className = ThreadOverviewItem.getClassName(isMatchingStackFilter, thread.status);
