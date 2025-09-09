@@ -1,4 +1,4 @@
-import Thread from './Thread';
+import type Thread from './Thread';
 
 export default class Lock {
   public readonly id: string;

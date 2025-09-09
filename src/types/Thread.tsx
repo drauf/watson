@@ -1,4 +1,4 @@
-import Lock from './Lock';
+import type Lock from './Lock';
 import ThreadStatus from './ThreadStatus';
 import TypeWithUniqueId from './TypeWithUniqueId';
 

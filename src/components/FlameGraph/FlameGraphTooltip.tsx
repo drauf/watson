@@ -1,6 +1,6 @@
 // @ts-expect-error: the library exports this file but does not have types for it
 import { defaultFlamegraphTooltip } from 'd3-flame-graph';
-import { Node } from './FlameGraph';
+import type { Node } from './FlameGraph';
 
 const topParent = (node: Node): Node => {
   let result = node;

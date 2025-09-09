@@ -26,7 +26,6 @@
   "rules": {
     "max-len": "off",
     // Switch non-trivial errors to warnings
-    "import/no-cycle": "warn",
     "no-param-reassign": "warn",
     // Suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
