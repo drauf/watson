@@ -23,45 +23,45 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
-      
+      uses: actions/checkout@v4
+
     - name: Setup Node 20
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '20'
-        
+
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-  
-    - uses: actions/cache@v3
+
+    - uses: actions/cache@v4
       id: yarn-cache
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
-        
-    - run: yarn install --frozen-lockfile --immutable    
+
+    - run: yarn install --frozen-lockfile --immutable
     - run: yarn lint
     - run: yarn test
-    
+
     - name: Install Playwright browsers
       run: yarn playwright install --with-deps
     - name: Run Playwright tests
       run: HOME=/root yarn playwright test
     - name: Upload Playwright report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
-        
+
     - name: Build static page for deployment
       run: yarn predeploy
     - name: Upload artifact for deployment
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@v3
       with:
         path: ./dist
 
@@ -69,18 +69,18 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      
+
     # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
     # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
     concurrency:
       group: 'pages'
       cancel-in-progress: false
-      
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
