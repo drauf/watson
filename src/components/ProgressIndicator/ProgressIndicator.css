@@ -24,10 +24,6 @@
   height: 40px;
 }
 
-.progress-header h4 {
-  /*margin-top: 0;*/
-}
-
 .progress-percentage {
   min-width: 42px;
   color: var(--color-b400);

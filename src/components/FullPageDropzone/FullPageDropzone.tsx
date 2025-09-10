@@ -92,16 +92,28 @@ export default class FullPageDropzone extends React.PureComponent<Props, State> 
     // Show error if parsing failed
     if (error) {
       return (
-        <div className="error-container">
-          <h3>Error Processing Files</h3>
-          <p>{error}</p>
-          <button
-            type="button"
-            onClick={() => this.setState({ error: undefined })}
-            className="retry-button"
-          >
-            Try Again
-          </button>
+        <div id="error-container">
+          <div className="error-indicator">
+            <div className="error-header">
+              <h4>Error processing files</h4>
+            </div>
+
+            <div className="error-details">
+              <div className="error-message" title={error}>
+                {error}
+              </div>
+            </div>
+
+            <div className="error-actions">
+              <button
+                type="button"
+                onClick={() => this.setState({ error: undefined })}
+                className="retry-button"
+              >
+                Try again
+              </button>
+            </div>
+          </div>
         </div>
       );
     }
