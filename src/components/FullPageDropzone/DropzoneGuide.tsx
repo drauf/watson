@@ -42,11 +42,29 @@ export default class DropzoneGuide extends React.PureComponent<Props> {
           stay right where they belong - on your machine.
         </h5>
 
-        <hr />
-
         <p>
-          To get the most out of Watson, capture Java thread dumps and top
-          outputs. Two ways to do this:
+          To learn more or contribute, visit our
+          {' '}
+          <OutboundLink to={DropzoneGuide.SOURCE_CODE_LINK}>
+            GitHub repo
+          </OutboundLink>
+          .
+          {' '}
+          <strong>
+            See screenshots of Watson
+            {' '}
+            <OutboundLink to={DropzoneGuide.SCREENSHOTS_LINK}>
+              here
+            </OutboundLink>
+          </strong>
+          .
+        </p>
+
+        <div>
+          <p>
+            To get the most out of Watson, capture Java thread dumps and top
+            outputs. Two ways to do this:
+          </p>
           <ul>
             <li>
               <OutboundLink to={DropzoneGuide.SUPPORT_ZIP_GUIDE_LINK}>
@@ -65,27 +83,7 @@ export default class DropzoneGuide extends React.PureComponent<Props> {
               .
             </li>
           </ul>
-        </p>
-
-        <hr />
-
-        <p>
-          To learn more or contribute, visit our
-          {' '}
-          <OutboundLink to={DropzoneGuide.SOURCE_CODE_LINK}>
-            GitHub repo
-          </OutboundLink>
-          .
-          {' '}
-          <strong>
-            See screenshots of Watson
-            {' '}
-            <OutboundLink to={DropzoneGuide.SCREENSHOTS_LINK}>
-              here
-            </OutboundLink>
-          </strong>
-          .
-        </p>
+        </div>
 
         <p>
           For any assistance,

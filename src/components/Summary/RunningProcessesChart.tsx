@@ -94,6 +94,7 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
             name="Chart data"
             dataKey="runningProcesses"
             stroke="#36B37E"
+            animationDuration={1000}
           />
           <Line
             name="Tooltip data"

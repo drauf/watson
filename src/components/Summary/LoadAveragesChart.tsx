@@ -44,9 +44,9 @@ export default class LoadAveragesChart extends React.PureComponent<Props> {
             <CartesianGrid stroke="#DFE1E5" strokeDasharray="5 5" />
             <Tooltip />
             <Legend />
-            <Line name="One minute" dataKey="oneMinute" stroke="#36B37E" />
-            <Line name="Five minutes" dataKey="fiveMinutes" stroke="#FFAB00" />
-            <Line name="Fifteen minutes" dataKey="fifteenMinutes" stroke="#6554C0" />
+            <Line name="One minute" dataKey="oneMinute" stroke="#36B37E" animationDuration={1000} />
+            <Line name="Five minutes" dataKey="fiveMinutes" stroke="#FFAB00" animationDuration={1000} />
+            <Line name="Fifteen minutes" dataKey="fifteenMinutes" stroke="#6554C0" animationDuration={1000} />
           </LineChart>
         </ResponsiveContainer>
       </div>
