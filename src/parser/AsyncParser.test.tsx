@@ -105,8 +105,12 @@ describe('AsyncParser', () => {
       const threadDumpContent = '2023-01-01 12:00:00\n"Thread-1" #1 prio=5 tid=0x1 nid=0x1';
       const file = createMockFile('test.txt', threadDumpContent);
 
-      // Mock the AsyncThreadDumpParser to return a thread dump
+      // Mock the AsyncThreadDumpParser to return a thread dump with threads
       const mockThreadDump = new ThreadDump(Date.parse('2023-01-01 12:00:00'));
+      // Add a mock thread so the thread dump isn't filtered out
+      const mockThread = { id: 1, name: 'Thread-1' } as any;
+      mockThreadDump.threads.push(mockThread);
+      
       const AsyncThreadDumpParser = await import('./AsyncThreadDumpParser');
       (AsyncThreadDumpParser.default.parseThreadDump as any).mockImplementation(
         (_lines: string[], callback: any) => {

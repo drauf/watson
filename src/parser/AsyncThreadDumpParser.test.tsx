@@ -119,7 +119,9 @@ describe('AsyncThreadDumpParser', () => {
 
       // Check that progress was reported with line counts
       const lastCall = mockProgressCallback.mock.calls[mockProgressCallback.mock.calls.length - 1];
-      expect(lastCall[1]).toBe(lines.length - 1); // Total lines to process (excluding date line)
+      // After the date line is removed with shift(), the remaining lines length is what gets reported
+      // Original: ['date', 'line1', 'line2', 'line3'] -> after shift: ['line1', 'line2', 'line3'] (length = 3)
+      expect(lastCall[1]).toBe(3); // Total lines to process after date line removal
     });
 
     it('should handle thread with locks', async () => {

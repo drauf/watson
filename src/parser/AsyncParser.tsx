@@ -79,14 +79,15 @@ export default class AsyncParser {
       await this.parseFile(file);
       this.filesProcessed++;
 
-      this.reportProgress('parsing', 0, 0);
+      // eslint-disable-next-line no-await-in-loop
+      await this.reportProgressAndRefreshUi('parsing', 0, 0);
     }
 
-    this.reportProgress('grouping', 0, 0);
+    await this.reportProgressAndRefreshUi('grouping', 0, 0);
     this.groupCpuUsagesWithThreadDumpsAsync();
     this.sortThreadDumps();
 
-    this.reportProgress('complete', 0, 0);
+    await this.reportProgressAndRefreshUi('complete', 0, 0);
     this.onFilesParsed(this.threadDumps);
   }
 
@@ -96,7 +97,7 @@ export default class AsyncParser {
 
       reader.onload = async () => {
         try {
-          this.reportProgress('reading', 0, 0);
+          await this.reportProgressAndRefreshUi('reading', 0, 0);
 
           const content = reader.result as string;
           const lines: string[] = content.split('\n');
@@ -171,9 +172,9 @@ export default class AsyncParser {
     await AsyncThreadDumpParser.parseThreadDump(
       lines.slice(),
       this.onParsedThreadDump,
-      (processed, total) => {
+      async (processed, total) => {
         // Update progress for line processing within this thread dump
-        this.reportProgress('parsing', processed, total);
+        await this.reportProgressAndRefreshUi('parsing', processed, total);
       },
       this.config,
     );
@@ -267,7 +268,7 @@ export default class AsyncParser {
     return threadDump.threads.find((thread) => thread.id === id);
   }
 
-  private reportProgress(phase: ParseProgress['phase'], linesProcessed: number, totalLines: number): void {
+  private async reportProgressAndRefreshUi(phase: ParseProgress['phase'], linesProcessed: number, totalLines: number): Promise<void> {
     if (!this.onProgress) return;
 
     const fileProgress = (this.filesProcessed / this.filesToParse) * 100;
@@ -291,6 +292,15 @@ export default class AsyncParser {
       linesProcessed,
       totalLines,
       percentage: Math.min(100, Math.max(0, percentage)),
+    });
+
+    // Allow UI to update
+    await AsyncParser.delay(0);
+  }
+
+  private static delay(ms: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
     });
   }
 }

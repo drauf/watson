@@ -17,7 +17,7 @@ const SYNCHRONIZATION_STATUS_PATTERN = /^\s+- (.*?) +<([x0-9a-f]+)> \(a (.*)\)/;
 const HELD_LOCK_PATTERN = /^\s+- <([x0-9a-f]+)> \(a (.*)\)/;
 
 export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
-export type ProgressCallback = (processed: number, total: number) => void;
+export type ProgressCallback = (processed: number, total: number) => Promise<void>;
 
 export default class AsyncThreadDumpParser {
   public static async parseThreadDump(
@@ -38,12 +38,10 @@ export default class AsyncThreadDumpParser {
         currentThread = AsyncThreadDumpParser.parseLine(line, threadDump, currentThread);
       }
 
-      // Report progress and yield control to the browser
       if (progressCallback) {
-        progressCallback(Math.min(i + config.threadDumpChunkSize, lines.length), lines.length);
+        // eslint-disable-next-line no-await-in-loop
+        await progressCallback(Math.min(i + config.threadDumpChunkSize, lines.length), lines.length);
       }
-      // eslint-disable-next-line no-await-in-loop
-      await AsyncThreadDumpParser.delay(config.threadDumpProcessingDelay);
     }
 
     AsyncThreadDumpParser.identifyAnonymousSynchronizers(threadDump.threads);
@@ -191,11 +189,5 @@ export default class AsyncThreadDumpParser {
     const newLock: Lock = new Lock(id, className, owner);
     locks.push(newLock);
     return newLock;
-  }
-
-  private static delay(ms: number): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
   }
 }
