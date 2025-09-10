@@ -6,6 +6,7 @@ import AsyncParser, { ParseProgress } from '../../parser/AsyncParser';
 import ThreadDump from '../../types/ThreadDump';
 import DropzoneGuide from './DropzoneGuide';
 import ProgressIndicator from '../ProgressIndicator/ProgressIndicator';
+import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import './FullPageDropzone.css';
 
 interface Props {
@@ -92,29 +93,11 @@ export default class FullPageDropzone extends React.PureComponent<Props, State> 
     // Show error if parsing failed
     if (error) {
       return (
-        <div id="error-container">
-          <div className="error-indicator">
-            <div className="error-header">
-              <h4>Error processing files</h4>
-            </div>
-
-            <div className="error-details">
-              <div className="error-message" title={error}>
-                {error}
-              </div>
-            </div>
-
-            <div className="error-actions">
-              <button
-                type="button"
-                onClick={() => this.setState({ error: undefined })}
-                className="retry-button"
-              >
-                Try again
-              </button>
-            </div>
-          </div>
-        </div>
+        <ErrorIndicator
+          title="Error processing files"
+          message={error}
+          onRetry={() => this.setState({ error: undefined })}
+        />
       );
     }
 
