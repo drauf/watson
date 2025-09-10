@@ -2,38 +2,38 @@
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
-import ErrorIndicator from './ErrorIndicator';
+import FullPageError from './FullPageError';
 
-describe('ErrorIndicator', () => {
+describe('FullPageError', () => {
   const defaultProps = {
-    title: 'Test Error',
+    title: 'Test error',
     message: 'Something went wrong',
   };
 
   describe('rendering', () => {
     it('renders error container', () => {
-      const { container } = render(<ErrorIndicator {...defaultProps} />);
+      const { container } = render(<FullPageError {...defaultProps} />);
       expect(container.querySelector('#error-container')).toBeInTheDocument();
     });
 
     it('displays the error title', () => {
-      render(<ErrorIndicator {...defaultProps} />);
-      expect(screen.getByRole('heading', { level: 4 })).toHaveTextContent('Test Error');
+      render(<FullPageError {...defaultProps} />);
+      expect(screen.getByRole('heading', { level: 4 })).toHaveTextContent('Test error');
     });
 
     it('displays the error message', () => {
-      render(<ErrorIndicator {...defaultProps} />);
+      render(<FullPageError {...defaultProps} />);
       expect(screen.getByText('Something went wrong')).toBeInTheDocument();
     });
 
     it('adds title attribute to error message for accessibility', () => {
-      render(<ErrorIndicator {...defaultProps} />);
+      render(<FullPageError {...defaultProps} />);
       const messageElement = screen.getByText('Something went wrong');
       expect(messageElement).toHaveAttribute('title', 'Something went wrong');
     });
 
     it('applies correct CSS classes', () => {
-      const { container } = render(<ErrorIndicator {...defaultProps} />);
+      const { container } = render(<FullPageError {...defaultProps} />);
 
       expect(container.querySelector('.error-indicator')).toBeInTheDocument();
       expect(container.querySelector('.error-header')).toBeInTheDocument();
@@ -45,20 +45,20 @@ describe('ErrorIndicator', () => {
   describe('retry functionality', () => {
     it('shows retry button when onRetry prop is provided', () => {
       const onRetry = vi.fn();
-      render(<ErrorIndicator {...defaultProps} onRetry={onRetry} />);
+      render(<FullPageError {...defaultProps} onRetry={onRetry} />);
 
       expect(screen.getByRole('button', { name: 'Try again' })).toBeInTheDocument();
     });
 
     it('does not show retry button when onRetry prop is not provided', () => {
-      render(<ErrorIndicator {...defaultProps} />);
+      render(<FullPageError {...defaultProps} />);
 
       expect(screen.queryByRole('button')).not.toBeInTheDocument();
     });
 
     it('calls onRetry when retry button is clicked', () => {
       const onRetry = vi.fn();
-      render(<ErrorIndicator {...defaultProps} onRetry={onRetry} />);
+      render(<FullPageError {...defaultProps} onRetry={onRetry} />);
 
       const retryButton = screen.getByRole('button', { name: 'Try again' });
       fireEvent.click(retryButton);
@@ -69,7 +69,7 @@ describe('ErrorIndicator', () => {
     it('uses custom retry button text when provided', () => {
       const onRetry = vi.fn();
       render(
-        <ErrorIndicator
+        <FullPageError
           {...defaultProps}
           onRetry={onRetry}
           retryButtonText="Retry Upload"
@@ -82,7 +82,7 @@ describe('ErrorIndicator', () => {
 
     it('applies correct CSS classes to retry elements', () => {
       const onRetry = vi.fn();
-      const { container } = render(<ErrorIndicator {...defaultProps} onRetry={onRetry} />);
+      const { container } = render(<FullPageError {...defaultProps} onRetry={onRetry} />);
 
       expect(container.querySelector('.error-actions')).toBeInTheDocument();
       expect(container.querySelector('.retry-button')).toBeInTheDocument();
@@ -91,15 +91,15 @@ describe('ErrorIndicator', () => {
 
   describe('accessibility', () => {
     it('has proper heading structure', () => {
-      render(<ErrorIndicator {...defaultProps} />);
+      render(<FullPageError {...defaultProps} />);
 
       const heading = screen.getByRole('heading', { level: 4 });
-      expect(heading).toHaveTextContent('Test Error');
+      expect(heading).toHaveTextContent('Test error');
     });
 
     it('has accessible button when retry is available', () => {
       const onRetry = vi.fn();
-      render(<ErrorIndicator {...defaultProps} onRetry={onRetry} />);
+      render(<FullPageError {...defaultProps} onRetry={onRetry} />);
 
       const button = screen.getByRole('button');
       expect(button).toHaveAttribute('type', 'button');
@@ -108,7 +108,7 @@ describe('ErrorIndicator', () => {
 
     it('provides tooltip for long error messages', () => {
       const longMessage = 'This is a very long error message that might be truncated in the UI but should be fully available in the title attribute for accessibility';
-      render(<ErrorIndicator {...defaultProps} message={longMessage} />);
+      render(<FullPageError {...defaultProps} message={longMessage} />);
 
       const messageElement = screen.getByText(longMessage);
       expect(messageElement).toHaveAttribute('title', longMessage);
@@ -117,14 +117,14 @@ describe('ErrorIndicator', () => {
 
   describe('edge cases', () => {
     it('handles empty title', () => {
-      render(<ErrorIndicator {...defaultProps} title="" />);
+      render(<FullPageError {...defaultProps} title="" />);
 
       const heading = screen.getByRole('heading', { level: 4 });
       expect(heading).toHaveTextContent('');
     });
 
     it('handles empty message', () => {
-      const { container } = render(<ErrorIndicator {...defaultProps} message="" />);
+      const { container } = render(<FullPageError {...defaultProps} message="" />);
 
       const messageElement = container.querySelector('.error-message');
       expect(messageElement).toHaveTextContent('');
@@ -135,7 +135,7 @@ describe('ErrorIndicator', () => {
       const specialTitle = 'Error: <>&"\'';
       const specialMessage = 'Message with special chars: <>&"\'';
 
-      render(<ErrorIndicator title={specialTitle} message={specialMessage} />);
+      render(<FullPageError title={specialTitle} message={specialMessage} />);
 
       expect(screen.getByText(specialTitle)).toBeInTheDocument();
       expect(screen.getByText(specialMessage)).toBeInTheDocument();
@@ -143,7 +143,7 @@ describe('ErrorIndicator', () => {
 
     it('handles multiline messages', () => {
       const multilineMessage = 'Line 1\nLine 2\nLine 3';
-      const { container } = render(<ErrorIndicator {...defaultProps} message={multilineMessage} />);
+      const { container } = render(<FullPageError {...defaultProps} message={multilineMessage} />);
 
       const messageElement = container.querySelector('.error-message');
       // HTML normalizes newlines to spaces in text content
@@ -156,7 +156,7 @@ describe('ErrorIndicator', () => {
   describe('interaction', () => {
     it('retry button can be activated with keyboard', () => {
       const onRetry = vi.fn();
-      render(<ErrorIndicator {...defaultProps} onRetry={onRetry} />);
+      render(<FullPageError {...defaultProps} onRetry={onRetry} />);
 
       const retryButton = screen.getByRole('button');
 
@@ -171,7 +171,7 @@ describe('ErrorIndicator', () => {
 
     it('handles multiple clicks', () => {
       const onRetry = vi.fn();
-      render(<ErrorIndicator {...defaultProps} onRetry={onRetry} />);
+      render(<FullPageError {...defaultProps} onRetry={onRetry} />);
 
       const retryButton = screen.getByRole('button');
 
@@ -187,7 +187,7 @@ describe('ErrorIndicator', () => {
 
   describe('component props validation', () => {
     it('renders correctly with minimal required props', () => {
-      render(<ErrorIndicator title="Title" message="Message" />);
+      render(<FullPageError title="Title" message="Message" />);
 
       expect(screen.getByText('Title')).toBeInTheDocument();
       expect(screen.getByText('Message')).toBeInTheDocument();
@@ -196,7 +196,7 @@ describe('ErrorIndicator', () => {
     it('renders correctly with all optional props', () => {
       const onRetry = vi.fn();
       render(
-        <ErrorIndicator
+        <FullPageError
           title="Custom Title"
           message="Custom Message"
           onRetry={onRetry}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './ErrorIndicator.css';
+import './FullPageError.css';
 
 interface Props {
   title: string;
@@ -13,7 +13,7 @@ const defaultProps = {
   retryButtonText: 'Try again',
 };
 
-const ErrorIndicator: React.FC<Props> = ({
+const FullPageError: React.FC<Props> = ({
   title,
   message,
   onRetry = defaultProps.onRetry,
@@ -46,6 +46,6 @@ const ErrorIndicator: React.FC<Props> = ({
   </div>
 );
 
-ErrorIndicator.defaultProps = defaultProps;
+FullPageError.defaultProps = defaultProps;
 
-export default ErrorIndicator;
+export default FullPageError;
