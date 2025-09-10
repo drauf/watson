@@ -17,8 +17,8 @@ type State = {
   parsedDataKey: string | undefined;
   hasCpuUsageInfo: boolean;
   isProcessing: boolean;
-  progress?: ParseProgress;
-  error?: string;
+  progress?: ParseProgress | undefined;
+  error?: string | undefined;
 };
 
 export default class FullPageDropzone extends React.PureComponent<Props, State> {

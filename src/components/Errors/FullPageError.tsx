@@ -4,20 +4,17 @@ import './FullPageError.css';
 interface Props {
   title: string;
   message: string;
+  /* eslint-disable react/require-default-props */
   onRetry?: () => void;
   retryButtonText?: string;
+  /* eslint-enable react/require-default-props */
 }
-
-const defaultProps = {
-  onRetry: undefined,
-  retryButtonText: 'Try again',
-};
 
 const FullPageError: React.FC<Props> = ({
   title,
   message,
-  onRetry = defaultProps.onRetry,
-  retryButtonText = defaultProps.retryButtonText,
+  onRetry,
+  retryButtonText = 'Try again',
 }) => (
   <div id="error-container">
     <div className="error-indicator">
@@ -45,7 +42,5 @@ const FullPageError: React.FC<Props> = ({
     </div>
   </div>
 );
-
-FullPageError.defaultProps = defaultProps;
 
 export default FullPageError;

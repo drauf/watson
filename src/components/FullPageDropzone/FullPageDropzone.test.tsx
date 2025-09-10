@@ -81,8 +81,8 @@ vi.mock('react-dropzone', () => ({
 
 // Mock Navigate component
 vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+  const actual = await vi.importActual('react-router-dom') as Record<string, any>;
   return {
     ...actual,
     Navigate: ({ to }: { to: string }) => <div data-testid="navigate" data-to={to} />,
