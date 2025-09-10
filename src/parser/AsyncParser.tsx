@@ -5,9 +5,12 @@ import TopCpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './cpuusage/os/To
 import { matchOne } from './RegExpUtils';
 import AsyncThreadDumpParser, { THREAD_DUMP_DATE_PATTERN } from './AsyncThreadDumpParser';
 import CpuUsageJfrParser, { CPU_USAGE_JFR_FIRST_LINE_PATTERN } from './cpuusage/jfr/CpuUsageJfrParser';
+import { getPerformanceConfig, PerformanceConfig } from './PerformanceConfig';
 
-const MAX_TIME_DIFFERENCE_ALLOWED = 10000;
-const CHUNK_SIZE = 1000; // how many lines to process at a time
+// Maximum time difference (in ms) to consider CPU usage and thread dump as corresponding
+// This allows matching files even if the timestamps are not exactly the same, as usually they
+// are taken by alternating top and jstack commands
+const MAX_DIFFERENCE_BETWEEN_CORRESPONDING_FILES_IN_MS = 10000;
 
 export interface ParseProgress {
   phase: 'reading' | 'parsing' | 'grouping' | 'complete';
@@ -39,8 +42,11 @@ export default class AsyncParser {
 
   private readonly onProgress?: ProgressCallback;
 
+  private readonly config: PerformanceConfig;
+
   constructor(onFilesParsed: CompletionCallback, onProgress?: ProgressCallback) {
     this.onFilesParsed = onFilesParsed;
+    this.config = getPerformanceConfig();
     if (onProgress !== undefined) {
       this.onProgress = onProgress;
     }
@@ -77,7 +83,7 @@ export default class AsyncParser {
     }
 
     this.reportProgress('grouping', 0, 0);
-    await this.groupCpuUsagesWithThreadDumpsAsync();
+    this.groupCpuUsagesWithThreadDumpsAsync();
     this.sortThreadDumps();
 
     this.reportProgress('complete', 0, 0);
@@ -122,9 +128,7 @@ export default class AsyncParser {
 
   private async splitThreadDumpsAsync(lines: string[]): Promise<void> {
     let currentDump: string[] = [];
-    let processedLines = 0;
 
-    // eslint-disable-next-line no-await-in-loop
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
@@ -141,15 +145,6 @@ export default class AsyncParser {
       } else if (currentDump.length > 0) {
         // Do not add lines if there is no thread dump (e.g. when parsing catalina.out)
         currentDump.push(line);
-      }
-
-      processedLines++;
-
-      // Yield control every CHUNK_SIZE lines
-      if (processedLines % CHUNK_SIZE === 0) {
-        this.reportProgress('parsing', processedLines, lines.length);
-        // eslint-disable-next-line no-await-in-loop
-        await AsyncParser.delay();
       }
     }
 
@@ -173,13 +168,14 @@ export default class AsyncParser {
   };
 
   private async parseThreadDumpAsync(lines: string[]): Promise<void> {
-    return AsyncThreadDumpParser.parseThreadDump(
+    await AsyncThreadDumpParser.parseThreadDump(
       lines.slice(),
       this.onParsedThreadDump,
       (processed, total) => {
         // Update progress for line processing within this thread dump
         this.reportProgress('parsing', processed, total);
       },
+      this.config,
     );
   }
 
@@ -189,20 +185,13 @@ export default class AsyncParser {
     }
   };
 
-  private async groupCpuUsagesWithThreadDumpsAsync(): Promise<void> {
+  private groupCpuUsagesWithThreadDumpsAsync(): void {
     const cpuUsagesWithEpoch = this.cpuUsages.filter((cpuUsage) => cpuUsage.epoch);
 
-    // eslint-disable-next-line no-await-in-loop
     for (let i = 0; i < cpuUsagesWithEpoch.length; i++) {
       const cpuUsage = cpuUsagesWithEpoch[i];
       const threadDump: ThreadDump = this.findCorrespondingThreadDump(cpuUsage);
       AsyncParser.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
-
-      // Yield control periodically during grouping
-      if (i % 10 === 0) { // todo: isn't 10 too low?
-        // eslint-disable-next-line no-await-in-loop
-        await AsyncParser.delay();
-      }
     }
   }
 
@@ -225,7 +214,7 @@ export default class AsyncParser {
     const AN_HOUR = 60 * 60 * 1000;
     const cpuUsageEpoch = cpuUsage.epoch;
     let closest: ThreadDump | null = null;
-    let smallestDiff: number = MAX_TIME_DIFFERENCE_ALLOWED;
+    let smallestDiff: number = MAX_DIFFERENCE_BETWEEN_CORRESPONDING_FILES_IN_MS;
 
     this.threadDumps
       .filter((threadDump) => threadDump.epoch)
@@ -302,13 +291,6 @@ export default class AsyncParser {
       linesProcessed,
       totalLines,
       percentage: Math.min(100, Math.max(0, percentage)),
-    });
-  }
-
-  // Simple delay to yield control back to the browser to refresh the UI
-  private static delay(): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(resolve, 0);
     });
   }
 }

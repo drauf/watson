@@ -3,9 +3,9 @@ import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
 import ThreadStatus from '../types/ThreadStatus';
 import { matchMultipleGroups, matchOne } from './RegExpUtils';
+import { PerformanceConfig, DEFAULT_PERFORMANCE_CONFIG } from './PerformanceConfig';
 
 const THREAD_HEADER_PREFIX = '"';
-const CHUNK_SIZE = 1000; // how many lines to process at a time
 
 export const THREAD_DUMP_DATE_PATTERN = /^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})\r?$/;
 const NAME_PATTERN = /^"(.*)" /;
@@ -24,29 +24,26 @@ export default class AsyncThreadDumpParser {
     lines: string[],
     callback: ParseThreadDumpCallback,
     progressCallback?: ProgressCallback,
+    config: PerformanceConfig = DEFAULT_PERFORMANCE_CONFIG,
   ): Promise<void> {
     const threadDump = ThreadDump.from(matchOne(THREAD_DUMP_DATE_PATTERN, lines.shift() as string));
     let currentThread: Thread | null = null;
 
     // Process lines in chunks to avoid blocking the UI
     // eslint-disable-next-line no-await-in-loop
-    for (let i = 0; i < lines.length; i += CHUNK_SIZE) {
-      const chunk = lines.slice(i, i + CHUNK_SIZE);
+    for (let i = 0; i < lines.length; i += config.threadDumpChunkSize) {
+      const chunk = lines.slice(i, i + config.threadDumpChunkSize);
 
       for (const line of chunk) {
         currentThread = AsyncThreadDumpParser.parseLine(line, threadDump, currentThread);
       }
 
-      // Report progress
+      // Report progress and yield control to the browser
       if (progressCallback) {
-        progressCallback(Math.min(i + CHUNK_SIZE, lines.length), lines.length);
+        progressCallback(Math.min(i + config.threadDumpChunkSize, lines.length), lines.length);
       }
-
-      // Yield control to the browser
-      if (i + CHUNK_SIZE < lines.length) {
-        // eslint-disable-next-line no-await-in-loop
-        await AsyncThreadDumpParser.delay(1);
-      }
+      // eslint-disable-next-line no-await-in-loop
+      await AsyncThreadDumpParser.delay(config.threadDumpProcessingDelay);
     }
 
     AsyncThreadDumpParser.identifyAnonymousSynchronizers(threadDump.threads);
@@ -56,7 +53,8 @@ export default class AsyncThreadDumpParser {
   private static parseLine(line: string, threadDump: ThreadDump, currentThread: Thread | null): Thread | null {
     if (line.startsWith(THREAD_HEADER_PREFIX)) {
       return AsyncThreadDumpParser.parseThreadHeader(line, threadDump);
-    } if (line && currentThread) {
+    }
+    if (line && currentThread) {
       AsyncThreadDumpParser.parseStackLine(line, threadDump, currentThread);
     }
     return currentThread;
