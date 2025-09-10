@@ -272,7 +272,7 @@ export default class AsyncParser {
 
     const fileProgress = (this.filesProcessed / this.filesToParse) * 100;
     const maxLineContribution = 100 / this.filesToParse;
-    const lineProgress = (linesProcessed / totalLines) * maxLineContribution;
+    const lineProgress = totalLines === 0 ? 0 : (linesProcessed / totalLines) * maxLineContribution;
 
     let percentage: number;
     if (phase === 'complete') {
