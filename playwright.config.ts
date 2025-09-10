@@ -55,8 +55,8 @@ export default defineConfig({
   expect: {
     /* Extend timeout for each assertion as screenshots take forever to take */
     timeout: 10000,
-    /* Limit the maximum pixel ratio for image comparisons to 5% */
-    toHaveScreenshot: { maxDiffPixelRatio: 0.05 },
+    /* Limit the maximum pixel ratio for image comparisons to 1% */
+    toHaveScreenshot: { maxDiffPixelRatio: 0.01 },
   },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

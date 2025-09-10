@@ -9,6 +9,9 @@ test.describe('Main page', () => {
   });
 
   test('redirects after uploading files', async ({ pageWithData }) => {
+    // todo: there is an animation after charts load - ideally we should wait for some event instead of timeout
+    await pageWithData.waitForTimeout(1_500);
+
     await expect(pageWithData).toHaveScreenshot();
   });
 });
