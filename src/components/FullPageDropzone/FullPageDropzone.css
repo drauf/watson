@@ -45,7 +45,6 @@
 .error-indicator {
   display: flex;
   flex-direction: column;
-
   width: 600px;
   padding: 24px 32px;
   background: var(--color-n20);
@@ -77,13 +76,13 @@
 }
 
 .error-message {
+  max-width: 100%;
   margin-bottom: 16px;
+  overflow: hidden;
   color: var(--color-n800);
   font-weight: 500;
-  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 100%;
 }
 
 .error-actions {
@@ -92,17 +91,18 @@
 }
 
 .retry-button {
-  color: var(--color-n0);
-  --webkit-text-fill-color: var(--color-n0);
-  background-color: var(--color-b400);
-  text-decoration: none;
   padding: 6px 9px;
+  color: var(--color-n0);
+  text-decoration: none;
+  background-color: var(--color-b400);
   border-radius: 3px;
+
+  --webkit-text-fill-color: var(--color-n0);
 }
 
 .retry-button:hover {
-  background: var(--color-b500);
   text-decoration: none;
+  background: var(--color-b500);
 }
 
 .retry-button:active {

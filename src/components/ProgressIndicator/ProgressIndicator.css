@@ -9,7 +9,6 @@
 .progress-indicator {
   display: flex;
   flex-direction: column;
-
   width: 600px;
   padding: 24px 32px;
   background: var(--color-n20);
@@ -95,10 +94,10 @@
 }
 
 .progress-lines {
-  font-family: monospace;
-  white-space: pre;
   color: var(--color-n400);
+  font-family: monospace;
   line-height: 16px;
+  white-space: pre;
 }
 
 @keyframes progress-shimmer {
