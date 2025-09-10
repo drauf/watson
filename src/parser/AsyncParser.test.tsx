@@ -110,7 +110,7 @@ describe('AsyncParser', () => {
       // Add a mock thread so the thread dump isn't filtered out
       const mockThread = { id: 1, name: 'Thread-1' } as any;
       mockThreadDump.threads.push(mockThread);
-      
+
       const AsyncThreadDumpParser = await import('./AsyncThreadDumpParser');
       (AsyncThreadDumpParser.default.parseThreadDump as any).mockImplementation(
         (_lines: string[], callback: any) => {
