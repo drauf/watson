@@ -3,6 +3,7 @@ import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
 import ThreadStatus from '../types/ThreadStatus';
 import { matchMultipleGroups, matchOne } from './RegExpUtils';
+import { PerformanceConfig, DEFAULT_PERFORMANCE_CONFIG } from './PerformanceConfig';
 
 const THREAD_HEADER_PREFIX = '"';
 
@@ -16,27 +17,48 @@ const SYNCHRONIZATION_STATUS_PATTERN = /^\s+- (.*?) +<([x0-9a-f]+)> \(a (.*)\)/;
 const HELD_LOCK_PATTERN = /^\s+- <([x0-9a-f]+)> \(a (.*)\)/;
 
 export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
+export type ProgressCallback = (processed: number, total: number) => Promise<void>;
 
-export default class ThreadDumpParser {
-  public static parseThreadDump(lines: string[], callback: ParseThreadDumpCallback): void {
+export default class AsyncThreadDumpParser {
+  public static async parseThreadDump(
+    lines: string[],
+    callback: ParseThreadDumpCallback,
+    progressCallback?: ProgressCallback,
+    config: PerformanceConfig = DEFAULT_PERFORMANCE_CONFIG,
+  ): Promise<void> {
     const threadDump = ThreadDump.from(matchOne(THREAD_DUMP_DATE_PATTERN, lines.shift() as string));
-    lines.forEach((line) => ThreadDumpParser.parseLine(line, threadDump));
-    ThreadDumpParser.identifyAnonymousSynchronizers(threadDump.threads);
+    let currentThread: Thread | null = null;
 
+    // Process lines in chunks to avoid blocking the UI
+    // eslint-disable-next-line no-await-in-loop
+    for (let i = 0; i < lines.length; i += config.threadDumpChunkSize) {
+      const chunk = lines.slice(i, i + config.threadDumpChunkSize);
+
+      for (const line of chunk) {
+        currentThread = AsyncThreadDumpParser.parseLine(line, threadDump, currentThread);
+      }
+
+      if (progressCallback) {
+        // eslint-disable-next-line no-await-in-loop
+        await progressCallback(Math.min(i + config.threadDumpChunkSize, lines.length), lines.length);
+      }
+    }
+
+    AsyncThreadDumpParser.identifyAnonymousSynchronizers(threadDump.threads);
     callback(threadDump);
   }
 
-  private static currentThread: Thread;
-
-  private static parseLine(line: string, threadDump: ThreadDump): void {
+  private static parseLine(line: string, threadDump: ThreadDump, currentThread: Thread | null): Thread | null {
     if (line.startsWith(THREAD_HEADER_PREFIX)) {
-      ThreadDumpParser.parseThreadHeader(line, threadDump);
-    } else if (line) {
-      ThreadDumpParser.parseStackLine(line, threadDump);
+      return AsyncThreadDumpParser.parseThreadHeader(line, threadDump);
     }
+    if (line && currentThread) {
+      AsyncThreadDumpParser.parseStackLine(line, threadDump, currentThread);
+    }
+    return currentThread;
   }
 
-  private static parseThreadHeader(header: string, threadDump: ThreadDump): void {
+  private static parseThreadHeader(header: string, threadDump: ThreadDump): Thread {
     const name = matchOne(NAME_PATTERN, header).trim();
     // Depending on the way thread dumps were made, they can either have NID or TID
     // We prefer NID, as it allows linking thread dumps with cpu_usage files
@@ -44,24 +66,22 @@ export default class ThreadDumpParser {
     const tid = parseInt(matchOne(TID_PATTERN, header), 16);
     const id = nid !== 0 ? nid : tid;
 
-    ThreadDumpParser.currentThread = new Thread(id, name, threadDump.epoch);
-    threadDump.threads.push(ThreadDumpParser.currentThread);
+    const currentThread = new Thread(id, name, threadDump.epoch);
+    threadDump.threads.push(currentThread);
+    return currentThread;
   }
 
-  private static parseStackLine(line: string, threadDump: ThreadDump): void {
-    if (!ThreadDumpParser.currentThread) {
-      return;
-    }
-
+  private static parseStackLine(line: string, threadDump: ThreadDump, currentThread: Thread): void {
     const frame: string = matchOne(FRAME_PATTERN, line);
     if (frame) {
-      ThreadDumpParser.currentThread.stackTrace.push(frame);
+      currentThread.stackTrace.push(frame);
       return;
     }
 
     const threadState: string = matchOne(THREAD_STATE_PATTERN, line);
     if (threadState) {
-      ThreadDumpParser.currentThread.status = ThreadDumpParser.stringToThreadStatus(threadState);
+      // eslint-disable-next-line no-param-reassign
+      currentThread.status = AsyncThreadDumpParser.stringToThreadStatus(threadState);
       return;
     }
 
@@ -77,20 +97,21 @@ export default class ThreadDumpParser {
         case 'parking to wait for':
         case 'waiting to lock':
         case 'waiting to re-lock in wait()':
-          lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
-          lock.addWaiting(ThreadDumpParser.currentThread);
-          ThreadDumpParser.currentThread.lockWaitingFor = lock;
+          lock = AsyncThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className);
+          lock.addWaiting(currentThread);
+          // eslint-disable-next-line no-param-reassign
+          currentThread.lockWaitingFor = lock;
           return;
 
         case 'locked':
-          if (ThreadDumpParser.currentThread.lockWaitingFor
-            && ThreadDumpParser.currentThread.lockWaitingFor.id === lockId) {
+          if (currentThread.lockWaitingFor
+            && currentThread.lockWaitingFor.id === lockId) {
             // lock is released while waiting for the notification
             return;
           }
-          lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className, ThreadDumpParser.currentThread);
-          ThreadDumpParser.currentThread.locksHeld.push(lock);
-          ThreadDumpParser.currentThread.classicalLocksHeld.push(lock);
+          lock = AsyncThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className, currentThread);
+          currentThread.locksHeld.push(lock);
+          currentThread.classicalLocksHeld.push(lock);
           return;
 
         case 'eliminated':
@@ -108,8 +129,8 @@ export default class ThreadDumpParser {
       const lockId: string = lockHeld[0];
       const className: string = lockHeld[1];
 
-      const lock: Lock = ThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className, ThreadDumpParser.currentThread);
-      ThreadDumpParser.currentThread.locksHeld.push(lock);
+      const lock: Lock = AsyncThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className, currentThread);
+      currentThread.locksHeld.push(lock);
     }
   }
 
