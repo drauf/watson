@@ -270,8 +270,9 @@ export default class AsyncParser {
   private reportProgress(phase: ParseProgress['phase'], linesProcessed: number, totalLines: number): void {
     if (!this.onProgress) return;
 
-    const fileProgress = this.filesToParse > 0 ? (this.filesProcessed / this.filesToParse) * 100 : 0;
-    const lineProgress = totalLines > 0 ? (linesProcessed / totalLines) * 100 : 0;
+    const fileProgress = (this.filesProcessed / this.filesToParse) * 100;
+    const maxLineContribution = 100 / this.filesToParse;
+    const lineProgress = (linesProcessed / totalLines) * maxLineContribution;
 
     let percentage: number;
     if (phase === 'complete') {
@@ -279,8 +280,7 @@ export default class AsyncParser {
     } else if (phase === 'grouping') {
       percentage = 95; // Almost done
     } else {
-      // Weight file progress more heavily than line progress within a file
-      percentage = (fileProgress * 0.8) + (lineProgress * 0.2 * (1 / this.filesToParse));
+      percentage = (fileProgress + lineProgress) * 0.95;
     }
 
     this.onProgress({
