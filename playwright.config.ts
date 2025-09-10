@@ -52,8 +52,12 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
-  /* Extend timeout for each assertion as screenshots take forever to take */
-  expect: { timeout: 10000 },
+  expect: {
+    /* Extend timeout for each assertion as screenshots take forever to take */
+    timeout: 10000,
+    /* Limit the maximum pixel ratio for image comparisons to 5% */
+    toHaveScreenshot: { maxDiffPixelRatio: 0.05 },
+  },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
