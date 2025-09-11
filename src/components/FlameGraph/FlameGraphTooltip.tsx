@@ -18,7 +18,7 @@ const tooltip = defaultFlamegraphTooltip()
     const totalSamples = topParent(node).value;
     const percentage = ((samples / totalSamples) * 100).toFixed(2);
 
-    return `${node.data.name} (${percentage}%, ${samples} samples)`;
+    return `${node.data.fullFrame} (${percentage}%, ${samples} samples)`;
   }) as boolean;
 
 export default tooltip;

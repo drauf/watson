@@ -1,8 +1,7 @@
-import { StackFrame } from 'd3-flame-graph';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import ThreadDump from '../../types/ThreadDump';
-import FlameGraph from './FlameGraph';
+import FlameGraph, { ExtendedStackFrame } from './FlameGraph';
 import PageWithSettings from '../PageWithSettings';
 import FlameGraphSettings from './FlameGraphSettings';
 import './FlameGraphPage.css';
@@ -13,6 +12,31 @@ type State = {
   withoutIdle: boolean;
 };
 
+export const shortNameFrom = (frame: string): string => {
+  // Split into class+method and line info
+  const [fullName, lineInfo] = frame.split('(');
+  // Get class parts
+  const parts = fullName.split('.');
+  // Get clean class name (last meaningful part)
+  let className = parts[parts.length - 2] || '';
+
+  className = className
+    .replace(/\$\$Lambda\$\d+.*/, '') // remove Lambda numbers and hex
+    .replace(/\$Proxy\d+/, 'Proxy'); // clean up proxy names
+
+  // Get method name and clean up lambda syntax
+  const methodName = parts[parts.length - 1]
+    .replace(/lambda\$(\w+)\$\d+/, '$1'); // convert "lambda$processClaimedItem$4" to "processClaimedItem"
+
+  // Clean up line info
+  const lineNumber = lineInfo?.split(':')[1]?.replace(/[^0-9]/g, '') || '';
+
+  if (!lineNumber) {
+    return `${className}.${methodName} @ Unknown line`;
+  }
+  return `${className}.${methodName} @ line ${lineNumber}`;
+};
+
 class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {
     super(props);
@@ -21,25 +45,28 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     };
   }
 
-  private static processLine = (previousFrame: StackFrame, line: string): StackFrame => {
-    const existingFrame = previousFrame.children.find((frame) => frame.name === line);
+  private static processLine = (previousFrame: ExtendedStackFrame, line: string): ExtendedStackFrame => {
+    const children = previousFrame.children as ExtendedStackFrame[];
+    const existingFrame = children.find((frame) => frame.fullFrame === line);
     if (existingFrame) {
       existingFrame.value += 1;
       return existingFrame;
     }
 
-    const newFrame = {
-      name: line,
+    const newFrame: ExtendedStackFrame = {
+      name: shortNameFrom(line),
       value: 1,
       children: [],
+      fullFrame: line,
+      fade: false,
     };
 
     previousFrame.children.push(newFrame);
     return newFrame;
   };
 
-  private static processStackTrace = (root: StackFrame, stackTrace: string[]): void => {
-    let previousFrame = root;
+  private static processStackTrace = (root: ExtendedStackFrame, stackTrace: string[]): void => {
+    let previousFrame: ExtendedStackFrame = root;
 
     for (const line of stackTrace.reverse()) {
       const currentFrame = FlameGraphPage.processLine(previousFrame, line);
@@ -47,11 +74,13 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     }
   };
 
-  private static calculateChartData = (threads: Thread[]): StackFrame => {
-    const root = {
+  private static calculateChartData = (threads: Thread[]): ExtendedStackFrame => {
+    const root: ExtendedStackFrame = {
       name: 'root',
       value: 0,
       children: [],
+      fullFrame: 'root',
+      fade: false,
     };
 
     threads.forEach((thread) => (
@@ -82,7 +111,7 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     }
 
     const filteredThreads = this.filterThreads(threadDumps);
-    const chartData: StackFrame = FlameGraphPage.calculateChartData(filteredThreads);
+    const chartData: ExtendedStackFrame = FlameGraphPage.calculateChartData(filteredThreads);
 
     return (
       <main className="full-width-page">
