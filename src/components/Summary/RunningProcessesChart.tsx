@@ -27,7 +27,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
     const threadsCount: number = payload[0].value ? payload[0].value : 0;
 
     return (
-      <div className="tooltip ellipsis">
+      <div className="smart-tooltip">
         <p>
           {`${time} - ${threadsCount}`}
           {' '}

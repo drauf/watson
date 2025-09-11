@@ -14,10 +14,7 @@
   text-align: center;
 }
 
-.tooltip {
-  max-width: 640px;
-  margin: 0;
-  padding: 0 20px;
-  background-color: rgb(255 255 255);
-  border: 1px solid rgb(204 204 204);
+.smart-tooltip ol {
+  padding: 0 32px;
+  text-align: left;
 }
