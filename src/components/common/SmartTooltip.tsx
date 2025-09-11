@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import TooltipContent from './TooltipContent';
 import './SmartTooltip.css';
 
 type Props = {
@@ -76,7 +77,6 @@ const SmartTooltip: React.FC<Props> = ({ children, tooltip, className = '', disa
       {isVisible && tooltip.trim() && (
         <div
           ref={tooltipRef}
-          className={`smart-tooltip smart-tooltip--${position.placement}`}
           style={{
             position: 'fixed',
             top: position.top,
@@ -84,7 +84,9 @@ const SmartTooltip: React.FC<Props> = ({ children, tooltip, className = '', disa
             zIndex: 1000,
           }}
         >
-          {tooltip}
+          <TooltipContent placement={position.placement as 'top' | 'bottom'}>
+            {tooltip}
+          </TooltipContent>
         </div>
       )}
     </div>

@@ -1,19 +1,54 @@
 import React from 'react';
 import {
-  CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
+  CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis,
 } from 'recharts';
 import ThreadDump from '../../types/ThreadDump';
+import TooltipContent from '../common/TooltipContent';
 
 type Props = {
   threadDumps: ThreadDump[];
+};
+
+type ChartData = {
+  fifteenMinutes: number;
+  fiveMinutes: number;
+  name: string;
+  oneMinute: number;
+};
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps<string, string>): JSX.Element | null => {
+  if (active && payload) {
+    return (
+      <TooltipContent>
+        <p>
+          Load averages at
+          {' '}
+          {label}
+          :
+        </p>
+
+        <ul>
+          {payload.map((item) => (
+            <li key={item.name} style={{ color: item.color }}>
+              {item.name}
+              :
+              {' '}
+              {item.value}
+            </li>
+          ))}
+        </ul>
+      </TooltipContent>
+    );
+  }
+
+  return null;
 };
 
 export default class LoadAveragesChart extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const { threadDumps } = this.props;
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const data: object[] = [];
+    const data: ChartData[] = [];
     threadDumps.forEach((threadDump) => {
       if (threadDump.loadAverages) {
         data.push({
@@ -42,7 +77,7 @@ export default class LoadAveragesChart extends React.PureComponent<Props> {
             <XAxis dataKey="name" />
             <YAxis type="number" />
             <CartesianGrid stroke="#DFE1E5" strokeDasharray="5 5" />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Line name="One minute" dataKey="oneMinute" stroke="#36B37E" animationDuration={1000} />
             <Line name="Five minutes" dataKey="fiveMinutes" stroke="#FFAB00" animationDuration={1000} />

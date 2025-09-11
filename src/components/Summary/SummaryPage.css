@@ -14,7 +14,7 @@
   text-align: center;
 }
 
-.smart-tooltip ol {
+.smart-tooltip ol, .smart-tooltip ul {
   padding: 0 32px;
   text-align: left;
 }

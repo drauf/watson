@@ -5,6 +5,7 @@ import {
 import MemoryUsage from '../../types/MemoryUsage';
 import ThreadDump from '../../types/ThreadDump';
 import labelFormatter from './LabelFormatter';
+import PieChartTooltip, { ChartData } from './PieChartTooltip';
 
 const COLORS = ['#00B8D9', '#36B37E'];
 
@@ -32,11 +33,11 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
     const { memoryUnit } = memoryUsages[0];
     const freeMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryFree, 0) / memoryUsages.length;
     const usedMemoryAvg = memoryUsages.reduce((a, b) => a + b.memoryUsed, 0) / memoryUsages.length;
+    const sum = freeMemoryAvg + usedMemoryAvg;
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const data: object[] = [
-      { name: 'Used memory', value: usedMemoryAvg },
-      { name: 'Free memory', value: freeMemoryAvg },
+    const data: ChartData[] = [
+      { name: 'Used memory', value: usedMemoryAvg, label: labelFormatter(usedMemoryAvg, memoryUnit) },
+      { name: 'Free memory', value: freeMemoryAvg, label: labelFormatter(freeMemoryAvg, memoryUnit) },
     ];
 
     return (
@@ -44,12 +45,15 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
         <h3>Memory usage</h3>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
-            <Pie data={data} dataKey="value" nameKey="name">
+            <Pie data={data} dataKey="value" nameKey="name" animationDuration={1000}>
               {
                 data.map((_, index) => <Cell key={COLORS[index]} fill={COLORS[index]} />)
               }
             </Pie>
-            <Tooltip formatter={(value) => labelFormatter(value, memoryUnit)} />
+            {sum === 0 && (
+              <Pie data={[{ name: 'No Data', value: 1 }]} dataKey="value" fill="#eeeeee" animationDuration={1000} />
+            )}
+            {sum !== 0 && <Tooltip content={<PieChartTooltip />} />}
             <Legend />
           </PieChart>
         </ResponsiveContainer>
