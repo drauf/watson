@@ -73,6 +73,9 @@
     "test:e2e": "playwright test",
     "predeploy": "yarn build"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "browserslist": [
     "last 2 chrome versions",
     "last 2 edge versions",
