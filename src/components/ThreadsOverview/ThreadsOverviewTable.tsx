@@ -21,7 +21,7 @@ export default class ThreadsOverview extends React.PureComponent<Props> {
               <th>Thread Name / Time</th>
               {dates.map((date) => (
                 <th key={date}>
-                  <SmartTooltip tooltip={date}>
+                  <SmartTooltip tooltip={date || ''}>
                     {date}
                   </SmartTooltip>
                 </th>
