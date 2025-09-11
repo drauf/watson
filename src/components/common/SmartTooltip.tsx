@@ -5,11 +5,11 @@ import './SmartTooltip.css';
 type Props = {
   children: React.ReactNode;
   tooltip: string;
-  className?: string;
-  disabled?: boolean;
 };
 
-const SmartTooltip: React.FC<Props> = ({ children, tooltip, className = '', disabled = false }) => {
+const SmartTooltip: React.FC<Props> = ({
+  children, tooltip,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0, placement: 'bottom' });
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,7 +49,7 @@ const SmartTooltip: React.FC<Props> = ({ children, tooltip, className = '', disa
   };
 
   const handleMouseEnter = () => {
-    if (disabled || !tooltip.trim()) return;
+    if (!tooltip.trim()) return;
     setIsVisible(true);
   };
 
@@ -69,7 +69,7 @@ const SmartTooltip: React.FC<Props> = ({ children, tooltip, className = '', disa
   return (
     <div
       ref={containerRef}
-      className={`smart-tooltip-container ${className}`}
+      className="smart-tooltip-container"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

@@ -3,20 +3,17 @@ import './SmartTooltip.css';
 
 type TooltipContentProps = {
   children: React.ReactNode | string;
-  className?: string;
+  /* eslint-disable-next-line react/require-default-props */
   placement?: 'top' | 'bottom' | 'left' | 'right';
 };
 
 const TooltipContent: React.FC<TooltipContentProps> = ({
   children,
-  className = '',
-  placement = 'bottom'
-}) => {
-  return (
-    <div className={`smart-tooltip smart-tooltip--${placement} ${className}`}>
-      {children}
-    </div>
-  );
-};
+  placement = 'bottom',
+}) => (
+  <div className={`smart-tooltip smart-tooltip--${placement}`}>
+    {children}
+  </div>
+);
 
 export default TooltipContent;

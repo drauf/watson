@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip
+  Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip,
 } from 'recharts';
 import MemoryUsage from '../../types/MemoryUsage';
 import ThreadDump from '../../types/ThreadDump';
