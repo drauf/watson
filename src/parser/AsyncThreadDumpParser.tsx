@@ -15,6 +15,7 @@ const FRAME_PATTERN = /^\s+at (.*)/;
 const THREAD_STATE_PATTERN = /^\s*java.lang.Thread.State: (.*)/;
 const SYNCHRONIZATION_STATUS_PATTERN = /^\s+- (.*?) +<([x0-9a-f]+)> \(a (.*)\)/;
 const HELD_LOCK_PATTERN = /^\s+- <([x0-9a-f]+)> \(a (.*)\)/;
+const MODULE_PREFIX_PATTERN = /^([a-z0-9._-]+(?:@[0-9.]+)?\/)/;
 
 export type ParseThreadDumpCallback = (threadDump: ThreadDump) => void;
 export type ProgressCallback = (processed: number, total: number) => Promise<void>;
@@ -74,7 +75,7 @@ export default class AsyncThreadDumpParser {
   private static parseStackLine(line: string, threadDump: ThreadDump, currentThread: Thread): void {
     const frame: string = matchOne(FRAME_PATTERN, line);
     if (frame) {
-      currentThread.stackTrace.push(frame);
+      currentThread.stackTrace.push(AsyncThreadDumpParser.moveJavaModulePrefixToSuffixFor(frame));
       return;
     }
 
@@ -132,6 +133,19 @@ export default class AsyncThreadDumpParser {
       const lock: Lock = AsyncThreadDumpParser.getOrCreateLock(threadDump.locks, lockId, className, currentThread);
       currentThread.locksHeld.push(lock);
     }
+  }
+
+  /**
+   * Trims the Java module prefix from a stack frame if present.
+   * For example, converts 'java.base@17.0.6/java.lang.Thread.run' to 'java.lang.Thread.run'.
+   * @param frame
+   */
+  private static moveJavaModulePrefixToSuffixFor(frame: string): string {
+    const modulePrefix = matchOne(MODULE_PREFIX_PATTERN, frame);
+    if (modulePrefix) {
+      return `${frame.slice(modulePrefix.length)} ${modulePrefix.slice(0, -1)}`;
+    }
+    return frame;
   }
 
   private static identifyAnonymousSynchronizers(threads: Thread[]): void {
