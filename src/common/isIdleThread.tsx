@@ -1,5 +1,21 @@
 import Thread from '../types/Thread';
 
+function isIdleRMIThread(thread: Thread): boolean {
+  const { length } = thread.stackTrace;
+  return thread.stackTrace[length - 4].startsWith('sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run')
+    && length < 22; // otherwise might actually be active
+}
+
+function isSleepingJRubyThread(thread: Thread): boolean {
+  return thread.stackTrace[9].startsWith('org.jruby.RubyThread.sleep')
+    && thread.stackTrace.length < 33; // otherwise might actually be active
+}
+
+function isOkHttpThread(thread: Thread): boolean {
+  return thread.name.startsWith('OkHttp')
+    && thread.stackTrace[0].startsWith('sun.nio.ch.Net.poll');
+}
+
 function isRufusThread(thread: Thread): boolean {
   if (!thread.name.includes('rufus-scheduler')) {
     return false;
@@ -17,6 +33,9 @@ function isRubiniusThread(thread: Thread): boolean {
 
 export default function isIdleThread(thread: Thread): boolean {
   return thread.stackTrace.length < 17
+    || isIdleRMIThread(thread)
+    || isSleepingJRubyThread(thread)
+    || isOkHttpThread(thread)
     || isRufusThread(thread)
     || isRubiniusThread(thread);
 }
