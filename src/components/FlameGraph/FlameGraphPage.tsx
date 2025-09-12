@@ -8,33 +8,58 @@ import './FlameGraphPage.css';
 import Thread from '../../types/Thread';
 import isIdleThread from '../../common/isIdleThread';
 
+type ParsedStackFrame = {
+  rawClassName: string;
+  cleanClassName: string;
+  rawMethodName: string;
+  cleanMethodName: string;
+  packageName: string;
+  lineNumber: string | null;
+};
+
 type State = {
   withoutIdle: boolean;
 };
 
-export const shortNameFrom = (frame: string): string => {
-  // Split into class+method and line info
+export const parseStackFrame = (frame: string): ParsedStackFrame => {
+  // Split "com.example.Class.method(File.java:123)" into method and location parts
   const [fullName, lineInfo] = frame.split('(');
-  // Get class parts
   const parts = fullName.split('.');
-  // Get clean class name (last meaningful part)
-  let className = parts[parts.length - 2] || '';
 
-  className = className
-    .replace(/\$\$Lambda\$\d+.*/, '') // remove Lambda numbers and hex
-    .replace(/\$Proxy\d+/, 'Proxy'); // clean up proxy names
+  // Extract class name, handling special cases like lambdas and proxies
+  const rawClassName = parts[parts.length - 2] || '';
+  const cleanClassName = rawClassName
+    .replace(/\$+Lambda\$\d+.*/, '')
+    .replace(/\$Proxy\d+/, 'Proxy');
 
-  // Get method name and clean up lambda syntax
-  const methodName = parts[parts.length - 1]
-    .replace(/lambda\$(\w+)\$\d+/, '$1'); // convert "lambda$processClaimedItem$4" to "processClaimedItem"
+  // Extract method name, cleaning up lambda syntax
+  const rawMethodName = parts[parts.length - 1];
+  const cleanMethodName = rawMethodName
+    .replace(/lambda\$(\w+)\$\d+/, '$1');
 
-  // Clean up line info
-  const lineNumber = lineInfo?.split(':')[1]?.replace(/[^0-9]/g, '') || '';
+  // Get line number, defaulting to null if not present
+  const lineNumber = lineInfo?.split(':')[1]?.replace(/[^0-9]/g, '') || null;
 
-  if (!lineNumber) {
-    return `${className}.${methodName} @ Unknown line`;
+  // Package name is everything except the last two parts (class and method)
+  const packageName = parts.slice(0, -2).join('.');
+
+  return {
+    rawClassName,
+    cleanClassName,
+    rawMethodName,
+    cleanMethodName,
+    packageName,
+    lineNumber,
+  };
+};
+
+export const shortNameFrom = (frame: string): string => {
+  const parsed = parseStackFrame(frame);
+
+  if (!parsed.lineNumber) {
+    return `${parsed.cleanClassName}.${parsed.cleanMethodName} @ Unknown line`;
   }
-  return `${className}.${methodName} @ line ${lineNumber}`;
+  return `${parsed.cleanClassName}.${parsed.cleanMethodName} @ line ${parsed.lineNumber}`;
 };
 
 class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
