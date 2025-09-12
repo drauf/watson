@@ -1,6 +1,7 @@
 import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadOverviewItem from './ThreadOverviewItem';
+import SmartTooltip from '../common/SmartTooltip';
 
 type Props = {
   total: number;
@@ -22,8 +23,10 @@ export default class ThreadOverviewRow extends React.PureComponent<Props> {
 
     return (
       <tr>
-        <td className="name" data-tooltip={threadName}>
-          {threadName}
+        <td className="name">
+          <SmartTooltip tooltip={threadName}>
+            {threadName}
+          </SmartTooltip>
         </td>
         {threadsPadded.map((thread, index) => (
           <ThreadOverviewItem

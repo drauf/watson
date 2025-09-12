@@ -1,6 +1,7 @@
 import React from 'react';
 import Thread from '../../types/Thread';
 import ThreadOverviewRow from './ThreadOverviewRow';
+import SmartTooltip from '../common/SmartTooltip';
 
 type Props = {
   dates: Array<string | null>;
@@ -20,7 +21,9 @@ export default class ThreadsOverview extends React.PureComponent<Props> {
               <th>Thread Name / Time</th>
               {dates.map((date) => (
                 <th key={date}>
-                  {date}
+                  <SmartTooltip tooltip={date || ''}>
+                    {date}
+                  </SmartTooltip>
                 </th>
               ))}
             </tr>

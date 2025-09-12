@@ -4,10 +4,10 @@ import './FullPageError.css';
 interface Props {
   title: string;
   message: string;
-  /* eslint-disable react/require-default-props */
+  /* eslint-disable-next-line react/require-default-props */
   onRetry?: () => void;
+  /* eslint-disable-next-line react/require-default-props */
   retryButtonText?: string;
-  /* eslint-enable react/require-default-props */
 }
 
 const FullPageError: React.FC<Props> = ({
