@@ -41,7 +41,7 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
     ];
 
     return (
-      <div>
+      <div id="memory-usage-chart">
         <h3>Memory usage</h3>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>

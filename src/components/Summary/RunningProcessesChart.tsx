@@ -83,7 +83,7 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
   }
 
   return (
-    <div className="chart">
+    <div id="running-processes-chart" className="chart">
       <h3>Running processes</h3>
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>

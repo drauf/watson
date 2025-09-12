@@ -70,7 +70,7 @@ export default class LoadAveragesChart extends React.PureComponent<Props> {
     }
 
     return (
-      <div className="chart">
+      <div id="load-averages-chart" className="chart">
         <h3>Load averages</h3>
         <ResponsiveContainer width="100%" height={350}>
           <LineChart data={data}>

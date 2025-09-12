@@ -41,7 +41,7 @@ export default class SwapUsageChart extends React.PureComponent<Props> {
     ];
 
     return (
-      <div>
+      <div id="swap-usage-chart">
         <h3>Swap usage</h3>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
