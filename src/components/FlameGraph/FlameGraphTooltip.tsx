@@ -2,14 +2,6 @@ import {createRoot, Root} from 'react-dom/client';
 import type {Node} from './FlameGraph';
 import SmartTooltip from '../common/SmartTooltip';
 
-export const splitFrame = (fullFrame: string): { packageName: string; className: string; methodName: string } => {
-  const parts = fullFrame.split('.');
-  const methodName = parts.pop() || '';
-  const className = parts.pop() || '';
-  const packageName = parts.join('.');
-  return {packageName, className, methodName};
-};
-
 const topParent = (node: Node): Node => {
   let result = node;
   while (result.parent) {
@@ -34,7 +26,7 @@ export function customTooltip() {
     const x: number = window.event.pageX;
     const y: number = window.event.pageY;
 
-    const { packageName, className, methodName } = splitFrame(node.data.fullFrame);
+    const {parsedStackFrame} = node.data;
     const samples = node.value;
     const totalSamples = topParent(node).value;
     const percentage = ((samples / totalSamples) * 100).toFixed(2);
@@ -48,13 +40,17 @@ export function customTooltip() {
           {percentage}
           %)
         </div>
+        {parsedStackFrame.packageName && (
+          <div>Package: {parsedStackFrame.packageName}</div>
+        )}
+        {parsedStackFrame.rawClassName && (
+          <div>Class: {parsedStackFrame.rawClassName}</div>
+        )}
+        {parsedStackFrame.rawMethodName && (
+          <div>Method: {parsedStackFrame.rawMethodName}</div>
+        )}
         <div>
-          {packageName}
-        </div>
-        <div>
-          {className}
-          .
-          {methodName}
+          {parsedStackFrame.line}
         </div>
       </>
     );

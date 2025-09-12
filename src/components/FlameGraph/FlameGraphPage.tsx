@@ -8,13 +8,14 @@ import './FlameGraphPage.css';
 import Thread from '../../types/Thread';
 import isIdleThread from '../../common/isIdleThread';
 
-type ParsedStackFrame = {
+export type ParsedStackFrame = {
+  rawFrame: string;
   rawClassName: string;
   cleanClassName: string;
   rawMethodName: string;
   cleanMethodName: string;
   packageName: string;
-  lineNumber: string | null;
+  line: string;
 };
 
 type State = {
@@ -38,28 +39,24 @@ export const parseStackFrame = (frame: string): ParsedStackFrame => {
     .replace(/lambda\$(\w+)\$\d+/, '$1');
 
   // Get line number, defaulting to null if not present
-  const lineNumber = lineInfo?.split(':')[1]?.replace(/[^0-9]/g, '') || null;
+  const lineNumber = lineInfo?.split(':')[1]?.replace(/[^0-9]/g, '');
 
   // Package name is everything except the last two parts (class and method)
   const packageName = parts.slice(0, -2).join('.');
 
   return {
+    rawFrame: frame,
     rawClassName,
     cleanClassName,
     rawMethodName,
     cleanMethodName,
     packageName,
-    lineNumber,
+    line: lineNumber ? `line ${lineNumber}` : 'Unknown line',
   };
 };
 
-export const shortNameFrom = (frame: string): string => {
-  const parsed = parseStackFrame(frame);
-
-  if (!parsed.lineNumber) {
-    return `${parsed.cleanClassName}.${parsed.cleanMethodName} @ Unknown line`;
-  }
-  return `${parsed.cleanClassName}.${parsed.cleanMethodName} @ line ${parsed.lineNumber}`;
+export const shortNameFrom = (parsedFrame: ParsedStackFrame): string => {
+  return `${parsedFrame.cleanClassName}.${parsedFrame.cleanMethodName} @ ${parsedFrame.line}`;
 };
 
 class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
@@ -72,17 +69,18 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
   private static processLine = (previousFrame: ExtendedStackFrame, line: string): ExtendedStackFrame => {
     const children = previousFrame.children as ExtendedStackFrame[];
-    const existingFrame = children.find((frame) => frame.fullFrame === line);
+    const existingFrame = children.find((frame) => frame.parsedStackFrame.rawFrame === line);
     if (existingFrame) {
       existingFrame.value += 1;
       return existingFrame;
     }
 
+    const parsedStackFrame = parseStackFrame(line);
     const newFrame: ExtendedStackFrame = {
-      name: shortNameFrom(line),
+      name: shortNameFrom(parsedStackFrame),
       value: 1,
       children: [],
-      fullFrame: line,
+      parsedStackFrame,
       fade: false,
     };
 
@@ -104,7 +102,15 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
       name: 'root',
       value: 0,
       children: [],
-      fullFrame: 'root',
+      parsedStackFrame: {
+        rawFrame: 'root',
+        rawClassName: '',
+        cleanClassName: '',
+        rawMethodName: '',
+        cleanMethodName: '',
+        packageName: '',
+        line: '',
+      },
       fade: false,
     };
 

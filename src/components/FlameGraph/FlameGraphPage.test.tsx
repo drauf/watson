@@ -1,4 +1,4 @@
-import { shortNameFrom, parseStackFrame } from './FlameGraphPage';
+import { shortNameFrom, parseStackFrame, ParsedStackFrame } from './FlameGraphPage';
 
 describe('FlameGraphPage.parseStackFrame', () => {
   describe('basic Java stack frames', () => {
@@ -6,12 +6,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'io.atlassian.util.concurrent.SettableFuture.get(SettableFuture.java:95)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'io.atlassian.util.concurrent.SettableFuture.get(SettableFuture.java:95)',
         rawClassName: 'SettableFuture',
         cleanClassName: 'SettableFuture',
         rawMethodName: 'get',
         cleanMethodName: 'get',
         packageName: 'io.atlassian.util.concurrent',
-        lineNumber: '95'
+        line: 'line 95'
       });
     });
 
@@ -19,12 +20,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'java.lang.reflect.Method.invoke(java.base@11.0.11/Method.java:566)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'java.lang.reflect.Method.invoke(java.base@11.0.11/Method.java:566)',
         rawClassName: 'Method',
         cleanClassName: 'Method',
         rawMethodName: 'invoke',
         cleanMethodName: 'invoke',
         packageName: 'java.lang.reflect',
-        lineNumber: '566'
+        line: 'line 566'
       });
     });
 
@@ -32,12 +34,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.sun.proxy.$Proxy21.reIndex(Unknown Source)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.sun.proxy.$Proxy21.reIndex(Unknown Source)',
         rawClassName: '$Proxy21',
         cleanClassName: 'Proxy',
         rawMethodName: 'reIndex',
         cleanMethodName: 'reIndex',
         packageName: 'com.sun.proxy',
-        lineNumber: null
+        line: 'Unknown line'
       });
     });
   });
@@ -47,12 +50,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.atlassian.jira.issue.index.DefaultIndexManager$Lambda$2492/0x0000000802fbe840.await(Unknown Source)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.atlassian.jira.issue.index.DefaultIndexManager$Lambda$2492/0x0000000802fbe840.await(Unknown Source)',
         rawClassName: 'DefaultIndexManager$Lambda$2492/0x0000000802fbe840',
         cleanClassName: 'DefaultIndexManager',
         rawMethodName: 'await',
         cleanMethodName: 'await',
         packageName: 'com.atlassian.jira.issue.index',
-        lineNumber: null
+        line: 'Unknown line'
       });
     });
 
@@ -60,12 +64,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.codebarrel.jira.plugin.automation.queue.JiraAutomationQueueExecutor.lambda$processClaimedItem$4(JiraAutomationQueueExecutor.java:268)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.codebarrel.jira.plugin.automation.queue.JiraAutomationQueueExecutor.lambda$processClaimedItem$4(JiraAutomationQueueExecutor.java:268)',
         rawClassName: 'JiraAutomationQueueExecutor',
         cleanClassName: 'JiraAutomationQueueExecutor',
         rawMethodName: 'lambda$processClaimedItem$4',
         cleanMethodName: 'processClaimedItem',
         packageName: 'com.codebarrel.jira.plugin.automation.queue',
-        lineNumber: '268'
+        line: 'line 268'
       });
     });
 
@@ -73,12 +78,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.codebarrel.automation.rulecomponent.jira.action.setentityproperty.SetEntityPropertyActionExecutor$Lambda$4721/0x0000000803928840.accept(Unknown Source)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.codebarrel.automation.rulecomponent.jira.action.setentityproperty.SetEntityPropertyActionExecutor$Lambda$4721/0x0000000803928840.accept(Unknown Source)',
         rawClassName: 'SetEntityPropertyActionExecutor$Lambda$4721/0x0000000803928840',
         cleanClassName: 'SetEntityPropertyActionExecutor',
         rawMethodName: 'accept',
         cleanMethodName: 'accept',
         packageName: 'com.codebarrel.automation.rulecomponent.jira.action.setentityproperty',
-        lineNumber: null
+        line: 'Unknown line'
       });
     });
 
@@ -86,12 +92,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.atlassian.event.internal.AsynchronousAbleEventDispatcher$Lambda$610/0x000000080095e840.run(Unknown Source)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.atlassian.event.internal.AsynchronousAbleEventDispatcher$Lambda$610/0x000000080095e840.run(Unknown Source)',
         rawClassName: 'AsynchronousAbleEventDispatcher$Lambda$610/0x000000080095e840',
         cleanClassName: 'AsynchronousAbleEventDispatcher',
         rawMethodName: 'run',
         cleanMethodName: 'run',
         packageName: 'com.atlassian.event.internal',
-        lineNumber: null
+        line: 'Unknown line'
       });
     });
   });
@@ -101,12 +108,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.sun.proxy.$Proxy21.reIndex(Unknown Source)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.sun.proxy.$Proxy21.reIndex(Unknown Source)',
         rawClassName: '$Proxy21',
         cleanClassName: 'Proxy',
         rawMethodName: 'reIndex',
         cleanMethodName: 'reIndex',
         packageName: 'com.sun.proxy',
-        lineNumber: null
+        line: 'Unknown line'
       });
     });
 
@@ -114,12 +122,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.sun.proxy.$Proxy123.execute(ProxyClass.java:42)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.sun.proxy.$Proxy123.execute(ProxyClass.java:42)',
         rawClassName: '$Proxy123',
         cleanClassName: 'Proxy',
         rawMethodName: 'execute',
         cleanMethodName: 'execute',
         packageName: 'com.sun.proxy',
-        lineNumber: '42'
+        line: 'line 42'
       });
     });
   });
@@ -129,12 +138,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'methodName(File.java:123)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'methodName(File.java:123)',
         rawClassName: '',
         cleanClassName: '',
         rawMethodName: 'methodName',
         cleanMethodName: 'methodName',
         packageName: '',
-        lineNumber: '123'
+        line: 'line 123'
       });
     });
 
@@ -142,12 +152,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'singleMethod(Unknown Source)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'singleMethod(Unknown Source)',
         rawClassName: '',
         cleanClassName: '',
         rawMethodName: 'singleMethod',
         cleanMethodName: 'singleMethod',
         packageName: '',
-        lineNumber: null
+        line: 'Unknown line'
       });
     });
 
@@ -155,12 +166,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.example.Class.method(File.java:)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.example.Class.method(File.java:)',
         rawClassName: 'Class',
         cleanClassName: 'Class',
         rawMethodName: 'method',
         cleanMethodName: 'method',
         packageName: 'com.example',
-        lineNumber: null
+        line: 'Unknown line'
       });
     });
 
@@ -168,12 +180,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.example.Class.method';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.example.Class.method',
         rawClassName: 'Class',
         cleanClassName: 'Class',
         rawMethodName: 'method',
         cleanMethodName: 'method',
         packageName: 'com.example',
-        lineNumber: null
+        line: 'Unknown line'
       });
     });
 
@@ -181,12 +194,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.example.service.ComplexService$Lambda$123$456/0x123456.lambda$complexOperation$7(ComplexService.java:789)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.example.service.ComplexService$Lambda$123$456/0x123456.lambda$complexOperation$7(ComplexService.java:789)',
         rawClassName: 'ComplexService$Lambda$123$456/0x123456',
         cleanClassName: 'ComplexService',
         rawMethodName: 'lambda$complexOperation$7',
         cleanMethodName: 'complexOperation',
         packageName: 'com.example.service',
-        lineNumber: '789'
+        line: 'line 789'
       });
     });
 
@@ -194,12 +208,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.example.Class.method(Class.java)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.example.Class.method(Class.java)',
         rawClassName: 'Class',
         cleanClassName: 'Class',
         rawMethodName: 'method',
         cleanMethodName: 'method',
         packageName: 'com.example',
-        lineNumber: null
+        line: 'Unknown line'
       });
     });
 
@@ -207,12 +222,13 @@ describe('FlameGraphPage.parseStackFrame', () => {
       const frame = 'com.example.OuterClass$InnerClass.method(OuterClass.java:123)';
       const result = parseStackFrame(frame);
       expect(result).toEqual({
+        rawFrame: 'com.example.OuterClass$InnerClass.method(OuterClass.java:123)',
         rawClassName: 'OuterClass$InnerClass',
         cleanClassName: 'OuterClass$InnerClass',
         rawMethodName: 'method',
         cleanMethodName: 'method',
         packageName: 'com.example',
-        lineNumber: '123'
+        line: 'line 123'
       });
     });
   });
@@ -221,33 +237,49 @@ describe('FlameGraphPage.parseStackFrame', () => {
     it('extracts line number correctly', () => {
       const frame = 'com.example.Class.method(Class.java:123)';
       const result = parseStackFrame(frame);
-      expect(result.lineNumber).toBe('123');
+      expect(result.line).toBe('line 123');
     });
 
     it('handles line number with extra characters', () => {
       const frame = 'com.example.Class.method(Class.java:123])';
       const result = parseStackFrame(frame);
-      expect(result.lineNumber).toBe('123');
+      expect(result.line).toBe('line 123');
     });
 
     it('handles unknown source variations', () => {
       const frame = 'com.example.Class.method(Unknown Source)';
       const result = parseStackFrame(frame);
-      expect(result.lineNumber).toBe(null);
+      expect(result.line).toBe('Unknown line');
     });
   });
 });
 
 describe('FlameGraphPage.shortNameFrom', () => {
   it('handles frame with line number', () => {
-    const frame = 'com.example.Class.method(Class.java:123)';
-    const result = shortNameFrom(frame);
+    const parsedFrame: ParsedStackFrame = {
+      rawFrame: 'com.example.Class.method(Class.java:123)',
+      rawClassName: 'Class',
+      cleanClassName: 'Class',
+      rawMethodName: 'method',
+      cleanMethodName: 'method',
+      packageName: 'com.example',
+      line: 'line 123'
+    };
+    const result = shortNameFrom(parsedFrame);
     expect(result).toBe('Class.method @ line 123');
   });
 
   it('handles frame without line number', () => {
-    const frame = 'com.example.Class.method(Unknown Source)';
-    const result = shortNameFrom(frame);
+    const parsedFrame: ParsedStackFrame = {
+      rawFrame: 'com.example.Class.method(Unknown Source)',
+      rawClassName: 'Class',
+      cleanClassName: 'Class',
+      rawMethodName: 'method',
+      cleanMethodName: 'method',
+      packageName: 'com.example',
+      line: 'Unknown line'
+    };
+    const result = shortNameFrom(parsedFrame);
     expect(result).toBe('Class.method @ Unknown line');
   });
 });
