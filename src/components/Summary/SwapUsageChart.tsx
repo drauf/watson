@@ -5,6 +5,7 @@ import {
 import MemoryUsage from '../../types/MemoryUsage';
 import ThreadDump from '../../types/ThreadDump';
 import labelFormatter from './LabelFormatter';
+import PieChartTooltip, { ChartData } from './PieChartTooltip';
 
 const COLORS = ['#6554C0', '#FF5630'];
 
@@ -29,26 +30,30 @@ export default class SwapUsageChart extends React.PureComponent<Props> {
       );
     }
 
+    const { memoryUnit } = memoryUsages[0];
     const freeSwapAvg = memoryUsages.reduce((a, b) => a + b.swapFree, 0) / memoryUsages.length;
     const usedSwapAvg = memoryUsages.reduce((a, b) => a + b.swapUsed, 0) / memoryUsages.length;
+    const sum = freeSwapAvg + usedSwapAvg;
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const data: object[] = [
-      { name: 'Free swap', value: freeSwapAvg },
-      { name: 'Used swap', value: usedSwapAvg },
+    const data: ChartData[] = [
+      { name: 'Free swap', value: freeSwapAvg, label: labelFormatter(freeSwapAvg, memoryUnit) },
+      { name: 'Used swap', value: usedSwapAvg, label: labelFormatter(usedSwapAvg, memoryUnit) },
     ];
 
     return (
-      <div>
+      <div id="swap-usage-chart">
         <h3>Swap usage</h3>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
-            <Pie data={data} dataKey="value" nameKey="name">
+            <Pie data={data} dataKey="value" nameKey="name" animationDuration={1000}>
               {
                 data.map((_, index) => <Cell key={COLORS[index]} fill={COLORS[index]} />)
               }
             </Pie>
-            <Tooltip formatter={labelFormatter} />
+            {sum === 0 && (
+              <Pie data={[{ name: 'No Data', value: 1 }]} dataKey="value" fill="#eeeeee" animationDuration={1000} />
+            )}
+            {sum !== 0 && <Tooltip content={<PieChartTooltip />} />}
             <Legend />
           </PieChart>
         </ResponsiveContainer>

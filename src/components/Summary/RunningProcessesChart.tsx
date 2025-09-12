@@ -4,6 +4,7 @@ import {
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';
+import TooltipContent from '../common/TooltipContent';
 
 type Props = {
   threadDumps: ThreadDump[];
@@ -27,7 +28,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
     const threadsCount: number = payload[0].value ? payload[0].value : 0;
 
     return (
-      <div className="tooltip ellipsis">
+      <TooltipContent>
         <p>
           {`${time} - ${threadsCount}`}
           {' '}
@@ -51,7 +52,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
             ? threadNames.map((name) => <li key={name}>{name}</li>)
             : <li>none</li>}
         </ol>
-      </div>
+      </TooltipContent>
     );
   }
 
@@ -82,7 +83,7 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
   }
 
   return (
-    <div className="chart">
+    <div id="running-processes-chart" className="chart">
       <h3>Running processes</h3>
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>
