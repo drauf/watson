@@ -55,9 +55,7 @@ export const parseStackFrame = (frame: string): ParsedStackFrame => {
   };
 };
 
-export const shortNameFrom = (parsedFrame: ParsedStackFrame): string => {
-  return `${parsedFrame.cleanClassName}.${parsedFrame.cleanMethodName} @ ${parsedFrame.line}`;
-};
+export const shortNameFrom = (parsedFrame: ParsedStackFrame): string => `${parsedFrame.cleanClassName}.${parsedFrame.cleanMethodName} @ ${parsedFrame.line}`;
 
 class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {

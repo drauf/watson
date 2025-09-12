@@ -8,7 +8,8 @@ const VIEWPORT_MARGIN = 8;
 type Props = {
   children: React.ReactNode;
   tooltip: string | React.ReactNode;
-  alwaysVisible: boolean | undefined;
+  // eslint-disable-next-line react/require-default-props
+  alwaysVisible?: boolean;
 };
 
 const SmartTooltip: React.FC<Props> = ({

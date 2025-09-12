@@ -12,7 +12,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'get',
         cleanMethodName: 'get',
         packageName: 'io.atlassian.util.concurrent',
-        line: 'line 95'
+        line: 'line 95',
       });
     });
 
@@ -26,7 +26,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'invoke',
         cleanMethodName: 'invoke',
         packageName: 'java.lang.reflect',
-        line: 'line 566'
+        line: 'line 566',
       });
     });
 
@@ -40,7 +40,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'reIndex',
         cleanMethodName: 'reIndex',
         packageName: 'com.sun.proxy',
-        line: 'Unknown line'
+        line: 'Unknown line',
       });
     });
   });
@@ -56,7 +56,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'await',
         cleanMethodName: 'await',
         packageName: 'com.atlassian.jira.issue.index',
-        line: 'Unknown line'
+        line: 'Unknown line',
       });
     });
 
@@ -70,7 +70,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'lambda$processClaimedItem$4',
         cleanMethodName: 'processClaimedItem',
         packageName: 'com.codebarrel.jira.plugin.automation.queue',
-        line: 'line 268'
+        line: 'line 268',
       });
     });
 
@@ -84,7 +84,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'accept',
         cleanMethodName: 'accept',
         packageName: 'com.codebarrel.automation.rulecomponent.jira.action.setentityproperty',
-        line: 'Unknown line'
+        line: 'Unknown line',
       });
     });
 
@@ -98,7 +98,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'run',
         cleanMethodName: 'run',
         packageName: 'com.atlassian.event.internal',
-        line: 'Unknown line'
+        line: 'Unknown line',
       });
     });
   });
@@ -114,7 +114,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'reIndex',
         cleanMethodName: 'reIndex',
         packageName: 'com.sun.proxy',
-        line: 'Unknown line'
+        line: 'Unknown line',
       });
     });
 
@@ -128,7 +128,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'execute',
         cleanMethodName: 'execute',
         packageName: 'com.sun.proxy',
-        line: 'line 42'
+        line: 'line 42',
       });
     });
   });
@@ -144,7 +144,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'methodName',
         cleanMethodName: 'methodName',
         packageName: '',
-        line: 'line 123'
+        line: 'line 123',
       });
     });
 
@@ -158,7 +158,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'singleMethod',
         cleanMethodName: 'singleMethod',
         packageName: '',
-        line: 'Unknown line'
+        line: 'Unknown line',
       });
     });
 
@@ -172,7 +172,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'method',
         cleanMethodName: 'method',
         packageName: 'com.example',
-        line: 'Unknown line'
+        line: 'Unknown line',
       });
     });
 
@@ -186,7 +186,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'method',
         cleanMethodName: 'method',
         packageName: 'com.example',
-        line: 'Unknown line'
+        line: 'Unknown line',
       });
     });
 
@@ -200,7 +200,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'lambda$complexOperation$7',
         cleanMethodName: 'complexOperation',
         packageName: 'com.example.service',
-        line: 'line 789'
+        line: 'line 789',
       });
     });
 
@@ -214,7 +214,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'method',
         cleanMethodName: 'method',
         packageName: 'com.example',
-        line: 'Unknown line'
+        line: 'Unknown line',
       });
     });
 
@@ -228,7 +228,7 @@ describe('FlameGraphPage.parseStackFrame', () => {
         rawMethodName: 'method',
         cleanMethodName: 'method',
         packageName: 'com.example',
-        line: 'line 123'
+        line: 'line 123',
       });
     });
   });
@@ -263,7 +263,7 @@ describe('FlameGraphPage.shortNameFrom', () => {
       rawMethodName: 'method',
       cleanMethodName: 'method',
       packageName: 'com.example',
-      line: 'line 123'
+      line: 'line 123',
     };
     const result = shortNameFrom(parsedFrame);
     expect(result).toBe('Class.method @ line 123');
@@ -277,7 +277,7 @@ describe('FlameGraphPage.shortNameFrom', () => {
       rawMethodName: 'method',
       cleanMethodName: 'method',
       packageName: 'com.example',
-      line: 'Unknown line'
+      line: 'Unknown line',
     };
     const result = shortNameFrom(parsedFrame);
     expect(result).toBe('Class.method @ Unknown line');

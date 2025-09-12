@@ -1,5 +1,5 @@
-import {createRoot, Root} from 'react-dom/client';
-import type {Node} from './FlameGraph';
+import { createRoot, Root } from 'react-dom/client';
+import type { Node } from './FlameGraph';
 import SmartTooltip from '../common/SmartTooltip';
 
 const topParent = (node: Node): Node => {
@@ -23,10 +23,11 @@ export function customTooltip() {
   }
 
   tip.show = (node: Node) => {
-    const x: number = window.event.pageX;
-    const y: number = window.event.pageY;
+    const event = window.event as MouseEvent | undefined;
+    const x: number = event?.pageX || 0;
+    const y: number = event?.pageY || 0;
 
-    const {parsedStackFrame} = node.data;
+    const { parsedStackFrame } = node.data;
     const samples = node.value;
     const totalSamples = topParent(node).value;
     const percentage = ((samples / totalSamples) * 100).toFixed(2);
@@ -41,13 +42,22 @@ export function customTooltip() {
           %)
         </div>
         {parsedStackFrame.packageName && (
-          <div>Package: {parsedStackFrame.packageName}</div>
+          <div>
+            Package:
+            {parsedStackFrame.packageName}
+          </div>
         )}
         {parsedStackFrame.rawClassName && (
-          <div>Class: {parsedStackFrame.rawClassName}</div>
+          <div>
+            Class:
+            {parsedStackFrame.rawClassName}
+          </div>
         )}
         {parsedStackFrame.rawMethodName && (
-          <div>Method: {parsedStackFrame.rawMethodName}</div>
+          <div>
+            Method:
+            {parsedStackFrame.rawMethodName}
+          </div>
         )}
         <div>
           {parsedStackFrame.line}
