@@ -1,8 +1,14 @@
-// @ts-expect-error: the library exports this file but does not have types for it
-import { defaultFlamegraphTooltip } from 'd3-flame-graph';
-import { renderToStaticMarkup } from 'react-dom/server';
-import type { Node } from './FlameGraph';
-import TooltipContent from '../common/TooltipContent';
+import {createRoot, Root} from 'react-dom/client';
+import type {Node} from './FlameGraph';
+import SmartTooltip from '../common/SmartTooltip';
+
+export const splitFrame = (fullFrame: string): { packageName: string; className: string; methodName: string } => {
+  const parts = fullFrame.split('.');
+  const methodName = parts.pop() || '';
+  const className = parts.pop() || '';
+  const packageName = parts.join('.');
+  return {packageName, className, methodName};
+};
 
 const topParent = (node: Node): Node => {
   let result = node;
@@ -12,18 +18,29 @@ const topParent = (node: Node): Node => {
   return result;
 };
 
-// we can't use types from the library because they thing this tooltip is a boolean
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-const tooltip = defaultFlamegraphTooltip()
-  .html((node: Node) => {
-    const parts = node.data.fullFrame.split('.');
+// Custom tooltip implementation for d3-flame-graph - note that we are limited by the package's API :(
+export function customTooltip() {
+  let container: HTMLDivElement | null = null;
+  let root: Root | null = null;
 
+  function tip() {
+    // create a container div that will persist
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    root = createRoot(container);
+  }
+
+  tip.show = (node: Node) => {
+    const x: number = window.event.pageX;
+    const y: number = window.event.pageY;
+
+    const { packageName, className, methodName } = splitFrame(node.data.fullFrame);
     const samples = node.value;
     const totalSamples = topParent(node).value;
     const percentage = ((samples / totalSamples) * 100).toFixed(2);
 
-    return renderToStaticMarkup(
-      <TooltipContent>
+    const tooltipContent = (
+      <>
         <div>
           {samples}
           {' '}
@@ -32,18 +49,51 @@ const tooltip = defaultFlamegraphTooltip()
           %)
         </div>
         <div>
-          {parts.slice(0, -2).join('.')}
+          {packageName}
         </div>
         <div>
-          {parts[parts.length - 2]}
+          {className}
           .
-          {parts[parts.length - 1]}
+          {methodName}
         </div>
-      </TooltipContent>,
+      </>
     );
-  });
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-tooltip.contentIsHTML = true;
+    root?.render(
+      <div style={{
+        position: 'absolute',
+        left: x,
+        top: y,
+      }}
+      >
+        <SmartTooltip
+          key={`${x}-${y}`}
+          tooltip={tooltipContent}
+          alwaysVisible
+        >
+          &#x200b;
+        </SmartTooltip>
+      </div>,
+    );
+    return tip;
+  };
 
+  tip.hide = () => {
+    root?.render(null);
+    return tip;
+  };
+
+  tip.destroy = () => {
+    root?.unmount();
+    container?.remove();
+  };
+
+  return tip;
+}
+
+const tooltip = customTooltip();
+
+// we need to export as boolean because of a bug in types for d3-flame-graph
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export default tooltip as boolean;
