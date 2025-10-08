@@ -16,7 +16,7 @@ test.describe('Threads overview', () => {
         expect(await pageWithData.getByText('Non-Tomcat').isChecked()).toBeFalsy();
         expect(await pageWithData.getByText('Database').isChecked()).toBeFalsy();
         expect(await pageWithData.getByText('Lucene', { exact: true }).isChecked()).toBeFalsy();
-        expect(await pageWithData.getByText('Using >30% CPU').isChecked()).toBeFalsy();
+        expect(await pageWithData.getByText('Using >10% CPU').isChecked()).toBeFalsy();
         expect(await pageWithData.getByRole('textbox', { name: NAME_REGEXP }).inputValue()).toBe('');
         expect(await pageWithData.getByRole('textbox', { name: STACK_REGEXP }).inputValue()).toBe('');
 
@@ -34,10 +34,10 @@ test.describe('Threads overview', () => {
         await expect(pageWithData).toHaveScreenshot();
 
         await pageWithData.getByText('Lucene', { exact: true }).uncheck();
-        await pageWithData.getByText('Using >30% CPU').check();
+        await pageWithData.getByText('Using >10% CPU').check();
         await expect(pageWithData).toHaveScreenshot();
 
-        await pageWithData.getByText('Using >30% CPU').uncheck();
+        await pageWithData.getByText('Using >10% CPU').uncheck();
         await pageWithData.getByText('Non-Tomcat').check();
         await pageWithData.getByText('Database').check();
         await expect(pageWithData).toHaveScreenshot();

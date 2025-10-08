@@ -177,7 +177,7 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
       return threads;
     }
 
-    return threads.filter((thread) => parseFloat(thread.cpuUsage) > 30);
+    return threads.filter((thread) => parseFloat(thread.cpuUsage) >= 10);
   };
 
   private static matchesStackTraceFilter = (thread: Thread, filter: RegExp): boolean => {

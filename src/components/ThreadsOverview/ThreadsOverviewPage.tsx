@@ -120,7 +120,7 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
 
   private static isUsingCpu = (threads: Map<number, Thread>): boolean => {
     for (const thread of threads.values()) {
-      if (parseFloat(thread.cpuUsage) > 30) {
+      if (parseFloat(thread.cpuUsage) >= 10) {
         return true;
       }
     }

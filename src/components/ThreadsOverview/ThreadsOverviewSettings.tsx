@@ -90,7 +90,7 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
             displayName="High CPU usage"
             checked={usingCpu}
             onChange={onFilterChange}
-            tooltip="Show only threads using more than 30% CPU"
+            tooltip="Show only threads using more than 10% CPU"
           />
         </div>
 
