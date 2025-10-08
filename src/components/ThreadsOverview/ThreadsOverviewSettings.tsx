@@ -1,5 +1,6 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
+import RegexFilters from "../common/RegexFilters";
 
 type Props = {
   active: boolean;
@@ -93,29 +94,11 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
           />
         </div>
 
-        <div>
-          <label title="Filter by thread name pattern. Examples: 'http.*exec' for Tomcat threads, '^main' for main thread only">
-            <b>Thread name pattern</b>
-            <input
-              type="text"
-              name="nameFilter"
-              value={nameFilter}
-              onChange={onRegExpChange}
-              placeholder="e.g. http.*exec"
-            />
-          </label>
-
-          <label title="Filter by stack trace pattern. Examples: 'java\.io' for I/O operations, 'SQLException' for database errors">
-            <b>Stack trace pattern</b>
-            <input
-              type="text"
-              name="stackFilter"
-              value={stackFilter}
-              onChange={onRegExpChange}
-              placeholder="e.g. java\.io"
-            />
-          </label>
-        </div>
+        <RegexFilters
+          nameFilter={nameFilter}
+          stackFilter={stackFilter}
+          onRegExpChange={onRegExpChange}
+        />
       </section>
     );
   }

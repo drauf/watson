@@ -1,5 +1,6 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
+import RegexFilters from '../common/RegexFilters';
 
 type Props = {
   withOwner: boolean;
@@ -47,29 +48,11 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
           />
         </div>
 
-        <div>
-          <label title="Filter monitors by thread name using regular expressions. Shows monitors where any waiting or owning thread matches. Examples: 'http.*exec' matches Tomcat threads, '^main' matches only the main thread">
-            <b>Thread name pattern</b>
-            <input
-              type="text"
-              name="nameFilter"
-              value={nameFilter}
-              onChange={onRegExpChange}
-              placeholder="e.g. http.*exec"
-            />
-          </label>
-
-          <label title="Filter monitors by stack trace using regular expressions. Shows monitors where any waiting or owning thread has a matching stack trace. Examples: 'java\.io' matches threads doing I/O operations, 'com\.atlassian\.jira' finds Jira-specific code">
-            <b>Stack trace pattern</b>
-            <input
-              type="text"
-              name="stackFilter"
-              value={stackFilter}
-              onChange={onRegExpChange}
-              placeholder="e.g. java\.io"
-            />
-          </label>
-        </div>
+        <RegexFilters
+          nameFilter={nameFilter}
+          stackFilter={stackFilter}
+          onRegExpChange={onRegExpChange}
+        />
       </section>
     );
   }

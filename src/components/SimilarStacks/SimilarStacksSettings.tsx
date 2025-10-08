@@ -1,18 +1,23 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
+import SmartTooltip from '../common/SmartTooltip';
+import RegexFilters from '../common/RegexFilters';
 
 type Props = {
   linesToConsider: number;
-  minimalGroupSize: number;
+  minimumGroupSize: number;
   withoutIdle: boolean;
+  nameFilter: string;
+  stackFilter: string;
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
   onIntegerChange: React.ChangeEventHandler<HTMLInputElement>;
+  onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 export default class SimilarStacksSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const {
-      linesToConsider, minimalGroupSize, withoutIdle, onFilterChange, onIntegerChange,
+      linesToConsider, minimumGroupSize, withoutIdle, nameFilter, stackFilter, onFilterChange, onIntegerChange, onRegExpChange,
     } = this.props;
 
     return (
@@ -29,28 +34,52 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
           />
         </div>
 
-        <div>
-          <label>
-            <b>Stack trace lines to compare</b>
-            <input
-              type="number"
-              name="linesToConsider"
-              value={linesToConsider}
-              onChange={onIntegerChange}
-            />
-          </label>
-        </div>
+        <RegexFilters
+          nameFilter={nameFilter}
+          stackFilter={stackFilter}
+          onRegExpChange={onRegExpChange}
+        />
 
         <div>
-          <label>
-            <b>Minimal group size to show</b>
-            <input
-              type="number"
-              name="minimalGroupSize"
-              value={minimalGroupSize}
-              onChange={onIntegerChange}
-            />
-          </label>
+          <SmartTooltip tooltip={
+            <div>
+              <div><strong>Stack trace depth for comparison</strong></div>
+              <div>How many stack frames to compare when grouping threads</div>
+              <div>• <strong>5-10:</strong> Focus on immediate call context</div>
+              <div>• <strong>15-20:</strong> Balanced detail level</div>
+              <div>• <strong>30+:</strong> Very detailed grouping</div>
+            </div>
+          }>
+            <label>
+              <b>Comparison depth</b>
+              <input
+                type="number"
+                name="linesToConsider"
+                value={linesToConsider}
+                onChange={onIntegerChange}
+              />
+            </label>
+          </SmartTooltip>
+
+          <SmartTooltip tooltip={
+            <div>
+              <div><strong>Minimum threads per group</strong></div>
+              <div>Only show groups with at least this many similar threads</div>
+              <div>• <strong>2-3:</strong> Show all similar patterns</div>
+              <div>• <strong>5-10:</strong> Focus on common patterns</div>
+              <div>• <strong>20+:</strong> Only show very frequent patterns</div>
+            </div>
+          }>
+            <label>
+              <b>Minimum group size</b>
+              <input
+                type="number"
+                name="minimalGroupSize"
+                value={minimumGroupSize}
+                onChange={onIntegerChange}
+              />
+            </label>
+          </SmartTooltip>
         </div>
       </section>
     );

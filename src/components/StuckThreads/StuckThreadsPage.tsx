@@ -15,6 +15,8 @@ type State = {
   minClusterSize: number;
   threadDumps: ThreadDump[];
   withoutIdle: boolean;
+  nameFilter: string;
+  stackFilter: string;
 };
 
 class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
@@ -28,6 +30,8 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
       minClusterSize: nonEmptyThreadDumps.length,
       threadDumps: nonEmptyThreadDumps,
       withoutIdle: true,
+      nameFilter: '',
+      stackFilter: '',
     };
   }
 
@@ -46,8 +50,11 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
           maxDifferingLines={this.state.maxDifferingLines}
           minClusterSize={this.state.minClusterSize}
           withoutIdle={this.state.withoutIdle}
+          nameFilter={this.state.nameFilter}
+          stackFilter={this.state.stackFilter}
           onFilterChange={this.handleFilterChange}
           onIntegerChange={this.handleIntegerChange}
+          onRegExpChange={this.handleTextChange}
         />
 
         {this.renderStuckThreads(clusters)}

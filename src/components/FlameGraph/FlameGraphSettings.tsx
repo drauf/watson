@@ -1,5 +1,6 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
+import RegexFilters from '../common/RegexFilters';
 
 type Props = {
   withoutIdle: boolean;
@@ -44,29 +45,11 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
             />
           </div>
 
-          <div>
-            <label title="Filter threads by name using regular expressions. Examples: 'http.*exec' matches Tomcat threads, '^main' matches only the main thread">
-              <b>Thread name pattern</b>
-              <input
-                type="text"
-                name="nameFilter"
-                value={nameFilter}
-                onChange={onRegExpChange}
-                placeholder="e.g. http.*exec"
-              />
-            </label>
-
-            <label title="Filter threads by any line in their stack trace using regular expressions. Examples: 'java\.io' matches threads doing I/O operations, 'SQLException' finds database errors, 'com\.atlassian\.jira' finds Jira-specific code">
-              <b>Stack trace pattern</b>
-              <input
-                type="text"
-                name="stackFilter"
-                value={stackFilter}
-                onChange={onRegExpChange}
-                placeholder="e.g. java\.io"
-              />
-            </label>
-          </div>
+          <RegexFilters
+            nameFilter={nameFilter}
+            stackFilter={stackFilter}
+            onRegExpChange={onRegExpChange}
+          />
         </section>
       </section>
     );

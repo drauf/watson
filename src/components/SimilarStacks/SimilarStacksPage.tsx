@@ -10,20 +10,24 @@ import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDu
 
 type State = {
   linesToConsider: number;
-  minimalGroupSize: number;
+  minimumGroupSize: number;
   withoutIdle: boolean;
+  nameFilter: string;
+  stackFilter: string;
 };
 
 class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public override state: State = {
-    linesToConsider: 40,
-    minimalGroupSize: 2,
+    linesToConsider: 30,
+    minimumGroupSize: 5,
     withoutIdle: true,
+    nameFilter: '',
+    stackFilter: '',
   };
 
   public override render(): JSX.Element {
     const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider)
-      .filter((group) => group.length >= this.state.minimalGroupSize);
+      .filter((group) => group.length >= this.state.minimumGroupSize);
 
     if (!this.props.threadDumps.some((dump) => dump.threads.length > 0)) {
       return <NoThreadDumpsError />;
@@ -33,10 +37,13 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
       <main>
         <SimilarStacksSettings
           linesToConsider={this.state.linesToConsider}
-          minimalGroupSize={this.state.minimalGroupSize}
+          minimumGroupSize={this.state.minimumGroupSize}
           withoutIdle={this.state.withoutIdle}
+          nameFilter={this.state.nameFilter}
+          stackFilter={this.state.stackFilter}
           onFilterChange={this.handleFilterChange}
           onIntegerChange={this.handleIntegerChange}
+          onRegExpChange={this.handleTextChange}
         />
 
         {this.renderThreadGroups(threadGroups)}
