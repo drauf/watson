@@ -2,15 +2,15 @@ import { expect } from '@playwright/test';
 import { test } from './e2e-common';
 
 test.describe('Stuck threads', () => {
-    const MIN_STACKS = 'Minimal similar stacks to consider a thread stuck';
-    const MAX_LINES = 'Maximum differing lines between dumps';
+    const MIN_STACKS = 'Detection threshold';
+    const MAX_LINES = 'Similarity tolerance';
 
     test.beforeEach(async ({ pageWithData }) => {
         await pageWithData.getByText('Stuck threads').click();
     });
 
     test('loads', async ({ pageWithData }) => {
-        expect(await pageWithData.getByText('Without Idle').isChecked()).toBeTruthy();
+        expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
         expect(await pageWithData.getByRole('spinbutton', { name: MIN_STACKS }).inputValue()).toBe('10');
         expect(await pageWithData.getByRole('spinbutton', { name: MAX_LINES }).inputValue()).toBe('5');
 
@@ -31,7 +31,7 @@ test.describe('Stuck threads', () => {
     });
 
     test('can fold sections', async ({ pageWithData }) => {
-        await pageWithData.getByText('Without Idle').uncheck();
+        await pageWithData.getByText('Active').uncheck();
         const buttons = (await pageWithData.locator('main').getByRole('button').all()).slice(0, 10);
 
         for (const button of buttons) {

@@ -7,21 +7,21 @@ test.describe('Monitors', () => {
     });
 
     test('loads', async ({ pageWithData }) => {
-        expect(await pageWithData.getByText('Without Idle').isChecked()).toBeTruthy();
+        expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
 
         await expect(pageWithData).toHaveScreenshot();
     });
 
     test('has working filters', async ({ pageWithData }) => {
-        await pageWithData.getByText('Without Idle').uncheck();
-        await pageWithData.getByText('Without Owner').check();
+        await pageWithData.getByText('Active').uncheck();
+        await pageWithData.getByText('Unowned locks').check();
 
         await expect(pageWithData).toHaveScreenshot();
     });
 
     test('shows empty state', async ({ pageWithData }) => {
-        await pageWithData.getByText('Without Owner').uncheck();
-        await pageWithData.getByText('With Owner').check();
+        await pageWithData.getByText('Unowned locks').uncheck();
+        await pageWithData.getByText('Owned locks').check();
 
         await expect(pageWithData).toHaveScreenshot();
     });

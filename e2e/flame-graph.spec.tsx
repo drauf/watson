@@ -15,13 +15,13 @@ test.describe('Flame graph', () => {
     });
 
     test('loads', async ({ pageWithData }) => {
-        expect(await pageWithData.getByText('Without Idle').isChecked()).toBeTruthy();
+        expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
 
         await expect(pageWithData).toHaveScreenshot();
     });
 
     test('has working filters', async ({ pageWithData }) => {
-        await pageWithData.getByText('Without Idle').uncheck();
+        await pageWithData.getByText('Active').uncheck();
         await waitForAnimationToFinish(pageWithData);
 
         await expect(pageWithData).toHaveScreenshot();

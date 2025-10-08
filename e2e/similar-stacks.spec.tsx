@@ -7,23 +7,23 @@ test.describe('Similar stacks', () => {
     });
 
     test('loads', async ({ pageWithData }) => {
-        expect(await pageWithData.getByText('Without Idle').isChecked()).toBeTruthy();
-        expect(await pageWithData.getByRole('spinbutton', { name: 'Stack trace lines to compare' }).inputValue()).toBe('40');
-        expect(await pageWithData.getByRole('spinbutton', { name: 'Minimal group size to show' }).inputValue()).toBe('2');
+        expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
+        expect(await pageWithData.getByRole('spinbutton', { name: 'Comparison depth' }).inputValue()).toBe('40');
+        expect(await pageWithData.getByRole('spinbutton', { name: 'Minimum group size' }).inputValue()).toBe('2');
 
         await expect(pageWithData).toHaveScreenshot();
     });
 
     test('has working filters', async ({ pageWithData }) => {
-        await pageWithData.getByText('Without Idle').uncheck();
-        await pageWithData.getByRole('spinbutton', { name: 'Stack trace lines to compare' }).fill('5');
-        await pageWithData.getByRole('spinbutton', { name: 'Minimal group size to show' }).fill('600');
+        await pageWithData.getByText('Active').uncheck();
+        await pageWithData.getByRole('spinbutton', { name: 'Comparison depth' }).fill('5');
+        await pageWithData.getByRole('spinbutton', { name: 'Minimum group size' }).fill('600');
 
         await expect(pageWithData).toHaveScreenshot();
     });    
     
     test('shows empty state', async ({ pageWithData }) => {
-        await pageWithData.getByRole('spinbutton', { name: 'Minimal group size to show' }).fill('2137');
+        await pageWithData.getByRole('spinbutton', { name: 'Minimum group size' }).fill('2137');
 
         await expect(pageWithData).toHaveScreenshot();
     });
