@@ -1,5 +1,6 @@
 import React from 'react';
 import './Filter.css';
+import SmartTooltip from '../common/SmartTooltip';
 
 type Props = {
   name: string;
@@ -15,8 +16,8 @@ export default class Filter extends React.PureComponent<Props> {
       name, displayName, checked, onChange, tooltip,
     } = this.props;
 
-    return (
-      <label className={checked ? 'checked' : ''} title={tooltip}>
+    const labelElement = (
+      <label className={checked ? 'checked' : ''}>
         <input
           type="checkbox"
           name={name}
@@ -26,5 +27,11 @@ export default class Filter extends React.PureComponent<Props> {
         {displayName}
       </label>
     );
+
+    return tooltip ? (
+      <SmartTooltip tooltip={tooltip}>
+        {labelElement}
+      </SmartTooltip>
+    ) : labelElement;
   }
 }
