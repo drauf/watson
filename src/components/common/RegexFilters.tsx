@@ -9,24 +9,35 @@ type Props = {
 
 const threadNameTooltip = (
   <div>
-    <div><strong>Filter by thread name pattern</strong></div>
-    <div>Examples:</div>
-    <div>• <code>http.*exec</code> → Tomcat request threads</div>
-    <div>• <code>^main$</code> → Main thread only</div>
-    <div>• <code>pool.*worker</code> → Thread pool workers</div>
-    <div>• <code>RMI.*Connection</code> → RMI connection handlers</div>
+    <div><strong>Filter threads by name using regex patterns</strong></div>
+    <div>Match threads whose names contain specific text or patterns.</div>
+    <br />
+    <div>Common pattern types:</div>
+    <div><strong>Starts with:</strong></div>
+    <div>• <code>^http-nio-</code> → HTTP connector threads</div>
+    <div><strong>Contains anywhere:</strong></div>
+    <div>• <code>webhook</code> → Webhook processing threads</div>
+    <div><strong>This OR that:</strong></div>
+    <div>• <code>(scheduler|timer)</code> → Scheduled task threads</div>
+    <div><strong>Exclude pattern:</strong></div>
+    <div>• <code>^(?!.*RMI)</code> → Exclude RMI threads</div>
   </div>
 );
 
 const stackTraceTooltip = (
   <div>
-    <div><strong>Filter by stack trace pattern</strong></div>
-    <div>Examples:</div>
-    <div>• <code>java\.io</code> → I/O operations</div>
+    <div><strong>Filter threads by stack trace using regex patterns</strong></div>
+    <div>Match threads with specific method calls or class names in their call stack.</div>
+    <br />
+    <div>Common pattern types:</div>
+    <div><strong>Contains anywhere:</strong></div>
     <div>• <code>SQLException</code> → Database errors</div>
-    <div>• <code>com\.atlassian</code> → Atlassian code</div>
-    <div>• <code>Lock.*wait</code> → Lock contention</div>
-    <div>• <code>Thread\.sleep</code> → Sleeping threads</div>
+    <div><strong>Starts with:</strong></div>
+    <div>• <code>^com\.atlassian\.webhook\.</code> → Webhook processing</div>
+    <div><strong>This OR that:</strong></div>
+    <div>• <code>(lucene|elasticsearch)</code> → Search operations</div>
+    <div><strong>Exclude pattern:</strong></div>
+    <div>• <code>^(?!.*\.wait\()</code> → Exclude waiting threads</div>
   </div>
 );
 
