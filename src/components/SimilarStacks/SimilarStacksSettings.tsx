@@ -22,9 +22,10 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
 
           <Filter
             name="withoutIdle"
-            displayName="Without Idle"
+            displayName="Active"
             checked={withoutIdle}
             onChange={onFilterChange}
+            tooltip="Hide threads waiting for I/O or in thread pools"
           />
         </div>
 

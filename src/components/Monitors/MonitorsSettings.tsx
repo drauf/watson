@@ -24,23 +24,26 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
 
           <Filter
             name="withoutIdle"
-            displayName="Without Idle"
+            displayName="Active"
             checked={withoutIdle}
             onChange={onFilterChange}
+            tooltip="Hide idle thread pool and queue monitoring patterns"
           />
 
           <Filter
             name="withOwner"
-            displayName="With Owner"
+            displayName="Owned locks"
             checked={withOwner}
             onChange={onFilterChange}
+            tooltip="Show only locks that have an owning thread - indicates active lock usage"
           />
 
           <Filter
             name="withoutOwner"
-            displayName="Without Owner"
+            displayName="Unowned locks"
             checked={withoutOwner}
             onChange={onFilterChange}
+            tooltip="Show only locks without owners - potential deadlock or contention areas"
           />
         </div>
 
@@ -51,9 +54,8 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
               name="nameFilter"
               value={nameFilter}
               onChange={onRegExpChange}
-              title="Filter monitors by thread name using regular expressions. Shows monitors where any waiting or owning thread matches. Examples: 'http.*exec' matches Tomcat threads, '^main
-}
- matches only the main thread"
+              title="Filter monitors by thread name using regular expressions. Shows monitors where any waiting or owning thread matches. Examples: 'http.*exec' matches Tomcat threads, '^main' matches only the main thread"
+              placeholder="e.g. http.*exec"
             />
             <b>Thread name RegExp</b>
           </label>
@@ -65,6 +67,7 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
               value={stackFilter}
               onChange={onRegExpChange}
               title="Filter monitors by stack trace using regular expressions. Shows monitors where any waiting or owning thread has a matching stack trace. Examples: 'java\.io' matches threads doing I/O operations, 'com\.atlassian\.jira' finds Jira-specific code"
+              placeholder="e.g. java\.io"
             />
             <b>Stack trace RegExp</b>
           </label>

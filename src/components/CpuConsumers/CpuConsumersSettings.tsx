@@ -71,9 +71,8 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
               name="nameFilter"
               value={nameFilter}
               onChange={onRegExpChange}
-              title="Filter threads by name using regular expressions. Examples: 'http.*exec' matches Tomcat threads, '^main
-}
- matches only the main thread"
+              title="Filter threads by name using regular expressions. Examples: 'http.*exec' matches Tomcat threads, '^main' matches only the main thread"
+              placeholder="e.g. http.*exec"
             />
             <b>Thread name RegExp</b>
           </label>
@@ -85,6 +84,7 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
               value={stackFilter}
               onChange={onRegExpChange}
               title="Filter threads by any line in their stack trace using regular expressions. Examples: 'java\.io' matches threads doing I/O operations, 'SQLException' finds database errors, 'com\.atlassian\.jira' finds Jira-specific code"
+              placeholder="e.g. java\.io"
             />
             <b>Stack trace RegExp</b>
           </label>

@@ -41,6 +41,7 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
             displayName="Active"
             checked={active}
             onChange={onFilterChange}
+            tooltip="Show only threads that changed state between dumps or are experiencing contention"
           />
 
           <Filter
@@ -48,6 +49,7 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
             displayName="Non-JVM"
             checked={nonJvm}
             onChange={onFilterChange}
+            tooltip="Hide JVM housekeeping threads (GC, compiler, etc.)"
           />
 
           <Filter
@@ -55,6 +57,7 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
             displayName="Tomcat"
             checked={tomcat}
             onChange={onFilterChange}
+            tooltip="Show only HTTP request processing threads"
           />
 
           <Filter
@@ -62,6 +65,7 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
             displayName="Non-Tomcat"
             checked={nonTomcat}
             onChange={onFilterChange}
+            tooltip="Hide HTTP request processing threads"
           />
 
           <Filter
@@ -69,6 +73,7 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
             displayName="Database"
             checked={database}
             onChange={onFilterChange}
+            tooltip="Show only threads performing database queries and operations"
           />
 
           <Filter
@@ -76,13 +81,15 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
             displayName="Lucene"
             checked={lucene}
             onChange={onFilterChange}
+            tooltip="Show only threads performing search indexing and queries"
           />
 
           <Filter
             name="usingCpu"
-            displayName="Using >30% CPU"
+            displayName="High CPU usage"
             checked={usingCpu}
             onChange={onFilterChange}
+            tooltip="Show only threads using more than 30% CPU"
           />
         </div>
 
@@ -93,8 +100,10 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
               name="nameFilter"
               value={nameFilter}
               onChange={onRegExpChange}
+              title="Filter by thread name pattern. Examples: 'http.*exec' for Tomcat threads, '^main' for main thread only"
+              placeholder="e.g. http.*exec"
             />
-            <b>Thread name RegExp</b>
+            <b>Thread name pattern</b>
           </label>
 
           <label>
@@ -103,8 +112,10 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
               name="stackFilter"
               value={stackFilter}
               onChange={onRegExpChange}
+              title="Filter by stack trace pattern. Examples: 'java\.io' for I/O operations, 'SQLException' for database errors"
+              placeholder="e.g. java\.io"
             />
-            <b>Stack trace RegExp</b>
+            <b>Stack trace pattern</b>
           </label>
         </div>
       </section>
