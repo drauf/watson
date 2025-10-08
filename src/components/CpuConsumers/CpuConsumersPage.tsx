@@ -15,6 +15,8 @@ type State = {
   mode: CpuConsumersMode;
   limit: number;
   threadDumps: ThreadDump[];
+  nameFilter: string;
+  stackFilter: string;
 };
 
 class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
@@ -27,6 +29,8 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
       limit: 40,
       mode: CpuConsumersMode.Mean,
       threadDumps: nonEmptyThreadDumps,
+      nameFilter: '',
+      stackFilter: '',
     };
   }
 
@@ -42,8 +46,11 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
         <CpuConsumersSettings
           mode={this.state.mode}
           limit={this.state.limit}
+          nameFilter={this.state.nameFilter}
+          stackFilter={this.state.stackFilter}
           onModeChange={this.handleModeChange}
           onLimitChange={this.handleIntegerChange}
+          onRegExpChange={this.handleTextChange}
         />
 
         <CpuConsumersList
@@ -62,13 +69,62 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
   private calculateCpuUsages = (calculationMode: CpuConsumersMode): CpuConsumer[] => {
     const consumers: CpuConsumer[] = [];
     const threadsOverTime = getThreadsOverTime(this.state.threadDumps);
+    const filteredThreadsOverTime = this.filterThreadsOverTime(threadsOverTime);
 
-    for (const threads of threadsOverTime) {
+    for (const threads of filteredThreadsOverTime) {
       consumers.push(this.calculateUsageFor(threads, calculationMode));
     }
     consumers.sort((a, b) => b.calculatedValue - a.calculatedValue);
 
     return consumers;
+  };
+
+  private filterThreadsOverTime = (threadsOverTime: Array<Map<number, Thread>>): Array<Map<number, Thread>> => {
+    if (!this.state.nameFilter && !this.state.stackFilter) {
+      return threadsOverTime;
+    }
+
+    return threadsOverTime.map((threadsMap) => {
+      const filteredMap = new Map<number, Thread>();
+      
+      for (const [threadId, thread] of threadsMap.entries()) {
+        if (this.matchesFilters(thread)) {
+          filteredMap.set(threadId, thread);
+        }
+      }
+      
+      return filteredMap;
+    }).filter((threadsMap) => threadsMap.size > 0);
+  };
+
+  private matchesFilters = (thread: Thread): boolean => {
+    if (this.state.nameFilter && !this.matchesNameFilter(thread)) {
+      return false;
+    }
+    
+    if (this.state.stackFilter && !this.matchesStackFilter(thread)) {
+      return false;
+    }
+    
+    return true;
+  };
+
+  private matchesNameFilter = (thread: Thread): boolean => {
+    try {
+      const regex = new RegExp(this.state.nameFilter, 'i');
+      return regex.test(thread.name);
+    } catch {
+      return true; // ignore invalid regex
+    }
+  };
+
+  private matchesStackFilter = (thread: Thread): boolean => {
+    try {
+      const regex = new RegExp(this.state.stackFilter, 'i');
+      return thread.stackTrace.some(line => regex.test(line));
+    } catch {
+      return true; // ignore invalid regex
+    }
   };
 
   private calculateUsageFor = (threadsMap: Map<number, Thread>, calculationMode: CpuConsumersMode) => {

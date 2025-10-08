@@ -1,4 +1,5 @@
 import React from 'react';
+import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
@@ -13,6 +14,8 @@ type State = {
   withOwner: boolean;
   withoutIdle: boolean;
   withoutOwner: boolean;
+  nameFilter: string;
+  stackFilter: string;
 };
 
 class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
@@ -20,6 +23,8 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     withOwner: false,
     withoutIdle: true,
     withoutOwner: false,
+    nameFilter: '',
+    stackFilter: '',
   };
 
   public override render(): JSX.Element {
@@ -36,7 +41,10 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
           withOwner={this.state.withOwner}
           withoutIdle={this.state.withoutIdle}
           withoutOwner={this.state.withoutOwner}
+          nameFilter={this.state.nameFilter}
+          stackFilter={this.state.stackFilter}
           onFilterChange={this.handleFilterChange}
+          onRegExpChange={this.handleTextChange}
         />
 
         {MonitorsPage.renderMonitors(filtered)}
@@ -91,8 +99,57 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     if (this.state.withoutOwner) {
       filtered = filtered.filter((monitor) => !MonitorsPage.hasAnyOwner(monitor));
     }
+    if (this.state.nameFilter || this.state.stackFilter) {
+      filtered = filtered.filter((monitor) => this.matchesRegexpFilters(monitor));
+    }
 
     return filtered;
+  };
+
+  private matchesRegexpFilters = (monitorOverTime: MonitorOverTime): boolean => {
+    for (const monitor of monitorOverTime.monitors) {
+      const allThreads = [...monitor.waiting];
+      if (monitor.owner) {
+        allThreads.push(monitor.owner);
+      }
+
+      for (const thread of allThreads) {
+        if (this.matchesThreadFilters(thread)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  private matchesThreadFilters = (thread: Thread): boolean => {
+    if (this.state.nameFilter && !this.matchesNameFilter(thread)) {
+      return false;
+    }
+    
+    if (this.state.stackFilter && !this.matchesStackFilter(thread)) {
+      return false;
+    }
+    
+    return true;
+  };
+
+  private matchesNameFilter = (thread: Thread): boolean => {
+    try {
+      const regex = new RegExp(this.state.nameFilter, 'i');
+      return regex.test(thread.name);
+    } catch {
+      return true; // ignore invalid regex
+    }
+  };
+
+  private matchesStackFilter = (thread: Thread): boolean => {
+    try {
+      const regex = new RegExp(this.state.stackFilter, 'i');
+      return thread.stackTrace.some((line: string) => regex.test(line));
+    } catch {
+      return true; // ignore invalid regex
+    }
   };
 
   private static hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => !!monitor.owner);

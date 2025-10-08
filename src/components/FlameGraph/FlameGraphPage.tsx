@@ -20,6 +20,9 @@ export type ParsedStackFrame = {
 
 type State = {
   withoutIdle: boolean;
+  usingCpu: boolean;
+  nameFilter: string;
+  stackFilter: string;
 };
 
 export const parseStackFrame = (frame: string): ParsedStackFrame => {
@@ -58,12 +61,12 @@ export const parseStackFrame = (frame: string): ParsedStackFrame => {
 export const shortNameFrom = (parsedFrame: ParsedStackFrame): string => `${parsedFrame.cleanClassName}.${parsedFrame.cleanMethodName} @ ${parsedFrame.line}`;
 
 class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
-  constructor(props: WithThreadDumpsProps) {
-    super(props);
-    this.state = {
-      withoutIdle: true,
-    };
-  }
+  public override state = {
+    withoutIdle: true,
+    usingCpu: false,
+    nameFilter: '',
+    stackFilter: '',
+  };
 
   private static processLine = (previousFrame: ExtendedStackFrame, line: string): ExtendedStackFrame => {
     const children = previousFrame.children as ExtendedStackFrame[];
@@ -120,7 +123,7 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
   };
 
   private filterThreads = (threadDumps: ThreadDump[]): Thread[] => {
-    const threads: Thread[] = [];
+    let threads: Thread[] = [];
 
     for (const threadDump of threadDumps) {
       for (const thread of threadDump.threads) {
@@ -130,7 +133,60 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
       }
     }
 
+    threads = this.filterByName(threads, this.state.nameFilter);
+    threads = this.filterByStackTrace(threads, this.state.stackFilter);
+    threads = FlameGraphPage.filterByCpuUsage(threads, this.state.usingCpu);
+
     return threads;
+  };
+
+  private filterByName = (threads: Thread[], nameFilter: string): Thread[] => {
+    if (!nameFilter) {
+      return threads;
+    }
+
+    let userProvided: RegExp;
+    try {
+      userProvided = new RegExp(nameFilter, 'i');
+    } catch {
+      // ignore when user provides invalid RegExp
+      return threads;
+    }
+
+    return threads.filter((thread) => userProvided.test(thread.name));
+  };
+
+  private filterByStackTrace = (threads: Thread[], stackFilter: string): Thread[] => {
+    if (!stackFilter) {
+      return threads;
+    }
+
+    let userProvided: RegExp;
+    try {
+      userProvided = new RegExp(stackFilter, 'i');
+    } catch {
+      // ignore when user provides invalid RegExp
+      return threads;
+    }
+
+    return threads.filter((thread) => this.matchesStackTraceFilter(thread, userProvided));
+  };
+
+  private static filterByCpuUsage = (threads: Thread[], shouldFilter: boolean): Thread[] => {
+    if (!shouldFilter) {
+      return threads;
+    }
+
+    return threads.filter((thread) => parseFloat(thread.cpuUsage) > 30);
+  };
+
+  private matchesStackTraceFilter = (thread: Thread, filter: RegExp): boolean => {
+    for (const line of thread.stackTrace) {
+      if (filter.test(line)) {
+        return true;
+      }
+    }
+    return false;
   };
 
   public override render(): JSX.Element {
@@ -146,7 +202,11 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
       <main className="full-width-page">
         <FlameGraphSettings
           withoutIdle={this.state.withoutIdle}
+          usingCpu={this.state.usingCpu}
+          nameFilter={this.state.nameFilter}
+          stackFilter={this.state.stackFilter}
           onFilterChange={this.handleFilterChange}
+          onRegExpChange={this.handleTextChange}
         />
 
         <FlameGraph chartData={chartData} />
