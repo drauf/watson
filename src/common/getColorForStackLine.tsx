@@ -4,9 +4,10 @@ export default function getColorForStackLine(line: string, fade = false): string
     return fade ? '#C8D4E6' : '#DEEBFF';
   }
 
-  // database and Lucene
+  // database, index, caches
   if (line.startsWith('com.microsoft.sqlserver')
-    || line.startsWith('com.mysql.jdbc')
+    || line.startsWith('com.mysql')
+    || line.startsWith('net.sf.ehcache')
     || line.startsWith('oracle.jdbc')
     || line.startsWith('org.apache.lucene')
     || line.startsWith('org.ofbiz')
@@ -25,6 +26,7 @@ export default function getColorForStackLine(line: string, fade = false): string
     || line.startsWith('org.apache')
     || line.startsWith('org.codehaus')
     || line.startsWith('org.eclipse')
+    || line.startsWith('org.glassfish')
     || line.startsWith('org.mozilla')
     || line.startsWith('org.springframework')
     || line.startsWith('sun.')
