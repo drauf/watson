@@ -59,12 +59,13 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
         />
 
         <div id="cpu-consumers-limit">
-          <SmartTooltip tooltip={
+          <SmartTooltip tooltip={(
             <div>
               <div><strong>Maximum threads to display</strong></div>
               <div>Higher values show more threads but may impact performance</div>
             </div>
-          }>
+          )}
+          >
             <label>
               <b>Threads to display</b>
               <input

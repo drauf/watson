@@ -19,8 +19,7 @@ main {
 
 #settings {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-flow: column wrap;
   padding: 1em 0;
 }
 
@@ -33,8 +32,8 @@ main {
 }
 
 #settings label input {
-  margin-left: 1em;
   margin-right: 2em;
+  margin-left: 1em;
 }
 
 #centered {

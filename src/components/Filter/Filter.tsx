@@ -7,7 +7,7 @@ type Props = {
   displayName: string;
   checked: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  tooltip?: string;
+  tooltip: string;
 };
 
 export default class Filter extends React.PureComponent<Props> {

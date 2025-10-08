@@ -4,6 +4,7 @@
 }
 
 .smart-tooltip {
+  box-sizing: border-box;
   max-width: 800px;
   padding: 8px 12px;
   color: var(--color-n0);
@@ -19,7 +20,6 @@
   animation: tooltip-fade-in 0.2s forwards;
   pointer-events: none;
   -webkit-text-fill-color: white;
-  box-sizing: border-box;
 }
 
 .smart-tooltip div {
@@ -31,12 +31,12 @@
 }
 
 .smart-tooltip code {
-  background-color: var(--color-n700);
   padding: 1px 4px;
-  border-radius: 2px;
-  font-family: monospace;
-  font-size: 11px;
   color: var(--color-n100);
+  font-size: 11px;
+  font-family: monospace;
+  background-color: var(--color-n700);
+  border-radius: 2px;
 }
 
 @keyframes tooltip-fade-in {

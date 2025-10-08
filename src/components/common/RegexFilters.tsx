@@ -14,13 +14,33 @@ const threadNameTooltip = (
     <br />
     <div>Common pattern types:</div>
     <div><strong>Starts with:</strong></div>
-    <div>• <code>^http-nio-</code> → HTTP connector threads</div>
+    <div>
+      •
+      <code>^http-nio-</code>
+      {' '}
+      → HTTP connector threads
+    </div>
     <div><strong>Contains anywhere:</strong></div>
-    <div>• <code>webhook</code> → Webhook processing threads</div>
+    <div>
+      •
+      <code>webhook</code>
+      {' '}
+      → Webhook processing threads
+    </div>
     <div><strong>This OR that:</strong></div>
-    <div>• <code>(scheduler|timer)</code> → Scheduled task threads</div>
+    <div>
+      •
+      <code>(scheduler|timer)</code>
+      {' '}
+      → Scheduled task threads
+    </div>
     <div><strong>Exclude pattern:</strong></div>
-    <div>• <code>^(?!.*RMI)</code> → Exclude RMI threads</div>
+    <div>
+      •
+      <code>^(?!.*RMI)</code>
+      {' '}
+      → Exclude RMI threads
+    </div>
   </div>
 );
 
@@ -31,13 +51,33 @@ const stackTraceTooltip = (
     <br />
     <div>Common pattern types:</div>
     <div><strong>Contains anywhere:</strong></div>
-    <div>• <code>SQLException</code> → Database errors</div>
+    <div>
+      •
+      <code>SQLException</code>
+      {' '}
+      → Database errors
+    </div>
     <div><strong>Starts with:</strong></div>
-    <div>• <code>^com\.atlassian\.webhook\.</code> → Webhook processing</div>
+    <div>
+      •
+      <code>^com\.atlassian\.webhook\.</code>
+      {' '}
+      → Webhook processing
+    </div>
     <div><strong>This OR that:</strong></div>
-    <div>• <code>(lucene|elasticsearch)</code> → Search operations</div>
+    <div>
+      •
+      <code>(lucene|elasticsearch)</code>
+      {' '}
+      → Search operations
+    </div>
     <div><strong>Exclude pattern:</strong></div>
-    <div>• <code>^(?!.*\.wait\()</code> → Exclude waiting threads</div>
+    <div>
+      •
+      <code>^(?!.*\.wait\()</code>
+      {' '}
+      → Exclude waiting threads
+    </div>
   </div>
 );
 

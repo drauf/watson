@@ -41,15 +41,31 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
         />
 
         <div>
-          <SmartTooltip tooltip={
+          <SmartTooltip tooltip={(
             <div>
               <div><strong>Stack trace depth for comparison</strong></div>
               <div>How many stack frames to compare when grouping threads</div>
-              <div>• <strong>5-10:</strong> Focus on immediate call context</div>
-              <div>• <strong>15-20:</strong> Balanced detail level</div>
-              <div>• <strong>30+:</strong> Very detailed grouping</div>
+              <div>
+                •
+                <strong>5-10:</strong>
+                {' '}
+                Focus on immediate call context
+              </div>
+              <div>
+                •
+                <strong>15-20:</strong>
+                {' '}
+                Balanced detail level
+              </div>
+              <div>
+                •
+                <strong>30+:</strong>
+                {' '}
+                Very detailed grouping
+              </div>
             </div>
-          }>
+          )}
+          >
             <label>
               <b>Comparison depth</b>
               <input
@@ -61,15 +77,31 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
             </label>
           </SmartTooltip>
 
-          <SmartTooltip tooltip={
+          <SmartTooltip tooltip={(
             <div>
               <div><strong>Minimum threads per group</strong></div>
               <div>Only show groups with at least this many similar threads</div>
-              <div>• <strong>2-3:</strong> Show all similar patterns</div>
-              <div>• <strong>5-10:</strong> Focus on common patterns</div>
-              <div>• <strong>20+:</strong> Only show very frequent patterns</div>
+              <div>
+                •
+                <strong>2-3:</strong>
+                {' '}
+                Show all similar patterns
+              </div>
+              <div>
+                •
+                <strong>5-10:</strong>
+                {' '}
+                Focus on common patterns
+              </div>
+              <div>
+                •
+                <strong>20+:</strong>
+                {' '}
+                Only show very frequent patterns
+              </div>
             </div>
-          }>
+          )}
+          >
             <label>
               <b>Minimum group size</b>
               <input

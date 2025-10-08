@@ -1,6 +1,6 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
-import RegexFilters from "../common/RegexFilters";
+import RegexFilters from '../common/RegexFilters';
 
 type Props = {
   active: boolean;
