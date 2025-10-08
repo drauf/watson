@@ -1,4 +1,6 @@
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
+import { matchesNameFilter, matchesStackFilter } from '../../common/regexFiltering';
+import { isIdleInSnapshot } from '../../common/threadFilters';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import ThreadDump from '../../types/ThreadDump';
 import FlameGraph, { ExtendedStackFrame } from './FlameGraph';
@@ -6,7 +8,6 @@ import PageWithSettings from '../PageWithSettings';
 import FlameGraphSettings from './FlameGraphSettings';
 import './FlameGraphPage.css';
 import Thread from '../../types/Thread';
-import { isIdleInSnapshot } from '../../common/threadFilters';
 
 export type ParsedStackFrame = {
   rawFrame: string;
@@ -140,37 +141,9 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     return threads;
   };
 
-  private static filterByName = (threads: Thread[], nameFilter: string): Thread[] => {
-    if (!nameFilter) {
-      return threads;
-    }
+  private static filterByName = (threads: Thread[], nameFilter: string): Thread[] => threads.filter((thread) => matchesNameFilter(thread, nameFilter));
 
-    let userProvided: RegExp;
-    try {
-      userProvided = new RegExp(nameFilter, 'i');
-    } catch {
-      // ignore when user provides invalid RegExp
-      return threads;
-    }
-
-    return threads.filter((thread) => userProvided.test(thread.name));
-  };
-
-  private static filterByStackTrace = (threads: Thread[], stackFilter: string): Thread[] => {
-    if (!stackFilter) {
-      return threads;
-    }
-
-    let userProvided: RegExp;
-    try {
-      userProvided = new RegExp(stackFilter, 'i');
-    } catch {
-      // ignore when user provides invalid RegExp
-      return threads;
-    }
-
-    return threads.filter((thread) => FlameGraphPage.matchesStackTraceFilter(thread, userProvided));
-  };
+  private static filterByStackTrace = (threads: Thread[], stackFilter: string): Thread[] => threads.filter((thread) => matchesStackFilter(thread, stackFilter));
 
   private static filterByCpuUsage = (threads: Thread[], shouldFilter: boolean): Thread[] => {
     if (!shouldFilter) {
@@ -178,15 +151,6 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     }
 
     return threads.filter((thread) => parseFloat(thread.cpuUsage) >= 10);
-  };
-
-  private static matchesStackTraceFilter = (thread: Thread, filter: RegExp): boolean => {
-    for (const line of thread.stackTrace) {
-      if (filter.test(line)) {
-        return true;
-      }
-    }
-    return false;
   };
 
   public override render(): JSX.Element {

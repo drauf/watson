@@ -1,5 +1,5 @@
 import React from 'react';
-import Thread from '../../types/Thread';
+import { matchesRegexFilters } from '../../common/regexFiltering';
 import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
@@ -114,42 +114,12 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
       }
 
       for (const thread of allThreads) {
-        if (this.matchesThreadFilters(thread)) {
+        if (matchesRegexFilters(thread, this.state.nameFilter, this.state.stackFilter)) {
           return true;
         }
       }
     }
     return false;
-  };
-
-  private matchesThreadFilters = (thread: Thread): boolean => {
-    if (this.state.nameFilter && !this.matchesNameFilter(thread)) {
-      return false;
-    }
-
-    if (this.state.stackFilter && !this.matchesStackFilter(thread)) {
-      return false;
-    }
-
-    return true;
-  };
-
-  private matchesNameFilter = (thread: Thread): boolean => {
-    try {
-      const regex = new RegExp(this.state.nameFilter, 'i');
-      return regex.test(thread.name);
-    } catch {
-      return true; // ignore invalid regex
-    }
-  };
-
-  private matchesStackFilter = (thread: Thread): boolean => {
-    try {
-      const regex = new RegExp(this.state.stackFilter, 'i');
-      return thread.stackTrace.some((line: string) => regex.test(line));
-    } catch {
-      return true; // ignore invalid regex
-    }
   };
 
   private static hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => !!monitor.owner);

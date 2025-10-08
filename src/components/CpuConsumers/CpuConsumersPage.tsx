@@ -1,5 +1,6 @@
 import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
+import { matchesRegexFilters } from '../../common/regexFiltering';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
@@ -88,43 +89,13 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
       const filteredMap = new Map<number, Thread>();
 
       for (const [threadId, thread] of threadsMap.entries()) {
-        if (this.matchesFilters(thread)) {
+        if (matchesRegexFilters(thread, this.state.nameFilter, this.state.stackFilter)) {
           filteredMap.set(threadId, thread);
         }
       }
 
       return filteredMap;
     }).filter((threadsMap) => threadsMap.size > 0);
-  };
-
-  private matchesFilters = (thread: Thread): boolean => {
-    if (this.state.nameFilter && !this.matchesNameFilter(thread)) {
-      return false;
-    }
-
-    if (this.state.stackFilter && !this.matchesStackFilter(thread)) {
-      return false;
-    }
-
-    return true;
-  };
-
-  private matchesNameFilter = (thread: Thread): boolean => {
-    try {
-      const regex = new RegExp(this.state.nameFilter, 'i');
-      return regex.test(thread.name);
-    } catch {
-      return true; // ignore invalid regex
-    }
-  };
-
-  private matchesStackFilter = (thread: Thread): boolean => {
-    try {
-      const regex = new RegExp(this.state.stackFilter, 'i');
-      return thread.stackTrace.some((line) => regex.test(line));
-    } catch {
-      return true; // ignore invalid regex
-    }
   };
 
   private calculateUsageFor = (threadsMap: Map<number, Thread>, calculationMode: CpuConsumersMode) => {

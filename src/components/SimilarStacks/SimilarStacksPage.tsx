@@ -1,3 +1,4 @@
+import { matchesRegexFilters } from '../../common/regexFiltering';
 import { isIdleInSnapshot } from '../../common/threadFilters';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
@@ -89,6 +90,10 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
   private getStackTrace = (thread: Thread, linesToConsider: number): string | null => {
     if (this.state.withoutIdle && isIdleInSnapshot(thread)) {
+      return null;
+    }
+
+    if (!matchesRegexFilters(thread, this.state.nameFilter, this.state.stackFilter)) {
       return null;
     }
 
