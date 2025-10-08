@@ -1,18 +1,17 @@
 .smart-tooltip-container {
   position: relative;
   display: inline-block;
-  width: 100%;
 }
 
 .smart-tooltip {
+  box-sizing: border-box;
   max-width: 800px;
-  padding: 4px 8px;
-  overflow: hidden;
+  padding: 8px 12px;
   color: var(--color-n0);
-  font-weight: bold;
+  font-weight: normal;
   font-size: 12px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  line-height: 1.4;
+  white-space: normal;
   word-wrap: break-word;
   background-color: var(--color-n800);
   border-radius: 4px;
@@ -21,6 +20,23 @@
   animation: tooltip-fade-in 0.2s forwards;
   pointer-events: none;
   -webkit-text-fill-color: white;
+}
+
+.smart-tooltip div {
+  margin-bottom: 2px;
+}
+
+.smart-tooltip div:last-child {
+  margin-bottom: 0;
+}
+
+.smart-tooltip code {
+  padding: 1px 4px;
+  color: var(--color-n100);
+  font-size: 11px;
+  font-family: monospace;
+  background-color: var(--color-n700);
+  border-radius: 2px;
 }
 
 @keyframes tooltip-fade-in {

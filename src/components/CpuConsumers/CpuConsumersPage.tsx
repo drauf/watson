@@ -1,5 +1,6 @@
 import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
+import { matchesRegexFilters } from '../../common/regexFiltering';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
@@ -15,6 +16,8 @@ type State = {
   mode: CpuConsumersMode;
   limit: number;
   threadDumps: ThreadDump[];
+  nameFilter: string;
+  stackFilter: string;
 };
 
 class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
@@ -27,6 +30,8 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
       limit: 40,
       mode: CpuConsumersMode.Mean,
       threadDumps: nonEmptyThreadDumps,
+      nameFilter: '',
+      stackFilter: '',
     };
   }
 
@@ -42,8 +47,11 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
         <CpuConsumersSettings
           mode={this.state.mode}
           limit={this.state.limit}
+          nameFilter={this.state.nameFilter}
+          stackFilter={this.state.stackFilter}
           onModeChange={this.handleModeChange}
           onLimitChange={this.handleIntegerChange}
+          onRegExpChange={this.handleTextChange}
         />
 
         <CpuConsumersList
@@ -62,13 +70,32 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
   private calculateCpuUsages = (calculationMode: CpuConsumersMode): CpuConsumer[] => {
     const consumers: CpuConsumer[] = [];
     const threadsOverTime = getThreadsOverTime(this.state.threadDumps);
+    const filteredThreadsOverTime = this.filterThreadsOverTime(threadsOverTime);
 
-    for (const threads of threadsOverTime) {
+    for (const threads of filteredThreadsOverTime) {
       consumers.push(this.calculateUsageFor(threads, calculationMode));
     }
     consumers.sort((a, b) => b.calculatedValue - a.calculatedValue);
 
     return consumers;
+  };
+
+  private filterThreadsOverTime = (threadsOverTime: Array<Map<number, Thread>>): Array<Map<number, Thread>> => {
+    if (!this.state.nameFilter && !this.state.stackFilter) {
+      return threadsOverTime;
+    }
+
+    return threadsOverTime.map((threadsMap) => {
+      const filteredMap = new Map<number, Thread>();
+
+      for (const [threadId, thread] of threadsMap.entries()) {
+        if (matchesRegexFilters(thread, this.state.nameFilter, this.state.stackFilter)) {
+          filteredMap.set(threadId, thread);
+        }
+      }
+
+      return filteredMap;
+    }).filter((threadsMap) => threadsMap.size > 0);
   };
 
   private calculateUsageFor = (threadsMap: Map<number, Thread>, calculationMode: CpuConsumersMode) => {

@@ -1,7 +1,7 @@
 import getThreadsOverTime from '../../common/getThreadsOverTime';
+import { isActiveOverTime } from '../../common/threadFilters';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import ThreadStatus from '../../types/ThreadStatus';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
@@ -107,53 +107,7 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
       return threadDumps;
     }
 
-    return threadDumps.filter((threads) => ThreadsOverviewPage.isActive(threads));
-  };
-
-  private static isActive = (threads: Map<number, Thread>): boolean => {
-    let status;
-    for (const thread of threads.values()) {
-      // Status changed, so the thread is active
-      if (status && thread.status !== status) {
-        return true;
-      }
-
-      // Otherwise the thread is active if it's blocked or runnable and not idle
-      status = thread.status;
-      if (status === ThreadStatus.BLOCKED
-        || (status === ThreadStatus.RUNNABLE && !ThreadsOverviewPage.isIdleThread(thread.stackTrace))) {
-        return true;
-      }
-    }
-
-    return false;
-  };
-
-  private static isIdleThread = (stackTrace: string[]): boolean => {
-    if (!stackTrace || !stackTrace[0]) {
-      return true;
-    }
-
-    // Prevent false positives for threads waiting for IO
-    if (stackTrace.length > 16) {
-      return false;
-    }
-
-    // Filter out the most common queue threads just waiting for some work to do
-    if (stackTrace[0] === 'sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)') {
-      return true;
-    }
-    if (stackTrace[0] === 'sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method)') {
-      return true;
-    }
-    if (stackTrace[0] === 'java.net.SocketInputStream.socketRead0(Native Method)') {
-      return true;
-    }
-    if (stackTrace[0] === 'java.net.PlainSocketImpl.socketAccept(Native Method)') {
-      return true;
-    }
-
-    return false;
+    return threadDumps.filter((threads) => isActiveOverTime(threads));
   };
 
   private static filterByCpuUsage = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
@@ -166,7 +120,7 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
 
   private static isUsingCpu = (threads: Map<number, Thread>): boolean => {
     for (const thread of threads.values()) {
-      if (parseFloat(thread.cpuUsage) > 30) {
+      if (parseFloat(thread.cpuUsage) >= 10) {
         return true;
       }
     }

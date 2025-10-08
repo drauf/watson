@@ -1,4 +1,6 @@
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
+import { matchesNameFilter, matchesStackFilter } from '../../common/regexFiltering';
+import { isIdleInSnapshot } from '../../common/threadFilters';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import ThreadDump from '../../types/ThreadDump';
 import FlameGraph, { ExtendedStackFrame } from './FlameGraph';
@@ -6,7 +8,6 @@ import PageWithSettings from '../PageWithSettings';
 import FlameGraphSettings from './FlameGraphSettings';
 import './FlameGraphPage.css';
 import Thread from '../../types/Thread';
-import isIdleThread from '../../common/isIdleThread';
 
 export type ParsedStackFrame = {
   rawFrame: string;
@@ -20,6 +21,9 @@ export type ParsedStackFrame = {
 
 type State = {
   withoutIdle: boolean;
+  usingCpu: boolean;
+  nameFilter: string;
+  stackFilter: string;
 };
 
 export const parseStackFrame = (frame: string): ParsedStackFrame => {
@@ -58,12 +62,12 @@ export const parseStackFrame = (frame: string): ParsedStackFrame => {
 export const shortNameFrom = (parsedFrame: ParsedStackFrame): string => `${parsedFrame.cleanClassName}.${parsedFrame.cleanMethodName} @ ${parsedFrame.line}`;
 
 class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
-  constructor(props: WithThreadDumpsProps) {
-    super(props);
-    this.state = {
-      withoutIdle: true,
-    };
-  }
+  public override state = {
+    withoutIdle: true,
+    usingCpu: false,
+    nameFilter: '',
+    stackFilter: '',
+  };
 
   private static processLine = (previousFrame: ExtendedStackFrame, line: string): ExtendedStackFrame => {
     const children = previousFrame.children as ExtendedStackFrame[];
@@ -120,17 +124,33 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
   };
 
   private filterThreads = (threadDumps: ThreadDump[]): Thread[] => {
-    const threads: Thread[] = [];
+    let threads: Thread[] = [];
 
     for (const threadDump of threadDumps) {
       for (const thread of threadDump.threads) {
-        if (!this.state.withoutIdle || !isIdleThread(thread)) {
+        if (!this.state.withoutIdle || !isIdleInSnapshot(thread)) {
           threads.push(thread);
         }
       }
     }
 
+    threads = FlameGraphPage.filterByName(threads, this.state.nameFilter);
+    threads = FlameGraphPage.filterByStackTrace(threads, this.state.stackFilter);
+    threads = FlameGraphPage.filterByCpuUsage(threads, this.state.usingCpu);
+
     return threads;
+  };
+
+  private static filterByName = (threads: Thread[], nameFilter: string): Thread[] => threads.filter((thread) => matchesNameFilter(thread, nameFilter));
+
+  private static filterByStackTrace = (threads: Thread[], stackFilter: string): Thread[] => threads.filter((thread) => matchesStackFilter(thread, stackFilter));
+
+  private static filterByCpuUsage = (threads: Thread[], shouldFilter: boolean): Thread[] => {
+    if (!shouldFilter) {
+      return threads;
+    }
+
+    return threads.filter((thread) => parseFloat(thread.cpuUsage) >= 10);
   };
 
   public override render(): JSX.Element {
@@ -146,7 +166,11 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
       <main className="full-width-page">
         <FlameGraphSettings
           withoutIdle={this.state.withoutIdle}
+          usingCpu={this.state.usingCpu}
+          nameFilter={this.state.nameFilter}
+          stackFilter={this.state.stackFilter}
           onFilterChange={this.handleFilterChange}
+          onRegExpChange={this.handleTextChange}
         />
 
         <FlameGraph chartData={chartData} />
