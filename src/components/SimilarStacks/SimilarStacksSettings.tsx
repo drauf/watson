@@ -106,7 +106,7 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
               <b>Minimum group size</b>
               <input
                 type="number"
-                name="minimalGroupSize"
+                name="minimumGroupSize"
                 value={minimumGroupSize}
                 onChange={onIntegerChange}
               />

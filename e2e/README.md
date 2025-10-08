@@ -6,9 +6,4 @@ yarn playwright install --with-deps
 yarn playwright test --update-snapshots
 ```
 
-To update snapshots used on your local OS (**execute from the parent directory**):
-```
-yarn playwright test --update-snapshots
-```
-
 Source: https://playwright.dev/docs/test-snapshots

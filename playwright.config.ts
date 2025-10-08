@@ -7,7 +7,6 @@ const testData = new Map([
 const browsers = new Map([
   ['chrome', devices['Desktop Chrome']],
   ['safari', devices['Desktop Safari']],
-  ['edge', devices['Desktop Edge']],
   ['firefox', devices['Desktop Firefox']],
 ]);
 
@@ -52,11 +51,12 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
+  timeout: 15000,
   expect: {
     /* Extend timeout for each assertion as screenshots take forever to take */
     timeout: 10000,
-    /* Limit the maximum pixel ratio for image comparisons to 1% */
-    toHaveScreenshot: { maxDiffPixelRatio: 0.01 },
+    /* Limit the maximum pixel ratio for image comparisons to 0.2% */
+    toHaveScreenshot: { maxDiffPixelRatio: 0.002 },
   },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

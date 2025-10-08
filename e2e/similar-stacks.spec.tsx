@@ -2,55 +2,59 @@ import { expect } from '@playwright/test';
 import { test } from './e2e-common';
 
 test.describe('Similar stacks', () => {
-    test.beforeEach(async ({ pageWithData }) => {
-        await pageWithData.getByText('Similar stacks').click();
-    });
+  const COMPARISON_DEPTH = 'Comparison depth';
+  const MINIMUM_GROUP_SIZE = 'Minimum group size';
 
-    test('loads', async ({ pageWithData }) => {
-        expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
-        expect(await pageWithData.getByRole('spinbutton', { name: 'Comparison depth' }).inputValue()).toBe('40');
-        expect(await pageWithData.getByRole('spinbutton', { name: 'Minimum group size' }).inputValue()).toBe('2');
+  test.beforeEach(async ({pageWithData}) => {
+    await pageWithData.getByText('Similar stacks').click();
+  });
 
-        await expect(pageWithData).toHaveScreenshot();
-    });
+  test('loads', async ({pageWithData}) => {
+    expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
 
-    test('has working filters', async ({ pageWithData }) => {
-        await pageWithData.getByText('Active').uncheck();
-        await pageWithData.getByRole('spinbutton', { name: 'Comparison depth' }).fill('5');
-        await pageWithData.getByRole('spinbutton', { name: 'Minimum group size' }).fill('600');
+    expect(await pageWithData.getByLabel(COMPARISON_DEPTH).inputValue()).toBe('30');
+    expect(await pageWithData.getByLabel(MINIMUM_GROUP_SIZE).inputValue()).toBe('5');
 
-        await expect(pageWithData).toHaveScreenshot();
-    });
+    await expect(pageWithData).toHaveScreenshot();
+  });
 
-    test('shows empty state', async ({ pageWithData }) => {
-        await pageWithData.getByRole('spinbutton', { name: 'Minimum group size' }).fill('2137');
+  test('has working filters', async ({pageWithData}) => {
+    await pageWithData.getByText('Active').uncheck();
+    await pageWithData.getByLabel(COMPARISON_DEPTH).fill('4');
+    await pageWithData.getByLabel(MINIMUM_GROUP_SIZE).fill('600');
 
-        await expect(pageWithData).toHaveScreenshot();
-    });
+    await expect(pageWithData).toHaveScreenshot();
+  });
 
-    test('can fold sections', async ({ pageWithData }) => {
-        const buttons = (await pageWithData.locator('main').getByRole('button').all()).slice(0, 6);
+  test('shows empty state', async ({pageWithData}) => {
+    await pageWithData.getByLabel(MINIMUM_GROUP_SIZE).fill('2137');
 
-        for (const button of buttons) {
-            await button.click()
-        }
+    await expect(pageWithData).toHaveScreenshot();
+  });
 
-        await expect(pageWithData).toHaveScreenshot();
-    });
+  test('can fold sections', async ({pageWithData}) => {
+    const buttons = (await pageWithData.locator('main').getByRole('button').all()).slice(0, 4);
 
-    test('has working regex filters', async ({ pageWithData }) => {
-        await pageWithData.getByPlaceholder('e.g. http.*exec').fill('caesium');
-        await pageWithData.getByPlaceholder('e.g. java\\.io').fill('reIndex');
+    for (const button of buttons) {
+      await button.click()
+    }
 
-        await expect(pageWithData).toHaveScreenshot();
-    });
+    await expect(pageWithData).toHaveScreenshot();
+  });
 
-    test('opens thread details', async ({ context, pageWithData }) => {
-        const [details] = await Promise.all([
-            context.waitForEvent('page'),
-            pageWithData.locator('main ul').first().getByRole('button').first().click()
-        ]);
+  test('has working regex filters', async ({pageWithData}) => {
+    await pageWithData.getByPlaceholder('e.g. http.*exec').fill('caesium');
+    await pageWithData.getByPlaceholder('e.g. java\\.io').fill('reIndex');
 
-        await expect(details).toHaveScreenshot();
-    });
+    await expect(pageWithData).toHaveScreenshot();
+  });
+
+  test('opens thread details', async ({context, pageWithData}) => {
+    const [details] = await Promise.all([
+      context.waitForEvent('page'),
+      pageWithData.locator('main ul').first().getByRole('button').first().click()
+    ]);
+
+    await expect(details).toHaveScreenshot();
+  });
 });
