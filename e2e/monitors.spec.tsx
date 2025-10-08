@@ -20,7 +20,7 @@ test.describe('Monitors', () => {
   });
 
   test('shows empty state', async ({pageWithData}) => {
-    await pageWithData.getByText('Owned locks').check();
+    await pageWithData.getByText('Owned locks', { exact: true }).check();
     await pageWithData.getByText('Unowned locks').check();
 
     await expect(pageWithData).toHaveScreenshot();

@@ -8,14 +8,14 @@ test.describe('CPU consumers', () => {
 
   test('loads', async ({pageWithData}) => {
     expect(await pageWithData.getByText('Mean').isChecked()).toBeTruthy();
-    expect(await pageWithData.getByLabel('Threads to show').inputValue()).toBe('40');
+    expect(await pageWithData.getByLabel('Threads to display').inputValue()).toBe('40');
 
     await expect(pageWithData).toHaveScreenshot();
   });
 
   test('has working filters', async ({pageWithData}) => {
     await pageWithData.getByText('Median').check();
-    await pageWithData.getByLabel('Threads to show').fill('10');
+    await pageWithData.getByLabel('Threads to display').fill('10');
 
     await expect(pageWithData).toHaveScreenshot();
   });
