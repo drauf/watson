@@ -20,6 +20,13 @@ test.describe('CPU consumers', () => {
         await expect(pageWithData).toHaveScreenshot();
     });
 
+    test('has working regex filters', async ({ pageWithData }) => {
+        await pageWithData.getByPlaceholder('e.g. http.*exec').fill('exec');
+        await pageWithData.getByPlaceholder('e.g. java\\.io').fill('java');
+
+        await expect(pageWithData).toHaveScreenshot();
+    });
+
     test('opens thread details', async ({ context, pageWithData }) => {
         const [details] = await Promise.all([
             context.waitForEvent('page'),

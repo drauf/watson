@@ -41,6 +41,13 @@ test.describe('Stuck threads', () => {
         await expect(pageWithData).toHaveScreenshot();
     });
 
+    test('has working regex filters', async ({ pageWithData }) => {
+        await pageWithData.getByPlaceholder('e.g. http.*exec').fill('caesium');
+        await pageWithData.getByPlaceholder('e.g. java\\.io').fill('CountDownLatch');
+
+        await expect(pageWithData).toHaveScreenshot();
+    });
+
     test('opens thread details', async ({ context, pageWithData }) => {
         const [details] = await Promise.all([
             context.waitForEvent('page'),

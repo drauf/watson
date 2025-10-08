@@ -20,8 +20,8 @@ test.describe('Similar stacks', () => {
         await pageWithData.getByRole('spinbutton', { name: 'Minimum group size' }).fill('600');
 
         await expect(pageWithData).toHaveScreenshot();
-    });    
-    
+    });
+
     test('shows empty state', async ({ pageWithData }) => {
         await pageWithData.getByRole('spinbutton', { name: 'Minimum group size' }).fill('2137');
 
@@ -34,6 +34,13 @@ test.describe('Similar stacks', () => {
         for (const button of buttons) {
             await button.click()
         }
+
+        await expect(pageWithData).toHaveScreenshot();
+    });
+
+    test('has working regex filters', async ({ pageWithData }) => {
+        await pageWithData.getByPlaceholder('e.g. http.*exec').fill('caesium');
+        await pageWithData.getByPlaceholder('e.g. java\\.io').fill('reIndex');
 
         await expect(pageWithData).toHaveScreenshot();
     });

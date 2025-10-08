@@ -32,4 +32,18 @@ test.describe('Flame graph', () => {
 
         await expect(pageWithData).toHaveScreenshot();
     });
+
+    test('has working thread name regex filter', async ({ pageWithData }) => {
+        await pageWithData.getByPlaceholder('e.g. http.*exec').fill('http.*exec');
+        await waitForAnimationToFinish(pageWithData);
+
+        await expect(pageWithData).toHaveScreenshot();
+    });
+
+    test('has working stack trace regex filter', async ({ pageWithData }) => {
+        await pageWithData.getByPlaceholder('e.g. java\\.io').fill('^com\\.codebarrel');
+        await waitForAnimationToFinish(pageWithData);
+
+        await expect(pageWithData).toHaveScreenshot();
+    });
 });
