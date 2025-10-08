@@ -91,7 +91,7 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     let filtered = monitors.filter((monitor) => monitor.waitingSum > 0);
 
     if (this.state.withoutIdle) {
-      filtered = filtered.filter((monitor) => !MonitorsPage.isQueueThread(monitor));
+      filtered = filtered.filter((monitor) => !MonitorsPage.isIdle(monitor));
     }
     if (this.state.withOwner) {
       filtered = filtered.filter((monitor) => MonitorsPage.hasAnyOwner(monitor));
@@ -126,11 +126,11 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     if (this.state.nameFilter && !this.matchesNameFilter(thread)) {
       return false;
     }
-    
+
     if (this.state.stackFilter && !this.matchesStackFilter(thread)) {
       return false;
     }
-    
+
     return true;
   };
 
@@ -154,16 +154,18 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
   private static hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => !!monitor.owner);
 
-  private static isQueueThread = (monitorOverTime: MonitorOverTime): boolean => {
+  private static isIdle = (monitorOverTime: MonitorOverTime): boolean => {
     for (const monitor of monitorOverTime.monitors) {
-      // if the lock has an owner, it's not a queue thread
+      // if the lock has an owner, it's not idle,
       if (monitor.owner) {
-        return false;
+        // ...unless it's the special JVM thread dealing with finalization or some structure thread
+        return monitor.owner.name === 'Reference Handler'
+          || monitor.owner.name.startsWith('Structure-ValueCacheCleaner');
       }
 
       // if the stack trace is too long, it's not a queue thread
       for (const thread of monitor.waiting) {
-        if (thread.stackTrace.length > 12) {
+        if (thread.stackTrace.length > 16) {
           return false;
         }
       }
