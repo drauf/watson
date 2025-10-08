@@ -32,7 +32,7 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
     } = this.props;
 
     return (
-      <section id="threads-overview-settings">
+      <section id="settings">
         <div className="filters">
           <b>Filters:</b>
 
@@ -93,8 +93,9 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
           />
         </div>
 
-        <div id="regexp-filters">
+        <div>
           <label>
+            <b>Thread name pattern</b>
             <input
               type="text"
               name="nameFilter"
@@ -103,10 +104,10 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
               title="Filter by thread name pattern. Examples: 'http.*exec' for Tomcat threads, '^main' for main thread only"
               placeholder="e.g. http.*exec"
             />
-            <b>Thread name pattern</b>
           </label>
 
           <label>
+            <b>Stack trace pattern</b>
             <input
               type="text"
               name="stackFilter"
@@ -115,7 +116,6 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
               title="Filter by stack trace pattern. Examples: 'java\.io' for I/O operations, 'SQLException' for database errors"
               placeholder="e.g. java\.io"
             />
-            <b>Stack trace pattern</b>
           </label>
         </div>
       </section>

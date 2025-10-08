@@ -22,52 +22,54 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
     } = this.props;
 
     return (
-      <section id="flame-graph-settings">
-        <div className="filters">
-          <b>Filters:</b>
+      <section id="heading">
+        <section id="settings">
+          <div className="filters">
+            <b>Filters:</b>
 
-          <Filter
-            name="withoutIdle"
-            displayName="Active"
-            checked={withoutIdle}
-            onChange={onFilterChange}
-            tooltip="Hide threads waiting for I/O or in thread pools"
-          />
-
-          <Filter
-            name="usingCpu"
-            displayName="High CPU usage"
-            checked={usingCpu}
-            onChange={onFilterChange}
-            tooltip="Show only threads using more than 30% CPU - focuses on actual performance hotspots"
-          />
-        </div>
-
-        <div id="regexp-filters">
-          <label>
-            <input
-              type="text"
-              name="nameFilter"
-              value={nameFilter}
-              onChange={onRegExpChange}
-              title="Filter threads by name using regular expressions. Examples: 'http.*exec' matches Tomcat threads, '^main' matches only the main thread"
-              placeholder="e.g. http.*exec"
+            <Filter
+              name="withoutIdle"
+              displayName="Active"
+              checked={withoutIdle}
+              onChange={onFilterChange}
+              tooltip="Hide threads waiting for I/O or in thread pools"
             />
-            <b>Thread name RegExp</b>
-          </label>
 
-          <label>
-            <input
-              type="text"
-              name="stackFilter"
-              value={stackFilter}
-              onChange={onRegExpChange}
-              title="Filter threads by any line in their stack trace using regular expressions. Examples: 'java\.io' matches threads doing I/O operations, 'SQLException' finds database errors, 'com\.atlassian\.jira' finds Jira-specific code"
-              placeholder="e.g. java\.io"
+            <Filter
+              name="usingCpu"
+              displayName="High CPU usage"
+              checked={usingCpu}
+              onChange={onFilterChange}
+              tooltip="Show only threads using more than 30% CPU - focuses on actual performance hotspots"
             />
-            <b>Stack trace RegExp</b>
-          </label>
-        </div>
+          </div>
+
+          <div>
+            <label>
+              <b>Thread name pattern</b>
+              <input
+                type="text"
+                name="nameFilter"
+                value={nameFilter}
+                onChange={onRegExpChange}
+                title="Filter threads by name using regular expressions. Examples: 'http.*exec' matches Tomcat threads, '^main' matches only the main thread"
+                placeholder="e.g. http.*exec"
+              />
+            </label>
+
+            <label>
+              <b>Stack trace pattern</b>
+              <input
+                type="text"
+                name="stackFilter"
+                value={stackFilter}
+                onChange={onRegExpChange}
+                title="Filter threads by any line in their stack trace using regular expressions. Examples: 'java\.io' matches threads doing I/O operations, 'SQLException' finds database errors, 'com\.atlassian\.jira' finds Jira-specific code"
+                placeholder="e.g. java\.io"
+              />
+            </label>
+          </div>
+        </section>
       </section>
     );
   }

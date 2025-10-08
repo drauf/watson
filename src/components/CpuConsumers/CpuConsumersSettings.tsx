@@ -50,7 +50,34 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
           </label>
         </div>
 
+        <div>
+          <label>
+            <b>Thread name pattern</b>
+            <input
+              type="text"
+              name="nameFilter"
+              value={nameFilter}
+              onChange={onRegExpChange}
+              title="Filter threads by name using regular expressions. Examples: 'http.*exec' matches Tomcat threads, '^main' matches only the main thread"
+              placeholder="e.g. http.*exec"
+            />
+          </label>
+
+          <label>
+            <b>Stack trace pattern</b>
+            <input
+              type="text"
+              name="stackFilter"
+              value={stackFilter}
+              onChange={onRegExpChange}
+              title="Filter threads by any line in their stack trace using regular expressions. Examples: 'java\.io' matches threads doing I/O operations, 'SQLException' finds database errors, 'com\.atlassian\.jira' finds Jira-specific code"
+              placeholder="e.g. java\.io"
+            />
+          </label>
+        </div>
+
         <div id="cpu-consumers-limit">
+          <b>Threads to show</b>
           <label>
             <input
               type="number"
@@ -60,33 +87,6 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
               value={limit}
               onChange={onLimitChange}
             />
-            <b>Threads to show</b>
-          </label>
-        </div>
-
-        <div id="regexp-filters">
-          <label>
-            <input
-              type="text"
-              name="nameFilter"
-              value={nameFilter}
-              onChange={onRegExpChange}
-              title="Filter threads by name using regular expressions. Examples: 'http.*exec' matches Tomcat threads, '^main' matches only the main thread"
-              placeholder="e.g. http.*exec"
-            />
-            <b>Thread name RegExp</b>
-          </label>
-
-          <label>
-            <input
-              type="text"
-              name="stackFilter"
-              value={stackFilter}
-              onChange={onRegExpChange}
-              title="Filter threads by any line in their stack trace using regular expressions. Examples: 'java\.io' matches threads doing I/O operations, 'SQLException' finds database errors, 'com\.atlassian\.jira' finds Jira-specific code"
-              placeholder="e.g. java\.io"
-            />
-            <b>Stack trace RegExp</b>
           </label>
         </div>
       </section>

@@ -1,25 +1,6 @@
 #heading {
   width: 80%;
   margin: auto;
-  padding-top: 22px;
-}
-
-#threads-overview-settings {
-  min-height: 83px;
-  line-height: 36px;
-}
-
-#regexp-filters {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 90%;
-  margin-left: 4em;
-  line-height: 42px;
-}
-
-#regexp-filters label {
-  margin-right: 2em;
 }
 
 #matching-summary {

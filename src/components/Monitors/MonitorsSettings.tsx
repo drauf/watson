@@ -47,8 +47,9 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
           />
         </div>
 
-        <div id="regexp-filters">
+        <div>
           <label>
+            <b>Thread name pattern</b>
             <input
               type="text"
               name="nameFilter"
@@ -57,10 +58,10 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
               title="Filter monitors by thread name using regular expressions. Shows monitors where any waiting or owning thread matches. Examples: 'http.*exec' matches Tomcat threads, '^main' matches only the main thread"
               placeholder="e.g. http.*exec"
             />
-            <b>Thread name RegExp</b>
           </label>
 
           <label>
+            <b>Stack trace pattern</b>
             <input
               type="text"
               name="stackFilter"
@@ -69,7 +70,6 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
               title="Filter monitors by stack trace using regular expressions. Shows monitors where any waiting or owning thread has a matching stack trace. Examples: 'java\.io' matches threads doing I/O operations, 'com\.atlassian\.jira' finds Jira-specific code"
               placeholder="e.g. java\.io"
             />
-            <b>Stack trace RegExp</b>
           </label>
         </div>
       </section>

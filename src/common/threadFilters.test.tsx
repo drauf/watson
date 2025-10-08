@@ -7,15 +7,13 @@ const createMockThread = (
   status: ThreadStatus,
   stackTrace: string[],
   cpuUsage: string = '0.00',
-): Thread => ({
-  uniqueId: Math.random(),
-  name,
-  status,
-  stackTrace,
-  cpuUsage,
-  locksHeld: [],
-  lockWaitingFor: undefined,
-});
+): Thread => {
+  const thread = new Thread(Math.floor(Math.random() * 10000), name);
+  thread.status = status;
+  thread.stackTrace.push(...stackTrace);
+  thread.cpuUsage = cpuUsage;
+  return thread;
+};
 
 const createStack = (coreFrames: string[], targetLength: number): string[] => {
   const fillerFrames = [

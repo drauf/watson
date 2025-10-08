@@ -29,25 +29,29 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
           />
         </div>
 
-        <label>
-          <input
-            type="number"
-            name="linesToConsider"
-            value={linesToConsider}
-            onChange={onIntegerChange}
-          />
-          <b>Stack trace lines to compare</b>
-        </label>
+        <div>
+          <label>
+            <b>Stack trace lines to compare</b>
+            <input
+              type="number"
+              name="linesToConsider"
+              value={linesToConsider}
+              onChange={onIntegerChange}
+            />
+          </label>
+        </div>
 
-        <label>
-          <input
-            type="number"
-            name="minimalGroupSize"
-            value={minimalGroupSize}
-            onChange={onIntegerChange}
-          />
-          <b>Minimal group size to show</b>
-        </label>
+        <div>
+          <label>
+            <b>Minimal group size to show</b>
+            <input
+              type="number"
+              name="minimalGroupSize"
+              value={minimalGroupSize}
+              onChange={onIntegerChange}
+            />
+          </label>
+        </div>
       </section>
     );
   }

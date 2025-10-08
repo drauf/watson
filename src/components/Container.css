@@ -19,14 +19,22 @@ main {
 
 #settings {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
-  padding: 24px 0;
-  line-height: 34px;
+  padding: 1em 0;
 }
 
-#settings input {
-  margin-left: 24px;
+#settings div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.5em 0;
+  line-height: 2em;
+}
+
+#settings label input {
+  margin-left: 1em;
+  margin-right: 2em;
 }
 
 #centered {

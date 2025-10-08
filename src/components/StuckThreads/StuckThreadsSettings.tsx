@@ -29,26 +29,30 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
           />
         </div>
 
-        <label>
-          <input
-            type="number"
-            min="2"
-            name="minClusterSize"
-            value={minClusterSize}
-            onChange={onIntegerChange}
-          />
-          <b>Minimal similar stacks to consider a thread stuck</b>
-        </label>
+        <div>
+          <label>
+            <b>Minimal similar stacks to consider a thread stuck</b>
+            <input
+              type="number"
+              min="2"
+              name="minClusterSize"
+              value={minClusterSize}
+              onChange={onIntegerChange}
+            />
+          </label>
+        </div>
 
-        <label>
-          <input
-            type="number"
-            name="maxDifferingLines"
-            value={maxDifferingLines}
-            onChange={onIntegerChange}
-          />
-          <b>Maximum differing lines between dumps</b>
-        </label>
+        <div>
+          <label>
+            <b>Maximum differing lines between dumps</b>
+            <input
+              type="number"
+              name="maxDifferingLines"
+              value={maxDifferingLines}
+              onChange={onIntegerChange}
+            />
+          </label>
+        </div>
       </section>
     );
   }
