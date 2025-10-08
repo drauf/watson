@@ -86,13 +86,13 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
     return threadsOverTime.map((threadsMap) => {
       const filteredMap = new Map<number, Thread>();
-      
+
       for (const [threadId, thread] of threadsMap.entries()) {
         if (this.matchesFilters(thread)) {
           filteredMap.set(threadId, thread);
         }
       }
-      
+
       return filteredMap;
     }).filter((threadsMap) => threadsMap.size > 0);
   };
@@ -101,11 +101,11 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
     if (this.state.nameFilter && !this.matchesNameFilter(thread)) {
       return false;
     }
-    
+
     if (this.state.stackFilter && !this.matchesStackFilter(thread)) {
       return false;
     }
-    
+
     return true;
   };
 
@@ -121,7 +121,7 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
   private matchesStackFilter = (thread: Thread): boolean => {
     try {
       const regex = new RegExp(this.state.stackFilter, 'i');
-      return thread.stackTrace.some(line => regex.test(line));
+      return thread.stackTrace.some((line) => regex.test(line));
     } catch {
       return true; // ignore invalid regex
     }

@@ -1,4 +1,4 @@
-import isIdleThread from '../../common/isIdleThread';
+import { isIdleInSnapshot } from '../../common/threadFilters';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
@@ -81,7 +81,7 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
   };
 
   private getStackTrace = (thread: Thread, linesToConsider: number): string | null => {
-    if (this.state.withoutIdle && isIdleThread(thread)) {
+    if (this.state.withoutIdle && isIdleInSnapshot(thread)) {
       return null;
     }
 

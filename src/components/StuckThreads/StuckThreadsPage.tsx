@@ -1,6 +1,6 @@
 import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
-import isIdleThread from '../../common/isIdleThread';
+import { isIdleInSnapshot } from '../../common/threadFilters';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
@@ -76,7 +76,7 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     const filtered = [];
 
     for (const thread of threadOverTime) {
-      if (!this.state.withoutIdle || !isIdleThread(thread[1])) {
+      if (!this.state.withoutIdle || !isIdleInSnapshot(thread[1])) {
         filtered.push(thread[1]);
       }
     }
