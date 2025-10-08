@@ -1,4 +1,5 @@
 import React from 'react';
+import { matchesRegexFilters } from '../../common/regexFiltering';
 import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
@@ -13,6 +14,8 @@ type State = {
   withOwner: boolean;
   withoutIdle: boolean;
   withoutOwner: boolean;
+  nameFilter: string;
+  stackFilter: string;
 };
 
 class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
@@ -20,6 +23,8 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     withOwner: false,
     withoutIdle: true,
     withoutOwner: false,
+    nameFilter: '',
+    stackFilter: '',
   };
 
   public override render(): JSX.Element {
@@ -36,7 +41,10 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
           withOwner={this.state.withOwner}
           withoutIdle={this.state.withoutIdle}
           withoutOwner={this.state.withoutOwner}
+          nameFilter={this.state.nameFilter}
+          stackFilter={this.state.stackFilter}
           onFilterChange={this.handleFilterChange}
+          onRegExpChange={this.handleTextChange}
         />
 
         {MonitorsPage.renderMonitors(filtered)}
@@ -83,7 +91,7 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     let filtered = monitors.filter((monitor) => monitor.waitingSum > 0);
 
     if (this.state.withoutIdle) {
-      filtered = filtered.filter((monitor) => !MonitorsPage.isQueueThread(monitor));
+      filtered = filtered.filter((monitor) => !MonitorsPage.isIdle(monitor));
     }
     if (this.state.withOwner) {
       filtered = filtered.filter((monitor) => MonitorsPage.hasAnyOwner(monitor));
@@ -91,22 +99,43 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     if (this.state.withoutOwner) {
       filtered = filtered.filter((monitor) => !MonitorsPage.hasAnyOwner(monitor));
     }
+    if (this.state.nameFilter || this.state.stackFilter) {
+      filtered = filtered.filter((monitor) => this.matchesRegexpFilters(monitor));
+    }
 
     return filtered;
   };
 
+  private matchesRegexpFilters = (monitorOverTime: MonitorOverTime): boolean => {
+    for (const monitor of monitorOverTime.monitors) {
+      const allThreads = [...monitor.waiting];
+      if (monitor.owner) {
+        allThreads.push(monitor.owner);
+      }
+
+      for (const thread of allThreads) {
+        if (matchesRegexFilters(thread, this.state.nameFilter, this.state.stackFilter)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   private static hasAnyOwner = (monitorOverTime: MonitorOverTime): boolean => monitorOverTime.monitors.some((monitor) => !!monitor.owner);
 
-  private static isQueueThread = (monitorOverTime: MonitorOverTime): boolean => {
+  private static isIdle = (monitorOverTime: MonitorOverTime): boolean => {
     for (const monitor of monitorOverTime.monitors) {
-      // if the lock has an owner, it's not a queue thread
+      // if the lock has an owner, it's not idle,
       if (monitor.owner) {
-        return false;
+        // ...unless it's the special JVM thread dealing with finalization or some structure thread
+        return monitor.owner.name === 'Reference Handler'
+          || monitor.owner.name.startsWith('Structure-ValueCacheCleaner');
       }
 
       // if the stack trace is too long, it's not a queue thread
       for (const thread of monitor.waiting) {
-        if (thread.stackTrace.length > 12) {
+        if (thread.stackTrace.length > 16) {
           return false;
         }
       }

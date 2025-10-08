@@ -27,7 +27,9 @@ test.describe('Tooltips', () => {
     });
 
     test('handles tooltip positioning at screen edges', async ({ pageWithData }) => {
-      await pageWithData.getByText('DefaultIssueManager.updateIssue @ line 687').first().hover();
+      // filter first as multiple segments with the same text cause problems in element selection
+      await pageWithData.getByText('SetEntityProperty').first().click();
+      await pageWithData.getByText('ContextClassLoader').first().hover();
 
       await expect(pageWithData).toHaveScreenshot('flame-graph-tooltip-edge-positioning.png');
     });
@@ -54,12 +56,14 @@ test.describe('Tooltips', () => {
     });
 
     test('shows stack trace tooltip on method hover', async ({ pageWithData }) => {
-      await pageWithData.getByRole('button', { name: 'java.lang.reflect' }).first().hover();
+      await pageWithData.getByRole('button', { name: 'org.bouncycastle' }).first().hover({ force: true });
       await expect(pageWithData).toHaveScreenshot('threads-tooltip-stack.png');
     });
 
     test('tooltip positioning works correctly', async ({ pageWithData }) => {
       // Test tooltip at the bottom-right corner of the page
+      // to do that we first unselect a filter to get more stacks on the screen
+      await pageWithData.getByText('Active').click();
       await pageWithData.getByRole('button').last().hover();
       await expect(pageWithData).toHaveScreenshot('threads-tooltip-positioning.png');
     });

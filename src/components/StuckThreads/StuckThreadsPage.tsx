@@ -1,6 +1,7 @@
 import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
-import isIdleThread from '../../common/isIdleThread';
+import { matchesRegexFilters } from '../../common/regexFiltering';
+import { isIdleInSnapshot } from '../../common/threadFilters';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
@@ -15,6 +16,8 @@ type State = {
   minClusterSize: number;
   threadDumps: ThreadDump[];
   withoutIdle: boolean;
+  nameFilter: string;
+  stackFilter: string;
 };
 
 class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
@@ -28,6 +31,8 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
       minClusterSize: nonEmptyThreadDumps.length,
       threadDumps: nonEmptyThreadDumps,
       withoutIdle: true,
+      nameFilter: '',
+      stackFilter: '',
     };
   }
 
@@ -46,8 +51,11 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
           maxDifferingLines={this.state.maxDifferingLines}
           minClusterSize={this.state.minClusterSize}
           withoutIdle={this.state.withoutIdle}
+          nameFilter={this.state.nameFilter}
+          stackFilter={this.state.stackFilter}
           onFilterChange={this.handleFilterChange}
           onIntegerChange={this.handleIntegerChange}
+          onRegExpChange={this.handleTextChange}
         />
 
         {this.renderStuckThreads(clusters)}
@@ -76,8 +84,10 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     const filtered = [];
 
     for (const thread of threadOverTime) {
-      if (!this.state.withoutIdle || !isIdleThread(thread[1])) {
-        filtered.push(thread[1]);
+      if (!this.state.withoutIdle || !isIdleInSnapshot(thread[1])) {
+        if (matchesRegexFilters(thread[1], this.state.nameFilter, this.state.stackFilter)) {
+          filtered.push(thread[1]);
+        }
       }
     }
 
