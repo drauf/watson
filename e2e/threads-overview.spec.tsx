@@ -2,8 +2,8 @@ import {expect} from '@playwright/test';
 import {test} from './e2e-common';
 
 test.describe('Threads overview', () => {
-  const NAME_REGEXP = 'Thread name RegExp';
-  const STACK_REGEXP = 'Stack trace RegExp';
+  const NAME_REGEXP = 'Thread name pattern';
+  const STACK_REGEXP = 'Stack trace pattern';
 
   test.beforeEach(async ({pageWithData}) => {
     await pageWithData.getByText('Threads overview').click();
@@ -16,7 +16,7 @@ test.describe('Threads overview', () => {
     expect(await pageWithData.getByText('Non-Tomcat').isChecked()).toBeFalsy();
     expect(await pageWithData.getByText('Database').isChecked()).toBeFalsy();
     expect(await pageWithData.getByText('Lucene', {exact: true}).isChecked()).toBeFalsy();
-    expect(await pageWithData.getByText('Using >10% CPU').isChecked()).toBeFalsy();
+    expect(await pageWithData.getByText('High CPU usage').isChecked()).toBeFalsy();
     expect(await pageWithData.getByLabel(NAME_REGEXP).inputValue()).toBe('');
     expect(await pageWithData.getByLabel(STACK_REGEXP).inputValue()).toBe('');
 
@@ -34,10 +34,10 @@ test.describe('Threads overview', () => {
     await expect(pageWithData).toHaveScreenshot();
 
     await pageWithData.getByText('Lucene', {exact: true}).uncheck();
-    await pageWithData.getByText('Using >10% CPU').check();
+    await pageWithData.getByText('High CPU usage').check();
     await expect(pageWithData).toHaveScreenshot();
 
-    await pageWithData.getByText('Using >10% CPU').uncheck();
+    await pageWithData.getByText('High CPU usage').uncheck();
     await pageWithData.getByText('Non-Tomcat').check();
     await pageWithData.getByText('Database').check();
     await expect(pageWithData).toHaveScreenshot();
@@ -56,7 +56,7 @@ test.describe('Threads overview', () => {
   test('opens thread details', async ({context, pageWithData}) => {
     const [details] = await Promise.all([
       context.waitForEvent('page'),
-      pageWithData.getByRole('button', {name: 'java.lang.reflect'}).click()
+      pageWithData.getByRole('button', {name: 'org.bouncycastle'}).click({ force: true })
     ]);
 
     await expect(details).toHaveScreenshot();
@@ -68,7 +68,7 @@ test.describe('Threads overview', () => {
   });
 
   test('shows first stack trace line on hover', async ({pageWithData}) => {
-    await pageWithData.getByRole('button', {name: 'java.lang.reflect'}).first().hover();
+    await pageWithData.getByRole('button', {name: 'org.bouncycastle'}).hover({ force: true });
     await expect(pageWithData).toHaveScreenshot();
   });
 

@@ -30,6 +30,12 @@ td {
   text-overflow: ellipsis;
 }
 
+td > div,
+th > div {
+  width: 100%;
+  height: 100%;
+}
+
 td button {
   width: 100%;
   height: 100%;
