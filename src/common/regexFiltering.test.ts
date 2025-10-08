@@ -195,5 +195,29 @@ describe('regexFiltering', () => {
       expect(matchesRegexFilters(webhookThread, 'processor', 'http')).toBe(true);
       expect(matchesRegexFilters(webhookThread, 'email', 'webhook')).toBe(false);
     });
+
+    it('works with exclude-style patterns using negative lookahead', () => {
+      const activeThread = createMockThread('worker-thread-1', [
+        'com.atlassian.jira.issue.IssueManager.updateIssue(IssueManager.java:123)',
+      ]);
+
+      const idleThread = createMockThread('idle-connection-2', [
+        'java.lang.Object.wait(Object.java:502)',
+        'java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)',
+      ]);
+
+      // Exclude idle threads pattern: ^(?!.*idle).*
+      expect(matchesRegexFilters(activeThread, '^(?!.*idle).*', '')).toBe(true);
+      expect(matchesRegexFilters(idleThread, '^(?!.*idle).*', '')).toBe(false);
+
+      // Exclude wait patterns: ^(?!.*\.wait\().*
+      expect(matchesRegexFilters(activeThread, '', '^(?!.*\\.wait\\().*')).toBe(true);
+      expect(matchesRegexFilters(idleThread, '', '^(?!.*\\.wait\\().*')).toBe(false);
+
+      // Include patterns still work normally
+      expect(matchesRegexFilters(activeThread, 'worker', 'IssueManager')).toBe(true);
+      expect(matchesRegexFilters(idleThread, 'idle', '\\.wait')).toBe(true);
+      expect(matchesRegexFilters(activeThread, 'idle', 'IssueManager')).toBe(false);
+    });
   });
 });
