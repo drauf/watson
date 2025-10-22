@@ -34,7 +34,7 @@ export default class WaitingList extends React.PureComponent<Props, State> {
     const threads = expanded ? waiting : waiting.slice(0, WaitingList.THREADS_TO_SHOW_WHEN_COLLAPSED);
 
     return (
-      <>
+      <p>
         <b>
           {waiting.length}
           {' '}
@@ -52,7 +52,7 @@ export default class WaitingList extends React.PureComponent<Props, State> {
                 : `Expand threads list (${collapsable} more thread(s) to show)`}
             </button>
           )}
-      </>
+      </p>
     );
   }
 }

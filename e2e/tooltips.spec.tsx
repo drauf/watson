@@ -56,7 +56,7 @@ test.describe('Tooltips', () => {
     });
 
     test('shows stack trace tooltip on method hover', async ({ pageWithData }) => {
-      await pageWithData.getByRole('button', { name: 'org.bouncycastle' }).first().hover({ force: true });
+      await pageWithData.getByText('org.bouncycastle').first().hover({ force: true });
       await expect(pageWithData).toHaveScreenshot('threads-tooltip-stack.png');
     });
 
@@ -64,7 +64,7 @@ test.describe('Tooltips', () => {
       // Test tooltip at the bottom-right corner of the page
       // to do that we first unselect a filter to get more stacks on the screen
       await pageWithData.getByText('Active').click();
-      await pageWithData.getByRole('button').last().hover();
+      await pageWithData.getByText('jdk.internal').last().hover();
       await expect(pageWithData).toHaveScreenshot('threads-tooltip-positioning.png');
     });
 

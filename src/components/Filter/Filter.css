@@ -1,26 +1,33 @@
 .filters label {
   margin-left: 8px;
   padding: 7px 10px;
-  color: var(--color-b400);
-  font-weight: 500;
+  color: var(--ds-text-accent-gray);
+  font-weight: var(--ds-font-weight-bold);
+  background: var(--ds-background-accent-gray-subtlest);
   border: 1px solid transparent;
   border-radius: 3px;
 }
 
 .filters label:hover {
-  color: var(--color-b300);
-  border: 1px solid var(--color-n40);
+  background: var(--ds-background-accent-gray-subtlest-hovered);
+  cursor: pointer;
+}
+
+.filters label:active {
+  background: var(--ds-background-accent-gray-subtlest-pressed);
 }
 
 .filters .checked {
-  color: var(--color-n0);
-  background: var(--color-n700);
+  color: var(--ds-text-inverse);
+  background: var(--ds-background-accent-gray-bolder);
 }
 
 .filters .checked:hover {
-  color: var(--color-n900);
-  background: var(--color-n40);
-  border: 1px solid transparent;
+  background: var(--ds-background-accent-gray-bolder-hovered);
+}
+
+.filters .checked:active {
+  background: var(--ds-background-accent-gray-bolder-pressed);
 }
 
 .filters input {

@@ -2,12 +2,13 @@ import React from 'react';
 import {
   Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip,
 } from 'recharts';
+import { token } from '@atlaskit/tokens';
 import MemoryUsage from '../../types/MemoryUsage';
 import ThreadDump from '../../types/ThreadDump';
 import labelFormatter from './LabelFormatter';
 import PieChartTooltip, { ChartData } from './PieChartTooltip';
 
-const COLORS = ['#6554C0', '#FF5630'];
+const COLORS = [token('color.chart.categorical.4'), token('color.chart.categorical.3')];
 
 type Props = {
   threadDumps: ThreadDump[];
@@ -51,7 +52,7 @@ export default class SwapUsageChart extends React.PureComponent<Props> {
               }
             </Pie>
             {sum === 0 && (
-              <Pie data={[{ name: 'No Data', value: 1 }]} dataKey="value" fill="#eeeeee" animationDuration={1000} />
+              <Pie data={[{ name: 'No Data', value: 1 }]} dataKey="value" fill={token('color.chart.neutral')} animationDuration={1000} />
             )}
             {sum !== 0 && <Tooltip content={<PieChartTooltip />} />}
             <Legend />

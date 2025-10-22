@@ -23,7 +23,7 @@ type TestOptions = {
 };
 
 export const test = base.extend<TestOptions>({
-  dataLocation: ['e2e/test-data/boring-example/', {option: true}],
+  dataLocation: ['test-data/boring-example/', {option: true}],
 
   pageWithData: async ({page, dataLocation}, use) => {
     await loadData(page, dataLocation);

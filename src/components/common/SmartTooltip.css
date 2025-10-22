@@ -6,20 +6,19 @@
 .smart-tooltip {
   box-sizing: border-box;
   max-width: 800px;
-  padding: 8px 12px;
-  color: var(--color-n0);
-  font-weight: normal;
-  font-size: 12px;
+  padding: var(--ds-space-100) var(--ds-space-150);
+  color: var(--ds-text);
+  font-weight: var(--ds-font-weight-semibold);
   line-height: 1.4;
   white-space: normal;
   word-wrap: break-word;
-  background-color: var(--color-n800);
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
+  background-color: var(--ds-surface-overlay);
+  border-radius: var(--ds-radius-xlarge);
+  box-shadow: var(--ds-shadow-overlay);
   opacity: 0;
   animation: tooltip-fade-in 0.2s forwards;
   pointer-events: none;
-  -webkit-text-fill-color: white;
+  -webkit-text-fill-color: var(--ds-text);
 }
 
 .smart-tooltip div {
@@ -32,11 +31,9 @@
 
 .smart-tooltip code {
   padding: 1px 4px;
-  color: var(--color-n100);
-  font-size: 11px;
-  font-family: monospace;
-  background-color: var(--color-n700);
-  border-radius: 2px;
+  color: var(--ds-text-subtle);
+  background-color: var(--ds-surface-overlay-pressed);
+  border-radius: var(--ds-radius-small);
 }
 
 @keyframes tooltip-fade-in {

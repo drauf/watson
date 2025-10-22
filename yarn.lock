@@ -22,6 +22,120 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/atlassian-context@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@atlaskit/atlassian-context@npm:0.6.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40atlaskit%2Fatlassian-context%2F-%2Fatlassian-context-0.6.0.tgz"
+  dependencies:
+    "@babel/runtime": "npm:^7.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/8eb5912db5ea6d9025f55f684e597220070f923c9359370a7553362b167cb86739559ed93b68dd11f740c4c46fc746f619aa341d4dc0b82c60c32fe835411489
+  languageName: node
+  linkType: hard
+
+"@atlaskit/codemod-utils@npm:^4.2.0":
+  version: 4.2.5
+  resolution: "@atlaskit/codemod-utils@npm:4.2.5::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40atlaskit%2Fcodemod-utils%2F-%2Fcodemod-utils-4.2.5.tgz"
+  dependencies:
+    "@babel/runtime": "npm:^7.0.0"
+  checksum: 10c0/7f1a2ed337f5ef423411cfb937feb8941d696bb0e6aa71b2dddf66cda33e53530884b81eac641a9ed1a8cd5821974868ce6e278e2e00110a4c759625af70a22f
+  languageName: node
+  linkType: hard
+
+"@atlaskit/css-reset@npm:7.3.8":
+  version: 7.3.8
+  resolution: "@atlaskit/css-reset@npm:7.3.8::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40atlaskit%2Fcss-reset%2F-%2Fcss-reset-7.3.8.tgz"
+  dependencies:
+    "@atlaskit/theme": "npm:^21.0.0"
+    "@atlaskit/tokens": "npm:^7.0.0"
+    "@babel/runtime": "npm:^7.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/a9cde2887e8b84f9d63974c9e3deac0ca0c1f13eaa10cd9f46a7022c33f671cb51e17da70395996aa8167ce40866bc297a78fc66495a5fb65634edf3425df3c6
+  languageName: node
+  linkType: hard
+
+"@atlaskit/ds-lib@npm:^5.1.0":
+  version: 5.1.1
+  resolution: "@atlaskit/ds-lib@npm:5.1.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40atlaskit%2Fds-lib%2F-%2Fds-lib-5.1.1.tgz"
+  dependencies:
+    "@atlaskit/platform-feature-flags": "npm:^1.1.0"
+    "@babel/runtime": "npm:^7.0.0"
+    bind-event-listener: "npm:^3.0.0"
+    react-uid: "npm:^2.2.0"
+    tiny-invariant: "npm:^1.2.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/09cb5f5b963a58fbd61ec99d10bf68accb1c41cf3a738f2dd0a629135330341e4d491ee64af41168fc648e71de8482f77c0d17af728c72eedee068a17e2b2398
+  languageName: node
+  linkType: hard
+
+"@atlaskit/feature-gate-js-client@npm:^5.5.0":
+  version: 5.5.7
+  resolution: "@atlaskit/feature-gate-js-client@npm:5.5.7::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40atlaskit%2Ffeature-gate-js-client%2F-%2Ffeature-gate-js-client-5.5.7.tgz"
+  dependencies:
+    "@atlaskit/atlassian-context": "npm:^0.6.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@statsig/client-core": "npm:^3.21.1"
+    "@statsig/js-client": "npm:^3.21.1"
+    eventemitter3: "npm:^4.0.0"
+  checksum: 10c0/4b702bf7d5b2d81b383558a5f7b9f15b33639a721451b66121ccbdb19f31c02142d6a40f9654b8e548c7ab6adf70d20d2b292722b982deccff718c0c2f725e8a
+  languageName: node
+  linkType: hard
+
+"@atlaskit/platform-feature-flags@npm:^1.1.0":
+  version: 1.1.2
+  resolution: "@atlaskit/platform-feature-flags@npm:1.1.2::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40atlaskit%2Fplatform-feature-flags%2F-%2Fplatform-feature-flags-1.1.2.tgz"
+  dependencies:
+    "@atlaskit/feature-gate-js-client": "npm:^5.5.0"
+    "@babel/runtime": "npm:^7.0.0"
+  checksum: 10c0/3e727fe8fc414e28b9ff3d409d142e6ffcc1487eb0bbcc07ca0a8553ceea4959f5e0fed40d6607c5d60a1b0e25b37f558a6d7fa669d1e474d847398ac32d3c87
+  languageName: node
+  linkType: hard
+
+"@atlaskit/stylelint-design-system@npm:4.1.3":
+  version: 4.1.3
+  resolution: "@atlaskit/stylelint-design-system@npm:4.1.3::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40atlaskit%2Fstylelint-design-system%2F-%2Fstylelint-design-system-4.1.3.tgz"
+  dependencies:
+    "@atlaskit/tokens": "npm:^7.0.0"
+    "@babel/runtime": "npm:^7.0.0"
+    postcss-value-parser: "npm:^4.2.0"
+  peerDependencies:
+    stylelint: ^14 || ^15 || ^16
+  checksum: 10c0/05b1ab52c8ac4d7f8a25b460c3f02dced6a945282d79325ebf5251e670ae876e25e86334d25a2586d56d021f6999059715558a92b507c86f99c8281380328579
+  languageName: node
+  linkType: hard
+
+"@atlaskit/theme@npm:^21.0.0":
+  version: 21.0.1
+  resolution: "@atlaskit/theme@npm:21.0.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40atlaskit%2Ftheme%2F-%2Ftheme-21.0.1.tgz"
+  dependencies:
+    "@atlaskit/codemod-utils": "npm:^4.2.0"
+    "@atlaskit/ds-lib": "npm:^5.1.0"
+    "@atlaskit/tokens": "npm:^7.0.0"
+    "@babel/runtime": "npm:^7.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/c3dac5edcf3d948228fa9c7fbecb8c029d3840ca811c426fc9019dcea1c6f0e2f4599da41a0c167400bf0cff48af8aa3c99acf3dba208a66503ced01090b6944
+  languageName: node
+  linkType: hard
+
+"@atlaskit/tokens@npm:7.0.0, @atlaskit/tokens@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@atlaskit/tokens@npm:7.0.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40atlaskit%2Ftokens%2F-%2Ftokens-7.0.0.tgz"
+  dependencies:
+    "@atlaskit/ds-lib": "npm:^5.1.0"
+    "@atlaskit/platform-feature-flags": "npm:^1.1.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@babel/traverse": "npm:^7.23.2"
+    "@babel/types": "npm:^7.20.0"
+    bind-event-listener: "npm:^3.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/15c8f54a57f4171de28fad315bf9956a155a56673ea773d79f0cec06cb32489869fab318cb199b4fdb0e98e44b9a5daa37bd4ce93887fdeb65d6c6d3fdf6862c
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.22.10, @babel/code-frame@npm:^7.27.1":
   version: 7.27.1
   resolution: "@babel/code-frame@npm:7.27.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40babel%2Fcode-frame%2F-%2Fcode-frame-7.27.1.tgz"
@@ -184,7 +298,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.20.7":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.20.7":
   version: 7.28.4
   resolution: "@babel/runtime@npm:7.28.4::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40babel%2Fruntime%2F-%2Fruntime-7.28.4.tgz"
   checksum: 10c0/792ce7af9750fb9b93879cc9d1db175701c4689da890e6ced242ea0207c9da411ccf16dc04e689cc01158b28d7898c40d75598f4559109f761c12ce01e959bf7
@@ -202,7 +316,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:^7.22.10, @babel/traverse@npm:^7.27.1, @babel/traverse@npm:^7.28.3, @babel/traverse@npm:^7.28.4":
+"@babel/traverse@npm:^7.22.10, @babel/traverse@npm:^7.23.2, @babel/traverse@npm:^7.27.1, @babel/traverse@npm:^7.28.3, @babel/traverse@npm:^7.28.4":
   version: 7.28.4
   resolution: "@babel/traverse@npm:7.28.4::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40babel%2Ftraverse%2F-%2Ftraverse-7.28.4.tgz"
   dependencies:
@@ -217,7 +331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.22.10, @babel/types@npm:^7.27.1, @babel/types@npm:^7.28.2, @babel/types@npm:^7.28.4":
+"@babel/types@npm:^7.20.0, @babel/types@npm:^7.22.10, @babel/types@npm:^7.27.1, @babel/types@npm:^7.28.2, @babel/types@npm:^7.28.4":
   version: 7.28.4
   resolution: "@babel/types@npm:7.28.4::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40babel%2Ftypes%2F-%2Ftypes-7.28.4.tgz"
   dependencies:
@@ -807,19 +921,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.37.1":
-  version: 1.37.1
-  resolution: "@playwright/test@npm:1.37.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40playwright%2Ftest%2F-%2Ftest-1.37.1.tgz"
+"@playwright/test@npm:1.56.1":
+  version: 1.56.1
+  resolution: "@playwright/test@npm:1.56.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40playwright%2Ftest%2F-%2Ftest-1.56.1.tgz"
   dependencies:
-    "@types/node": "npm:*"
-    fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.37.1"
-  dependenciesMeta:
-    fsevents:
-      optional: true
+    playwright: "npm:1.56.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/82f12766cfbbc38592d38e8ddca185c488332b0747fb607ddc00b4f8cbb7311cfb712b27f780504b737c71aec9c49748bca7ad7784521ece5b5bb5db3d3031c8
+  checksum: 10c0/2b5b0e1f2e6a18f6e5ce6897c7440ca78f64e0b004834e9808e93ad2b78b96366b562ae4366602669cf8ad793a43d85481b58541e74be71e905e732d833dd691
   languageName: node
   linkType: hard
 
@@ -988,6 +1097,22 @@ __metadata:
   version: 0.27.8
   resolution: "@sinclair/typebox@npm:0.27.8::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40sinclair%2Ftypebox%2F-%2Ftypebox-0.27.8.tgz"
   checksum: 10c0/ef6351ae073c45c2ac89494dbb3e1f87cc60a93ce4cde797b782812b6f97da0d620ae81973f104b43c9b7eaa789ad20ba4f6a1359f1cc62f63729a55a7d22d4e
+  languageName: node
+  linkType: hard
+
+"@statsig/client-core@npm:3.28.0, @statsig/client-core@npm:^3.21.1":
+  version: 3.28.0
+  resolution: "@statsig/client-core@npm:3.28.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40statsig%2Fclient-core%2F-%2Fclient-core-3.28.0.tgz"
+  checksum: 10c0/fb38a84b66d5fc302a5b861bd45943a8691fe15dc2bd840ad82e22b8dc8fcb9d9ab58d066c090d97129e70136148d5dba3499cd206e666f2caee1c0a7d1ee250
+  languageName: node
+  linkType: hard
+
+"@statsig/js-client@npm:^3.21.1":
+  version: 3.28.0
+  resolution: "@statsig/js-client@npm:3.28.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2F%40statsig%2Fjs-client%2F-%2Fjs-client-3.28.0.tgz"
+  dependencies:
+    "@statsig/client-core": "npm:3.28.0"
+  checksum: 10c0/9d04cfa2e4e0323e27064623c50798d0e773b61b444d4bc3dfe3ecf8d9dea88019c8b4983a514a7775ad3636257abc7b91a49b5e128ac2681528415e96b5292c
   languageName: node
   linkType: hard
 
@@ -2349,6 +2474,13 @@ __metadata:
     mixin-deep: "npm:^1.2.0"
     pascalcase: "npm:^0.1.1"
   checksum: 10c0/30a2c0675eb52136b05ef496feb41574d9f0bb2d6d677761da579c00a841523fccf07f1dbabec2337b5f5750f428683b8ca60d89e56a1052c4ae1c0cd05de64d
+  languageName: node
+  linkType: hard
+
+"bind-event-listener@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "bind-event-listener@npm:3.0.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fbind-event-listener%2F-%2Fbind-event-listener-3.0.0.tgz"
+  checksum: 10c0/08eadf1c7d3a58633f25c2bbd8dc066f77ef4e5df1049e81ff2f43a40c00f6581aba37387caa4878782b1f1f7c337b827757f52b637052a465ad74a7e1db8def
   languageName: node
   linkType: hard
 
@@ -4345,7 +4477,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^4.0.1":
+"eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.1":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Feventemitter3%2F-%2Feventemitter3-4.0.7.tgz"
   checksum: 10c0/5f6d97cbcbac47be798e6355e3a7639a84ee1f7d9b199a07017f1d2f1e2fe236004d14fa5dfaeba661f94ea57805385e326236a6debbc7145c8877fbc0297c6b
@@ -7355,12 +7487,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.37.1":
-  version: 1.37.1
-  resolution: "playwright-core@npm:1.37.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fplaywright-core%2F-%2Fplaywright-core-1.37.1.tgz"
+"playwright-core@npm:1.56.1":
+  version: 1.56.1
+  resolution: "playwright-core@npm:1.56.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fplaywright-core%2F-%2Fplaywright-core-1.56.1.tgz"
   bin:
     playwright-core: cli.js
-  checksum: 10c0/3eddeb05569a2aa54375bcc4955fe2e497865481cd523cdaa095d7695b1ea48f3f34438cc652e4a9096e1d7b2c47e29776713a4730c171f6186805866a0aa53b
+  checksum: 10c0/ffd40142b99c68678b387445d5b42f1fee4ab0b65d983058c37f342e5629f9cdbdac0506ea80a0dfd41a8f9f13345bad54e9a8c35826ef66dc765f4eb3db8da7
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.56.1":
+  version: 1.56.1
+  resolution: "playwright@npm:1.56.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fplaywright%2F-%2Fplaywright-1.56.1.tgz"
+  dependencies:
+    fsevents: "npm:2.3.2"
+    playwright-core: "npm:1.56.1"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    playwright: cli.js
+  checksum: 10c0/8e9965aede86df0f4722063385748498977b219630a40a10d1b82b8bd8d4d4e9b6b65ecbfa024331a30800163161aca292fb6dd7446c531a1ad25f4155625ab4
   languageName: node
   linkType: hard
 
@@ -7633,7 +7780,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fprop-types%2F-%2Fprop-types-15.8.1.tgz"
   dependencies:
@@ -7764,6 +7911,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-new-window@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "react-new-window@npm:1.0.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Freact-new-window%2F-%2Freact-new-window-1.0.1.tgz"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ^16.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^18.0.0
+  checksum: 10c0/1a4367d6ff06fbda8c660c5cf7dc71287fd920d5920ce262875766810d0c20209b59581b0e7ea88edbd7ae3368610f3324ef610a63d13a6dc194658c7550b2ee
+  languageName: node
+  linkType: hard
+
 "react-resize-detector@npm:^8.0.4":
   version: 8.1.0
   resolution: "react-resize-detector@npm:8.1.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Freact-resize-detector%2F-%2Freact-resize-detector-8.1.0.tgz"
@@ -7826,6 +7985,21 @@ __metadata:
     react: ">=15.0.0"
     react-dom: ">=15.0.0"
   checksum: 10c0/df40608e9defb6873290b9f2165921f17139b8edbb2019e2de38f77477f9cbd8fdb739b20e1e04cb16a513137c80e85cf5f0fff96049a94b740d389313394476
+  languageName: node
+  linkType: hard
+
+"react-uid@npm:^2.2.0":
+  version: 2.4.0
+  resolution: "react-uid@npm:2.4.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Freact-uid%2F-%2Freact-uid-2.4.0.tgz"
+  dependencies:
+    tslib: "npm:^2.0.0"
+  peerDependencies:
+    "@types/react": ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/5e01e8d3a4144d160af26f7ea8300887ed8379ee14b1fad7979ea755d5bfa4badfdab531cb7d4495488e94083f829bd5b28a8f6661522b11729fceb42dcf73ea
   languageName: node
   linkType: hard
 
@@ -9349,6 +9523,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tiny-invariant@npm:^1.2.0":
+  version: 1.3.3
+  resolution: "tiny-invariant@npm:1.3.3::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Ftiny-invariant%2F-%2Ftiny-invariant-1.3.3.tgz"
+  checksum: 10c0/65af4a07324b591a059b35269cd696aba21bef2107f29b9f5894d83cc143159a204b299553435b03874ebb5b94d019afa8b8eff241c8a4cfee95872c2e1c1c4a
+  languageName: node
+  linkType: hard
+
 "tinybench@npm:^2.5.0":
   version: 2.9.0
   resolution: "tinybench@npm:2.9.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Ftinybench%2F-%2Ftinybench-2.9.0.tgz"
@@ -9511,7 +9692,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.4.0":
+"tslib@npm:^2.0.0, tslib@npm:^2.4.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Ftslib%2F-%2Ftslib-2.8.1.tgz"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
@@ -10099,8 +10280,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "watson@workspace:."
   dependencies:
+    "@atlaskit/css-reset": "npm:7.3.8"
+    "@atlaskit/stylelint-design-system": "npm:4.1.3"
+    "@atlaskit/tokens": "npm:7.0.0"
     "@babel/core": "npm:7.22.10"
-    "@playwright/test": "npm:1.37.1"
+    "@playwright/test": "npm:1.56.1"
     "@testing-library/jest-dom": "npm:6.8.0"
     "@testing-library/react": "npm:14.0.0"
     "@types/d3": "npm:7.4.0"
@@ -10133,6 +10317,7 @@ __metadata:
     react-app-polyfill: "npm:3.0.0"
     react-dom: "npm:18.2.0"
     react-dropzone: "npm:14.2.3"
+    react-new-window: "npm:^1.0.1"
     react-router-dom: "npm:6.15.0"
     recharts: "npm:2.7.3"
     rollup: "npm:4.50.1"

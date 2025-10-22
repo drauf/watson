@@ -1,9 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const testData = new Map([
-  ['boring example', 'e2e/test-data/boring-example/'],
-]);
-
 const browsers = new Map([
   ['chrome', devices['Desktop Chrome']],
   ['safari', devices['Desktop Safari']],
@@ -14,18 +10,20 @@ const viewports = [
   { width: 1680, height: 1050 }
 ];
 
-const getProjects = () => {
-  const projects = new Array();
+const colorSchemes = ['light', 'dark'];
 
-  for (const [dataName, dataLocation] of testData) {
-    for (const [browserName, browser] of browsers) {
-      for (const viewport of viewports) {
+const getProjects = () => {
+  const projects = [];
+
+  for (const [browserName, browser] of browsers) {
+    for (const viewport of viewports) {
+      for (const colorScheme of colorSchemes) {
         const project = {
-          name: `${dataName} - ${browserName} - ${viewport.width}x${viewport.height}`,
+          name: `${colorScheme}-${browserName}`,
           use: {
             ...browser,
+            colorScheme: colorScheme,
             viewport: viewport,
-            dataLocation: dataLocation,
           },
         };
 
@@ -51,10 +49,8 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
-  timeout: 15000,
+  timeout: 30_000,
   expect: {
-    /* Extend timeout for each assertion as screenshots take forever to take */
-    timeout: 10000,
     /* Limit the maximum pixel ratio for image comparisons to 0.1% */
     toHaveScreenshot: { maxDiffPixelRatio: 0.001 },
   },

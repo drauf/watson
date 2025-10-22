@@ -1,18 +1,21 @@
+import { token } from '@atlaskit/tokens';
+
 export default function getColorForStackLine(line: string, fade = false): string {
   // anything Atlassian
   if (line.startsWith('com.atlassian')) {
-    return fade ? '#C8D4E6' : '#DEEBFF';
+    return fade ? token('color.background.accent.blue.subtler.hovered') : token('color.background.accent.blue.subtler');
   }
 
   // database, index, caches
   if (line.startsWith('com.microsoft.sqlserver')
     || line.startsWith('com.mysql')
+    || line.startsWith('com.querydsl')
     || line.startsWith('net.sf.ehcache')
     || line.startsWith('oracle.jdbc')
     || line.startsWith('org.apache.lucene')
     || line.startsWith('org.ofbiz')
     || line.startsWith('org.postgresql')) {
-    return fade ? '#E6E2CF' : '#FFFAE6';
+    return fade ? token('color.background.accent.yellow.subtler.pressed') : token('color.background.accent.yellow.subtler');
   }
 
   // "Boring" third parties
@@ -31,9 +34,9 @@ export default function getColorForStackLine(line: string, fade = false): string
     || line.startsWith('org.springframework')
     || line.startsWith('sun.')
     || line.startsWith('webwork')) {
-    return fade ? '#C7C8CD' : '#DFE1E6';
+    return fade ? token('color.background.accent.gray.subtler.pressed') : token('color.background.accent.gray.subtler');
   }
 
   // most likely 3rd party apps
-  return fade ? '#CDE4D8' : '#E3FCEF';
+  return fade ? token('color.background.accent.green.subtler.hovered') : token('color.background.accent.green.subtler');
 }

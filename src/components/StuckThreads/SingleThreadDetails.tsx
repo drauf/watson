@@ -1,6 +1,6 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import ThreadDetails from '../ThreadDetails/ThreadDetails';
+import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 
 type Props = {
   maxDifferingLines: number;
@@ -15,13 +15,16 @@ export default class SingleThreadDetails extends React.PureComponent<Props> {
 
     return (
       <>
-        <ThreadDetails text={Thread.getFormattedTime(thread)} className="single-thread-details" thread={thread} />
+        <OpenThreadDetailsButton
+          text={Thread.getFormattedTime(thread)}
+          className="single-thread-details"
+          thread={thread}
+        />
 
         {showStackTrace && (
-          <ol className="stacktrace">
-            {stack.map((line) => (
-              <li>{line}</li>))}
-          </ol>
+          <p className="stacktrace-container">
+            {stack.map((line) => (<code>{line}</code>))}
+          </p>
         )}
       </>
     );

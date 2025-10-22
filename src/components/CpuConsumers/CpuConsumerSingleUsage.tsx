@@ -1,6 +1,6 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import ThreadDetails from '../ThreadDetails/ThreadDetails';
+import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 
 type Props = {
   thread: Thread | undefined;
@@ -42,7 +42,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
 
     return (
       <>
-        <ThreadDetails text={cpuUsage} className={className} thread={thread} />
+        <OpenThreadDetailsButton text={cpuUsage} className={className} thread={thread} />
         {' '}
       </>
     );

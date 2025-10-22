@@ -14,32 +14,30 @@ export default class ThreadsOverview extends React.PureComponent<Props> {
     const { dates, threadDumps, matchingStackFilter } = this.props;
 
     return (
-      <div id="threads-overview-table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Thread Name / Time</th>
-              {dates.map((date) => (
-                <th key={date}>
-                  <SmartTooltip tooltip={date || ''}>
-                    {date}
-                  </SmartTooltip>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {threadDumps.map((threads) => (
-              <ThreadOverviewRow
-                key={(threads.values().next().value as Thread).uniqueId}
-                total={dates.length}
-                threads={threads}
-                matchingStackFilter={matchingStackFilter}
-              />
+      <table className="threads-overview-table">
+        <thead>
+          <tr>
+            <th>Thread Name / Time</th>
+            {dates.map((date) => (
+              <th key={date}>
+                <SmartTooltip tooltip={date || ''}>
+                  {date}
+                </SmartTooltip>
+              </th>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </tr>
+        </thead>
+        <tbody>
+          {threadDumps.map((threads) => (
+            <ThreadOverviewRow
+              key={(threads.values().next().value as Thread).uniqueId}
+              total={dates.length}
+              threads={threads}
+              matchingStackFilter={matchingStackFilter}
+            />
+          ))}
+        </tbody>
+      </table>
     );
   }
 }
