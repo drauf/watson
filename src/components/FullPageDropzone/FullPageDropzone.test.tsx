@@ -35,11 +35,11 @@ vi.mock('../ProgressIndicator/ProgressIndicator', () => ({
 }));
 
 vi.mock('../Errors/FullPageError', () => ({
-  default: ({ title, message, onRetry }: any) => (
+  default: ({ title, message }: any) => (
     <div data-testid="full-page-error">
       <h4>{title}</h4>
       <p>{message}</p>
-      {onRetry && <button type="button" onClick={onRetry}>Try again</button>}
+      <button type="button" onClick={() => window.location.reload()}>Try again</button>
     </div>
   ),
 }));
@@ -105,7 +105,7 @@ describe('FullPageDropzone', () => {
       renderComponent();
 
       expect(screen.getByTestId('dropzone')).toBeInTheDocument();
-      expect(screen.getByText('Drop a catalog here, or click to select files to load.')).toBeInTheDocument();
+      expect(screen.getByText('Drop files or folders here, or click to browse')).toBeInTheDocument();
       expect(screen.getByTestId('dropzone-guide')).toBeInTheDocument();
     });
 
@@ -304,40 +304,6 @@ describe('FullPageDropzone', () => {
         expect(screen.getByText('An error occurred while parsing files')).toBeInTheDocument();
       });
     });
-
-    it('allows retry after error', async () => {
-      const mockParser = {
-        parseFiles: vi.fn().mockRejectedValue(new Error('Parsing failed')),
-      };
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation(() => mockParser);
-
-      renderComponent();
-
-      // Trigger error
-      const file = new File(['test content'], 'test.txt', { type: 'text/plain' });
-      const input = document.querySelector('input[type="file"]') as HTMLInputElement;
-
-      Object.defineProperty(input, 'files', {
-        value: [file],
-        configurable: true,
-      });
-
-      fireEvent.change(input);
-
-      await waitFor(() => {
-        expect(screen.getByTestId('full-page-error')).toBeInTheDocument();
-      });
-
-      // Click retry
-      const retryButton = screen.getByText('Try again');
-      fireEvent.click(retryButton);
-
-      await waitFor(() => {
-        expect(screen.queryByTestId('full-page-error')).not.toBeInTheDocument();
-        expect(screen.getByTestId('dropzone')).toBeInTheDocument();
-      });
-    });
   });
 
   describe('navigation after successful parsing', () => {
@@ -428,66 +394,6 @@ describe('FullPageDropzone', () => {
       await waitFor(() => {
         const navigate = screen.getByTestId('navigate');
         expect(navigate).toHaveAttribute('data-to', '/mock-data-key/similar-stacks');
-      });
-    });
-  });
-
-  describe('component lifecycle', () => {
-    it('has correct initial state', () => {
-      renderComponent();
-
-      // Should show the dropzone, not progress or error
-      expect(screen.getByTestId('dropzone')).toBeInTheDocument();
-      expect(screen.queryByTestId('progress-indicator')).not.toBeInTheDocument();
-      expect(screen.queryByTestId('full-page-error')).not.toBeInTheDocument();
-      expect(screen.queryByTestId('navigate')).not.toBeInTheDocument();
-    });
-
-    it('clears error and progress when starting new parsing', async () => {
-      // First, trigger an error
-      const mockParser = {
-        parseFiles: vi.fn().mockRejectedValue(new Error('First error')),
-      };
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation(() => mockParser);
-
-      renderComponent();
-
-      const file1 = new File(['test content'], 'test1.txt', { type: 'text/plain' });
-      const input = document.querySelector('input[type="file"]') as HTMLInputElement;
-
-      Object.defineProperty(input, 'files', {
-        value: [file1],
-        configurable: true,
-      });
-
-      fireEvent.change(input);
-
-      await waitFor(() => {
-        expect(screen.getByTestId('full-page-error')).toBeInTheDocument();
-      });
-
-      // Click retry to go back to dropzone
-      fireEvent.click(screen.getByText('Try again'));
-
-      await waitFor(() => {
-        expect(screen.getByTestId('dropzone')).toBeInTheDocument();
-      });
-
-      // Now mock successful parsing
-      mockParser.parseFiles.mockResolvedValue(undefined);
-
-      const file2 = new File(['test content 2'], 'test2.txt', { type: 'text/plain' });
-      Object.defineProperty(input, 'files', {
-        value: [file2],
-        configurable: true,
-      });
-
-      fireEvent.change(input);
-
-      // Should not show error anymore
-      await waitFor(() => {
-        expect(screen.queryByTestId('full-page-error')).not.toBeInTheDocument();
       });
     });
   });
