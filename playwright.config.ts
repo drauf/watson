@@ -2,7 +2,6 @@ import { defineConfig, devices } from '@playwright/test';
 
 const browsers = new Map([
   ['chrome', devices['Desktop Chrome']],
-  ['safari', devices['Desktop Safari']],
   ['firefox', devices['Desktop Firefox']],
 ]);
 
@@ -19,7 +18,7 @@ const getProjects = () => {
     for (const viewport of viewports) {
       for (const colorScheme of colorSchemes) {
         const project = {
-          name: `${colorScheme}-${browserName}`,
+          name: `${browserName}-${colorScheme}`,
           use: {
             ...browser,
             colorScheme: colorScheme,

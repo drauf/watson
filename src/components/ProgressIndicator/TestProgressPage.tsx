@@ -60,7 +60,7 @@ const TestProgressPage: React.FC = () => {
         Use this page to test the progress indicator in different states for visual regression testing.
       </p>
 
-      <div style={{ marginBottom: '40px' }}>
+      <div data-testid="progress-container" style={{ marginBottom: '40px' }}>
         <ProgressIndicator progress={mockProgress} />
       </div>
 

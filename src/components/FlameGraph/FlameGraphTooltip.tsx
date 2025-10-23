@@ -44,18 +44,21 @@ export function customTooltip() {
         {parsedStackFrame.packageName && (
           <div>
             Package:
+            {' '}
             {parsedStackFrame.packageName}
           </div>
         )}
         {parsedStackFrame.rawClassName && (
           <div>
             Class:
+            {' '}
             {parsedStackFrame.rawClassName}
           </div>
         )}
         {parsedStackFrame.rawMethodName && (
           <div>
             Method:
+            {' '}
             {parsedStackFrame.rawMethodName}
           </div>
         )}

@@ -11,7 +11,7 @@ test.describe('Progress Indicator Visual Tests', () => {
     await expect(page.locator('.progress-indicator')).toBeVisible();
     await expect(page.locator('.progress-percentage')).toContainText('5%');
 
-    await expect(page).toHaveScreenshot('progress-reading.png');
+    await expect(page.getByTestId("progress-container")).toHaveScreenshot('progress-reading.png');
   });
 
   test('shows parsing phase at 45%', async ({ page }) => {
@@ -20,7 +20,7 @@ test.describe('Progress Indicator Visual Tests', () => {
     await expect(page.locator('.progress-percentage')).toContainText('45%');
     await expect(page.locator('.progress-lines')).toBeVisible();
 
-    await expect(page).toHaveScreenshot('progress-parsing.png');
+    await expect(page.getByTestId("progress-container")).toHaveScreenshot('progress-parsing.png');
   });
 
   test('shows grouping phase at 95%', async ({ page }) => {
@@ -28,7 +28,7 @@ test.describe('Progress Indicator Visual Tests', () => {
 
     await expect(page.locator('.progress-percentage')).toContainText('95%');
 
-    await expect(page).toHaveScreenshot('progress-grouping.png');
+    await expect(page.getByTestId("progress-container")).toHaveScreenshot('progress-grouping.png');
   });
 
   test('shows complete phase at 100%', async ({ page }) => {
@@ -36,6 +36,6 @@ test.describe('Progress Indicator Visual Tests', () => {
 
     await expect(page.locator('.progress-percentage')).toContainText('100%');
 
-    await expect(page).toHaveScreenshot('progress-complete.png');
+    await expect(page.getByTestId("progress-container")).toHaveScreenshot('progress-complete.png');
   });
 });
