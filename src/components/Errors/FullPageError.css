@@ -11,8 +11,8 @@
   flex-direction: column;
   width: 600px;
   padding: 24px 32px;
-  background: var(--color-n20);
-  border: 2px dashed var(--color-b400);
+  background: var(--ds-background-accent-gray-subtlest);
+  border: 2px solid var(--ds-border-accent-blue);
   border-radius: 5px;
 }
 
@@ -26,8 +26,8 @@
 
 .error-header h4 {
   margin: 0;
-  color: var(--color-r500);
-  font-weight: 500;
+  color: var(--ds-text-accent-red);
+  font-weight: var(--ds-font-weight-bold);
   font-size: 16px;
 }
 
@@ -35,7 +35,7 @@
   height: 40px;
   min-height: 40px;
   margin-bottom: 20px;
-  color: var(--color-n600);
+  color: var(--ds-text-subtlest);
   font-size: 14px;
 }
 
@@ -43,8 +43,8 @@
   max-width: 100%;
   margin-bottom: 16px;
   overflow: hidden;
-  color: var(--color-n800);
-  font-weight: 500;
+  color: var(--ds-text-subtle);
+  font-weight: var(--ds-font-weight-bold);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -56,21 +56,20 @@
 
 .retry-button {
   padding: 6px 9px;
-  color: var(--color-n0);
+  color: var(--ds-text-inverse);
   text-decoration: none;
-  background-color: var(--color-b400);
+  background: var(--ds-background-accent-blue-bolder);
   border-radius: 3px;
-
-  --webkit-text-fill-color: var(--color-n0);
+  -webkit-text-fill-color: var(--ds-text-inverse);
 }
 
 .retry-button:hover {
   text-decoration: none;
-  background: var(--color-b500);
+  background: var(--ds-background-accent-blue-bolder-hovered);
 }
 
 .retry-button:active {
-  background: var(--color-b500);
+  background: var(--ds-background-accent-blue-bolder-pressed);
 }
 
 /* Overlay backdrop */

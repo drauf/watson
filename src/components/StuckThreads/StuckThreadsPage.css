@@ -6,7 +6,7 @@
 .group-details button {
   min-width: 68px;
   margin: 6px 0 0;
-  font-weight: 600;
+  font-weight: var(--ds-font-weight-bold);
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0;

@@ -24,7 +24,7 @@ export default class CollapsableGroup extends React.PureComponent<Props, State> 
     const { collapse } = this.state;
 
     return (
-      <>
+      <p>
         <button type="button" className="default-color ellipsis" onClick={this.toggleCollapse}>
           <h5>
             <span className={collapse ? 'chevron rotate' : 'chevron'} />
@@ -33,7 +33,7 @@ export default class CollapsableGroup extends React.PureComponent<Props, State> 
         </button>
 
         {!collapse && content}
-      </>
+      </p>
     );
   }
 }

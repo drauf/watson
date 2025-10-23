@@ -1,6 +1,7 @@
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import React from 'react';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';
+import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import './Navigation.css';
 
 type LinkProps = {
@@ -46,17 +47,16 @@ const Navigation: React.FC = () => {
       </div>
 
       <div className="header-section">
-        <ul>
-          <button
-            type="button"
-            onClick={() => {
-              clearCurrentData();
-              navigate('/');
-            }}
-          >
-            <li>Clear current data</li>
-          </button>
-        </ul>
+        <ThemeSwitcher />
+        <button
+          type="button"
+          onClick={() => {
+            clearCurrentData();
+            navigate('/');
+          }}
+        >
+          <li>Clear current data</li>
+        </button>
       </div>
     </header>
   );

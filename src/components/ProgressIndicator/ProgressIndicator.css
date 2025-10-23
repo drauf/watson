@@ -11,8 +11,8 @@
   flex-direction: column;
   width: 600px;
   padding: 24px 32px;
-  background: var(--color-n20);
-  border: 2px dashed var(--color-b400);
+  background: var(--ds-background-accent-gray-subtlest);
+  border: 2px solid var(--ds-border-accent-blue);
   border-radius: 5px;
 }
 
@@ -25,8 +25,8 @@
 
 .progress-percentage {
   min-width: 42px;
-  color: var(--color-b400);
-  font-weight: 600;
+  color: var(--ds-background-accent-blue-bolder);
+  font-weight: var(--ds-font-weight-bold);
   font-size: 16px;
   text-align: right;
 }
@@ -36,14 +36,14 @@
   min-height: 6px;
   margin-bottom: 20px;
   overflow: hidden;
-  background-color: var(--color-n30);
+  background-color: var(--ds-background-accent-gray-subtler);
   border-radius: 3px;
 }
 
 .progress-fill {
   position: relative;
   height: 100%;
-  background: linear-gradient(90deg, var(--color-b400), var(--color-b300));
+  background: linear-gradient(90deg, var(--ds-background-accent-blue-subtle), var(--ds-background-accent-blue-subtle-hovered));
   border-radius: 3px;
   transition: width 0.2s ease-out;
   animation: progress-shimmer 2s infinite ease-in-out;
@@ -73,29 +73,27 @@
 .progress-details {
   height: 80px;
   min-height: 80px;
-  color: var(--color-n600);
+  color: var(--ds-text-subtlest);
   font-size: 14px;
 }
 
 .progress-file {
   margin-bottom: 8px;
-  color: var(--color-n800);
-  font-weight: 500;
+  color: var(--ds-text-subtle);
+  font-weight: var(--ds-font-weight-medium);
 }
 
 .progress-file-name {
   max-width: 100%;
   margin-bottom: 8px;
   overflow: hidden;
-  color: var(--color-n500);
-  font-weight: 400;
+  color: var(--ds-text-subtlest);
+  font-weight: var(--ds-font-weight-semibold);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 .progress-lines {
-  color: var(--color-n400);
-  font-family: monospace;
   line-height: 16px;
   white-space: pre;
 }

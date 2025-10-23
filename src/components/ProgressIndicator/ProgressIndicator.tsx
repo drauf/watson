@@ -71,13 +71,13 @@ const ProgressIndicator: React.FC<Props> = ({ progress }) => {
             </div>
           )}
           {progress.phase === 'parsing' && progress.totalLines > 0 && (
-            <div className="progress-lines">
+            <code className="progress-lines">
               {progress.linesProcessed.toLocaleString().padStart(8, '\u00A0')}
               /
               {progress.totalLines.toLocaleString()}
               {' '}
               lines
-            </div>
+            </code>
           )}
         </div>
       </div>

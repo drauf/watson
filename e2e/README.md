@@ -1,9 +1,10 @@
 To update snapshots used in CI (**execute from the parent directory**):
 ```
-docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:next-jammy /bin/bash
+docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.56.1-noble /bin/bash
 yarn install
-yarn playwright install --with-deps
 yarn playwright test --update-snapshots
 ```
 
-Source: https://playwright.dev/docs/test-snapshots
+When running locally, you'll need to also run `yarn playwright install --with-deps` to install required browsers
+
+You can also run tests using filters, e.g. `yarn playwright test --update-snapshots changed theme-switcher.spec.tsx`

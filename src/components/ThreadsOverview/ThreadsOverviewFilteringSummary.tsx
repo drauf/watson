@@ -11,13 +11,13 @@ type Props = {
 const nonEmptyCounter = (sum: number, currentGroup: Map<number, Thread>): number => sum + Array.from(currentGroup.values()).length;
 
 export default class ThreadsOverviewFilteringSummary extends React.PureComponent<Props> {
-  private static renderFilteredByStackSummary = (threadDumps: Array<Map<number, Thread>>, matchingStackFilter: Set<number>): JSX.Element => {
+  private static readonly renderFilteredByStackSummary = (threadDumps: Array<Map<number, Thread>>, matchingStackFilter: Set<number>): JSX.Element => {
     const matching = matchingStackFilter.size;
     const total = threadDumps.reduce(nonEmptyCounter, 0);
     const percentage = ((matching / total) * 100).toFixed(1);
 
     return (
-      <p id="matching-summary">
+      <span id="matching-summary">
         {matching}
         {' '}
         out of
@@ -27,16 +27,16 @@ export default class ThreadsOverviewFilteringSummary extends React.PureComponent
         (
         {percentage}
         %) visible threads matching the stack trace filters
-      </p>
+      </span>
     );
   };
 
-  private static renderFilteredByThreadNameSummary = (threadDumps: Array<Map<number, Thread>>, threadsNumber: number): JSX.Element => {
+  private static readonly renderFilteredByThreadNameSummary = (threadDumps: Array<Map<number, Thread>>, threadsNumber: number): JSX.Element => {
     const matching = threadDumps.length;
     const percentage = ((matching / threadsNumber) * 100).toFixed(1);
 
     return (
-      <p id="matching-summary">
+      <span id="matching-summary">
         {matching}
         {' '}
         out of
@@ -46,7 +46,7 @@ export default class ThreadsOverviewFilteringSummary extends React.PureComponent
         (
         {percentage}
         %) threads matching the thread name filters
-      </p>
+      </span>
     );
   };
 
@@ -63,6 +63,6 @@ export default class ThreadsOverviewFilteringSummary extends React.PureComponent
       return ThreadsOverviewFilteringSummary.renderFilteredByThreadNameSummary(threadDumps, threadsNumber);
     }
 
-    return <p id="matching-summary" />;
+    return <span id="matching-summary" />;
   }
 }

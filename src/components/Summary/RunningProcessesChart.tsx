@@ -1,6 +1,7 @@
 import {
   CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis,
 } from 'recharts';
+import { token } from '@atlaskit/tokens';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';
@@ -89,12 +90,12 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
         <LineChart data={data}>
           <XAxis dataKey="name" />
           <YAxis type="number" allowDecimals={false} />
-          <CartesianGrid stroke="#DFE1E5" strokeDasharray="5 5" />
+          <CartesianGrid stroke={token('color.chart.neutral')} strokeDasharray="5 5" />
           <Tooltip content={<CustomTooltip />} />
           <Line
             name="Chart data"
             dataKey="runningProcesses"
-            stroke="#36B37E"
+            stroke={token('color.text.accent.lime')}
             animationDuration={1000}
           />
           <Line

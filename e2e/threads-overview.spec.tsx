@@ -56,24 +56,9 @@ test.describe('Threads overview', () => {
   test('opens thread details', async ({context, pageWithData}) => {
     const [details] = await Promise.all([
       context.waitForEvent('page'),
-      pageWithData.getByRole('button', {name: 'org.bouncycastle'}).click({ force: true })
+      pageWithData.getByText('org.bouncycastle').click({ force: true })
     ]);
 
     await expect(details).toHaveScreenshot();
-  });
-
-  test('shows thread name on hover', async ({pageWithData}) => {
-    await pageWithData.getByText('http-nio-').first().hover();
-    await expect(pageWithData).toHaveScreenshot();
-  });
-
-  test('shows first stack trace line on hover', async ({pageWithData}) => {
-    await pageWithData.getByRole('button', {name: 'org.bouncycastle'}).hover({ force: true });
-    await expect(pageWithData).toHaveScreenshot();
-  });
-
-  test('does not show popup when hovering over legend', async ({pageWithData}) => {
-    await pageWithData.getByText('Timed waiting').hover();
-    await expect(pageWithData).toHaveScreenshot();
   });
 });

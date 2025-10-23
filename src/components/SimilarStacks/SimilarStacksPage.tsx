@@ -5,7 +5,6 @@ import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
 import SimilarStacksGroup from './SimilarStacksGroup';
-import './SimilarStacksPage.css';
 import SimilarStacksSettings from './SimilarStacksSettings';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 

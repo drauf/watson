@@ -56,10 +56,10 @@ export default class ThreadDetailsBody extends React.PureComponent<Props> {
   private static getLineStyles = (line: string): CSSProperties => ({ backgroundColor: getColorForStackLine(line) });
 
   private static renderStackTrace = (thread: Thread) => (
-    <div id="stacktrace-container">
+    <div className="stacktrace-container">
       <h5>Stack trace</h5>
 
-      {thread.stackTrace.map((line) => <span style={ThreadDetailsBody.getLineStyles(line)}>{line}</span>)}
+      {thread.stackTrace.map((line) => <code style={ThreadDetailsBody.getLineStyles(line)}>{line}</code>)}
     </div>
   );
 
@@ -67,11 +67,14 @@ export default class ThreadDetailsBody extends React.PureComponent<Props> {
     const { thread } = this.props;
 
     return (
-      <div className="details-body">
-        {ThreadDetailsBody.renderWaitingFor(thread)}
-        {ThreadDetailsBody.renderLocksHeld(thread)}
+      <>
+        <div className="details-body">
+          {ThreadDetailsBody.renderWaitingFor(thread)}
+          {ThreadDetailsBody.renderLocksHeld(thread)}
+        </div>
+
         {ThreadDetailsBody.renderStackTrace(thread)}
-      </div>
+      </>
     );
   }
 }

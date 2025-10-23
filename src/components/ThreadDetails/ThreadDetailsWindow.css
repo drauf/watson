@@ -7,16 +7,16 @@
 }
 
 .details-header {
-  padding-bottom: 10px;
-  background-color: var(--color-n10);
+  padding-bottom: var(--ds-space-200);
+  background-color: var(--ds-background-accent-gray-subtlest);
 }
 
 .details-header h3 {
-  padding-left: 10px;
+  padding: var(--ds-space-200);
 }
 
 .details-header div {
-  padding: 0 16px;
+  padding: 0 var(--ds-space-200);
 }
 
 .details-body {
@@ -26,96 +26,105 @@
 }
 
 .details-body div {
-  padding: 0 16px;
+  padding: var(--ds-space-100) var(--ds-space-200);
 }
 
-#stacktrace-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0;
-}
-
-#stacktrace-container h5 {
-  padding: 0 16px;
-}
-
-#stacktrace-container span {
-  width: calc(100% - 32px);
-  margin: 0 auto;
-  padding: 0 16px;
-  overflow-x: hidden;
-  font-size: 12px;
-  line-height: 16px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.stacktrace-container h5 {
+  padding: var(--ds-space-100) var(--ds-space-200);
 }
 
 .thread-state {
   display: inline-block;
   margin: 0;
-  padding: 3px 8px;
-  color: var(--color-n600);
-  font-weight: bold;
-  font-size: 13px;
+  padding: var(--ds-space-050) var(--ds-space-100);
+  color: var(--ds-text-subtle);
+  font-weight: var(--ds-font-weight-bold);
+  font-size: var(--ds-font-body);
   line-height: 99%;
   text-align: center;
   border-radius: 3px;
+  -webkit-text-fill-color: var(--ds-text-subtle);
 }
 
 .unknown {
   cursor: default;
-  -webkit-text-fill-color: var(--color-n800);
 }
 
 .runnable {
-  color: var(--color-g500);
-  background: var(--color-g50);
-  -webkit-text-fill-color: var(--color-g500);
+  color: var(--ds-text-accent-lime);
+  background: var(--ds-background-accent-lime-subtlest);
+  -webkit-text-fill-color: var(--ds-text-accent-lime);
+  border: 1px solid var(--ds-border-inverse);
+}
+
+.runnable-matching {
+  color: var(--ds-text-accent-lime-bolder);
+  background: var(--ds-background-accent-lime-subtle);
+  -webkit-text-fill-color: var(--ds-text-accent-lime-bolder);
+  border: 1px solid var(--ds-border-accent-lime);
 }
 
 .blocked {
-  color: var(--color-r500);
-  background: var(--color-r50);
-  -webkit-text-fill-color: var(--color-r500);
+  color: var(--ds-text-accent-red);
+  background: var(--ds-background-accent-red-subtlest);
+  -webkit-text-fill-color: var(--ds-text-accent-red);
+  border: 1px solid var(--ds-border-inverse);
+}
+
+.blocked-matching {
+  color: var(--ds-text-accent-red-bolder);
+  background: var(--ds-background-accent-red-subtle);
+  -webkit-text-fill-color: var(--ds-text-accent-red-bolder);
+  border: 1px solid var(--ds-border-accent-red);
 }
 
 .waiting {
-  color: var(--color-p400);
-  background: var(--color-p50);
-  -webkit-text-fill-color: var(--color-p400);
+  color: var(--ds-text-accent-purple);
+  background: var(--ds-background-accent-purple-subtlest);
+  -webkit-text-fill-color: var(--ds-text-accent-purple);
+  border: 1px solid var(--ds-border-inverse);
+}
+
+.waiting-matching {
+  color: var(--ds-text-accent-purple-bolder);
+  background: var(--ds-background-accent-purple-subtle);
+  -webkit-text-fill-color: var(--ds-text-accent-purple-bolder);
+  border: 1px solid var(--ds-border-accent-purple);
 }
 
 .timed-waiting {
-  color: var(--color-n400);
-  background: var(--color-y50);
-  -webkit-text-fill-color: var(--color-n400);
+  color: var(--ds-text-accent-yellow);
+  background: var(--ds-background-accent-yellow-subtlest);
+  -webkit-text-fill-color: var(--ds-text-accent-yellow);
+  border: 1px solid var(--ds-border-inverse);
 }
 
-.matching {
-  font-weight: 600;
-  border: 1px dashed var(--color-n400);
+.timed-waiting-matching {
+  color: var(--ds-text-accent-yellow-bolder);
+  background: var(--ds-background-accent-yellow-subtle);
+  -webkit-text-fill-color: var(--ds-text-accent-yellow-bolder);
+  border: 1px solid var(--ds-border-accent-yellow);
 }
 
 .high {
-  color: var(--color-r500);
-  background: var(--color-r50);
-  -webkit-text-fill-color: var(--color-r500);
+  color: var(--ds-text-accent-red);
+  background: var(--ds-background-accent-red-subtler);
+  -webkit-text-fill-color: var(--ds-text-accent-red);
 }
 
 .medium {
-  color: var(--color-n500);
-  background: var(--color-y75);
-  -webkit-text-fill-color: var(--color-n500);
+  color: var(--ds-text-accent-orange);
+  background: var(--ds-background-accent-orange-subtler);
+  -webkit-text-fill-color: var(--ds-text-accent-orange);
 }
 
 .low {
-  color: var(--color-b500);
-  background: var(--color-b50);
-  -webkit-text-fill-color: var(--color-b500);
+  color: var(--ds-text-accent-yellow);
+  background: var(--ds-background-accent-yellow-subtler);
+  -webkit-text-fill-color: var(--ds-text-accent-yellow);
 }
 
 .none {
-  color: var(--color-n800);
-  -webkit-text-fill-color: var(--color-n800);
+  color: var(--ds-text-subtlest);
+  -webkit-text-fill-color: var(--ds-text-subtlest);
 }

@@ -1,3 +1,8 @@
 svg div {
   cursor: pointer;
 }
+
+#flame-graph svg {
+  display: block;
+  margin: auto;
+}

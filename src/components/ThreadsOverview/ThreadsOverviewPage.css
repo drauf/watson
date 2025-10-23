@@ -1,3 +1,31 @@
+.threads-overview-table {
+  position: relative;
+  min-width: 100%;
+  padding: 20px 4px 4px;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.threads-overview-table th,
+.threads-overview-table td {
+  padding: 2px;
+  overflow: hidden;
+  color: var(--ds-text-subtle);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.threads-overview-table td {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+td.name {
+  font-weight: var(--ds-font-weight-bold);
+}
+
 #heading {
   width: 80%;
   margin: auto;
@@ -9,41 +37,14 @@
 
 #thread-overview-legend {
   height: 32px;
+  margin-bottom: 16px;
   padding: 0;
-  text-align: center;
   table-layout: fixed;
-}
-
-table {
-  position: relative;
-  width: 100%;
-  padding: 20px 4px 4px;
-  table-layout: fixed;
+  border-collapse: separate;
   border-spacing: 0;
 }
 
-th,
-td {
-  overflow: hidden;
-  color: var(--color-n600);
-  white-space: nowrap;
-  text-overflow: ellipsis;
+#thread-overview-legend th,
+#thread-overview-legend td {
+  padding: 1px;
 }
-
-td > div,
-th > div {
-  width: 100%;
-  height: 100%;
-}
-
-td button {
-  width: 100%;
-  height: 100%;
-  border: 1px solid var(--color-n0);
-  border-radius: 3px;
-}
-
-td.name {
-  font-weight: 700;
-}
-
