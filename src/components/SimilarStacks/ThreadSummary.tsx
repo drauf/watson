@@ -1,6 +1,6 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import ThreadDetails from '../ThreadDetails/ThreadDetails';
+import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 
 type Props = {
   thread: Thread;
@@ -28,7 +28,7 @@ export default class ThreadSummary extends React.PureComponent<Props> {
         <>
           , awaiting notification on
           {' '}
-          <ThreadDetails text={`[${lockWaitingFor}]`} className="lock-owner" thread={lockOwner} />
+          <OpenThreadDetailsButton text={`[${lockWaitingFor}]`} className="lock-owner" thread={lockOwner} />
         </>
       );
     }
@@ -42,7 +42,7 @@ export default class ThreadSummary extends React.PureComponent<Props> {
 
     return (
       <li>
-        <ThreadDetails text={`"${thread.name}"`} className="thread-summary" thread={thread} />
+        <OpenThreadDetailsButton text={`"${thread.name}"`} className="thread-summary" thread={thread} />
         {` ${Thread.getFormattedTime(thread)}`}
         {ThreadSummary.waitingForRender(thread, lockOwner)}
         {thread.locksHeld.length > 0 && `, holding [${locksHeld}]`}

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { clearOldData } from './common/threadDumpsStorageService';
 import './index.css';
 import App from './App';
+import '@atlaskit/css-reset';
 
 clearOldData();
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import ThreadDetails from '../ThreadDetails/ThreadDetails';
 import Monitor from './Monitor';
+import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 
 type Props = {
   monitor: Monitor;
@@ -15,12 +15,12 @@ export default class MonitorOwner extends React.PureComponent<Props> {
     }
 
     return (
-      <>
+      <p>
         <b>Held by:</b>
         <br />
-        <ThreadDetails text={monitor.owner.name} className="monitor-owner" thread={monitor.owner} />
+        <OpenThreadDetailsButton text={monitor.owner.name} className="monitor-owner" thread={monitor.owner} />
         <br />
-      </>
+      </p>
     );
   }
 }

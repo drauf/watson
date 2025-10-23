@@ -1,6 +1,6 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import ThreadDetails from '../ThreadDetails/ThreadDetails';
+import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 
 type Props = {
   thread: Thread;
@@ -8,7 +8,7 @@ type Props = {
 
 const WaitingListItem: React.FC<Props> = ({ thread }) => (
   <>
-    <ThreadDetails text={thread.name} className="waiting-for-lock" thread={thread} />
+    <OpenThreadDetailsButton text={thread.name} className="waiting-for-lock" thread={thread} />
     <br />
   </>
 );

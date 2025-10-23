@@ -6,13 +6,7 @@ interface Props {
 }
 
 export default class DropzoneGuide extends React.PureComponent<Props> {
-  private static SUPPORT_ZIP_GUIDE_LINK = 'https://confluence.atlassian.com/support/create-a-support-zip-790796819.html';
-
-  private static GATHER_DATA_LINK = 'https://bitbucket.org/atlassianlabs/atlassian-support/src/master/';
-
   private static SOURCE_CODE_LINK = 'https://github.com/drauf/watson';
-
-  private static SCREENSHOTS_LINK = 'https://github.com/drauf/watson/blob/main/screenshots.md';
 
   private static SLACK_CONNECT_DOCS_LINK = 'https://slack.com/help/articles/1500001422062-Use-Slack-Connect-to-start-a-DM-with-someone-at-another-company#send-an-invitation';
 
@@ -30,69 +24,29 @@ export default class DropzoneGuide extends React.PureComponent<Props> {
         onClick={DropzoneGuide.stopPropagation}
       >
         <h5>
-          Watson is your go-to tool for analyzing JVM thread dumps and CPU
-          usage.
-          <br />
-          It filters out the idle threads and presents you with the most
-          relevant information.
-        </h5>
-
-        <h5>
-          Watson operates completely within your browser, ensuring your files
-          stay right where they belong - on your machine.
+          Watson analyzes JVM thread dumps and CPU usage, filtering out idle threads to show you what matters most.
         </h5>
 
         <p>
-          To learn more or contribute, visit our
-          {' '}
-          <OutboundLink to={DropzoneGuide.SOURCE_CODE_LINK}>
-            GitHub repo
-          </OutboundLink>
-          .
-          {' '}
-          <strong>
-            See screenshots of Watson
-            {' '}
-            <OutboundLink to={DropzoneGuide.SCREENSHOTS_LINK}>
-              here
-            </OutboundLink>
-          </strong>
-          .
+          It runs entirely in your browser - your files never leave your machine.
         </p>
 
-        <div>
-          <p>
-            To get the most out of Watson, capture Java thread dumps and top
-            outputs. Two ways to do this:
-          </p>
-          <ul>
-            <li>
-              <OutboundLink to={DropzoneGuide.SUPPORT_ZIP_GUIDE_LINK}>
-                Generate a support zip
-              </OutboundLink>
-              {' '}
-              and load thread dumps from the jfr-bundle directory,
-            </li>
-            <li>
-              or manually collect the data, even for non-Atlassian applications,
-              using the
-              {' '}
-              <OutboundLink to={DropzoneGuide.GATHER_DATA_LINK}>
-                Atlassian Support scripts
-              </OutboundLink>
-              .
-            </li>
-          </ul>
-        </div>
-
         <p>
-          For any assistance,
+          Found a bug or have a suggestion?
+          {' '}
+          <OutboundLink to={DropzoneGuide.SOURCE_CODE_LINK}>
+            GitHub
+          </OutboundLink>
+          ,
           {' '}
           <OutboundLink to={DropzoneGuide.SLACK_CONNECT_DOCS_LINK}>
-            DM me on Slack
+            Slack
           </OutboundLink>
+          , or
           {' '}
-          or send me an email at drauf at atlassian.com.
+          <a href="mailto:drauf@atlassian.com">email</a>
+          {' '}
+          (drauf@atlassian.com).
         </p>
       </div>
     );

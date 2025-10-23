@@ -1,129 +1,17 @@
-/* https://atlassian.design/foundations/color */
-:root {
-  /* Primary pallette: B400, N800, N0 */
-
-  /* Neutrals */
-  --color-n900: #091e42;
-  --color-n800: #172b4d;
-  --color-n700: #253858;
-  --color-n600: #344563;
-  --color-n500: #42526e;
-  --color-n400: #505f79;
-  --color-n300: #5e6c84;
-  --color-n200: #6b778c;
-  --color-n100: #7a869a;
-  --color-n40: #dfe1e6;
-  --color-n30: #ebecf0;
-  --color-n20: #f4f5f7;
-  --color-n10: #fafbfc;
-  --color-n0: #fff;
-
-  /* Red */
-  --color-r500: #bf2600;
-  --color-r50: #ffebe6;
-
-  /* Yellow */
-  --color-y75: #fff0b3;
-  --color-y50: #fffae6;
-
-  /* Green */
-  --color-g500: #064;
-  --color-g50: #e3fcef;
-
-  /* Blue */
-  --color-b500: #0747a6;
-  --color-b400: #0052cc;
-  --color-b300: #0065ff;
-  --color-b100: #4c9aff;
-  --color-b50: #deebff;
-
-  /* Purple */
-  --color-p400: #5243aa;
-  --color-p50: #eae6ff;
-}
-
 html,
 body {
   height: 100%;
 }
 
-/* https://atlassian.design/guidelines/product/foundations/typography */
-body {
-  margin: 0;
-  color: var(--color-n800);
-  font-weight: 400;
-  font-size: 14px;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
-    sans-serif;
-  line-height: 20px;
-  letter-spacing: -0.005em;
-  background: var(--color-n0);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Text size h900 */
-h1 {
-  font-weight: 500;
-  font-size: 35px;
-  line-height: 40px;
-  letter-spacing: -0.01em;
-}
-
-/* Text size h800 */
-h2 {
-  margin-top: 40px;
-  font-weight: 500;
-  font-size: 29px;
-  line-height: 32px;
-  letter-spacing: -0.01em;
-}
-
-/* Text size h600 */
-h4 {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: -0.008em;
-}
-
-/* Text size h400 */
-h5 {
-  margin-top: 16px;
-  margin-bottom: 0;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 16px;
-  letter-spacing: -0.003em;
-}
-
-a {
-  color: var(--color-b400);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 button {
-  color: var(--color-b400);
+  color: var(--ds-link);
   all: unset;
-  -webkit-text-fill-color: var(--color-b400);
+  -webkit-text-fill-color: var(--ds-link);
 }
 
 .default-color {
-  color: var(--color-n800);
-  -webkit-text-fill-color: var(--color-n800);
+  color: var(--ds-text);
+  -webkit-text-fill-color: var(--ds-text);
 }
 
 button:hover {
@@ -133,14 +21,12 @@ button:hover {
 
 input {
   box-sizing: border-box;
-  margin: 0 4px 0 0;
   padding: 3px 4px;
-  font-size: inherit;
+  color: var(--ds-text-subtle);
   vertical-align: baseline;
-  background-color: var(--color-n10);
-  border: 2px solid var(--color-n40);
+  background-color: var(--ds-background-accent-gray-subtlest);
+  border: 1px solid var(--ds-border);
   border-radius: 3px;
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 input[type="number"],
@@ -154,14 +40,17 @@ input[type="number"] {
 }
 
 input:hover {
-  background-color: var(--color-n30);
-  border-color: var(--color-n40);
+  background-color: var(--ds-background-accent-gray-subtlest-hovered);
 }
 
 input:focus {
-  background-color: var(--color-n0);
-  border-color: var(--color-b100);
+  background-color: var(--ds-background-accent-gray-subtlest);
+  border-color: var(--ds-border-focused);
   outline: none;
+}
+
+input::placeholder {
+  color: var(--ds-text-subtlest);
 }
 
 .chevron {
@@ -171,10 +60,22 @@ input:focus {
   width: 14px;
   height: 14px;
   margin-right: 5px;
-  color: var(--color-n600);
-  background: rgba(9 30 66 / 8%) url("chevron.svg") no-repeat top left;
+  background: var(--ds-background-accent-gray-subtler);
   border-radius: 3.01px;
   transition: background-color 0.1s ease-out;
+}
+
+/* workaround to make the SVG adapt to theme */
+.chevron::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--ds-icon);
+  content: '';
+  mask: url("chevron.svg") no-repeat center;
+  mask-size: contain;
 }
 
 .rotate {
@@ -183,6 +84,24 @@ input:focus {
 
 .ellipsis {
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.stacktrace-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+}
+
+.stacktrace-container code {
+  width: calc(100% - 32px);
+  margin: 0 auto;
+  padding: 0 var(--ds-space-200);
+  overflow-x: hidden;
+  font: var(--ds-font-code);
+  line-height: 19px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }

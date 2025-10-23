@@ -1,5 +1,6 @@
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import './App.css';
+import { ThemeProvider } from './context/ThemeContext';
 import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
 import Container from './components/Container';
 import PageNotFoundError from './components/Errors/PageNotFoundError';
@@ -12,8 +13,9 @@ import MonitorsPage from './components/Monitors/MonitorsPage';
 import FlameGraphPage from './components/FlameGraph/FlameGraphPage';
 import ThreadsOverviewPage from './components/ThreadsOverview/ThreadsOverviewPage';
 import Index from './components/Index/Index';
+import TestProgressPage from './components/ProgressIndicator/TestProgressPage';
 
-const router = createHashRouter([
+const routes = [
   {
     path: '/',
     element: <Index />,
@@ -64,8 +66,21 @@ const router = createHashRouter([
       },
     ],
   },
-]);
+];
 
-const App = () => <RouterProvider router={router} />;
+if (import.meta.env.DEV) {
+  routes.push({
+    path: '/test/progress',
+    element: <TestProgressPage />,
+  });
+}
+
+const router = createHashRouter(routes);
+
+const App = () => (
+  <ThemeProvider>
+    <RouterProvider router={router} />
+  </ThemeProvider>
+);
 
 export default App;

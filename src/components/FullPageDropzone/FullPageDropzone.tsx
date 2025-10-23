@@ -96,7 +96,6 @@ export default class FullPageDropzone extends React.PureComponent<Props, State> 
         <FullPageError
           title="Error processing files"
           message={error}
-          onRetry={() => this.setState({ error: undefined })}
         />
       );
     }
@@ -114,7 +113,7 @@ export default class FullPageDropzone extends React.PureComponent<Props, State> 
             {
               isDragActive
                 ? <h4>Drop files here...</h4>
-                : <h4>Drop a catalog here, or click to select files to load.</h4>
+                : <h4>Drop files or folders here, or click to browse</h4>
             }
             <DropzoneGuide />
           </div>
