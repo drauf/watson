@@ -29,7 +29,7 @@ test.describe('Tooltips', () => {
     test('handles tooltip positioning at screen edges', async ({ pageWithData }) => {
       // filter first as multiple segments with the same text cause problems in element selection
       await pageWithData.getByText('SetEntityProperty').first().click();
-      await pageWithData.getByText('ContextClassLoader').first().hover();
+      await pageWithData.getByText('Unsafe.park').last().hover();
 
       await expect(pageWithData).toHaveScreenshot('flame-graph-tooltip-edge-positioning.png');
     });
@@ -42,6 +42,16 @@ test.describe('Tooltips', () => {
 
       // Tooltip should be gone
       await expect(pageWithData).toHaveScreenshot('flame-graph-no-tooltip.png');
+    });
+
+    test('shows regex filter tooltips', async ({pageWithData}) => {
+      // Test thread name filter tooltip
+      await pageWithData.getByText('Thread name pattern').hover();
+      await expect(pageWithData).toHaveScreenshot('flame-graph-thread-name-tooltip.png');
+
+      // Test stack trace filter tooltip
+      await pageWithData.getByText('Stack trace pattern').hover();
+      await expect(pageWithData).toHaveScreenshot('flame-graph-stack-trace-tooltip.png');
     });
   });
 
@@ -71,6 +81,16 @@ test.describe('Tooltips', () => {
     test('no tooltip appears on legend hover', async ({ pageWithData }) => {
       await pageWithData.getByText('Timed waiting').hover();
       await expect(pageWithData).toHaveScreenshot('threads-no-tooltip-legend.png');
+    });
+
+    test('shows filter tooltips', async ({pageWithData}) => {
+      // Test Active filter tooltip
+      await pageWithData.getByText('Active').hover();
+      await expect(pageWithData).toHaveScreenshot('threads-overview-active-tooltip.png');
+
+      // Test High CPU usage filter tooltip
+      await pageWithData.getByText('High CPU usage').hover();
+      await expect(pageWithData).toHaveScreenshot('threads-overview-cpu-tooltip.png');
     });
   });
 

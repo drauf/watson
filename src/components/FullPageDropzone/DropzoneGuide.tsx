@@ -37,7 +37,6 @@ export default class DropzoneGuide extends React.PureComponent<Props> {
           <OutboundLink to={DropzoneGuide.SOURCE_CODE_LINK}>
             GitHub
           </OutboundLink>
-          {' '}
           ,
           {' '}
           <OutboundLink to={DropzoneGuide.SLACK_CONNECT_DOCS_LINK}>
