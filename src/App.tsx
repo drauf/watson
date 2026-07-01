@@ -13,6 +13,7 @@ import MonitorsPage from './components/Monitors/MonitorsPage';
 import FlameGraphPage from './components/FlameGraph/FlameGraphPage';
 import ThreadsOverviewPage from './components/ThreadsOverview/ThreadsOverviewPage';
 import Index from './components/Index/Index';
+import HelpPage from './components/Help/HelpPage';
 import TestProgressPage from './components/ProgressIndicator/TestProgressPage';
 
 const routes = [
@@ -59,6 +60,10 @@ const routes = [
         path: 'threads-overview',
         element: <ThreadsOverviewPage />,
         loader: threadDumpsLoader,
+      },
+      {
+        path: 'help',
+        element: <HelpPage />,
       },
       {
         path: '*',

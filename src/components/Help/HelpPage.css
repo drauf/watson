@@ -1,0 +1,25 @@
+.help-page {
+  max-width: 720px;
+  padding: var(--ds-space-400) var(--ds-space-300);
+  margin: 0 auto;
+  line-height: 1.6;
+  color: var(--ds-text);
+}
+
+.help-page h2 {
+  margin-bottom: var(--ds-space-200);
+  color: var(--ds-text-brand);
+}
+
+.help-page p {
+  margin-bottom: var(--ds-space-200);
+}
+
+.help-page ul {
+  padding-left: var(--ds-space-300);
+  margin-bottom: var(--ds-space-200);
+}
+
+.help-page li {
+  margin-bottom: var(--ds-space-100);
+}

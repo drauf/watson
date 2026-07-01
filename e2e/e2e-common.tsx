@@ -10,11 +10,11 @@ const getFilesFromPath = (path: string) => {
 const loadData = async (page: Page, dataLocation: string) => {
   await page.goto('/');
   await page.setInputFiles('input[type="file"]', getFilesFromPath(dataLocation));
-  await page.getByText('Clear current data').isVisible();
+  await page.getByText('Clear data').isVisible();
 };
 
 const clearData = async (page: Page) => {
-  await page.getByText('Clear current data').click();
+  await page.getByText('Clear data').click();
 };
 
 type TestOptions = {
