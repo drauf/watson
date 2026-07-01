@@ -16,7 +16,7 @@ const SummaryPage: React.FC = () => {
   }
 
   return (
-    <main>
+    <main className="summary-page">
       <RunningProcessesChart threadDumps={threadDumps} />
       <div id="memory-usages">
         <MemoryUsageChart threadDumps={threadDumps} />
