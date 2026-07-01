@@ -38,7 +38,9 @@ const HelpPage: React.FC = () => (
       <li>
         <a href={`mailto:${EMAIL}`}>email</a>
         {' '}
-        - {EMAIL}
+        -
+        {' '}
+        {EMAIL}
       </li>
     </ul>
 

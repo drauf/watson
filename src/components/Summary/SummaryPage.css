@@ -16,8 +16,8 @@
 
 /* Vertical spacing around chart titles */
 .summary-page h3 {
-  padding-top: 28px; /* padding as Atlassian CSS reset has a very specific rule that overwrites margin-top to 0 */
   margin-bottom: 8px;
+  padding-top: 28px; /* padding as Atlassian CSS reset has a very specific rule that overwrites margin-top to 0 */
 }
 
 .smart-tooltip ol, .smart-tooltip ul {
