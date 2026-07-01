@@ -22,10 +22,14 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.56.1-noble
 
     steps:
+    - name: Install git-lfs
+      run: |
+        apt-get update
+        apt-get install -y git-lfs
+
     - name: Checkout
       uses: actions/checkout@v4
       with:
-        # Fetch e2e snapshot PNGs stored in Git LFS so Playwright can diff against them
         lfs: true
 
     - name: Setup Node 22
