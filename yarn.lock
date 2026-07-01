@@ -6908,6 +6908,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nanoid@npm:^3.3.12":
+  version: 3.3.15
+  resolution: "nanoid@npm:3.3.15"
+  bin:
+    nanoid: bin/nanoid.cjs
+  checksum: 10c0/e0b12e3a1d361f74150fa4b25631d0ae29f7162dab01a12f0f1be1f53b7a2a219f9b729504e474d4821207d0fe349bd3c97569ab5cf7ec2fff6aa94711956c93
+  languageName: node
+  linkType: hard
+
 "nanomatch@npm:^1.2.9":
   version: 1.2.13
   resolution: "nanomatch@npm:1.2.13::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fnanomatch%2F-%2Fnanomatch-1.2.13.tgz"
@@ -7655,6 +7664,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-sorting@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "postcss-sorting@npm:10.0.0"
+  peerDependencies:
+    postcss: ^8.4.20
+  checksum: 10c0/2e53560ccfaefb6ccfaa44cd258735f815de7a06ff6c79e6fb0fe789422f10242266044902c716e2eec9680879d7e0872b4ecd5d89e9bd8670f6d9f6c3ce5adc
+  languageName: node
+  linkType: hard
+
 "postcss-sorting@npm:^4.1.0":
   version: 4.1.0
   resolution: "postcss-sorting@npm:4.1.0::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fpostcss-sorting%2F-%2Fpostcss-sorting-4.1.0.tgz"
@@ -7662,15 +7680,6 @@ __metadata:
     lodash: "npm:^4.17.4"
     postcss: "npm:^7.0.0"
   checksum: 10c0/e36bb86257f78764ca6f427c7153c11ceadd60eef2227788a061facd170d665f323660437484ecaf20630708ce21fe2b541134076a70ecad57acf5ba3559cb01
-  languageName: node
-  linkType: hard
-
-"postcss-sorting@npm:^8.0.2":
-  version: 8.0.2
-  resolution: "postcss-sorting@npm:8.0.2::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fpostcss-sorting%2F-%2Fpostcss-sorting-8.0.2.tgz"
-  peerDependencies:
-    postcss: ^8.4.20
-  checksum: 10c0/955c72d8d71b6b54dcdcbcef765a593803512d215cef12a49b71d1abf8ab8d2dacb5645dbb5a0a6535609aab6bffb834599d6073f28fe61e589a4437af85e243
   languageName: node
   linkType: hard
 
@@ -7707,7 +7716,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.21, postcss@npm:^8.4.27, postcss@npm:^8.4.39":
+"postcss@npm:^8.4.27, postcss@npm:^8.4.39":
   version: 8.5.6
   resolution: "postcss@npm:8.5.6::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fpostcss%2F-%2Fpostcss-8.5.6.tgz"
   dependencies:
@@ -7715,6 +7724,17 @@ __metadata:
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
   checksum: 10c0/5127cc7c91ed7a133a1b7318012d8bfa112da9ef092dddf369ae699a1f10ebbd89b1b9f25f3228795b84585c72aabd5ced5fc11f2ba467eedf7b081a66fad024
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.5.8":
+  version: 8.5.16
+  resolution: "postcss@npm:8.5.16"
+  dependencies:
+    nanoid: "npm:^3.3.12"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 10c0/625de7a02f662f3a340964d14b487bd5097adf16f5f171e257d19005ba37aea8768ee446557500e88e91ca46b4d14d6cb4a0bf033c6ec0c8c0b660d85719f1ef
   languageName: node
   linkType: hard
 
@@ -9276,15 +9296,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-order@npm:6.0.3":
-  version: 6.0.3
-  resolution: "stylelint-order@npm:6.0.3::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fstylelint-order%2F-%2Fstylelint-order-6.0.3.tgz"
+"stylelint-order@npm:8.1.1":
+  version: 8.1.1
+  resolution: "stylelint-order@npm:8.1.1"
   dependencies:
-    postcss: "npm:^8.4.21"
-    postcss-sorting: "npm:^8.0.2"
+    postcss: "npm:^8.5.8"
+    postcss-sorting: "npm:^10.0.0"
   peerDependencies:
-    stylelint: ^14.0.0 || ^15.0.0
-  checksum: 10c0/8e6ba85b39ff827038ec4dc46a37ea6aeac110c0a8d468c6962b068c623ceac26b7d6617f5e372be4a10571127e4a3ce424714b7a66d54147ce57116776d4d13
+    stylelint: ^16.18.0 || ^17.0.0
+  checksum: 10c0/ef135a414d3ed98a53cc19e52f1cdff25105e34d96430ecc805d831dbdf4f505031d692dba0f2275b6e7b3a4f4b406f352d85a3924e2e3d89931af65a64eb047
   languageName: node
   linkType: hard
 
@@ -10325,7 +10345,7 @@ __metadata:
     stylelint: "npm:15.10.3"
     stylelint-config-rational-order: "npm:0.1.2"
     stylelint-config-standard: "npm:34.0.0"
-    stylelint-order: "npm:6.0.3"
+    stylelint-order: "npm:8.1.1"
     typescript: "npm:5.9.2"
     vite: "npm:5.3.3"
     vite-plugin-singlefile: "npm:2.0.2"

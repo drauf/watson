@@ -60,7 +60,7 @@
     "stylelint": "15.10.3",
     "stylelint-config-rational-order": "0.1.2",
     "stylelint-config-standard": "34.0.0",
-    "stylelint-order": "6.0.3",
+    "stylelint-order": "8.1.1",
     "typescript": "5.9.2",
     "vite": "5.3.3",
     "vite-plugin-singlefile": "2.0.2",
