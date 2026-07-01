@@ -8,7 +8,7 @@ const ThemeSwitcher: React.FC = () => {
   return (
     <div className="theme-switcher" data-testid="theme-switcher">
       <label htmlFor="theme-select" className="theme-label">
-        Theme:
+        Theme
       </label>
       <select
         id="theme-select"
@@ -19,7 +19,7 @@ const ThemeSwitcher: React.FC = () => {
       >
         <option value="light">Light</option>
         <option value="dark">Dark</option>
-        <option value="auto">Auto</option>
+        <option value="auto">Match system</option>
       </select>
     </div>
   );

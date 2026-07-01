@@ -48,6 +48,9 @@ const Navigation: React.FC = () => {
 
       <div className="header-section">
         <ThemeSwitcher />
+
+        <StyledNavLink hash={hash} pageLink="help" displayName="Help & feedback" />
+
         <button
           type="button"
           onClick={() => {
@@ -55,7 +58,7 @@ const Navigation: React.FC = () => {
             navigate('/');
           }}
         >
-          <li>Clear current data</li>
+          <li>Clear data</li>
         </button>
       </div>
     </header>

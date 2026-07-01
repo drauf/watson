@@ -50,8 +50,8 @@ export default defineConfig({
   reporter: 'html',
   timeout: 30_000,
   expect: {
-    /* Limit the maximum pixel ratio for image comparisons to 0.1% */
-    toHaveScreenshot: { maxDiffPixelRatio: 0.001 },
+    /* Limit the maximum pixel ratio for image comparisons to 0.05% */
+    toHaveScreenshot: { maxDiffPixelRatio: 0.0005 },
   },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
