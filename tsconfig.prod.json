@@ -5,6 +5,7 @@
       "./src/__mocks__/**",
       "./src/test-utils",
       "./src/**/*.test.tsx",
+      ".e2e/**"
     ]
   }
   
