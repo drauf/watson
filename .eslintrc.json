@@ -88,6 +88,13 @@
         // sequential awaits in a loop are intentional in e2e steps
         "no-await-in-loop": "off"
       }
+    },
+    {
+      // test and setup files legitimately import devDependencies
+      "files": ["src/**/*.test.{ts,tsx}", "src/test-setup.ts"],
+      "rules": {
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+      }
     }
   ],
   "settings": {
