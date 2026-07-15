@@ -2,28 +2,22 @@ import MemoryUnit from '../../types/MemoryUnit';
 
 const round = (value: number): string => value.toFixed(2);
 
-const convertMiB = (value: number): string => {
-  const valueInMB = value * 1.048576;
-  const valueInGB = value * 0.001048576;
-
-  if (valueInGB > 1) {
-    return `${round(valueInGB)} GB`;
-  }
-  return `${round(valueInMB)} MB`;
+// how many KiB one of each unit represents
+const KIB_PER_UNIT: Record<MemoryUnit, number> = {
+  [MemoryUnit.KiB]: 1,
+  [MemoryUnit.MiB]: 1024,
+  [MemoryUnit.GiB]: 1024 * 1024,
+  [MemoryUnit.TiB]: 1024 * 1024 * 1024,
 };
 
-const convertKiB = (value: number): string => {
-  const valueInMB = value * 0.001024;
-  const valueInGB = valueInMB / 1024;
-
-  if (valueInGB > 1) {
-    return `${round(valueInGB)} GB`;
-  }
-  return `${round(valueInMB)} MB`;
-};
-
-// perform a "best effort" conversion to GBs
+// perform a "best effort" conversion to GiB, falling back to MiB for small values
 export default function labelFormatter(value: string | number | Array<string | number>, unit: MemoryUnit): string {
-  const numericValue = Number(value);
-  return unit === MemoryUnit.MiB ? convertMiB(numericValue) : convertKiB(numericValue);
+  const valueInKiB = Number(value) * KIB_PER_UNIT[unit];
+  const valueInMiB = valueInKiB / 1024;
+  const valueInGiB = valueInMiB / 1024;
+
+  if (valueInGiB > 1) {
+    return `${round(valueInGiB)} GiB`;
+  }
+  return `${round(valueInMiB)} MiB`;
 }
