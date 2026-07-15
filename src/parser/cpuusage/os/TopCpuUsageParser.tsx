@@ -61,7 +61,8 @@ export default class TopCpuUsageParser {
     const memoryTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line1), 10);
     const memoryUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line1), 10);
     const memoryFree = parseInt(matchOne(FREE_MEMORY_PATTERN, line1), 10);
-    const memoryUnit = line1?.includes(MemoryUnit.MiB) ? MemoryUnit.MiB : MemoryUnit.KiB;
+    const memoryUnit = [MemoryUnit.TiB, MemoryUnit.GiB, MemoryUnit.MiB, MemoryUnit.KiB]
+      .find((unit) => line1?.includes(unit)) ?? MemoryUnit.KiB;
 
     const swapTotal = parseInt(matchOne(TOTAL_MEMORY_PATTERN, line2), 10);
     const swapUsed = parseInt(matchOne(USED_MEMORY_PATTERN, line2), 10);
@@ -103,6 +104,7 @@ export default class TopCpuUsageParser {
         case '%CPU':
           offsets.setCpuUsageOffset(index);
           break;
+        case 'TIME':
         case 'TIME+':
           offsets.setRunningForOffset(index);
           break;
