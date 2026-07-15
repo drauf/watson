@@ -8,9 +8,7 @@ export type Theme = 'light' | 'dark' | 'auto';
  * @returns The effective theme ('light' or 'dark')
  */
 export async function getEffectiveTheme(page: Page): Promise<'light' | 'dark'> {
-  return page.evaluate(() => {
-    return document.documentElement.getAttribute('data-color-mode') as 'light' | 'dark';
-  });
+  return page.evaluate(() => document.documentElement.getAttribute('data-color-mode') as 'light' | 'dark');
 }
 
 /**

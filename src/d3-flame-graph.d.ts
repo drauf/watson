@@ -8,7 +8,7 @@ declare module 'd3-flame-graph' {
     parsedStackFrame: import('./components/FlameGraph/FlameGraphPage').ParsedStackFrame;
     fade: boolean;
   }
-  
+
   export type ChartNode = {
     data: StackFrame,
     parent: ChartNode | null,

@@ -41,7 +41,7 @@ test.describe('Tooltips', () => {
       await expect(pageWithData).toHaveScreenshot('flame-graph-no-tooltip.png');
     });
 
-    test('shows regex filter tooltips', async ({pageWithData}) => {
+    test('shows regex filter tooltips', async ({ pageWithData }) => {
       // Test thread name filter tooltip
       await pageWithData.getByText('Thread name pattern').hover();
       await expect(pageWithData).toHaveScreenshot('flame-graph-thread-name-tooltip.png');
@@ -80,7 +80,7 @@ test.describe('Tooltips', () => {
       await expect(pageWithData).toHaveScreenshot('threads-no-tooltip-legend.png');
     });
 
-    test('shows filter tooltips', async ({pageWithData}) => {
+    test('shows filter tooltips', async ({ pageWithData }) => {
       // Test Active filter tooltip
       await pageWithData.getByText('Active').hover();
       await expect(pageWithData).toHaveScreenshot('threads-overview-active-tooltip.png');
@@ -92,9 +92,7 @@ test.describe('Tooltips', () => {
   });
 
   test.describe('Summary Page Tooltips', () => {
-    const getRechartsWrapperForChart = (page: Page, chartContainerId: string) => {
-      return page.locator(`#${chartContainerId} .recharts-wrapper`).first();
-    }
+    const getRechartsWrapperForChart = (page: Page, chartContainerId: string) => page.locator(`#${chartContainerId} .recharts-wrapper`).first();
 
     async function testTooltipForChart(pageWithData: Page, chartId: string) {
       const chartArea = getRechartsWrapperForChart(pageWithData, chartId);

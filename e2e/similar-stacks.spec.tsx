@@ -5,11 +5,11 @@ test.describe('Similar stacks', () => {
   const COMPARISON_DEPTH = 'Comparison depth';
   const MINIMUM_GROUP_SIZE = 'Minimum group size';
 
-  test.beforeEach(async ({pageWithData}) => {
+  test.beforeEach(async ({ pageWithData }) => {
     await pageWithData.getByText('Similar stacks').click();
   });
 
-  test('loads', async ({pageWithData}) => {
+  test('loads', async ({ pageWithData }) => {
     expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
 
     expect(await pageWithData.getByLabel(COMPARISON_DEPTH).inputValue()).toBe('30');
@@ -18,7 +18,7 @@ test.describe('Similar stacks', () => {
     await expect(pageWithData).toHaveScreenshot();
   });
 
-  test('has working filters', async ({pageWithData}) => {
+  test('has working filters', async ({ pageWithData }) => {
     await pageWithData.getByText('Active').uncheck();
     await pageWithData.getByLabel(COMPARISON_DEPTH).fill('4');
     await pageWithData.getByLabel(MINIMUM_GROUP_SIZE).fill('600');
@@ -26,33 +26,34 @@ test.describe('Similar stacks', () => {
     await expect(pageWithData).toHaveScreenshot();
   });
 
-  test('shows empty state', async ({pageWithData}) => {
+  test('shows empty state', async ({ pageWithData }) => {
     await pageWithData.getByLabel(MINIMUM_GROUP_SIZE).fill('2137');
 
     await expect(pageWithData).toHaveScreenshot();
   });
 
-  test('can fold sections', async ({pageWithData}) => {
+  test('can fold sections', async ({ pageWithData }) => {
     const buttons = (await pageWithData.locator('main').getByRole('button').all()).slice(0, 4);
 
     for (const button of buttons) {
-      await button.click()
+      await button.click();
     }
 
     await expect(pageWithData).toHaveScreenshot();
   });
 
-  test('has working regex filters', async ({pageWithData}) => {
+  test('has working regex filters', async ({ pageWithData }) => {
     await pageWithData.getByPlaceholder('e.g. http.*exec').fill('caesium');
     await pageWithData.getByPlaceholder('e.g. java\\.io').fill('reIndex');
 
     await expect(pageWithData).toHaveScreenshot();
   });
 
-  test('opens thread details', async ({context, pageWithData}) => {
+  test('opens thread details', async ({ context, pageWithData }) => {
     const [details] = await Promise.all([
       context.waitForEvent('page'),
-      pageWithData.locator('main ul').first().getByRole('button').first().click()
+      pageWithData.locator('main ul').first().getByRole('button').first()
+        .click(),
     ]);
 
     await expect(details).toHaveScreenshot();

@@ -1,11 +1,9 @@
-import {test as base, Page, TestFixture} from '@playwright/test';
+import { test as base, Page } from '@playwright/test';
 import fs from 'fs';
 
-const getFilesFromPath = (path: string) => {
-  return fs.readdirSync(path, {withFileTypes: true})
-    .filter(item => !item.isDirectory())
-    .map(item => `${path}${item.name}`)
-};
+const getFilesFromPath = (path: string) => fs.readdirSync(path, { withFileTypes: true })
+  .filter((item) => !item.isDirectory())
+  .map((item) => `${path}${item.name}`);
 
 const loadData = async (page: Page, dataLocation: string) => {
   await page.goto('/');
@@ -23,11 +21,11 @@ type TestOptions = {
 };
 
 export const test = base.extend<TestOptions>({
-  dataLocation: ['test-data/boring-example/', {option: true}],
+  dataLocation: ['test-data/boring-example/', { option: true }],
 
-  pageWithData: async ({page, dataLocation}, use) => {
+  pageWithData: async ({ page, dataLocation }, use) => {
     await loadData(page, dataLocation);
     await use(page);
     await clearData(page);
-  }
+  },
 });

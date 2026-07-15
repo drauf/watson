@@ -19,8 +19,8 @@ describe('regexFiltering', () => {
 
     it('returns true when no filter is provided', () => {
       expect(matchesNameFilter(thread, '')).toBe(true);
-      expect(matchesNameFilter(thread, null as any)).toBe(true);
-      expect(matchesNameFilter(thread, undefined as any)).toBe(true);
+      expect(matchesNameFilter(thread, null)).toBe(true);
+      expect(matchesNameFilter(thread, undefined)).toBe(true);
     });
 
     it('matches thread names with case insensitive regex', () => {
@@ -74,8 +74,8 @@ describe('regexFiltering', () => {
 
     it('returns true when no filter is provided', () => {
       expect(matchesStackFilter(thread, '')).toBe(true);
-      expect(matchesStackFilter(thread, null as any)).toBe(true);
-      expect(matchesStackFilter(thread, undefined as any)).toBe(true);
+      expect(matchesStackFilter(thread, null)).toBe(true);
+      expect(matchesStackFilter(thread, undefined)).toBe(true);
     });
 
     it('matches stack trace lines with case insensitive regex', () => {
@@ -151,20 +151,20 @@ describe('regexFiltering', () => {
 
     it('returns true when only name filter is provided and matches', () => {
       expect(matchesRegexFilters(thread, 'http', '')).toBe(true);
-      expect(matchesRegexFilters(thread, 'exec', null as any)).toBe(true);
-      expect(matchesRegexFilters(thread, '8080', undefined as any)).toBe(true);
+      expect(matchesRegexFilters(thread, 'exec', null)).toBe(true);
+      expect(matchesRegexFilters(thread, '8080', undefined)).toBe(true);
     });
 
     it('returns true when only stack filter is provided and matches', () => {
       expect(matchesRegexFilters(thread, '', 'java.io')).toBe(true);
-      expect(matchesRegexFilters(thread, null as any, 'atlassian')).toBe(true);
-      expect(matchesRegexFilters(thread, undefined as any, 'FileUtils')).toBe(true);
+      expect(matchesRegexFilters(thread, null, 'atlassian')).toBe(true);
+      expect(matchesRegexFilters(thread, undefined, 'FileUtils')).toBe(true);
     });
 
     it('returns true when both filters are empty', () => {
       expect(matchesRegexFilters(thread, '', '')).toBe(true);
-      expect(matchesRegexFilters(thread, null as any, null as any)).toBe(true);
-      expect(matchesRegexFilters(thread, undefined as any, undefined as any)).toBe(true);
+      expect(matchesRegexFilters(thread, null, null)).toBe(true);
+      expect(matchesRegexFilters(thread, undefined, undefined)).toBe(true);
     });
 
     it('handles invalid regex in both filters gracefully', () => {

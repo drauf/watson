@@ -77,6 +77,26 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": ["e2e/**/*.ts", "e2e/**/*.tsx", "playwright.config.ts"],
+      "rules": {
+        // e2e code imports @playwright/test, which is correctly a devDependency
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+        // the shared test fixture is a named export by Playwright convention
+        "import/prefer-default-export": "off",
+        // sequential awaits in a loop are intentional in e2e steps
+        "no-await-in-loop": "off"
+      }
+    },
+    {
+      // test and setup files legitimately import devDependencies
+      "files": ["src/**/*.test.{ts,tsx}", "src/test-setup.ts"],
+      "rules": {
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+      }
+    }
+  ],
   "settings": {
     "import/resolver": {
       "node": {
