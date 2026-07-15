@@ -3,10 +3,7 @@ import {test} from './e2e-common';
 
 test.describe('Flame graph', () => {
   const waitForAnimationToFinish = async (page: Page) => {
-    await page.getByText('root').isVisible();
-    // the condition above happens a little too early, so we add a little bit of extra wait time
-    // yes, I know this sucks, but I'm too lazy to find a proper way to achieve this
-    await page.waitForTimeout(750);
+    await page.getByText('root').first().isVisible();
   };
 
   test.beforeEach(async ({pageWithData}) => {

@@ -2,16 +2,10 @@ import { Page, expect } from '@playwright/test';
 import { test } from './e2e-common';
 
 test.describe('Tooltips', () => {
-  const waitForAnimationToFinish = async (page: Page) => {
-    await page.getByText('root').isVisible();
-    // Wait for flame graph animation to complete
-    await page.waitForTimeout(750);
-  };
-
   test.describe('Flame Graph Tooltips', () => {
     test.beforeEach(async ({ pageWithData }) => {
       await pageWithData.getByText('Flame graph').click();
-      await waitForAnimationToFinish(pageWithData);
+      await pageWithData.getByText('root').first().isVisible();
     });
 
     test('shows tooltip on flame graph segment hover', async ({ pageWithData }) => {
@@ -98,11 +92,6 @@ test.describe('Tooltips', () => {
   });
 
   test.describe('Summary Page Tooltips', () => {
-    test.beforeEach(async ({ pageWithData }) => {
-      // todo: there is an animation after charts load - ideally we should wait for some event instead of timeout
-      await pageWithData.waitForTimeout(1_500);
-    });
-
     const getRechartsWrapperForChart = (page: Page, chartContainerId: string) => {
       return page.locator(`#${chartContainerId} .recharts-wrapper`).first();
     }
@@ -111,7 +100,6 @@ test.describe('Tooltips', () => {
       const chartArea = getRechartsWrapperForChart(pageWithData, chartId);
 
       await chartArea.hover();
-      await pageWithData.waitForTimeout(200);
       await expect(pageWithData).toHaveScreenshot(`summary-${chartId}-tooltip.png`);
     }
 
