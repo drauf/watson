@@ -1,8 +1,8 @@
 import { createRoot, Root } from 'react-dom/client';
-import type { Node } from './FlameGraph';
+import { ChartNode } from 'd3-flame-graph';
 import SmartTooltip from '../common/SmartTooltip';
 
-const topParent = (node: Node): Node => {
+const topParent = (node: ChartNode): ChartNode => {
   let result = node;
   while (result.parent) {
     result = result.parent;
@@ -22,8 +22,7 @@ export function customTooltip() {
     root = createRoot(container);
   }
 
-  tip.show = (node: Node) => {
-    const event = window.event as MouseEvent | undefined;
+  tip.show = (event: MouseEvent, node: ChartNode) => {
     const x: number = event?.pageX || 0;
     const y: number = event?.pageY || 0;
 
@@ -101,8 +100,4 @@ export function customTooltip() {
 }
 
 const tooltip = customTooltip();
-
-// we need to export as boolean because of a bug in types for d3-flame-graph
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export default tooltip as boolean;
+export default tooltip;

@@ -28,7 +28,7 @@ test.describe('Flame graph', () => {
   });
 
   test('allows zooming', async ({pageWithData}) => {
-    await pageWithData.getByText('IssueRequiredExecutor').first().click();
+    await pageWithData.getByText('IssueRequiredExecutor').first().click({ force: true });
 
     await expect(pageWithData).toHaveScreenshot();
   });

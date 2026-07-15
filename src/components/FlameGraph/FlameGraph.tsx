@@ -1,23 +1,11 @@
 import React from 'react';
 import { select } from 'd3';
-import { flamegraph, StackFrame } from 'd3-flame-graph';
+import flamegraph, { StackFrame, ChartNode } from 'd3-flame-graph';
 import getColorForStackLine from '../../common/getColorForStackLine';
 import tooltip from './FlameGraphTooltip';
-import type { ParsedStackFrame } from './FlameGraphPage';
-
-export type ExtendedStackFrame = StackFrame & {
-  parsedStackFrame: ParsedStackFrame,
-  fade: boolean,
-};
-
-export type Node = {
-  data: ExtendedStackFrame,
-  parent: Node | null,
-  value: number
-};
 
 type Props = {
-  chartData: ExtendedStackFrame;
+  chartData: StackFrame;
 };
 
 export default class FlameGraph extends React.PureComponent<Props> {
@@ -34,12 +22,14 @@ export default class FlameGraph extends React.PureComponent<Props> {
 
     const chart = flamegraph()
       .width(window.innerWidth - 36)
-      .sort(true)
+      .cellHeight(22)
+      // from biggest to smallest groups of frames
+      .sort((a: StackFrame, b: StackFrame) => b.value - a.value)
       .inverted(true)
       .minFrameSize(5)
-      .transitionDuration(500)
+      .transitionDuration(200)
       .tooltip(tooltip)
-      .setColorMapper((node: Node) => (getColorForStackLine(node.data.parsedStackFrame.rawFrame, node.data.fade)));
+      .setColorMapper((node: ChartNode) => (getColorForStackLine(node.data.parsedStackFrame.rawFrame, node.data.fade)));
 
     select('#flame-graph')
       .datum(chartData)

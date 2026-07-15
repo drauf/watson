@@ -15,27 +15,30 @@ test.describe('Tooltips', () => {
     });
 
     test('shows tooltip on flame graph segment hover', async ({ pageWithData }) => {
-      await pageWithData.getByText('root').first().hover();
+      await pageWithData.getByText('root').first().hover({ force: true });
 
       await expect(pageWithData).toHaveScreenshot('flame-graph-tooltip-basic.png');
     });
 
     test('shows detailed information in flame graph tooltip', async ({ pageWithData }) => {
-      await pageWithData.getByText('EditIssueActionExecutor').first().hover();
+      await pageWithData.getByText('EditIssueActionExecutor').first().hover({ force: true });
 
       await expect(pageWithData).toHaveScreenshot('flame-graph-tooltip-detailed.png');
     });
 
     test('handles tooltip positioning at screen edges', async ({ pageWithData }) => {
       // filter first as multiple segments with the same text cause problems in element selection
-      await pageWithData.getByText('SetEntityProperty').first().click();
-      await pageWithData.getByText('Unsafe.park').last().hover();
+      await pageWithData.getByText('MultipartBoundaryCheckFilter').first().click({ force: true });
+
+      const stackFrame = pageWithData.getByText('AggregateTranslator').last();
+      await stackFrame.scrollIntoViewIfNeeded();
+      await stackFrame.hover({ force: true });
 
       await expect(pageWithData).toHaveScreenshot('flame-graph-tooltip-edge-positioning.png');
     });
 
     test('tooltip disappears when not hovering', async ({ pageWithData }) => {
-      await pageWithData.getByText('root').first().hover();
+      await pageWithData.getByText('root').first().hover({ force: true });
 
       // Move away from the segment
       await pageWithData.mouse.move(10, 10);

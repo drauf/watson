@@ -1,4 +1,5 @@
-import { TooltipProps } from 'recharts';
+import { TooltipContentProps } from 'recharts';
+import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import TooltipContent from '../common/TooltipContent';
 
 export type ChartData = {
@@ -7,7 +8,7 @@ export type ChartData = {
   label: string;
 };
 
-const PieChartTooltip = ({ active, payload }: TooltipProps<string, string>): JSX.Element | null => {
+const PieChartTooltip = ({ active, payload }: TooltipContentProps<ValueType, NameType>): JSX.Element | null => {
   if (active && payload) {
     const { name, label } = payload[0].payload as ChartData;
 

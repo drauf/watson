@@ -6,3 +6,24 @@ svg div {
   display: block;
   margin: auto;
 }
+
+.d3-flame-graph .fade {
+  opacity: 1 !important;
+}
+
+.d3-flame-graph rect {
+  fill-opacity: 1;
+  stroke: none;
+}
+
+.d3-flame-graph rect:hover {
+  fill-opacity: 0.65;
+  stroke: none;
+}
+
+.d3-flame-graph-label {
+  color: unset;
+  font-weight: unset;
+  font-size: unset;
+  font-family: unset;
+}
