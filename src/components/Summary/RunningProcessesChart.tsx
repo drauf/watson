@@ -1,6 +1,7 @@
 import {
-  CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis,
+  CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipContentProps, XAxis, YAxis,
 } from 'recharts';
+import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import { token } from '@atlaskit/tokens';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
@@ -22,11 +23,11 @@ const getSortedThreadNames = (payload: unknown): string[] => {
     .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
 };
 
-const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>): JSX.Element | null => {
+const CustomTooltip = ({ active, payload, label }: TooltipContentProps<ValueType, NameType>): JSX.Element | null => {
   if (active && payload) {
     const time = label as string;
     const threadNames: string[] = getSortedThreadNames(payload[1].value);
-    const threadsCount: number = payload[0].value ? payload[0].value : 0;
+    const threadsCount: number = payload[0].value ? Number(payload[0].value) : 0;
 
     return (
       <TooltipContent>
@@ -91,7 +92,7 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
           <XAxis dataKey="name" />
           <YAxis type="number" allowDecimals={false} />
           <CartesianGrid stroke={token('color.chart.neutral')} strokeDasharray="5 5" />
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip content={CustomTooltip} />
           <Line
             name="Chart data"
             dataKey="runningProcesses"

@@ -14,6 +14,11 @@ const colorSchemes = ['light', 'dark'];
 const getProjects = () => {
   const projects = [];
 
+  projects.push({
+    name: 'disable animations',
+    testMatch: /global\.setup\.tsx/,
+  });
+
   for (const [browserName, browser] of browsers) {
     for (const viewport of viewports) {
       for (const colorScheme of colorSchemes) {
@@ -23,6 +28,7 @@ const getProjects = () => {
             ...browser,
             colorScheme: colorScheme,
             viewport: viewport,
+            dependencies: ['disable animations'],
           },
         };
 
@@ -45,7 +51,6 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   timeout: 30_000,

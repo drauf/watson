@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/jsx-props-no-spreading */
 
 import {
   render, screen, fireEvent, waitFor,
@@ -13,12 +12,25 @@ import FullPageDropzone from './FullPageDropzone';
 import ThreadDump from '../../types/ThreadDump';
 
 // Mock dependencies
+const parserMock = vi.hoisted(() => ({
+  parseFiles: vi.fn(),
+  onParsed: undefined as ((dumps: ThreadDump[]) => void) | undefined,
+  onProgress: undefined as ((progress: any) => void) | undefined,
+}));
+
 vi.mock('../../common/threadDumpsStorageService', () => ({
   setParsedData: vi.fn(() => 'mock-data-key'),
 }));
 
 vi.mock('../../parser/AsyncParser', () => ({
-  default: vi.fn(),
+  default: class {
+    parseFiles = parserMock.parseFiles;
+
+    constructor(onParsed: (dumps: ThreadDump[]) => void, onProgress: (progress: any) => void) {
+      parserMock.onParsed = onParsed;
+      parserMock.onProgress = onProgress;
+    }
+  },
 }));
 
 vi.mock('../ProgressIndicator/ProgressIndicator', () => ({
@@ -98,6 +110,9 @@ describe('FullPageDropzone', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    parserMock.parseFiles.mockReset();
+    parserMock.onParsed = undefined;
+    parserMock.onProgress = undefined;
   });
 
   describe('initial render', () => {
@@ -128,11 +143,7 @@ describe('FullPageDropzone', () => {
 
   describe('file dropping and parsing', () => {
     it('handles file drop with valid files', async () => {
-      const mockParser = {
-        parseFiles: vi.fn().mockResolvedValue(undefined),
-      };
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation(() => mockParser);
+      parserMock.parseFiles.mockResolvedValue(undefined);
 
       renderComponent();
 
@@ -147,17 +158,11 @@ describe('FullPageDropzone', () => {
       fireEvent.change(input);
 
       await waitFor(() => {
-        expect(mockParser.parseFiles).toHaveBeenCalledWith([file]);
+        expect(parserMock.parseFiles).toHaveBeenCalledWith([file]);
       });
     });
 
     it('does not process when no files are dropped', async () => {
-      const mockParser = {
-        parseFiles: vi.fn(),
-      };
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation(() => mockParser);
-
       renderComponent();
 
       const input = document.querySelector('input[type="file"]') as HTMLInputElement;
@@ -169,7 +174,7 @@ describe('FullPageDropzone', () => {
       fireEvent.change(input);
 
       await waitFor(() => {
-        expect(mockParser.parseFiles).not.toHaveBeenCalled();
+        expect(parserMock.parseFiles).not.toHaveBeenCalled();
       });
     });
 
@@ -179,11 +184,7 @@ describe('FullPageDropzone', () => {
         resolveParser = resolve;
       });
 
-      const mockParser = {
-        parseFiles: vi.fn().mockReturnValue(parsePromise),
-      };
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation(() => mockParser);
+      parserMock.parseFiles.mockReturnValue(parsePromise);
 
       renderComponent();
 
@@ -209,30 +210,19 @@ describe('FullPageDropzone', () => {
 
   describe('progress indication', () => {
     it('shows progress indicator during parsing', async () => {
-      let onProgressCallback: (progress: any) => void;
-
-      const mockParser = {
-        parseFiles: vi.fn().mockImplementation(() => {
-          // Simulate progress callback
-          setTimeout(() => {
-            onProgressCallback({
-              phase: 'parsing',
-              percentage: 50,
-              fileName: 'test.txt',
-              filesProcessed: 1,
-              totalFiles: 2,
-              linesProcessed: 100,
-              totalLines: 200,
-            });
-          }, 10);
-          return Promise.resolve();
-        }),
-      };
-
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation((_onParsed: any, onProgress: any) => {
-        onProgressCallback = onProgress;
-        return mockParser;
+      parserMock.parseFiles.mockImplementation(() => {
+        setTimeout(() => {
+          parserMock.onProgress!({
+            phase: 'parsing',
+            percentage: 50,
+            fileName: 'test.txt',
+            filesProcessed: 1,
+            totalFiles: 2,
+            linesProcessed: 100,
+            totalLines: 200,
+          });
+        }, 10);
+        return Promise.resolve();
       });
 
       renderComponent();
@@ -256,11 +246,7 @@ describe('FullPageDropzone', () => {
 
   describe('error handling', () => {
     it('shows error when parsing fails', async () => {
-      const mockParser = {
-        parseFiles: vi.fn().mockRejectedValue(new Error('Parsing failed')),
-      };
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation(() => mockParser);
+      parserMock.parseFiles.mockRejectedValue(new Error('Parsing failed'));
 
       renderComponent();
 
@@ -282,11 +268,7 @@ describe('FullPageDropzone', () => {
     });
 
     it('handles non-Error exceptions', async () => {
-      const mockParser = {
-        parseFiles: vi.fn().mockRejectedValue('String error'),
-      };
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation(() => mockParser);
+      parserMock.parseFiles.mockRejectedValue('String error');
 
       renderComponent();
 
@@ -317,21 +299,11 @@ describe('FullPageDropzone', () => {
         },
       ] as ThreadDump[];
 
-      let onParsedCallback: (dumps: ThreadDump[]) => void;
-
-      const mockParser = {
-        parseFiles: vi.fn().mockImplementation(() => {
-          setTimeout(() => {
-            onParsedCallback(mockThreadDumps);
-          }, 10);
-          return Promise.resolve();
-        }),
-      };
-
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation((onParsed: any) => {
-        onParsedCallback = onParsed;
-        return mockParser;
+      parserMock.parseFiles.mockImplementation(() => {
+        setTimeout(() => {
+          parserMock.onParsed!(mockThreadDumps);
+        }, 10);
+        return Promise.resolve();
       });
 
       renderComponent();
@@ -362,21 +334,11 @@ describe('FullPageDropzone', () => {
         },
       ] as ThreadDump[];
 
-      let onParsedCallback: (dumps: ThreadDump[]) => void;
-
-      const mockParser = {
-        parseFiles: vi.fn().mockImplementation(() => {
-          setTimeout(() => {
-            onParsedCallback(mockThreadDumps);
-          }, 10);
-          return Promise.resolve();
-        }),
-      };
-
-      const AsyncParser = await import('../../parser/AsyncParser');
-      (AsyncParser.default as any).mockImplementation((onParsed: any) => {
-        onParsedCallback = onParsed;
-        return mockParser;
+      parserMock.parseFiles.mockImplementation(() => {
+        setTimeout(() => {
+          parserMock.onParsed!(mockThreadDumps);
+        }, 10);
+        return Promise.resolve();
       });
 
       renderComponent();

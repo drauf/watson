@@ -54,7 +54,7 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
             {sum === 0 && (
               <Pie data={[{ name: 'No Data', value: 1 }]} dataKey="value" fill={token('color.chart.neutral')} animationDuration={1000} />
             )}
-            {sum !== 0 && <Tooltip content={<PieChartTooltip />} />}
+            {sum !== 0 && <Tooltip content={PieChartTooltip} />}
             <Legend />
           </PieChart>
         </ResponsiveContainer>

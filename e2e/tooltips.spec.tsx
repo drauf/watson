@@ -2,40 +2,37 @@ import { Page, expect } from '@playwright/test';
 import { test } from './e2e-common';
 
 test.describe('Tooltips', () => {
-  const waitForAnimationToFinish = async (page: Page) => {
-    await page.getByText('root').isVisible();
-    // Wait for flame graph animation to complete
-    await page.waitForTimeout(750);
-  };
-
   test.describe('Flame Graph Tooltips', () => {
     test.beforeEach(async ({ pageWithData }) => {
       await pageWithData.getByText('Flame graph').click();
-      await waitForAnimationToFinish(pageWithData);
+      await pageWithData.getByText('root').first().isVisible();
     });
 
     test('shows tooltip on flame graph segment hover', async ({ pageWithData }) => {
-      await pageWithData.getByText('root').first().hover();
+      await pageWithData.getByText('root').first().hover({ force: true });
 
       await expect(pageWithData).toHaveScreenshot('flame-graph-tooltip-basic.png');
     });
 
     test('shows detailed information in flame graph tooltip', async ({ pageWithData }) => {
-      await pageWithData.getByText('EditIssueActionExecutor').first().hover();
+      await pageWithData.getByText('EditIssueActionExecutor').first().hover({ force: true });
 
       await expect(pageWithData).toHaveScreenshot('flame-graph-tooltip-detailed.png');
     });
 
     test('handles tooltip positioning at screen edges', async ({ pageWithData }) => {
       // filter first as multiple segments with the same text cause problems in element selection
-      await pageWithData.getByText('SetEntityProperty').first().click();
-      await pageWithData.getByText('Unsafe.park').last().hover();
+      await pageWithData.getByText('MultipartBoundaryCheckFilter').first().click({ force: true });
+
+      const stackFrame = pageWithData.getByText('AggregateTranslator').last();
+      await stackFrame.scrollIntoViewIfNeeded();
+      await stackFrame.hover({ force: true });
 
       await expect(pageWithData).toHaveScreenshot('flame-graph-tooltip-edge-positioning.png');
     });
 
     test('tooltip disappears when not hovering', async ({ pageWithData }) => {
-      await pageWithData.getByText('root').first().hover();
+      await pageWithData.getByText('root').first().hover({ force: true });
 
       // Move away from the segment
       await pageWithData.mouse.move(10, 10);
@@ -95,11 +92,6 @@ test.describe('Tooltips', () => {
   });
 
   test.describe('Summary Page Tooltips', () => {
-    test.beforeEach(async ({ pageWithData }) => {
-      // todo: there is an animation after charts load - ideally we should wait for some event instead of timeout
-      await pageWithData.waitForTimeout(1_500);
-    });
-
     const getRechartsWrapperForChart = (page: Page, chartContainerId: string) => {
       return page.locator(`#${chartContainerId} .recharts-wrapper`).first();
     }
@@ -108,7 +100,6 @@ test.describe('Tooltips', () => {
       const chartArea = getRechartsWrapperForChart(pageWithData, chartId);
 
       await chartArea.hover();
-      await pageWithData.waitForTimeout(200);
       await expect(pageWithData).toHaveScreenshot(`summary-${chartId}-tooltip.png`);
     }
 

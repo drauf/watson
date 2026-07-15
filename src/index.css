@@ -105,3 +105,15 @@ input::placeholder {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+/* used in visual regression tests to make animations predictable without unnecessary long waits */
+.no-motion {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    transition-duration: 0s !important;
+    animation: none !important;
+    animation-duration: 0s !important;
+  }
+}

@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis,
+  CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, TooltipContentProps, XAxis, YAxis,
 } from 'recharts';
+import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import { token } from '@atlaskit/tokens';
 import ThreadDump from '../../types/ThreadDump';
 import TooltipContent from '../common/TooltipContent';
@@ -17,7 +18,7 @@ type ChartData = {
   oneMinute: number;
 };
 
-const CustomTooltip = ({ active, payload, label }: TooltipProps<string, string>): JSX.Element | null => {
+const CustomTooltip = ({ active, payload, label }: TooltipContentProps<ValueType, NameType>): JSX.Element | null => {
   if (active && payload) {
     return (
       <TooltipContent>
@@ -78,7 +79,7 @@ export default class LoadAveragesChart extends React.PureComponent<Props> {
             <XAxis dataKey="name" />
             <YAxis type="number" />
             <CartesianGrid stroke={token('color.chart.neutral')} strokeDasharray="5 5" />
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={CustomTooltip} />
             <Legend />
             <Line name="One minute" dataKey="oneMinute" stroke={token('color.chart.categorical.1')} animationDuration={1000} />
             <Line name="Five minutes" dataKey="fiveMinutes" stroke={token('color.chart.categorical.2')} animationDuration={1000} />
