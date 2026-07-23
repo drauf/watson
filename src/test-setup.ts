@@ -1,4 +1,15 @@
 import '@testing-library/jest-dom';
+import { vi } from 'vitest';
+
+type AtlaskitTokens = typeof import('@atlaskit/tokens');
+
+vi.mock('@atlaskit/tokens', async (importOriginal) => {
+  const actual = await importOriginal<AtlaskitTokens>();
+  return {
+    ...actual,
+    setGlobalTheme: vi.fn(),
+  };
+});
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
