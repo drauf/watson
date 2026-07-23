@@ -1,7 +1,7 @@
 import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import { matchesRegexFilters } from '../../common/regexFiltering';
-import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
+import { WithThreadDumpsProps, withAllThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import NoCpuInfosAndThreadDumpPairError from '../Errors/NoCpuInfosAndThreadDumpPairError';
@@ -132,4 +132,4 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
   };
 }
 
-export default withThreadDumps(CpuConsumersPage);
+export default withAllThreadDumps(CpuConsumersPage);

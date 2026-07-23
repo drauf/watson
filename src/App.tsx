@@ -24,42 +24,36 @@ const routes = [
   {
     path: ':threadDumpsHash/*',
     element: <Container />,
+    loader: threadDumpsLoader,
     errorElement: <FullPageDropzone />, // todo: proper error page
     children: [
       {
         path: 'summary',
         element: <SummaryPage />,
-        loader: threadDumpsLoader,
       },
       {
         path: 'cpu-consumers',
         element: <CpuConsumersPage />,
-        loader: threadDumpsLoader,
       },
       {
         path: 'similar-stacks',
         element: <SimilarStacksPage />,
-        loader: threadDumpsLoader,
       },
       {
         path: 'stuck-threads',
         element: <StuckThreadsPage />,
-        loader: threadDumpsLoader,
       },
       {
         path: 'monitors',
         element: <MonitorsPage />,
-        loader: threadDumpsLoader,
       },
       {
         path: 'flame-graph',
         element: <FlameGraphPage />,
-        loader: threadDumpsLoader,
       },
       {
         path: 'threads-overview',
         element: <ThreadsOverviewPage />,
-        loader: threadDumpsLoader,
       },
       {
         path: 'help',
