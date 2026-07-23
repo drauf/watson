@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import {
   vi, describe, it, expect, beforeEach, afterEach,
 } from 'vitest';

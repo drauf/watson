@@ -11,7 +11,7 @@ const KIB_PER_UNIT: Record<MemoryUnit, number> = {
 };
 
 // perform a "best effort" conversion to GiB, falling back to MiB for small values
-export default function labelFormatter(value: string | number | Array<string | number>, unit: MemoryUnit): string {
+export default function labelFormatter(value: string | number | (string | number)[], unit: MemoryUnit): string {
   const valueInKiB = Number(value) * KIB_PER_UNIT[unit];
   const valueInMiB = valueInKiB / 1024;
   const valueInGiB = valueInMiB / 1024;

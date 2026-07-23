@@ -10,9 +10,9 @@ import PieChartTooltip, { ChartData } from './PieChartTooltip';
 
 const COLORS = [token('color.chart.categorical.4'), token('color.chart.categorical.3')];
 
-type Props = {
+interface Props {
   threadDumps: ThreadDump[];
-};
+}
 
 export default class SwapUsageChart extends React.PureComponent<Props> {
   public override render(): JSX.Element {

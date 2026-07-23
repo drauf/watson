@@ -11,14 +11,14 @@ import StuckThreadsGroup from './StuckThreadsGroup';
 import StuckThreadsSettings from './StuckThreadsSettings';
 import './StuckThreadsPage.css';
 
-type State = {
+interface State {
   maxDifferingLines: number;
   minClusterSize: number;
   threadDumps: ThreadDump[];
   withoutIdle: boolean;
   nameFilter: string;
   stackFilter: string;
-};
+}
 
 class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {
@@ -76,7 +76,7 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     ));
   };
 
-  private filterThreads = (threadDumps: Array<Map<number, Thread>>): Thread[][] => threadDumps
+  private filterThreads = (threadDumps: Map<number, Thread>[]): Thread[][] => threadDumps
     .map((threadDump) => this.filterThread(threadDump))
     .filter((dump) => dump.length > 0);
 

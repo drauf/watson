@@ -3,7 +3,7 @@ import Filter from '../Filter/Filter';
 import SmartTooltip from '../common/SmartTooltip';
 import RegexFilters from '../common/RegexFilters';
 
-type Props = {
+interface Props {
   maxDifferingLines: number;
   minClusterSize: number;
   withoutIdle: boolean;
@@ -12,7 +12,7 @@ type Props = {
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
   onIntegerChange: React.ChangeEventHandler<HTMLInputElement>;
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
-};
+}
 
 export default class StuckThreadsSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {

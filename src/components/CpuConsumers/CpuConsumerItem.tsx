@@ -3,10 +3,10 @@ import Thread from '../../types/Thread';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumerSingleUsage from './CpuConsumerSingleUsage';
 
-type Props = {
+interface Props {
   dumpsNumber: number;
   consumer: CpuConsumer;
-};
+}
 
 export default class CpuConsumerItem extends React.PureComponent<Props> {
   private static formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => (
@@ -25,7 +25,7 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const { dumpsNumber, consumer } = this.props;
 
-    const threadsPadded: Array<Thread | undefined> = [];
+    const threadsPadded: (Thread | undefined)[] = [];
     for (let i = 0; i < dumpsNumber; i++) {
       threadsPadded.push(consumer.threadOccurrences.get(i));
     }

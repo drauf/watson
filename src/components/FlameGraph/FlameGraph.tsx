@@ -4,9 +4,9 @@ import flamegraph, { StackFrame, ChartNode } from 'd3-flame-graph';
 import getColorForStackLine from '../../common/getColorForStackLine';
 import tooltip from './FlameGraphTooltip';
 
-type Props = {
+interface Props {
   chartData: StackFrame;
-};
+}
 
 export default class FlameGraph extends React.PureComponent<Props> {
   public override componentDidMount(): void {

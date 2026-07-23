@@ -5,12 +5,12 @@ import './SmartTooltip.css';
 const TOOLTIP_SPACING = 16;
 const VIEWPORT_MARGIN = 8;
 
-type Props = {
+interface Props {
   children: React.ReactNode;
   tooltip: string | React.ReactNode;
   // eslint-disable-next-line react/require-default-props
   alwaysVisible?: boolean;
-};
+}
 
 const SmartTooltip: React.FC<Props> = ({
   children, tooltip, alwaysVisible,

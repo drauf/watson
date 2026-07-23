@@ -2,9 +2,9 @@ import React from 'react';
 import Monitor from './Monitor';
 import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 
-type Props = {
+interface Props {
   monitor: Monitor;
-};
+}
 
 export default class MonitorOwner extends React.PureComponent<Props> {
   public override render(): JSX.Element | null {

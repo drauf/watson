@@ -3,9 +3,9 @@ import CollapsableGroup from '../CollapsableGroup';
 import MonitorItem from './MonitorItem';
 import MonitorOverTime from './MonitorOverTime';
 
-type Props = {
+interface Props {
   monitor: MonitorOverTime;
-};
+}
 
 export default class MonitorOverTimeGroup extends React.PureComponent<Props> {
   public override render(): JSX.Element {

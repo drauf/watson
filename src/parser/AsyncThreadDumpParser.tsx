@@ -29,13 +29,13 @@ export default class AsyncThreadDumpParser {
     epochFromFileName?: number,
   ): Promise<void> {
     const threadDump = ThreadDump.from(
-      matchOne(THREAD_DUMP_DATE_PATTERN, lines.shift() as string),
+      matchOne(THREAD_DUMP_DATE_PATTERN, lines.shift()),
       epochFromFileName,
     );
     let currentThread: Thread | null = null;
 
     // Process lines in chunks to avoid blocking the UI
-    // eslint-disable-next-line no-await-in-loop
+
     for (let i = 0; i < lines.length; i += config.threadDumpChunkSize) {
       const chunk = lines.slice(i, i + config.threadDumpChunkSize);
 
@@ -177,7 +177,7 @@ export default class AsyncThreadDumpParser {
 
   private static stringToThreadStatus(status: string): ThreadStatus {
     const key = status as keyof typeof ThreadStatus;
-    const threadStatus = ThreadStatus[key] as ThreadStatus;
+    const threadStatus = ThreadStatus[key];
     if (threadStatus) {
       return threadStatus;
     }

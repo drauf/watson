@@ -2,10 +2,10 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import SingleThreadDetails from './SingleThreadDetails';
 
-type Props = {
+interface Props {
   maxDifferingLines: number;
   threadGroup: Thread[];
-};
+}
 
 export default class GroupDetails extends React.PureComponent<Props> {
   // Only show the stack trace if it's the last one or the next one is different than current

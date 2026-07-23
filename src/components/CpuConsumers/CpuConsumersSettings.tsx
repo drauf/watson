@@ -3,7 +3,7 @@ import CpuConsumersMode from './CpuConsumersMode';
 import SmartTooltip from '../common/SmartTooltip';
 import RegexFilters from '../common/RegexFilters';
 
-type Props = {
+interface Props {
   mode: CpuConsumersMode;
   limit: number;
   nameFilter: string;
@@ -11,7 +11,7 @@ type Props = {
   onModeChange: (mode: number) => React.ChangeEventHandler<HTMLInputElement>;
   onLimitChange: React.ChangeEventHandler<HTMLInputElement>;
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
-};
+}
 
 export default class CpuConsumersSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {

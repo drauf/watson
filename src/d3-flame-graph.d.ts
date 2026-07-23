@@ -9,11 +9,11 @@ declare module 'd3-flame-graph' {
     fade: boolean;
   }
 
-  export type ChartNode = {
-    data: StackFrame,
-    parent: ChartNode | null,
-    value: number
-  };
+  export interface ChartNode {
+    data: StackFrame;
+    parent: ChartNode | null;
+    value: number;
+  }
 
   export interface FlameGraph {
     (selection: unknown): void;

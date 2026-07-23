@@ -2,7 +2,7 @@ import React from 'react';
 import Filter from '../Filter/Filter';
 import RegexFilters from '../common/RegexFilters';
 
-type Props = {
+interface Props {
   withOwner: boolean;
   withoutIdle: boolean;
   withoutOwner: boolean;
@@ -10,7 +10,7 @@ type Props = {
   stackFilter: string;
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
-};
+}
 
 export default class MonitorsSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {

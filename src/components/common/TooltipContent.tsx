@@ -1,11 +1,11 @@
 import React from 'react';
 import './SmartTooltip.css';
 
-type TooltipContentProps = {
+interface TooltipContentProps {
   children: React.ReactNode | string;
   /* eslint-disable-next-line react/require-default-props */
   placement?: 'top' | 'bottom' | 'left' | 'right';
-};
+}
 
 const TooltipContent: React.FC<TooltipContentProps> = ({
   children,

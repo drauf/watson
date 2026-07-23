@@ -10,7 +10,7 @@ import FlameGraphSettings from './FlameGraphSettings';
 import './FlameGraphPage.css';
 import Thread from '../../types/Thread';
 
-export type ParsedStackFrame = {
+export interface ParsedStackFrame {
   rawFrame: string;
   rawClassName: string;
   cleanClassName: string;
@@ -18,14 +18,14 @@ export type ParsedStackFrame = {
   cleanMethodName: string;
   packageName: string;
   line: string;
-};
+}
 
-type State = {
+interface State {
   withoutIdle: boolean;
   usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
-};
+}
 
 export const parseStackFrame = (frame: string): ParsedStackFrame => {
   // Split "com.example.Class.method(File.java:123)" into method and location parts

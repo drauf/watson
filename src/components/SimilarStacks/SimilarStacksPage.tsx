@@ -8,13 +8,13 @@ import SimilarStacksGroup from './SimilarStacksGroup';
 import SimilarStacksSettings from './SimilarStacksSettings';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 
-type State = {
+interface State {
   linesToConsider: number;
   minimumGroupSize: number;
   withoutIdle: boolean;
   nameFilter: string;
   stackFilter: string;
-};
+}
 
 class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public override state: State = {

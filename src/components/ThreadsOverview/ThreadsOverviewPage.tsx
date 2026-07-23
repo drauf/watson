@@ -11,7 +11,7 @@ import ThreadsOverviewSettings from './ThreadsOverviewSettings';
 import ThreadsOverviewTable from './ThreadsOverviewTable';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 
-type State = {
+interface State {
   nonJvm: boolean;
   tomcat: boolean;
   nonTomcat: boolean;
@@ -20,7 +20,7 @@ type State = {
   usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
-};
+}
 
 class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public override state = {
@@ -95,14 +95,14 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
     || this.state.lucene
     || this.state.database;
 
-  private filterThreads = (threadDumps: Array<Map<number, Thread>>) => {
+  private filterThreads = (threadDumps: Map<number, Thread>[]) => {
     let filtered = ThreadsOverviewPage.filterByActive(threadDumps, this.state.active);
     filtered = ThreadsOverviewPage.filterByCpuUsage(filtered, this.state.usingCpu);
     filtered = this.filterByName(filtered, this.state.nameFilter);
     return filtered;
   };
 
-  private static filterByActive = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
+  private static filterByActive = (threadDumps: Map<number, Thread>[], shouldFilter: boolean) => {
     if (!shouldFilter) {
       return threadDumps;
     }
@@ -110,7 +110,7 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
     return threadDumps.filter((threads) => isActiveOverTime(threads));
   };
 
-  private static filterByCpuUsage = (threadDumps: Array<Map<number, Thread>>, shouldFilter: boolean) => {
+  private static filterByCpuUsage = (threadDumps: Map<number, Thread>[], shouldFilter: boolean) => {
     if (!shouldFilter) {
       return threadDumps;
     }
@@ -128,7 +128,7 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
     return false;
   };
 
-  private filterByName = (threadDumps: Array<Map<number, Thread>>, nameFilter: string) => {
+  private filterByName = (threadDumps: Map<number, Thread>[], nameFilter: string) => {
     let userProvided: RegExp;
     if (nameFilter) {
       try {
@@ -154,7 +154,7 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
     return false;
   };
 
-  private getThreadsMatchingStackFilter = (threadDumps: Array<Map<number, Thread>>, filter: string): Set<number> => {
+  private getThreadsMatchingStackFilter = (threadDumps: Map<number, Thread>[], filter: string): Set<number> => {
     const matchingThreadIds = new Set<number>();
 
     const filters = this.getStackTraceFilters(filter);

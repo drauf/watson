@@ -2,23 +2,22 @@ import React from 'react';
 import {
   CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, TooltipContentProps, XAxis, YAxis,
 } from 'recharts';
-import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import { token } from '@atlaskit/tokens';
 import ThreadDump from '../../types/ThreadDump';
 import TooltipContent from '../common/TooltipContent';
 
-type Props = {
+interface Props {
   threadDumps: ThreadDump[];
-};
+}
 
-type ChartData = {
+interface ChartData {
   fifteenMinutes: number;
   fiveMinutes: number;
   name: string;
   oneMinute: number;
-};
+}
 
-const CustomTooltip = ({ active, payload, label }: TooltipContentProps<ValueType, NameType>): JSX.Element | null => {
+const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Element | null => {
   if (active && payload) {
     return (
       <TooltipContent>

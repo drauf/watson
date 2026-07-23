@@ -13,13 +13,13 @@ interface Props {
   // This component doesn't receive any props
 }
 
-type State = {
+interface State {
   parsedDataKey: string | undefined;
   hasCpuUsageInfo: boolean;
   isProcessing: boolean;
   progress?: ParseProgress | undefined;
   error?: string | undefined;
-};
+}
 
 export default class FullPageDropzone extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -103,11 +103,13 @@ export default class FullPageDropzone extends React.PureComponent<Props, State> 
     return (
       <Dropzone
         multiple
-        onDrop={(files) => { this.onDrop(files).catch(console.error); }}
+        onDrop={(files) => {
+          this.onDrop(files).catch(console.error);
+        }}
         disabled={isProcessing}
       >
         {({ getRootProps, getInputProps, isDragActive }) => (
-          /* eslint-disable react/jsx-props-no-spreading */
+
           <div id="dropzone" {...getRootProps()}>
             <input {...getInputProps()} />
             {
@@ -117,7 +119,7 @@ export default class FullPageDropzone extends React.PureComponent<Props, State> 
             }
             <DropzoneGuide />
           </div>
-          /* eslint-enable react/jsx-props-no-spreading */
+
         )}
       </Dropzone>
     );

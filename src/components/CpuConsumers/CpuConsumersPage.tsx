@@ -12,13 +12,13 @@ import CpuConsumersSettings from './CpuConsumersSettings';
 import CpuConsumersMode from './CpuConsumersMode';
 import './CpuConsumersPage.css';
 
-type State = {
+interface State {
   mode: CpuConsumersMode;
   limit: number;
   threadDumps: ThreadDump[];
   nameFilter: string;
   stackFilter: string;
-};
+}
 
 class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
   constructor(props: WithThreadDumpsProps) {
@@ -64,7 +64,7 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
   }
 
   private handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
-    this.setState({ mode: mode as CpuConsumersMode });
+    this.setState({ mode });
   };
 
   private calculateCpuUsages = (calculationMode: CpuConsumersMode): CpuConsumer[] => {
@@ -80,7 +80,7 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
     return consumers;
   };
 
-  private filterThreadsOverTime = (threadsOverTime: Array<Map<number, Thread>>): Array<Map<number, Thread>> => {
+  private filterThreadsOverTime = (threadsOverTime: Map<number, Thread>[]): Map<number, Thread>[] => {
     if (!this.state.nameFilter && !this.state.stackFilter) {
       return threadsOverTime;
     }

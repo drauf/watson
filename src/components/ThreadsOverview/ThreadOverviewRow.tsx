@@ -1,19 +1,19 @@
 import React from 'react';
 import Thread from '../../types/Thread';
-import ThreadOverviewItem from './ThreadOverviewItem';
+import ThreadsOverviewItem from './ThreadOverviewItem';
 import SmartTooltip from '../common/SmartTooltip';
 
-type Props = {
+interface Props {
   total: number;
   threads: Map<number, Thread>;
   matchingStackFilter: Set<number>;
-};
+}
 
 export default class ThreadOverviewRow extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const { total, threads, matchingStackFilter } = this.props;
 
-    const threadsPadded: Array<Thread | undefined> = [];
+    const threadsPadded: (Thread | undefined)[] = [];
     for (let i = 0; i < total; i++) {
       threadsPadded[i] = threads.get(i);
     }
@@ -29,7 +29,7 @@ export default class ThreadOverviewRow extends React.PureComponent<Props> {
           </SmartTooltip>
         </td>
         {threadsPadded.map((thread, index) => (
-          <ThreadOverviewItem
+          <ThreadsOverviewItem
             key={thread ? thread.uniqueId : `undefined_${index}`}
             thread={thread}
             isMatchingStackFilter={thread ? matchingStackFilter.has(thread.uniqueId) : false}

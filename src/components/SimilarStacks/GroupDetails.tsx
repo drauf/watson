@@ -3,14 +3,14 @@ import Thread from '../../types/Thread';
 import StackTrace from './StackTrace';
 import ThreadSummary from './ThreadSummary';
 
-type Props = {
+interface Props {
   threadGroup: Thread[];
   linesToConsider: number;
-};
+}
 
-type State = {
+interface State {
   expanded: boolean;
-};
+}
 
 export default class GroupDetails extends React.PureComponent<Props, State> {
   private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;

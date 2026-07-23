@@ -73,7 +73,7 @@ export default class AsyncParser {
 
   private async parseFilesAsync(files: File[]): Promise<void> {
     // Process files sequentially to avoid memory overload
-    // eslint-disable-next-line no-await-in-loop
+
     for (const file of files) {
       this.currentFileName = file.name;
       // eslint-disable-next-line no-await-in-loop

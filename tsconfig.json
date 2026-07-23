@@ -12,7 +12,7 @@
       "ESNext"
     ],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noUnusedLocals": true,
     "removeComments": true,
     "strict": true,

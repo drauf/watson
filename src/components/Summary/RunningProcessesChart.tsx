@@ -1,16 +1,15 @@
 import {
   CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipContentProps, XAxis, YAxis,
 } from 'recharts';
-import { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import { token } from '@atlaskit/tokens';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';
 import TooltipContent from '../common/TooltipContent';
 
-type Props = {
+interface Props {
   threadDumps: ThreadDump[];
-};
+}
 
 const getSortedThreadNames = (payload: unknown): string[] => {
   const threads: Thread[] = payload as Thread[];
@@ -23,7 +22,7 @@ const getSortedThreadNames = (payload: unknown): string[] => {
     .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
 };
 
-const CustomTooltip = ({ active, payload, label }: TooltipContentProps<ValueType, NameType>): JSX.Element | null => {
+const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Element | null => {
   if (active && payload) {
     const time = label as string;
     const threadNames: string[] = getSortedThreadNames(payload[1].value);
@@ -62,7 +61,6 @@ const CustomTooltip = ({ active, payload, label }: TooltipContentProps<ValueType
 };
 
 const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const data: object[] = [];
 
   threadDumps.forEach((threadDump) => {

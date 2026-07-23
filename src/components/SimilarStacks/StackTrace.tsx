@@ -1,9 +1,9 @@
 import React from 'react';
 
-type Props = {
+interface Props {
   stackTrace: string[];
   linesToConsider: number;
-};
+}
 
 export default class StackTrace extends React.PureComponent<Props> {
   public override render(): JSX.Element {

@@ -19,7 +19,9 @@ const parse = (memLine: string, swapLine: string): CpuUsage => {
   let result: CpuUsage | undefined;
   TopCpuUsageParser.parseCpuUsage(
     [...HEADER, memLine, swapLine, ...PROCESS_ROWS],
-    (cpuUsage) => { result = cpuUsage; },
+    (cpuUsage) => {
+      result = cpuUsage;
+    },
   );
   return result as CpuUsage;
 };

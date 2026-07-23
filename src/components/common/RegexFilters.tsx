@@ -1,11 +1,11 @@
 import React from 'react';
 import SmartTooltip from './SmartTooltip';
 
-type Props = {
+interface Props {
   nameFilter: string;
   stackFilter: string;
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
-};
+}
 
 const threadNameTooltip = (
   <div>

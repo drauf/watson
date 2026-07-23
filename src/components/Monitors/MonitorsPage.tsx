@@ -10,13 +10,13 @@ import './MonitorsPage.css';
 import MonitorsSettings from './MonitorsSettings';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 
-type State = {
+interface State {
   withOwner: boolean;
   withoutIdle: boolean;
   withoutOwner: boolean;
   nameFilter: string;
   stackFilter: string;
-};
+}
 
 class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
   public override state: State = {
