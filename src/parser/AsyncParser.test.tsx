@@ -11,6 +11,7 @@ import {
 } from 'vitest';
 import AsyncParser, { ProgressCallback, CompletionCallback } from './AsyncParser';
 import ThreadDump from '../types/ThreadDump';
+import CpuUsage from './cpuusage/CpuUsage';
 
 // Mock the AsyncThreadDumpParser
 vi.mock('./AsyncThreadDumpParser', () => ({
@@ -32,7 +33,7 @@ vi.mock('./cpuusage/jfr/CpuUsageJfrParser', () => ({
   default: {
     parseCpuUsage: vi.fn(),
   },
-  CPU_USAGE_JFR_FIRST_LINE_PATTERN: /^"Thread Name"/,
+  CPU_USAGE_JFR_FIRST_LINE_PATTERN: /^(JVM_THREAD_ID\s*OS_THREAD_ID\s*%CPU_USER_MODE\s*%CPU_SYSTEM_MODE\s*SYSTEM_TIME\s*THREAD_NAME)/,
 }));
 
 describe('AsyncParser', () => {
@@ -129,6 +130,57 @@ describe('AsyncParser', () => {
       ]));
     });
 
+    it('matches JFR CPU usage with the same absolute filename timestamp', async () => {
+      const firstThreadDumpFile = createMockFile(
+        '2026_07_22_09_13_46.txt',
+        '2026-07-22 09:13:46\n"Thread-1" #1 prio=5 tid=0x1 nid=0x1',
+      );
+      const secondThreadDumpFile = createMockFile(
+        '2026_07_22_10_13_46.txt',
+        '2026-07-22 10:13:46\n"Thread-2" #2 prio=5 tid=0x2 nid=0x2',
+      );
+      const cpuUsageFile = createMockFile(
+        '2026_07_22_10_13_46_thread_cpu_utilisation.txt',
+        'JVM_THREAD_ID OS_THREAD_ID %CPU_USER_MODE %CPU_SYSTEM_MODE SYSTEM_TIME THREAD_NAME',
+      );
+
+      const AsyncThreadDumpParser = await import('./AsyncThreadDumpParser');
+      (AsyncThreadDumpParser.default.parseThreadDump as any).mockImplementation(
+        (_lines: string[], callback: any, _progress: any, _config: any, epochFromFileName: number) => {
+          const threadDump = new ThreadDump(epochFromFileName);
+          threadDump.threads.push({ id: epochFromFileName, name: 'Thread' } as any);
+          callback(threadDump);
+          return Promise.resolve();
+        },
+      );
+
+      const CpuUsageJfrParser = await import('./cpuusage/jfr/CpuUsageJfrParser');
+      (CpuUsageJfrParser.default.parseCpuUsage as any).mockImplementation(
+        (fileName: string, _lines: string[], callback: any) => {
+          callback(CpuUsage.fromJfr(fileName, 7, []));
+        },
+      );
+
+      await parser.parseFiles([firstThreadDumpFile, secondThreadDumpFile, cpuUsageFile]);
+
+      const parsedThreadDumps = (mockOnFilesParsed as any).mock.calls[0][0] as ThreadDump[];
+      expect(parsedThreadDumps).toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          epoch: Date.UTC(2026, 6, 22, 10, 13, 46),
+          runningProcesses: 7,
+        }),
+      ]));
+      expect(parsedThreadDumps).toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          epoch: Date.UTC(2026, 6, 22, 9, 13, 46),
+        }),
+      ]));
+      const firstThreadDump = parsedThreadDumps.find(
+        (threadDump) => threadDump.epoch === Date.UTC(2026, 6, 22, 9, 13, 46),
+      );
+      expect(firstThreadDump?.runningProcesses).toBeUndefined();
+    });
+
     it('should handle multiple files', async () => {
       const file1 = createMockFile('dump1.txt', '2023-01-01 12:00:00\n"Thread-1" #1 prio=5 tid=0x1 nid=0x1');
       const file2 = createMockFile('dump2.txt', '2023-01-01 12:01:00\n"Thread-2" #2 prio=5 tid=0x2 nid=0x2');
@@ -159,16 +211,16 @@ describe('AsyncParser', () => {
 
       // Mock FileReader to simulate error
       const originalFileReader = global.FileReader;
-      global.FileReader = vi.fn().mockImplementation(() => ({
-        readAsText: vi.fn().mockImplementation(function (this: any) {
+      global.FileReader = vi.fn().mockImplementation(function (this: any) {
+        this.readAsText = vi.fn().mockImplementation(function (this: any) {
           // Simulate error
           setTimeout(() => {
             if (this.onerror) {
               this.onerror(new Error('File read error'));
             }
           }, 0);
-        }),
-      })) as any;
+        });
+      }) as any;
 
       await expect(parser.parseFiles([file])).rejects.toThrow();
 

@@ -2,19 +2,16 @@ import LoadAverages from './LoadAverage';
 import Lock from './Lock';
 import MemoryUsage from './MemoryUsage';
 import Thread from './Thread';
+import { getEpochFromDateTime } from '../parser/TimestampParser';
 
 export default class ThreadDump {
   public static getFormattedTime = (threadDump: ThreadDump): string => (
     new Date(threadDump.epoch).toUTCString().substr(17, 8)
   );
 
-  public static from = (date: string): ThreadDump => {
-    // we can't use new Date(date).valueOf() due to Safari not understanding the date format
-    const hours = parseInt(date.substring(11, 13), 10);
-    const minutes = parseInt(date.substring(14, 16), 10);
-    const seconds = parseInt(date.substring(17), 10);
-    return new ThreadDump(hours * 3600000 + minutes * 60000 + seconds * 1000);
-  };
+  public static from = (dateFromContent: string, epochFromFileName?: number): ThreadDump => (
+    new ThreadDump(epochFromFileName ?? getEpochFromDateTime(dateFromContent))
+  );
 
   public readonly epoch: number;
 
