@@ -3,10 +3,10 @@ import Thread from '../../types/Thread';
 import CollapsableGroup from '../CollapsableGroup';
 import GroupDetails from './GroupDetails';
 
-type Props = {
+interface Props {
   threadGroup: Thread[];
   linesToConsider: number;
-};
+}
 
 export default class SimilarStacksGroup extends React.PureComponent<Props> {
   public override render(): JSX.Element {

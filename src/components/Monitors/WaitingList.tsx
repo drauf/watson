@@ -2,13 +2,13 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import WaitingListItem from './WaitingListItem';
 
-type Props = {
-  waiting: Thread[],
-};
+interface Props {
+  waiting: Thread[];
+}
 
-type State = {
+interface State {
   expanded: boolean;
-};
+}
 
 export default class WaitingList extends React.PureComponent<Props, State> {
   private static THREADS_TO_SHOW_WHEN_COLLAPSED = 20;

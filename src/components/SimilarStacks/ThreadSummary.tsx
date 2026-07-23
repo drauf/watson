@@ -2,9 +2,9 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 
-type Props = {
+interface Props {
   thread: Thread;
-};
+}
 
 export default class ThreadSummary extends React.PureComponent<Props> {
   private static locksReducer = (previousLocks: string, lockId: string, index: number): string => ((index === 0) ? lockId : `${previousLocks}, ${lockId}`);

@@ -4,11 +4,11 @@ import { clearCurrentData } from '../../common/threadDumpsStorageService';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import './Navigation.css';
 
-type LinkProps = {
+interface LinkProps {
   hash: string;
   pageLink: string;
   displayName: string;
-};
+}
 
 const StyledNavLink: React.FC<LinkProps> = (props: LinkProps) => {
   const { hash, pageLink, displayName: name } = props;

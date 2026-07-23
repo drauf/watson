@@ -3,7 +3,7 @@ import Filter from '../Filter/Filter';
 import SmartTooltip from '../common/SmartTooltip';
 import RegexFilters from '../common/RegexFilters';
 
-type Props = {
+interface Props {
   linesToConsider: number;
   minimumGroupSize: number;
   withoutIdle: boolean;
@@ -12,7 +12,7 @@ type Props = {
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
   onIntegerChange: React.ChangeEventHandler<HTMLInputElement>;
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
-};
+}
 
 export default class SimilarStacksSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {

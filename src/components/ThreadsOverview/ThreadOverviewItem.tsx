@@ -4,10 +4,10 @@ import ThreadStatus from '../../types/ThreadStatus';
 import SmartTooltip from '../common/SmartTooltip';
 import useOpenThreadDetails from '../ThreadDetails/useOpenThreadDetails';
 
-type Props = {
+interface Props {
   thread: Thread | undefined;
   isMatchingStackFilter: boolean;
-};
+}
 
 const getClassName = (isMatchingStackFilter: boolean, status: ThreadStatus) => {
   const statusClass = status.toString();

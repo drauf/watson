@@ -4,9 +4,9 @@ import ThreadDetailsHeader from './ThreadDetailsHeader';
 import ThreadDetailsBody from './ThreadDetailsBody';
 import Thread from '../../types/Thread';
 
-type Props = {
+interface Props {
   thread: Thread;
-};
+}
 
 const ThreadDetailsWindow: React.FC<Props> = ({ thread }) => (
   <div className="thread-details">

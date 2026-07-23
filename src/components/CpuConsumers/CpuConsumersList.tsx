@@ -2,11 +2,11 @@ import React from 'react';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumerItem from './CpuConsumerItem';
 
-type Props = {
+interface Props {
   limit: number;
   dumpsNumber: number;
   consumers: CpuConsumer[];
-};
+}
 
 export default class CpuConsumersList extends React.PureComponent<Props> {
   public override render(): JSX.Element {

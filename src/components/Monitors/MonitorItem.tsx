@@ -3,9 +3,9 @@ import Monitor from './Monitor';
 import MonitorOwner from './MonitorOwner';
 import WaitingList from './WaitingList';
 
-type Props = {
+interface Props {
   monitor: Monitor;
-};
+}
 
 export default class MonitorItem extends React.PureComponent<Props> {
   public override render(): JSX.Element {

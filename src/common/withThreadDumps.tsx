@@ -3,9 +3,9 @@ import { LoaderFunction, useLoaderData } from 'react-router-dom';
 import ThreadDump from '../types/ThreadDump';
 import { getThreadDumpsAsync } from './threadDumpsStorageService';
 
-export type WithThreadDumpsProps = {
+export interface WithThreadDumpsProps {
   threadDumps: ThreadDump[];
-};
+}
 
 export const threadDumpsLoader: LoaderFunction = async function threadDumpsLoader({ params }): Promise<WithThreadDumpsProps> {
   const { threadDumpsHash } = params;

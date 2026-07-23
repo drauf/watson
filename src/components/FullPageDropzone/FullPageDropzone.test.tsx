@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {
   render, screen, fireEvent, waitFor,
 } from '@testing-library/react';
@@ -73,7 +68,6 @@ vi.mock('react-dropzone', () => ({
       multiple,
       onChange: (e: any) => {
         if (e.target.files) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           onDrop(Array.from(e.target.files));
         }
       },

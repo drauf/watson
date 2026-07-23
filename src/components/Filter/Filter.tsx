@@ -2,13 +2,13 @@ import React from 'react';
 import './Filter.css';
 import SmartTooltip from '../common/SmartTooltip';
 
-type Props = {
+interface Props {
   name: string;
   displayName: string;
   checked: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   tooltip: string;
-};
+}
 
 export default class Filter extends React.PureComponent<Props> {
   public override render(): JSX.Element {

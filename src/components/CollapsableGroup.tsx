@@ -1,13 +1,13 @@
 import React from 'react';
 
-type Props = {
+interface Props {
   header: JSX.Element;
-  content: Array<JSX.Element> | JSX.Element;
-};
+  content: JSX.Element[] | JSX.Element;
+}
 
-type State = {
+interface State {
   collapse: boolean;
-};
+}
 
 export default class CollapsableGroup extends React.PureComponent<Props, State> {
   constructor(props: Props) {

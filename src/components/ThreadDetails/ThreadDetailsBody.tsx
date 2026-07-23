@@ -2,9 +2,9 @@ import React, { CSSProperties } from 'react';
 import getColorForStackLine from '../../common/getColorForStackLine';
 import Thread from '../../types/Thread';
 
-type Props = {
+interface Props {
   thread: Thread;
-};
+}
 
 export default class ThreadDetailsBody extends React.PureComponent<Props> {
   private static renderWaitingFor = (thread: Thread) => (

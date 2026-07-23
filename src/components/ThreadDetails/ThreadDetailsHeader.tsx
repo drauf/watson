@@ -1,9 +1,9 @@
 import React from 'react';
 import Thread from '../../types/Thread';
 
-type Props = {
+interface Props {
   thread: Thread;
-};
+}
 
 export default class ThreadDetailsHeader extends React.PureComponent<Props> {
   private static renderName = (thread: Thread) => (

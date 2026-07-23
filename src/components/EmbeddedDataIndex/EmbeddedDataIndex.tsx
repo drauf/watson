@@ -5,16 +5,16 @@ import { setParsedData } from '../../common/threadDumpsStorageService';
 import ThreadDump from '../../types/ThreadDump';
 import AsyncParser from '../../parser/AsyncParser';
 
-type State = {
+interface State {
   parsedDataKey: string | undefined;
   hasCpuUsageInfo: boolean;
   loadingEmbeddedData: boolean;
   b64zip: string;
-};
+}
 
-type Props = {
+interface Props {
   b64zip: string;
-};
+}
 
 export default class EmbeddedDataIndex extends React.PureComponent<Props, State> {
   constructor(props: Props) {

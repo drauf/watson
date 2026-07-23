@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 
-type Props = {
+interface Props {
   to: string;
   children: ReactNode;
-};
+}
 
 export default class OutboundLink extends React.PureComponent<Props> {
   public override render(): JSX.Element {

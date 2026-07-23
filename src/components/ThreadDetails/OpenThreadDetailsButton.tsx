@@ -3,11 +3,11 @@ import './ThreadDetailsWindow.css';
 import Thread from '../../types/Thread';
 import useOpenThreadDetails from './useOpenThreadDetails';
 
-type Props = {
+interface Props {
   text: string;
   className: string;
   thread: Thread;
-};
+}
 
 const OpenThreadDetailsButton: React.FC<Props> = ({ text, className, thread }) => {
   const { open, WindowComponent } = useOpenThreadDetails(thread);

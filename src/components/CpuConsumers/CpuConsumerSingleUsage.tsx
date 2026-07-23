@@ -2,9 +2,9 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 
-type Props = {
+interface Props {
   thread: Thread | undefined;
-};
+}
 
 export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
   private static getCpuUsage = (cpuUsage: string): string => `${cpuUsage}%`;

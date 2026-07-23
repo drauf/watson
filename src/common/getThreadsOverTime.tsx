@@ -6,7 +6,7 @@ const getThreadName = (threads: Map<number, Thread>): string => {
   return firstThread ? firstThread.name : '';
 };
 
-export default function getThreadsOverTime(threadDumps: ThreadDump[]): Array<Map<number, Thread>> {
+export default function getThreadsOverTime(threadDumps: ThreadDump[]): Map<number, Thread>[] {
   const threadsOverTime = new Map<number, Map<number, Thread>>();
 
   threadDumps.forEach((threadDump, dumpNumber) => {

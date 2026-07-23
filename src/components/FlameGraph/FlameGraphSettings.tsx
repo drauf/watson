@@ -2,14 +2,14 @@ import React from 'react';
 import Filter from '../Filter/Filter';
 import RegexFilters from '../common/RegexFilters';
 
-type Props = {
+interface Props {
   withoutIdle: boolean;
   usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
-};
+}
 
 export default class FlameGraphSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {

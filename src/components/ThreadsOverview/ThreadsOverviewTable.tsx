@@ -3,13 +3,13 @@ import Thread from '../../types/Thread';
 import ThreadOverviewRow from './ThreadOverviewRow';
 import SmartTooltip from '../common/SmartTooltip';
 
-type Props = {
-  dates: Array<string | null>;
-  threadDumps: Array<Map<number, Thread>>;
+interface Props {
+  dates: (string | null)[];
+  threadDumps: Map<number, Thread>[];
   matchingStackFilter: Set<number>;
-};
+}
 
-export default class ThreadsOverview extends React.PureComponent<Props> {
+export default class ThreadsOverviewTable extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const { dates, threadDumps, matchingStackFilter } = this.props;
 

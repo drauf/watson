@@ -15,10 +15,10 @@ const clearData = async (page: Page) => {
   await page.getByText('Clear data').click();
 };
 
-type TestOptions = {
+interface TestOptions {
   dataLocation: string;
   pageWithData: Page;
-};
+}
 
 export const test = base.extend<TestOptions>({
   dataLocation: ['test-data/boring-example/', { option: true }],

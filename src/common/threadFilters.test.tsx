@@ -6,7 +6,7 @@ const createMockThread = (
   name: string,
   status: ThreadStatus,
   stackTrace: string[],
-  cpuUsage: string = '0.00',
+  cpuUsage = '0.00',
 ): Thread => {
   const thread = new Thread(Math.floor(Math.random() * 10000), name);
   thread.status = status;
@@ -44,13 +44,13 @@ const createStack = (coreFrames: string[], targetLength: number): string[] => {
 };
 
 // Create very long stack traces - always considered active
-const createVeryLongStack = (coreFrames: string[], targetLength: number = 40): string[] => createStack(coreFrames, targetLength);
+const createVeryLongStack = (coreFrames: string[], targetLength = 40): string[] => createStack(coreFrames, targetLength);
 
 // Create medium-length stack traces for pattern testing
-const createMediumStack = (coreFrames: string[], targetLength: number = 25): string[] => createStack(coreFrames, targetLength);
+const createMediumStack = (coreFrames: string[], targetLength = 25): string[] => createStack(coreFrames, targetLength);
 
 // Create short stack - always considered idle
-const createShortStack = (coreFrames: string[], targetLength: number = 12): string[] => createStack(coreFrames, targetLength);
+const createShortStack = (coreFrames: string[], targetLength = 12): string[] => createStack(coreFrames, targetLength);
 
 describe('threadFilters', () => {
   describe('isIdleInSnapshot', () => {

@@ -2,11 +2,11 @@ import React from 'react';
 import Thread from '../../types/Thread';
 import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 
-type Props = {
+interface Props {
   maxDifferingLines: number;
   showStackTrace: boolean;
   thread: Thread;
-};
+}
 
 export default class SingleThreadDetails extends React.PureComponent<Props> {
   public override render(): JSX.Element {
