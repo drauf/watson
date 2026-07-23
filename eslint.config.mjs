@@ -11,29 +11,24 @@ export default [
     rules: {
       '@stylistic/max-len': 'off',
       'react/react-in-jsx-scope': 'off',
+      // allow the use of for...of which is supported by modern browser targets
       'no-restricted-syntax': [
         'error',
         'ForInStatement',
         'LabeledStatement',
         'WithStatement',
       ],
-      'jsx-a11y/label-has-associated-control': [
-        'error',
-        {
-          required: {
-            some: ['nesting', 'id'],
-          },
-        },
-      ],
+      // a label can associate its control through nesting or htmlFor and id, no need for both
+      'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
+      // TypeScript interfaces are the source of truth for component props
       'react/prop-types': 'off',
+      // increment operators are allowed in conventional loop counters
       'no-plusplus': 'off',
+      // allow warns and errors in the console
       'no-console': ['error', { allow: ['warn', 'error'] }],
-      'react/jsx-filename-extension': [
-        'warn',
-        { extensions: ['.tsx'] },
-      ],
+      // keep function components consistent with existing arrow-function convention
       'react/function-component-definition': [
-        'warn',
+        'error',
         {
           namedComponents: 'arrow-function',
           unnamedComponents: 'arrow-function',

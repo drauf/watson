@@ -8858,7 +8858,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1::__archiveUrl=https%3A%2F%2Fpackages.atlassian.com%2Fapi%2Fnpm%2Fnpm-remote%2Fprop-types%2F-%2Fprop-types-15.8.1.tgz"
   dependencies:
@@ -11557,7 +11557,6 @@ __metadata:
     jszip: "npm:3.10.1"
     localforage: "npm:1.10.0"
     node-gyp: "npm:11.4.2"
-    prop-types: "npm:15.8.1"
     react: "npm:18.2.0"
     react-app-polyfill: "npm:3.0.0"
     react-dom: "npm:18.2.0"
