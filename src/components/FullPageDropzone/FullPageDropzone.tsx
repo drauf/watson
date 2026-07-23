@@ -9,10 +9,6 @@ import ProgressIndicator from '../ProgressIndicator/ProgressIndicator';
 import FullPageError from '../Errors/FullPageError';
 import './FullPageDropzone.css';
 
-interface Props {
-  // This component doesn't receive any props
-}
-
 interface State {
   parsedDataKey: string | undefined;
   hasCpuUsageInfo: boolean;
@@ -21,8 +17,8 @@ interface State {
   error?: string | undefined;
 }
 
-export default class FullPageDropzone extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
+export default class FullPageDropzone extends React.PureComponent<Record<string, never>, State> {
+  constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       parsedDataKey: undefined,

@@ -1,11 +1,7 @@
 import React from 'react';
 import OutboundLink from './OutboundLink';
 
-interface Props {
-  // This component doesn't receive any props
-}
-
-export default class DropzoneGuide extends React.PureComponent<Props> {
+export default class DropzoneGuide extends React.PureComponent {
   private static SOURCE_CODE_LINK = 'https://github.com/drauf/watson';
 
   private static SLACK_CONNECT_DOCS_LINK = 'https://slack.com/help/articles/1500001422062-Use-Slack-Connect-to-start-a-DM-with-someone-at-another-company#send-an-invitation';

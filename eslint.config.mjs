@@ -10,7 +10,6 @@ export default [
   {
     rules: {
       '@stylistic/max-len': 'off',
-      '@typescript-eslint/no-empty-object-type': 'off',
       'react/react-in-jsx-scope': 'off',
       'no-restricted-syntax': [
         'error',

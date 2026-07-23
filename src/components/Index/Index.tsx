@@ -3,16 +3,12 @@ import React from 'react';
 import EmbeddedDataIndex from '../EmbeddedDataIndex/EmbeddedDataIndex';
 import FullPageDropzone from '../FullPageDropzone/FullPageDropzone';
 
-interface Props {
-  // This component doesn't receive any props
-}
-
 interface State {
   b64zip: string | undefined;
 }
 
-export default class Index extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
+export default class Index extends React.PureComponent<Record<string, never>, State> {
+  constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       b64zip: undefined,

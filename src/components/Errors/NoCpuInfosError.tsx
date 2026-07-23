@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface Props {
-  // This component doesn't receive any props
-}
-
-export default class NoCpuInfosError extends React.PureComponent<Props> {
+export default class NoCpuInfosError extends React.PureComponent {
   public override render(): JSX.Element {
     return (
       <main id="centered">
