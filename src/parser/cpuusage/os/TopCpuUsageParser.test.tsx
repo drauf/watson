@@ -91,6 +91,8 @@ describe('TopCpuUsageParser', () => {
       'KiB Swap:        0 total,        0 free,        0 used. 44042408 avail Mem',
     );
 
+    expect(cpuUsage.timestampKind).toBe('time-of-day');
+    expect(cpuUsage.epoch).toBe(4400000);
     expect(cpuUsage.runningProcesses).toBe(1);
     expect(cpuUsage.loadAverages?.oneMinute).toBe(1.58);
     expect(cpuUsage.loadAverages?.fiveMinutes).toBe(1.84);

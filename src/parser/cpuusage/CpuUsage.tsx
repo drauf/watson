@@ -1,9 +1,14 @@
 import LoadAverages from '../../types/LoadAverage';
 import MemoryUsage from '../../types/MemoryUsage';
 import ThreadCpuUsage from './ThreadCpuUsage';
+import { tryGetEpochFromFileName } from '../TimestampParser';
+
+export type CpuUsageTimestampKind = 'absolute' | 'time-of-day';
 
 export default class CpuUsage {
   public readonly epoch: number;
+
+  public readonly timestampKind: CpuUsageTimestampKind;
 
   public readonly runningProcesses: number;
 
@@ -13,17 +18,13 @@ export default class CpuUsage {
 
   public readonly memoryUsage?: MemoryUsage;
 
-  private static calculateEpochFromFilename(fileName: string): number {
-    // filename has a format of yyyy_mm_dd_hh_mm_ss_thread_cpu_utilisation.txt
-    const hours = parseInt(fileName.substring(11, 13), 10);
-    const minutes = parseInt(fileName.substring(14, 16), 10);
-    const seconds = parseInt(fileName.substring(17, 19), 10);
-
-    return hours * 3600000 + minutes * 60000 + seconds * 1000;
-  }
-
   public static fromJfr(fileName: string, runningProcesses: number, threadCpuUsages: ThreadCpuUsage[]): CpuUsage {
-    return new CpuUsage(CpuUsage.calculateEpochFromFilename(fileName), runningProcesses, threadCpuUsages);
+    return new CpuUsage(
+      tryGetEpochFromFileName(fileName) ?? 0,
+      'absolute',
+      runningProcesses,
+      threadCpuUsages,
+    );
   }
 
   private static calculateEpochFromTimestamp(timestamp: string): number {
@@ -36,11 +37,26 @@ export default class CpuUsage {
   }
 
   public static fromTop(timestamp: string, runningProcesses: number, threadCpuUsages: ThreadCpuUsage[], loadAverages: LoadAverages, memoryUsage: MemoryUsage): CpuUsage {
-    return new CpuUsage(CpuUsage.calculateEpochFromTimestamp(timestamp), runningProcesses, threadCpuUsages, loadAverages, memoryUsage);
+    return new CpuUsage(
+      CpuUsage.calculateEpochFromTimestamp(timestamp),
+      'time-of-day',
+      runningProcesses,
+      threadCpuUsages,
+      loadAverages,
+      memoryUsage,
+    );
   }
 
-  private constructor(epoch: number, runningProcesses: number, threadCpuUsages: ThreadCpuUsage[], loadAverages?: LoadAverages, memoryUsage?: MemoryUsage) {
+  private constructor(
+    epoch: number,
+    timestampKind: CpuUsageTimestampKind,
+    runningProcesses: number,
+    threadCpuUsages: ThreadCpuUsage[],
+    loadAverages?: LoadAverages,
+    memoryUsage?: MemoryUsage,
+  ) {
     this.epoch = epoch;
+    this.timestampKind = timestampKind;
     if (loadAverages !== undefined) {
       this.loadAverages = loadAverages;
     }

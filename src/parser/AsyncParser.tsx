@@ -1,4 +1,5 @@
 import CpuUsage from './cpuusage/CpuUsage';
+import { tryGetEpochFromFileName } from './TimestampParser';
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
 import TopCpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './cpuusage/os/TopCpuUsageParser';
@@ -113,7 +114,7 @@ export default class AsyncParser {
           } else if (matchOne(CPU_USAGE_JFR_FIRST_LINE_PATTERN, firstLine)) {
             this.parseJfrCpuUsage(file.name, lines);
           } else {
-            await this.splitThreadDumpsAsync(lines);
+            await this.splitThreadDumpsAsync(lines, tryGetEpochFromFileName(file.name));
           }
 
           resolve();
@@ -127,7 +128,10 @@ export default class AsyncParser {
     });
   }
 
-  private async splitThreadDumpsAsync(lines: string[]): Promise<void> {
+  private async splitThreadDumpsAsync(lines: string[], epochFromFileName?: number): Promise<void> {
+    const threadDumpCount = lines.filter((line) => matchOne(THREAD_DUMP_DATE_PATTERN, line)).length;
+    // One filename timestamp cannot identify multiple dumps in the same file
+    const epochFromFileNameForSingleDump = threadDumpCount === 1 ? epochFromFileName : undefined;
     let currentDump: string[] = [];
 
     for (let i = 0; i < lines.length; i++) {
@@ -140,7 +144,7 @@ export default class AsyncParser {
           currentDump.push(line);
         } else {
           // eslint-disable-next-line no-await-in-loop
-          await this.parseThreadDumpAsync(currentDump);
+          await this.parseThreadDumpAsync(currentDump, epochFromFileNameForSingleDump);
           currentDump = [line];
         }
       } else if (currentDump.length > 0) {
@@ -150,7 +154,7 @@ export default class AsyncParser {
     }
 
     if (currentDump.length > 0) {
-      await this.parseThreadDumpAsync(currentDump);
+      await this.parseThreadDumpAsync(currentDump, epochFromFileNameForSingleDump);
     }
   }
 
@@ -168,7 +172,7 @@ export default class AsyncParser {
     this.cpuUsages.push(cpuUsage);
   };
 
-  private async parseThreadDumpAsync(lines: string[]): Promise<void> {
+  private async parseThreadDumpAsync(lines: string[], epochFromFileName?: number): Promise<void> {
     await AsyncThreadDumpParser.parseThreadDump(
       lines.slice(),
       this.onParsedThreadDump,
@@ -177,6 +181,7 @@ export default class AsyncParser {
         await this.reportProgressAndRefreshUi('parsing', processed, total);
       },
       this.config,
+      epochFromFileName,
     );
   }
 
@@ -226,7 +231,10 @@ export default class AsyncParser {
           return;
         }
 
-        const diff = Math.abs((dumpEpoch % AN_HOUR) - (cpuUsageEpoch % AN_HOUR));
+        // JFR CPU files have an absolute filename timestamp; legacy top data only has a clock time.
+        const diff = cpuUsage.timestampKind === 'absolute'
+          ? Math.abs(dumpEpoch - cpuUsageEpoch)
+          : Math.abs((dumpEpoch % AN_HOUR) - (cpuUsageEpoch % AN_HOUR));
 
         if (diff < smallestDiff) {
           smallestDiff = diff;

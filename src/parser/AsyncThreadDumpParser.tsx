@@ -26,8 +26,12 @@ export default class AsyncThreadDumpParser {
     callback: ParseThreadDumpCallback,
     progressCallback?: ProgressCallback,
     config: PerformanceConfig = DEFAULT_PERFORMANCE_CONFIG,
+    epochFromFileName?: number,
   ): Promise<void> {
-    const threadDump = ThreadDump.from(matchOne(THREAD_DUMP_DATE_PATTERN, lines.shift() as string));
+    const threadDump = ThreadDump.from(
+      matchOne(THREAD_DUMP_DATE_PATTERN, lines.shift() as string),
+      epochFromFileName,
+    );
     let currentThread: Thread | null = null;
 
     // Process lines in chunks to avoid blocking the UI
