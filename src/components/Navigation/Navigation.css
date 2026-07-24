@@ -1,4 +1,8 @@
 header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+
   /* important needed due to atlassian css reset overwriting display to block */
   display: flex !important;
   flex-wrap: nowrap;
@@ -8,7 +12,7 @@ header {
   min-height: var(--watson-navigation-height);
   font-weight: var(--ds-font-weight-bold);
   background: var(--ds-surface-raised);
-  box-shadow: var(--ds-shadow-overflow);
+  border-bottom: 1px solid var(--ds-border);
 }
 
 .header-section {
@@ -18,6 +22,7 @@ header {
 }
 
 header h1 {
+  margin: 0 var(--ds-space-200, 16px) 0 0;
   color: var(--ds-text-brand);
   font-size: 29px;
 }
@@ -32,7 +37,10 @@ header ul {
   display: inline-flex;
   align-items: center;
   min-height: var(--watson-navigation-height);
+  margin: 0;
+  padding: 0;
   overflow: hidden;
+  list-style: none;
 }
 
 header li {
