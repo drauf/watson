@@ -19,21 +19,46 @@ main {
 
 #settings {
   display: flex;
-  flex-flow: column wrap;
-  padding: 1em 0;
+  flex-direction: column;
+  gap: var(--ds-space-200, 16px);
+  padding: var(--ds-space-100, 8px) 0;
 }
 
 #settings > div {
   display: flex;
   flex-wrap: wrap;
+  gap: var(--ds-space-100, 8px);
   align-items: center;
-  padding: 0.5em 0;
-  line-height: 2em;
+  line-height: normal;
 }
 
 #settings label input {
-  margin-right: 2em;
-  margin-left: 1em;
+  margin: 0;
+}
+
+#settings > div:not(.filters) label {
+  display: inline-flex;
+  gap: var(--ds-space-050, 4px);
+  align-items: center;
+}
+
+#settings.compact-analysis-settings {
+  flex-flow: row wrap;
+  row-gap: var(--ds-space-200, 16px);
+  column-gap: var(--ds-space-100, 8px);
+}
+
+#settings.compact-analysis-settings > .time-window-filter,
+#settings.compact-analysis-settings > .filters {
+  flex-basis: 100%;
+}
+
+#settings.compact-analysis-settings > #regexp-filters {
+  flex: 0 1 auto;
+}
+
+#settings.compact-analysis-settings > #regexp-filters + div {
+  flex: 0 1 auto;
 }
 
 #centered {

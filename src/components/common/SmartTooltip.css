@@ -13,7 +13,7 @@
   white-space: normal;
   word-wrap: break-word;
   background-color: var(--ds-surface-overlay);
-  border-radius: var(--ds-radius-xlarge);
+  border-radius: var(--ds-radius-xlarge, 12px);
   box-shadow: var(--ds-shadow-overlay);
   opacity: 0;
   animation: tooltip-fade-in 0.2s forwards;
@@ -22,7 +22,7 @@
 }
 
 .smart-tooltip div {
-  margin-bottom: 2px;
+  margin-bottom: var(--ds-space-025, 2px);
 }
 
 .smart-tooltip div:last-child {
@@ -33,7 +33,7 @@
   padding: 1px 4px;
   color: var(--ds-text-subtle);
   background-color: var(--ds-surface-overlay-pressed);
-  border-radius: var(--ds-radius-small);
+  border-radius: var(--ds-radius-small, 3px);
 }
 
 @keyframes tooltip-fade-in {

@@ -1,4 +1,5 @@
 import React from 'react';
+import './CollapsableGroup.css';
 
 interface Props {
   header: JSX.Element;
@@ -24,16 +25,21 @@ export default class CollapsableGroup extends React.PureComponent<Props, State> 
     const { collapse } = this.state;
 
     return (
-      <p>
-        <button type="button" className="default-color ellipsis" onClick={this.toggleCollapse}>
-          <h5>
+      <section className="collapsable-group">
+        <h5 className="collapsable-group-heading">
+          <button
+            type="button"
+            className="collapsable-group-toggle ellipsis"
+            aria-expanded={!collapse}
+            onClick={this.toggleCollapse}
+          >
             <span className={collapse ? 'chevron rotate' : 'chevron'} />
             {header}
-          </h5>
-        </button>
+          </button>
+        </h5>
 
-        {!collapse && content}
-      </p>
+        {!collapse && <div className="collapsable-group-content">{content}</div>}
+      </section>
     );
   }
 }
