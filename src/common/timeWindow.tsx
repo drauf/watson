@@ -36,6 +36,36 @@ export const getTimeWindowBounds = (threadDumps: ThreadDump[]): TimeWindow | und
   );
 };
 
-export const getDistinctTimestampCount = (threadDumps: ThreadDump[]): number => (
-  new Set(threadDumps.map((threadDump) => threadDump.epoch)).size
+export const getThreadDumpTimestamps = (threadDumps: ThreadDump[]): number[] => (
+  [...new Set(threadDumps.map((threadDump) => threadDump.epoch))]
+    .sort((first, second) => first - second)
 );
+
+export const getDistinctTimestampCount = (threadDumps: ThreadDump[]): number => (
+  getThreadDumpTimestamps(threadDumps).length
+);
+
+export const getClosestTimestamp = (timestamps: number[], epoch: number): number | undefined => {
+  if (timestamps.length === 0) {
+    return undefined;
+  }
+
+  let low = 0;
+  let high = timestamps.length - 1;
+  while (low < high) {
+    const middle = Math.floor((low + high) / 2);
+    if (timestamps[middle] < epoch) {
+      low = middle + 1;
+    } else {
+      high = middle;
+    }
+  }
+
+  const laterTimestamp = timestamps[low];
+  const earlierTimestamp = timestamps[low - 1];
+  if (earlierTimestamp === undefined || laterTimestamp - epoch < epoch - earlierTimestamp) {
+    return laterTimestamp;
+  }
+
+  return earlierTimestamp;
+};

@@ -2,6 +2,7 @@ import React from 'react';
 import Filter from '../Filter/Filter';
 import SmartTooltip from '../common/SmartTooltip';
 import RegexFilters from '../common/RegexFilters';
+import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
 
 interface Props {
   maxDifferingLines: number;
@@ -22,6 +23,7 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
 
     return (
       <section id="settings">
+        <TimeWindowFilter />
         <div className="filters">
           <b>Filters:</b>
 

@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import { LoaderFunction } from 'react-router-dom';
-import { useTimeWindow } from '../context/TimeWindowContext';
+import { useTimeWindowData } from '../context/TimeWindowContext';
 import ThreadDump from '../types/ThreadDump';
 import { getThreadDumpsAsync } from './threadDumpsStorageService';
 
@@ -19,10 +19,10 @@ export const threadDumpsLoader: LoaderFunction = async function threadDumpsLoade
 };
 
 // Returns thread dumps in the applied shared time window
-export const useThreadDumps = (): ThreadDump[] => useTimeWindow().threadDumps;
+export const useThreadDumps = (): ThreadDump[] => useTimeWindowData().threadDumps;
 
 // Use only for pages that intentionally ignore the shared time window
-export const useAllThreadDumps = (): ThreadDump[] => useTimeWindow().allThreadDumps;
+export const useAllThreadDumps = (): ThreadDump[] => useTimeWindowData().allThreadDumps;
 
 export const withThreadDumps = (WrappedComponent: ComponentType<WithThreadDumpsProps>): ComponentType => {
   const WithThreadDumps = () => <WrappedComponent threadDumps={useThreadDumps()} />;

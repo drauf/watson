@@ -9,13 +9,16 @@ import {
 } from '../common/timeWindow';
 import ThreadDump from '../types/ThreadDump';
 
-interface TimeWindowContextValue {
+interface TimeWindowDataContextValue {
   allThreadDumps: ThreadDump[];
   threadDumps: ThreadDump[];
   bounds: TimeWindow | undefined;
   appliedTimeWindow: TimeWindow | undefined;
-  previewTimeWindow: TimeWindow | undefined;
   distinctTimestampCount: number;
+}
+
+interface TimeWindowControlsContextValue {
+  previewTimeWindow: TimeWindow | undefined;
   setPreviewTimeWindow: (timeWindow?: TimeWindow) => void;
   applyPreviewTimeWindow: () => void;
   resetPreviewTimeWindow: () => void;
@@ -26,50 +29,99 @@ interface TimeWindowProviderProps {
   threadDumps: ThreadDump[];
 }
 
-const TimeWindowContext = createContext<TimeWindowContextValue | undefined>(undefined);
+const TimeWindowDataContext = createContext<TimeWindowDataContextValue | undefined>(undefined);
+const TimeWindowControlsContext = createContext<TimeWindowControlsContextValue | undefined>(undefined);
+
+const timeWindowsEqual = (
+  first: TimeWindow | undefined,
+  second: TimeWindow | undefined,
+): boolean => (
+  first === second
+  || (first !== undefined
+    && second !== undefined
+    && first.startEpoch === second.startEpoch
+    && first.endEpoch === second.endEpoch)
+);
 
 export const TimeWindowProvider = ({ children, threadDumps }: TimeWindowProviderProps) => {
   const [appliedTimeWindow, setAppliedTimeWindow] = useState<TimeWindow>();
-  const [previewTimeWindow, setPreviewTimeWindow] = useState<TimeWindow>();
+  const [previewTimeWindow, setPreviewTimeWindowState] = useState<TimeWindow>();
+  const bounds = useMemo(() => getTimeWindowBounds(threadDumps), [threadDumps]);
+  const distinctTimestampCount = useMemo(() => getDistinctTimestampCount(threadDumps), [threadDumps]);
+  const activeThreadDumps = useMemo(
+    () => filterThreadDumpsByTimeWindow(threadDumps, appliedTimeWindow),
+    [appliedTimeWindow, threadDumps],
+  );
+
+  const setPreviewTimeWindow = useCallback((timeWindow?: TimeWindow) => {
+    setPreviewTimeWindowState((current) => (
+      timeWindowsEqual(current, timeWindow) ? current : timeWindow
+    ));
+  }, []);
 
   const applyPreviewTimeWindow = useCallback(() => {
-    setAppliedTimeWindow(previewTimeWindow);
+    setAppliedTimeWindow((current) => (
+      timeWindowsEqual(current, previewTimeWindow) ? current : previewTimeWindow
+    ));
   }, [previewTimeWindow]);
 
   const resetPreviewTimeWindow = useCallback(() => {
     setPreviewTimeWindow(appliedTimeWindow);
-  }, [appliedTimeWindow]);
+  }, [appliedTimeWindow, setPreviewTimeWindow]);
 
-  const contextValue = useMemo<TimeWindowContextValue>(() => ({
+  const dataContextValue = useMemo<TimeWindowDataContextValue>(() => ({
     allThreadDumps: threadDumps,
-    threadDumps: filterThreadDumpsByTimeWindow(threadDumps, appliedTimeWindow),
-    bounds: getTimeWindowBounds(threadDumps),
+    threadDumps: activeThreadDumps,
+    bounds,
     appliedTimeWindow,
+    distinctTimestampCount,
+  }), [
+    activeThreadDumps,
+    appliedTimeWindow,
+    bounds,
+    distinctTimestampCount,
+    threadDumps,
+  ]);
+  const controlsContextValue = useMemo<TimeWindowControlsContextValue>(() => ({
     previewTimeWindow,
-    distinctTimestampCount: getDistinctTimestampCount(threadDumps),
     setPreviewTimeWindow,
     applyPreviewTimeWindow,
     resetPreviewTimeWindow,
   }), [
-    appliedTimeWindow,
     applyPreviewTimeWindow,
     previewTimeWindow,
     resetPreviewTimeWindow,
-    threadDumps,
+    setPreviewTimeWindow,
   ]);
 
   return (
-    <TimeWindowContext.Provider value={contextValue}>
-      {children}
-    </TimeWindowContext.Provider>
+    <TimeWindowDataContext.Provider value={dataContextValue}>
+      <TimeWindowControlsContext.Provider value={controlsContextValue}>
+        {children}
+      </TimeWindowControlsContext.Provider>
+    </TimeWindowDataContext.Provider>
   );
 };
 
-export const useTimeWindow = (): TimeWindowContextValue => {
-  const context = useContext(TimeWindowContext);
+export const useTimeWindowData = (): TimeWindowDataContextValue => {
+  const context = useContext(TimeWindowDataContext);
   if (!context) {
-    throw new Error('useTimeWindow must be used within a TimeWindowProvider');
+    throw new Error('useTimeWindowData must be used within a TimeWindowProvider');
   }
 
   return context;
 };
+
+const useTimeWindowControls = (): TimeWindowControlsContextValue => {
+  const context = useContext(TimeWindowControlsContext);
+  if (!context) {
+    throw new Error('useTimeWindowControls must be used within a TimeWindowProvider');
+  }
+
+  return context;
+};
+
+export const useTimeWindow = (): TimeWindowDataContextValue & TimeWindowControlsContextValue => ({
+  ...useTimeWindowData(),
+  ...useTimeWindowControls(),
+});
