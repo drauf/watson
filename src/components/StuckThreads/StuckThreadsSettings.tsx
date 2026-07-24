@@ -34,13 +34,13 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
           />
         </div>
 
-        <RegexFilters
-          nameFilter={nameFilter}
-          stackFilter={stackFilter}
-          onRegExpChange={onRegExpChange}
-        />
+        <div className="settings-row">
+          <RegexFilters
+            nameFilter={nameFilter}
+            stackFilter={stackFilter}
+            onRegExpChange={onRegExpChange}
+          />
 
-        <div>
           <SmartTooltip tooltip={(
             <div>
               <div><strong>Minimum threads to detect stuck pattern</strong></div>
@@ -64,17 +64,11 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
                 Only major blocking issues
               </div>
             </div>
-          )}
+            )}
           >
             <label>
-              <b>Detection threshold</b>
-              <input
-                type="number"
-                min="2"
-                name="minClusterSize"
-                value={minClusterSize}
-                onChange={onIntegerChange}
-              />
+              <b>Threshold</b>
+              <input type="number" min="2" name="minClusterSize" value={minClusterSize} onChange={onIntegerChange} />
             </label>
           </SmartTooltip>
 
@@ -101,16 +95,11 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
                 Loose matching for broader patterns
               </div>
             </div>
-          )}
+            )}
           >
             <label>
-              <b>Similarity tolerance</b>
-              <input
-                type="number"
-                name="maxDifferingLines"
-                value={maxDifferingLines}
-                onChange={onIntegerChange}
-              />
+              <b>Tolerance</b>
+              <input type="number" name="maxDifferingLines" value={maxDifferingLines} onChange={onIntegerChange} />
             </label>
           </SmartTooltip>
         </div>

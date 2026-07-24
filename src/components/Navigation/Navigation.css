@@ -5,7 +5,7 @@ header {
   align-items: stretch;
   justify-content: space-between;
   width: 100%;
-  min-height: 56px;
+  min-height: var(--watson-navigation-height);
   font-weight: var(--ds-font-weight-bold);
   background: var(--ds-surface-raised);
   box-shadow: var(--ds-shadow-overflow);
@@ -25,52 +25,66 @@ header h1 {
 header nav {
   display: inline-flex;
   align-items: center;
-  min-height: 56px;
+  min-height: var(--watson-navigation-height);
 }
 
 header ul {
   display: inline-flex;
   align-items: center;
-  min-height: 56px;
+  min-height: var(--watson-navigation-height);
   overflow: hidden;
 }
 
-header a {
+header li {
+  display: flex;
+  align-items: center;
+  min-height: var(--watson-navigation-height);
+}
+
+header li + li {
+  margin-top: 0;
+}
+
+header a,
+header button {
   display: inline-flex;
   align-items: center;
-  min-height: 56px;
+  box-sizing: border-box;
+  min-height: var(--watson-navigation-height);
+  padding: 0 var(--ds-space-150, 12px);
+  overflow: hidden;
+  color: var(--ds-text-subtle);
+  line-height: 24px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-radius: 0;
+  -webkit-text-fill-color: var(--ds-text-subtle);
 }
 
 header a.active {
   box-sizing: border-box;
-  padding-top: 3px;
+  color: var(--ds-link);
+  -webkit-text-fill-color: var(--ds-link);
   background: var(--ds-background-accent-blue-subtlest);
   border-bottom: 3px solid var(--ds-link);
 }
 
 header a:hover,
 header button:hover {
+  color: var(--ds-text);
   text-decoration: none;
+  background: var(--ds-background-neutral-subtle-hovered, #0515240f);
+  -webkit-text-fill-color: var(--ds-text);
 }
 
-header li {
-  margin: 0 var(--ds-space-050, 4px);
-  padding: 0 var(--ds-space-075, 6px);
-  overflow: hidden;
-  color: var(--ds-text-subtle);
-  line-height: 32px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  border-radius: var(--ds-radius-small, 3px);
-  -webkit-text-fill-color: var(--ds-text-subtle);
-}
-
-header li:hover {
-  background: var(--ds-background-accent-gray-subtlest-hovered);
-}
-
-header a.active li:hover {
+header a.active:hover {
   color: var(--ds-link);
+  background: var(--ds-background-accent-blue-subtlest);
   -webkit-text-fill-color: var(--ds-link);
-  background: var(--ds-background-accent-blue-subtlest-hovered);
+}
+
+header a:focus-visible,
+header button:focus-visible {
+  outline: 2px solid var(--ds-border-focused, #0c66e4);
+  outline-offset: 2px;
 }

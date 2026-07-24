@@ -31,7 +31,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
     if (!thread) {
       return (
         <>
-          <button type="button" className="no-click">n/a</button>
+          <button type="button" className="cpu-consumer-usage no-click">n/a</button>
           {' '}
         </>
       );
@@ -42,7 +42,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
 
     return (
       <>
-        <OpenThreadDetailsButton text={cpuUsage} className={className} thread={thread} />
+        <OpenThreadDetailsButton text={cpuUsage} className={`cpu-consumer-usage ${className}`} thread={thread} />
         {' '}
       </>
     );

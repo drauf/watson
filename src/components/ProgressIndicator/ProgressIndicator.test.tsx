@@ -228,7 +228,6 @@ describe('ProgressIndicator', () => {
       expect(container.querySelector('.progress-details')).toBeInTheDocument();
       expect(container.querySelector('.progress-file')).toBeInTheDocument();
     });
-
     it('applies progress-file-name class when file name is shown', () => {
       const progress = createMockProgress({
         phase: 'parsing',

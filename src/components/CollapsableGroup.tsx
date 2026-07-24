@@ -1,5 +1,6 @@
 import React from 'react';
 import './CollapsableGroup.css';
+import './common/ExpandableSurface.css';
 
 interface Props {
   header: JSX.Element;
@@ -25,11 +26,13 @@ export default class CollapsableGroup extends React.PureComponent<Props, State> 
     const { collapse } = this.state;
 
     return (
-      <section className="collapsable-group">
+      <section
+        className={`collapsable-group expandable-surface${collapse ? '' : ' expandable-surface-expanded'}`}
+      >
         <h5 className="collapsable-group-heading">
           <button
             type="button"
-            className="collapsable-group-toggle ellipsis"
+            className="expandable-surface-toggle ellipsis"
             aria-expanded={!collapse}
             onClick={this.toggleCollapse}
           >
@@ -38,7 +41,7 @@ export default class CollapsableGroup extends React.PureComponent<Props, State> 
           </button>
         </h5>
 
-        {!collapse && <div className="collapsable-group-content">{content}</div>}
+        {!collapse && <div className="expandable-surface-content">{content}</div>}
       </section>
     );
   }

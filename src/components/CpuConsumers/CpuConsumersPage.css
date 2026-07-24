@@ -4,14 +4,14 @@
   list-style: none;
 }
 
-#consumers-list button {
+#consumers-list .cpu-consumer-usage {
   display: inline-block;
   width: 56px;
   margin: var(--ds-space-025);
   padding: var(--ds-space-050) var(--ds-space-100);
   font-weight: var(--ds-font-weight-bold);
   text-align: center;
-  border-radius: 3px;
+  border-radius: var(--ds-radius-medium, 6px);
 }
 
 #consumers-list li {

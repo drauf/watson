@@ -1,17 +1,11 @@
-import React from 'react';
+import EmptyState from './EmptyState';
 
-export default class NoThreadDumpsError extends React.PureComponent {
-  public override render(): JSX.Element {
-    return (
-      <main id="centered">
-        <h4>
-          You need to load at least one file containing
-          {' '}
-          <i>thread dumps</i>
-          {' '}
-          to see this data.
-        </h4>
-      </main>
-    );
-  }
-}
+const NoThreadDumpsError = (): JSX.Element => (
+  <EmptyState
+    fullPage
+    title="No thread dumps found"
+    description="Upload at least one thread dump to use this view."
+  />
+);
+
+export default NoThreadDumpsError;

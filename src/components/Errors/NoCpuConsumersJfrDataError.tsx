@@ -1,17 +1,11 @@
-import React from 'react';
+import EmptyState from './EmptyState';
 
-export default class NoCpuConsumersJfrDataError extends React.PureComponent {
-  public override render(): JSX.Element {
-    return (
-      <main id="centered">
-        <h4>
-          You need to load
-          {' '}
-          <code><i>thread_cpu_utilisation.txt</i></code>
-          {' '}
-          file to see this data.
-        </h4>
-      </main>
-    );
-  }
-}
+const NoCpuConsumersJfrDataError = (): JSX.Element => (
+  <EmptyState
+    fullPage
+    title="No thread CPU usage data found"
+    description="Upload a JFR bundle containing thread CPU usage data, then try this view again."
+  />
+);
+
+export default NoCpuConsumersJfrDataError;

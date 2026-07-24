@@ -4,7 +4,6 @@ import { matchesRegexFilters } from '../../common/regexFiltering';
 import { isIdleInSnapshot } from '../../common/threadFilters';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
-import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
 import StuckThreadsGroup from './StuckThreadsGroup';
@@ -14,7 +13,6 @@ import './StuckThreadsPage.css';
 interface State {
   maxDifferingLines: number;
   minClusterSize: number;
-  threadDumps: ThreadDump[];
   withoutIdle: boolean;
   nameFilter: string;
   stackFilter: string;
@@ -29,19 +27,31 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     this.state = {
       maxDifferingLines: 5,
       minClusterSize: nonEmptyThreadDumps.length,
-      threadDumps: nonEmptyThreadDumps,
       withoutIdle: true,
       nameFilter: '',
       stackFilter: '',
     };
   }
 
+  public override componentDidUpdate(previousProps: WithThreadDumpsProps): void {
+    if (previousProps.threadDumps === this.props.threadDumps) {
+      return;
+    }
+
+    const previousNonEmptyThreadDumpCount = previousProps.threadDumps.filter((dump) => dump.threads.length > 0).length;
+    const currentNonEmptyThreadDumpCount = this.props.threadDumps.filter((dump) => dump.threads.length > 0).length;
+    if (this.state.minClusterSize === previousNonEmptyThreadDumpCount) {
+      this.setState({ minClusterSize: currentNonEmptyThreadDumpCount });
+    }
+  }
+
   public override render(): JSX.Element {
-    const threadOverTime = getThreadsOverTime(this.state.threadDumps);
+    const threadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
+    const threadOverTime = getThreadsOverTime(threadDumps);
     const filtered = this.filterThreads(threadOverTime);
     const clusters = this.buildClusters(filtered);
 
-    if (!this.state.threadDumps.some((dump) => dump.threads.length > 0)) {
+    if (threadDumps.length === 0) {
       return <NoThreadDumpsError />;
     }
 

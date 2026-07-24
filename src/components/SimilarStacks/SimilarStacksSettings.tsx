@@ -34,13 +34,13 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
           />
         </div>
 
-        <RegexFilters
-          nameFilter={nameFilter}
-          stackFilter={stackFilter}
-          onRegExpChange={onRegExpChange}
-        />
+        <div className="settings-row">
+          <RegexFilters
+            nameFilter={nameFilter}
+            stackFilter={stackFilter}
+            onRegExpChange={onRegExpChange}
+          />
 
-        <div>
           <SmartTooltip tooltip={(
             <div>
               <div><strong>Stack trace depth for comparison</strong></div>
@@ -64,16 +64,11 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
                 Very detailed grouping
               </div>
             </div>
-          )}
+            )}
           >
             <label>
-              <b>Comparison depth</b>
-              <input
-                type="number"
-                name="linesToConsider"
-                value={linesToConsider}
-                onChange={onIntegerChange}
-              />
+              <b>Depth</b>
+              <input type="number" name="linesToConsider" value={linesToConsider} onChange={onIntegerChange} />
             </label>
           </SmartTooltip>
 
@@ -100,16 +95,11 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
                 Only show very frequent patterns
               </div>
             </div>
-          )}
+            )}
           >
             <label>
-              <b>Minimum group size</b>
-              <input
-                type="number"
-                name="minimumGroupSize"
-                value={minimumGroupSize}
-                onChange={onIntegerChange}
-              />
+              <b>Min group</b>
+              <input type="number" name="minimumGroupSize" value={minimumGroupSize} onChange={onIntegerChange} />
             </label>
           </SmartTooltip>
         </div>

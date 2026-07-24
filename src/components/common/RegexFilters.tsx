@@ -82,7 +82,7 @@ const stackTraceTooltip = (
 );
 
 const RegexFilters: React.FC<Props> = ({ nameFilter, stackFilter, onRegExpChange }) => (
-  <div id="regexp-filters">
+  <div className="settings-row" id="regexp-filters">
     <SmartTooltip tooltip={threadNameTooltip}>
       <label>
         <b>Thread name pattern</b>

@@ -2,8 +2,10 @@ main {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  box-sizing: border-box;
   width: 80%;
   margin: 0 auto;
+  padding-top: var(--ds-space-150, 12px);
   animation: fadein 400ms;
 }
 
@@ -24,7 +26,8 @@ main {
   padding: var(--ds-space-100, 8px) 0;
 }
 
-#settings > div {
+#settings > div,
+.settings-row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ds-space-100, 8px);
@@ -42,27 +45,19 @@ main {
   align-items: center;
 }
 
-#settings.compact-analysis-settings {
-  flex-flow: row wrap;
-  row-gap: var(--ds-space-200, 16px);
-  column-gap: var(--ds-space-100, 8px);
-}
-
-#settings.compact-analysis-settings > .time-window-filter,
-#settings.compact-analysis-settings > .filters {
-  flex-basis: 100%;
-}
-
-#settings.compact-analysis-settings > #regexp-filters {
-  flex: 0 1 auto;
-}
-
-#settings.compact-analysis-settings > #regexp-filters + div {
-  flex: 0 1 auto;
+/* Keep filter-chip rows visually associated with the controls immediately below them */
+#settings > .filters + .settings-row {
+  margin-top: calc(-1 * var(--ds-space-050, 4px));
 }
 
 #centered {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  box-sizing: border-box;
+  height: calc(100vh - var(--watson-navigation-height));
+  min-height: calc(100vh - var(--watson-navigation-height));
+  padding: var(--ds-space-400, 32px) 0 calc(var(--ds-space-400, 32px) + var(--watson-navigation-height));
+  text-align: center;
 }

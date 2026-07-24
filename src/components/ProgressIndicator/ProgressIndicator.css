@@ -9,11 +9,13 @@
 .progress-indicator {
   display: flex;
   flex-direction: column;
-  width: 600px;
-  padding: var(--ds-space-300, 24px) var(--ds-space-400, 32px);
-  background: var(--ds-background-accent-gray-subtlest);
-  border: 2px solid var(--ds-border-accent-blue);
-  border-radius: var(--ds-radius-medium, 6px);
+  box-sizing: border-box;
+  width: min(100%, 600px);
+  padding: var(--ds-space-300, 24px);
+  background: var(--ds-surface-overlay, #fff);
+  border: 1px solid var(--ds-border, #dfe1e6);
+  border-radius: var(--ds-radius-xlarge, 12px);
+  box-shadow: var(--ds-shadow-overlay, 0 8px 12px #1e1f2126);
 }
 
 .progress-header {
@@ -112,11 +114,3 @@
   }
 }
 
-/* Overlay backdrop */
-.progress-indicator::before {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: rgb(9 30 66 / 54%);
-  content: '';
-}
