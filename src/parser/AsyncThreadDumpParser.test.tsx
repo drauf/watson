@@ -190,6 +190,16 @@ describe('AsyncThreadDumpParser', () => {
       expect(threadDump.threads).toHaveLength(0);
     });
 
+    it('parses a decimal nid from a JFR-generated thread dump', async () => {
+      const callback = vi.fn();
+      await AsyncThreadDumpParser.parseThreadDump([
+        '2026-07-21 14:37:58',
+        '"JFR Recorder Thread" #40 prio=5 os_prio=0 cpu=0.01ms elapsed=1.00s tid=0x0000000000000001 nid=7867 runnable',
+      ], callback);
+
+      expect(callback.mock.calls[0][0].threads[0].id).toBe(7867);
+    });
+
     it('should prefer nid over tid when both are available', async () => {
       const lines = [
         '2023-01-01 12:00:00',

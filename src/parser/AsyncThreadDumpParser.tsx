@@ -67,13 +67,19 @@ export default class AsyncThreadDumpParser {
     const name = matchOne(NAME_PATTERN, header).trim();
     // Depending on the way thread dumps were made, they can either have NID or TID
     // We prefer NID, as it allows linking thread dumps with cpu_usage files
-    const nid = parseInt(matchOne(NID_PATTERN, header), 16);
-    const tid = parseInt(matchOne(TID_PATTERN, header), 16);
+    const nid = AsyncThreadDumpParser.parseThreadId(matchOne(NID_PATTERN, header));
+    const tid = AsyncThreadDumpParser.parseThreadId(matchOne(TID_PATTERN, header));
     const id = nid !== 0 ? nid : tid;
 
     const currentThread = new Thread(id, name, threadDump.epoch);
     threadDump.threads.push(currentThread);
     return currentThread;
+  }
+
+  private static parseThreadId(id: string): number {
+    // JFR thread dumps use decimal nid values, while traditional JVM dumps prefix hexadecimal IDs with 0x.
+    const parsedId = parseInt(id, id.startsWith('0x') ? 16 : 10);
+    return Number.isNaN(parsedId) ? 0 : parsedId;
   }
 
   private static parseStackLine(line: string, threadDump: ThreadDump, currentThread: Thread): void {
