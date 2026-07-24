@@ -1,9 +1,11 @@
-import React from 'react';
+import EmptyState from './EmptyState';
 
-const PageNotFoundError: React.FC = () => (
-  <main id="centered">
-    <h4>Oops, you&apos;ve found a dead link!</h4>
-  </main>
+const PageNotFoundError = (): JSX.Element => (
+  <EmptyState
+    fullPage
+    title="Page not found"
+    description="Oops, you've found a dead link."
+  />
 );
 
 export default PageNotFoundError;

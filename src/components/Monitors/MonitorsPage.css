@@ -6,7 +6,7 @@
 .monitors-container div,
 .monitors-container button {
   max-width: 100%;
-  padding-left: 6px;
+  padding-left: var(--ds-space-075, 6px);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

@@ -1,11 +1,11 @@
 .filters label {
-  margin-left: 8px;
-  padding: 7px 10px;
+  margin-left: 0;
+  padding: 6px 10px;
   color: var(--ds-text-accent-gray);
   font-weight: var(--ds-font-weight-bold);
   background: var(--ds-background-accent-gray-subtlest);
   border: 1px solid transparent;
-  border-radius: 3px;
+  border-radius: var(--ds-radius-small, 3px);
 }
 
 .filters label:hover {

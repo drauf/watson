@@ -33,7 +33,7 @@ test.describe('Similar stacks', () => {
   });
 
   test('can fold sections', async ({ pageWithData }) => {
-    const buttons = (await pageWithData.locator('main').getByRole('button').all()).slice(0, 4);
+    const buttons = (await pageWithData.locator('.collapsable-group .expandable-surface-toggle').all()).slice(0, 4);
 
     for (const button of buttons) {
       await button.click();

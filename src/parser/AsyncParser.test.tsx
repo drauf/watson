@@ -6,6 +6,7 @@ import {
 import AsyncParser, { ProgressCallback, CompletionCallback } from './AsyncParser';
 import ThreadDump from '../types/ThreadDump';
 import CpuUsage from './cpuusage/CpuUsage';
+import ThreadCpuUsage from './cpuusage/ThreadCpuUsage';
 
 // Mock the AsyncThreadDumpParser
 vi.mock('./AsyncThreadDumpParser', () => ({
@@ -173,6 +174,48 @@ describe('AsyncParser', () => {
         (threadDump) => threadDump.epoch === Date.UTC(2026, 6, 22, 9, 13, 46),
       );
       expect(firstThreadDump?.runningProcesses).toBeUndefined();
+    });
+
+    it('falls back to clock-only matching when a JFR CPU filename has a different hour', async () => {
+      const threadDumpFile = createMockFile(
+        '2026_07_22_09_13_46.txt',
+        '2026-07-22 09:13:46\n"Thread-1" #1 prio=5 tid=0x1 nid=0x7b',
+      );
+      const cpuUsageFile = createMockFile(
+        '2026_07_22_10_13_46_thread_cpu_utilisation.txt',
+        'JVM_THREAD_ID OS_THREAD_ID %CPU_USER_MODE %CPU_SYSTEM_MODE SYSTEM_TIME THREAD_NAME',
+      );
+
+      const AsyncThreadDumpParser = await import('./AsyncThreadDumpParser');
+      (AsyncThreadDumpParser.default.parseThreadDump as any).mockImplementation(
+        (_lines: string[], callback: any, _progress: any, _config: any, epochFromFileName: number) => {
+          const threadDump = new ThreadDump(epochFromFileName);
+          threadDump.threads.push({
+            id: 123,
+            name: 'Thread-1',
+            cpuUsage: '0.00',
+            runningFor: '0:00.00',
+          } as any);
+          callback(threadDump);
+          return Promise.resolve();
+        },
+      );
+
+      const CpuUsageJfrParser = await import('./cpuusage/jfr/CpuUsageJfrParser');
+      (CpuUsageJfrParser.default.parseCpuUsage as any).mockImplementation(
+        (fileName: string, _lines: string[], callback: any) => {
+          callback(CpuUsage.fromJfr(fileName, 1, [new ThreadCpuUsage(123, '0:01.00', 5)]));
+        },
+      );
+
+      await parser.parseFiles([threadDumpFile, cpuUsageFile]);
+
+      const parsedThreadDumps = (mockOnFilesParsed as any).mock.calls[0][0] as ThreadDump[];
+      expect(parsedThreadDumps).toHaveLength(1);
+      expect(parsedThreadDumps[0].threads[0]).toMatchObject({
+        cpuUsage: '5.00',
+        runningFor: '0:01.00',
+      });
     });
 
     it('should handle multiple files', async () => {

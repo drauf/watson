@@ -52,19 +52,19 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
           </label>
         </div>
 
-        <RegexFilters
-          nameFilter={nameFilter}
-          stackFilter={stackFilter}
-          onRegExpChange={onRegExpChange}
-        />
+        <div className="settings-row">
+          <RegexFilters
+            nameFilter={nameFilter}
+            stackFilter={stackFilter}
+            onRegExpChange={onRegExpChange}
+          />
 
-        <div id="cpu-consumers-limit">
           <SmartTooltip tooltip={(
             <div>
               <div><strong>Maximum threads to display</strong></div>
               <div>Higher values show more threads but may impact performance</div>
             </div>
-          )}
+            )}
           >
             <label>
               <b>Threads to display</b>

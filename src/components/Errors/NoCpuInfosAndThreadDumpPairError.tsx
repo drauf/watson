@@ -1,21 +1,11 @@
-import React from 'react';
+import EmptyState from './EmptyState';
 
-export default class NoCpuInfosAndThreadDumpPairError extends React.PureComponent {
-  public override render(): JSX.Element {
-    return (
-      <main id="centered">
-        <h4>
-          You need to load at least one matching pair of
-          {' '}
-          <i>thread dumps</i>
-          {' '}
-          and
-          {' '}
-          <i>top output</i>
-          {' '}
-          to see this data.
-        </h4>
-      </main>
-    );
-  }
-}
+const NoCpuInfosAndThreadDumpPairError = (): JSX.Element => (
+  <EmptyState
+    fullPage
+    title="CPU usage data could not be matched to a thread dump"
+    description="Upload thread dumps and CPU usage data captured at the same time, then try this view again."
+  />
+);
+
+export default NoCpuInfosAndThreadDumpPairError;

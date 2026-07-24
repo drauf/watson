@@ -53,7 +53,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
-  timeout: 30_000,
+  timeout: process.env.CI ? 30_000 : 10_000,
   expect: {
     /* Limit the maximum pixel ratio for image comparisons to 0.1% */
     toHaveScreenshot: { maxDiffPixelRatio: 0.001 },

@@ -1,17 +1,11 @@
-import React from 'react';
+import EmptyState from './EmptyState';
 
-export default class NoCpuInfosError extends React.PureComponent {
-  public override render(): JSX.Element {
-    return (
-      <main id="centered">
-        <h4>
-          You need to load at least one file containing
-          {' '}
-          <i>top output</i>
-          {' '}
-          to see this data.
-        </h4>
-      </main>
-    );
-  }
-}
+const NoCpuInfosError = (): JSX.Element => (
+  <EmptyState
+    fullPage
+    title="No CPU usage data found"
+    description="Upload top output or a supported JFR containing CPU usage data, then try this view again."
+  />
+);
+
+export default NoCpuInfosError;

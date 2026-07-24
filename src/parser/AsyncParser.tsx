@@ -12,6 +12,7 @@ import { getPerformanceConfig, PerformanceConfig } from './PerformanceConfig';
 // This allows matching files even if the timestamps are not exactly the same, as usually they
 // are taken by alternating top and jstack commands
 const MAX_DIFFERENCE_BETWEEN_CORRESPONDING_FILES_IN_MS = 10000;
+const AN_HOUR = 60 * 60 * 1000;
 
 export interface ParseProgress {
   phase: 'reading' | 'parsing' | 'grouping' | 'complete';
@@ -217,35 +218,40 @@ export default class AsyncParser {
   }
 
   private findCorrespondingThreadDump(cpuUsage: CpuUsage): ThreadDump {
-    const AN_HOUR = 60 * 60 * 1000;
     const cpuUsageEpoch = cpuUsage.epoch;
-    let closest: ThreadDump | null = null;
-    let smallestDiff: number = MAX_DIFFERENCE_BETWEEN_CORRESPONDING_FILES_IN_MS;
+    const exactMatch = cpuUsage.timestampKind === 'absolute'
+      ? this.findClosestThreadDump((dumpEpoch) => Math.abs(dumpEpoch - cpuUsageEpoch))
+      : undefined;
+
+    // Prefer full filename timestamps, but retain the legacy fallback for captures with different clock hours.
+    const closest = exactMatch ?? this.findClosestThreadDump(
+      (dumpEpoch) => Math.abs((dumpEpoch % AN_HOUR) - (cpuUsageEpoch % AN_HOUR)),
+    );
+
+    if (closest == null) {
+      const threadDump = new ThreadDump(cpuUsageEpoch);
+      this.threadDumps.push(threadDump);
+      return threadDump;
+    }
+
+    return closest;
+  }
+
+  private findClosestThreadDump(
+    getDifference: (dumpEpoch: number) => number,
+  ): ThreadDump | undefined {
+    let closest: ThreadDump | undefined;
+    let smallestDiff = MAX_DIFFERENCE_BETWEEN_CORRESPONDING_FILES_IN_MS;
 
     this.threadDumps
       .filter((threadDump) => threadDump.epoch)
       .forEach((threadDump) => {
-        const dumpEpoch = threadDump.epoch;
-
-        if (!dumpEpoch || !cpuUsageEpoch) {
-          return;
-        }
-
-        // JFR CPU files have an absolute filename timestamp; legacy top data only has a clock time.
-        const diff = cpuUsage.timestampKind === 'absolute'
-          ? Math.abs(dumpEpoch - cpuUsageEpoch)
-          : Math.abs((dumpEpoch % AN_HOUR) - (cpuUsageEpoch % AN_HOUR));
-
+        const diff = getDifference(threadDump.epoch);
         if (diff < smallestDiff) {
           smallestDiff = diff;
           closest = threadDump;
         }
       });
-
-    if (closest == null) {
-      closest = new ThreadDump(cpuUsageEpoch);
-      this.threadDumps.push(closest);
-    }
 
     return closest;
   }

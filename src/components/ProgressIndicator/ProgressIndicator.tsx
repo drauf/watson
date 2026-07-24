@@ -84,5 +84,4 @@ const ProgressIndicator: React.FC<Props> = ({ progress }) => {
     </div>
   );
 };
-
 export default ProgressIndicator;

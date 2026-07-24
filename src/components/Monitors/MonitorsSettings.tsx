@@ -1,6 +1,7 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
 import RegexFilters from '../common/RegexFilters';
+import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
 
 interface Props {
   withOwner: boolean;
@@ -20,6 +21,7 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
 
     return (
       <section id="settings">
+        <TimeWindowFilter />
         <div className="filters">
           <b>Filters:</b>
 

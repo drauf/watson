@@ -2,6 +2,7 @@ import React from 'react';
 import Filter from '../Filter/Filter';
 import SmartTooltip from '../common/SmartTooltip';
 import RegexFilters from '../common/RegexFilters';
+import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
 
 interface Props {
   maxDifferingLines: number;
@@ -22,6 +23,7 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
 
     return (
       <section id="settings">
+        <TimeWindowFilter />
         <div className="filters">
           <b>Filters:</b>
 
@@ -34,13 +36,13 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
           />
         </div>
 
-        <RegexFilters
-          nameFilter={nameFilter}
-          stackFilter={stackFilter}
-          onRegExpChange={onRegExpChange}
-        />
+        <div className="settings-row">
+          <RegexFilters
+            nameFilter={nameFilter}
+            stackFilter={stackFilter}
+            onRegExpChange={onRegExpChange}
+          />
 
-        <div>
           <SmartTooltip tooltip={(
             <div>
               <div><strong>Minimum threads to detect stuck pattern</strong></div>
@@ -64,17 +66,18 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
                 Only major blocking issues
               </div>
             </div>
-          )}
+            )}
           >
             <label>
-              <b>Detection threshold</b>
+              <b>Threshold</b>
               <input
-                type="number"
-                min="2"
-                name="minClusterSize"
-                value={minClusterSize}
-                onChange={onIntegerChange}
-              />
+                  type="number"
+                  min="2"
+                  name="minClusterSize"
+                  aria-label="Detection threshold"
+                  value={minClusterSize}
+                  onChange={onIntegerChange}
+                />
             </label>
           </SmartTooltip>
 
@@ -101,16 +104,17 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
                 Loose matching for broader patterns
               </div>
             </div>
-          )}
+            )}
           >
             <label>
-              <b>Similarity tolerance</b>
+              <b>Tolerance</b>
               <input
-                type="number"
-                name="maxDifferingLines"
-                value={maxDifferingLines}
-                onChange={onIntegerChange}
-              />
+                  type="number"
+                  name="maxDifferingLines"
+                  aria-label="Similarity tolerance"
+                  value={maxDifferingLines}
+                  onChange={onIntegerChange}
+                />
             </label>
           </SmartTooltip>
         </div>

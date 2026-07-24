@@ -32,7 +32,7 @@ test.describe('Stuck threads', () => {
 
   test('can fold sections', async ({ pageWithData }) => {
     await pageWithData.getByText('Active').uncheck();
-    const buttons = (await pageWithData.locator('main').getByRole('button').all()).slice(0, 10);
+    const buttons = (await pageWithData.locator('.collapsable-group .expandable-surface-toggle').all()).slice(0, 10);
 
     for (const button of buttons) {
       await button.click();

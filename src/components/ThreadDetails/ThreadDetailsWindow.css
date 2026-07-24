@@ -42,7 +42,7 @@
   font-size: var(--ds-font-body);
   line-height: 99%;
   text-align: center;
-  border-radius: 3px;
+  border-radius: var(--ds-radius-small, 3px);
   -webkit-text-fill-color: var(--ds-text-subtle);
 }
 

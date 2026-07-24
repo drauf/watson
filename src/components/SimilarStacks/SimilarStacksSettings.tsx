@@ -2,6 +2,7 @@ import React from 'react';
 import Filter from '../Filter/Filter';
 import SmartTooltip from '../common/SmartTooltip';
 import RegexFilters from '../common/RegexFilters';
+import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
 
 interface Props {
   linesToConsider: number;
@@ -22,6 +23,7 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
 
     return (
       <section id="settings">
+        <TimeWindowFilter />
         <div className="filters">
           <b>Filters:</b>
 
@@ -34,13 +36,13 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
           />
         </div>
 
-        <RegexFilters
-          nameFilter={nameFilter}
-          stackFilter={stackFilter}
-          onRegExpChange={onRegExpChange}
-        />
+        <div className="settings-row">
+          <RegexFilters
+            nameFilter={nameFilter}
+            stackFilter={stackFilter}
+            onRegExpChange={onRegExpChange}
+          />
 
-        <div>
           <SmartTooltip tooltip={(
             <div>
               <div><strong>Stack trace depth for comparison</strong></div>
@@ -64,16 +66,17 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
                 Very detailed grouping
               </div>
             </div>
-          )}
+            )}
           >
             <label>
-              <b>Comparison depth</b>
+              <b>Depth</b>
               <input
-                type="number"
-                name="linesToConsider"
-                value={linesToConsider}
-                onChange={onIntegerChange}
-              />
+                  type="number"
+                  name="linesToConsider"
+                  aria-label="Comparison depth"
+                  value={linesToConsider}
+                  onChange={onIntegerChange}
+                />
             </label>
           </SmartTooltip>
 
@@ -100,16 +103,17 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
                 Only show very frequent patterns
               </div>
             </div>
-          )}
+            )}
           >
             <label>
-              <b>Minimum group size</b>
+              <b>Min group</b>
               <input
-                type="number"
-                name="minimumGroupSize"
-                value={minimumGroupSize}
-                onChange={onIntegerChange}
-              />
+                  type="number"
+                  name="minimumGroupSize"
+                  aria-label="Minimum group size"
+                  value={minimumGroupSize}
+                  onChange={onIntegerChange}
+                />
             </label>
           </SmartTooltip>
         </div>

@@ -1,0 +1,7 @@
+.collapsable-group {
+  margin: var(--ds-space-100) 0;
+}
+
+.collapsable-group-heading {
+  margin: 0;
+}

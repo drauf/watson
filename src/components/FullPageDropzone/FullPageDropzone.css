@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  min-height: 100dvh;
 }
 
 #dropzone h4 {
@@ -13,7 +13,7 @@
   text-align: center;
   background: var(--ds-background-accent-gray-subtlest);
   border: 2px solid var(--ds-border-accent-blue);
-  border-radius: 5px;
+  border-radius: var(--ds-radius-medium, 6px);
   cursor: pointer;
 }
 

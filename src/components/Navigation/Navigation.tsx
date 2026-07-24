@@ -13,9 +13,11 @@ interface LinkProps {
 const StyledNavLink: React.FC<LinkProps> = (props: LinkProps) => {
   const { hash, pageLink, displayName: name } = props;
   return (
-    <NavLink to={`/${hash}/${pageLink}`} className={({ isActive }) => (isActive ? ' active' : '')}>
-      <li>{name}</li>
-    </NavLink>
+    <li>
+      <NavLink to={`/${hash}/${pageLink}`} className={({ isActive }) => (isActive ? ' active' : '')}>
+        {name}
+      </NavLink>
+    </li>
   );
 };
 
@@ -49,7 +51,11 @@ const Navigation: React.FC = () => {
       <div className="header-section">
         <ThemeSwitcher />
 
-        <StyledNavLink hash={hash} pageLink="help" displayName="Help & feedback" />
+        <nav aria-label="Utility navigation">
+          <ul>
+            <StyledNavLink hash={hash} pageLink="help" displayName="Help & feedback" />
+          </ul>
+        </nav>
 
         <button
           type="button"
@@ -58,7 +64,7 @@ const Navigation: React.FC = () => {
             navigate('/');
           }}
         >
-          <li>Clear data</li>
+          Clear data
         </button>
       </div>
     </header>

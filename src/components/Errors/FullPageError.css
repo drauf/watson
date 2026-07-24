@@ -10,10 +10,10 @@
   display: flex;
   flex-direction: column;
   width: 600px;
-  padding: 24px 32px;
+  padding: var(--ds-space-300, 24px) var(--ds-space-400, 32px);
   background: var(--ds-background-accent-gray-subtlest);
   border: 2px solid var(--ds-border-accent-blue);
-  border-radius: 5px;
+  border-radius: var(--ds-radius-medium, 6px);
 }
 
 .error-header {
@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: var(--ds-space-250, 20px);
 }
 
 .error-header h4 {
@@ -34,14 +34,14 @@
 .error-details {
   height: 40px;
   min-height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: var(--ds-space-250, 20px);
   color: var(--ds-text-subtlest);
   font-size: 14px;
 }
 
 .error-message {
   max-width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: var(--ds-space-200, 16px);
   overflow: hidden;
   color: var(--ds-text-subtle);
   font-weight: var(--ds-font-weight-bold);
@@ -59,7 +59,7 @@
   color: var(--ds-text-inverse);
   text-decoration: none;
   background: var(--ds-background-accent-blue-bolder);
-  border-radius: 3px;
+  border-radius: var(--ds-radius-small, 3px);
   -webkit-text-fill-color: var(--ds-text-inverse);
 }
 

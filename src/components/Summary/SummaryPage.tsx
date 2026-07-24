@@ -6,10 +6,10 @@ import RunningProcessesChart from './RunningProcessesChart';
 import './SummaryPage.css';
 import '../common/SmartTooltip.css';
 import SwapUsageChart from './SwapUsageChart';
-import { useThreadDumps } from '../../common/withThreadDumps';
+import { useAllThreadDumps } from '../../common/withThreadDumps';
 
 const SummaryPage: React.FC = () => {
-  const threadDumps = useThreadDumps();
+  const threadDumps = useAllThreadDumps();
 
   if (!threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage !== '0.00'))) {
     return <NoCpuInfosError />;
