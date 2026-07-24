@@ -30,7 +30,7 @@ test.describe('CPU consumers', () => {
   test('opens thread details', async ({ context, pageWithData }) => {
     const [details] = await Promise.all([
       context.waitForEvent('page'),
-      pageWithData.locator('#consumers-list').getByRole('button').first().click(),
+      pageWithData.locator('#consumers-list .cpu-consumer-usages').getByRole('button').first().click(),
     ]);
 
     await expect(details).toHaveScreenshot();
