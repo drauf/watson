@@ -71,13 +71,13 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
             <label>
               <b>Threshold</b>
               <input
-                  type="number"
-                  min="2"
-                  name="minClusterSize"
-                  aria-label="Detection threshold"
-                  value={minClusterSize}
-                  onChange={onIntegerChange}
-                />
+                type="number"
+                min="2"
+                name="minClusterSize"
+                aria-label="Detection threshold"
+                value={minClusterSize}
+                onChange={onIntegerChange}
+              />
             </label>
           </SmartTooltip>
 
@@ -109,12 +109,12 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
             <label>
               <b>Tolerance</b>
               <input
-                  type="number"
-                  name="maxDifferingLines"
-                  aria-label="Similarity tolerance"
-                  value={maxDifferingLines}
-                  onChange={onIntegerChange}
-                />
+                type="number"
+                name="maxDifferingLines"
+                aria-label="Similarity tolerance"
+                value={maxDifferingLines}
+                onChange={onIntegerChange}
+              />
             </label>
           </SmartTooltip>
         </div>

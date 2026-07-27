@@ -1,12 +1,26 @@
-The baseline snapshot PNGs are stored in git-lfs. Before running the tests locally, run `git lfs pull` to fetch them - otherwise they stay as pointer stubs and every visual comparison fails.
+## Running visual tests
 
-To update snapshots used in CI (**execute from the parent directory**):
+The committed screenshots must be generated in the same Linux Playwright container used by CI. Do not create or update baselines on macOS.
+
+Before comparing or updating snapshots, fetch the Git LFS images:
+
 ```
-docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.62.0-noble /bin/bash
+git lfs pull
+```
+
+To update snapshots, execute this from the repository root:
+
+```
+docker run --rm --network host -v $(pwd):/work -w /work/ -it mcr.microsoft.com/playwright:v1.61.1-noble /bin/bash
 yarn install
-yarn playwright test --update-snapshots
+HOME=/root yarn playwright install chromium firefox
+HOME=/root yarn playwright test --update-snapshots
 ```
 
-When running locally, you'll need to also run `yarn playwright install --with-deps` to install required browsers
+The container supplies the Linux browser dependencies. The `playwright install` command downloads the browser revisions required by the pinned `@playwright/test` package, because the matching `v1.62.0` container image is not yet available. See the upstream release-image issue: https://github.com/microsoft/playwright/issues/41987.
 
-You can also run tests using filters, e.g. `yarn playwright test --update-snapshots changed theme-switcher.spec.tsx`
+Run a focused component visual spec with:
+
+```
+yarn playwright test e2e/visual/components/time-window.visual.spec.tsx --update-snapshots
+```

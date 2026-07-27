@@ -71,12 +71,12 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
             <label>
               <b>Depth</b>
               <input
-                  type="number"
-                  name="linesToConsider"
-                  aria-label="Comparison depth"
-                  value={linesToConsider}
-                  onChange={onIntegerChange}
-                />
+                type="number"
+                name="linesToConsider"
+                aria-label="Comparison depth"
+                value={linesToConsider}
+                onChange={onIntegerChange}
+              />
             </label>
           </SmartTooltip>
 
@@ -108,12 +108,12 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
             <label>
               <b>Min group</b>
               <input
-                  type="number"
-                  name="minimumGroupSize"
-                  aria-label="Minimum group size"
-                  value={minimumGroupSize}
-                  onChange={onIntegerChange}
-                />
+                type="number"
+                name="minimumGroupSize"
+                aria-label="Minimum group size"
+                value={minimumGroupSize}
+                onChange={onIntegerChange}
+              />
             </label>
           </SmartTooltip>
         </div>

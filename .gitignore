@@ -31,3 +31,4 @@ yarn-error.log*
 /playwright-report/
 /playwright/.cache/
 /playwright/.browsers/
+**/*-darwin.png

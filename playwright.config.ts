@@ -10,29 +10,43 @@ const viewports = [
 ];
 
 const colorSchemes = ['light', 'dark'];
+const componentTestDirectory = './e2e/visual/components';
 
 const getProjects = () => {
-  const projects = [];
-
-  projects.push({
-    name: 'disable animations',
-    testMatch: /global\.setup\.tsx/,
-  });
+  const projects = [
+    {
+      name: 'disable animations',
+      testMatch: /global\.setup\.tsx/,
+    },
+  ];
 
   for (const [browserName, browser] of browsers) {
     for (const viewport of viewports) {
       for (const colorScheme of colorSchemes) {
-        const project = {
-          name: `${browserName}-${colorScheme}`,
-          use: {
-            ...browser,
-            colorScheme: colorScheme,
-            viewport: viewport,
-            dependencies: ['disable animations'],
-          },
+        const browserSettings = {
+          ...browser,
+          colorScheme,
+          viewport,
         };
 
-        projects.push(project)
+        projects.push({
+          name: `${browserName}-${colorScheme}`,
+          testIgnore: /e2e\/visual\/components\//,
+          use: {
+            ...browserSettings,
+            dependencies: ['disable animations'],
+          },
+        });
+        projects.push({
+          name: `${browserName}-${colorScheme}-components`,
+          testDir: componentTestDirectory,
+          use: {
+            ...browserSettings,
+            baseURL: 'http://localhost:3000/playwright/gallery/index.html',
+            reuseContext: true,
+            serviceWorkers: 'block',
+          },
+        });
       }
     }
   }
