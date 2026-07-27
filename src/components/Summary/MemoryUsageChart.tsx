@@ -46,13 +46,13 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
         <h3>Memory usage</h3>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
-            <Pie data={data} dataKey="value" nameKey="name" animationDuration={1000}>
+            <Pie data={data} dataKey="value" nameKey="name" isAnimationActive={false}>
               {
                 data.map((_, index) => <Cell key={COLORS[index]} fill={COLORS[index]} />)
               }
             </Pie>
             {sum === 0 && (
-              <Pie data={[{ name: 'No Data', value: 1 }]} dataKey="value" fill={token('color.chart.neutral')} animationDuration={1000} />
+              <Pie data={[{ name: 'No Data', value: 1 }]} dataKey="value" fill={token('color.chart.neutral')} isAnimationActive={false} />
             )}
             {sum !== 0 && <Tooltip content={PieChartTooltip} />}
             <Legend />

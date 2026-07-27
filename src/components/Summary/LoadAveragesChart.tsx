@@ -80,9 +80,9 @@ export default class LoadAveragesChart extends React.PureComponent<Props> {
             <CartesianGrid stroke={token('color.chart.neutral')} strokeDasharray="5 5" />
             <Tooltip content={CustomTooltip} />
             <Legend />
-            <Line name="One minute" dataKey="oneMinute" stroke={token('color.chart.categorical.1')} animationDuration={1000} />
-            <Line name="Five minutes" dataKey="fiveMinutes" stroke={token('color.chart.categorical.2')} animationDuration={1000} />
-            <Line name="Fifteen minutes" dataKey="fifteenMinutes" stroke={token('color.chart.categorical.3')} animationDuration={1000} />
+            <Line name="One minute" dataKey="oneMinute" stroke={token('color.chart.categorical.1')} isAnimationActive={false} />
+            <Line name="Five minutes" dataKey="fiveMinutes" stroke={token('color.chart.categorical.2')} isAnimationActive={false} />
+            <Line name="Fifteen minutes" dataKey="fifteenMinutes" stroke={token('color.chart.categorical.3')} isAnimationActive={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>
