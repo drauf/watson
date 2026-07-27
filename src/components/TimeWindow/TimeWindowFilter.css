@@ -100,8 +100,8 @@
   -webkit-text-fill-color: var(--ds-text);
 }
 
-.time-window-inputs button,
-.time-window-dialog-actions button {
+.time-window-dialog-actions button,
+.time-window-inputs button:not(.primary) {
   box-sizing: border-box;
   min-height: 32px;
   padding: 0 var(--ds-space-150, 12px);
