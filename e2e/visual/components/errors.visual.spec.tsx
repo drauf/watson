@@ -1,4 +1,6 @@
-import { expect, Locator, Page, test } from '@playwright/test';
+import {
+  expect, Locator, Page, test,
+} from '@playwright/test';
 
 const panelMargin = 20;
 
