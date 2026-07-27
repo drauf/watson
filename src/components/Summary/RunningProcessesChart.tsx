@@ -6,6 +6,7 @@ import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';
 import TooltipContent from '../common/TooltipContent';
+import prefersReducedMotion from '../../common/prefersReducedMotion';
 
 interface Props {
   threadDumps: ThreadDump[];
@@ -96,10 +97,12 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
             dataKey="runningProcesses"
             stroke={token('color.text.accent.lime')}
             animationDuration={1000}
+            isAnimationActive={!prefersReducedMotion()}
           />
           <Line
             name="Tooltip data"
             dataKey="threads"
+            isAnimationActive={!prefersReducedMotion()}
           />
         </LineChart>
       </ResponsiveContainer>

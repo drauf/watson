@@ -13,12 +13,7 @@ const colorSchemes = ['light', 'dark'];
 const componentTestDirectory = './e2e/visual/components';
 
 const getProjects = () => {
-  const projects = [
-    {
-      name: 'disable animations',
-      testMatch: /global\.setup\.tsx/,
-    },
-  ];
+  const projects = [];
 
   for (const [browserName, browser] of browsers) {
     for (const viewport of viewports) {
@@ -27,15 +22,13 @@ const getProjects = () => {
           ...browser,
           colorScheme,
           viewport,
+          reducedMotion: 'reduce' as const,
         };
 
         projects.push({
           name: `${browserName}-${colorScheme}`,
           testIgnore: /e2e\/visual\/components\//,
-          use: {
-            ...browserSettings,
-            dependencies: ['disable animations'],
-          },
+          use: browserSettings,
         });
         projects.push({
           name: `${browserName}-${colorScheme}-components`,
