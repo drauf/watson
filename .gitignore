@@ -30,3 +30,4 @@ yarn-error.log*
 /test-results/
 /playwright-report/
 /playwright/.cache/
+/playwright/.browsers/

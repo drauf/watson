@@ -2,7 +2,7 @@ The baseline snapshot PNGs are stored in git-lfs. Before running the tests local
 
 To update snapshots used in CI (**execute from the parent directory**):
 ```
-docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.61.1-noble /bin/bash
+docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:v1.62.0-noble /bin/bash
 yarn install
 yarn playwright test --update-snapshots
 ```
