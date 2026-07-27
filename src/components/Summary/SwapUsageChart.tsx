@@ -6,7 +6,6 @@ import { token } from '@atlaskit/tokens';
 import MemoryUsage from '../../types/MemoryUsage';
 import ThreadDump from '../../types/ThreadDump';
 import labelFormatter from './LabelFormatter';
-import prefersReducedMotion from '../../common/prefersReducedMotion';
 import PieChartTooltip, { ChartData } from './PieChartTooltip';
 
 const COLORS = [token('color.chart.categorical.4'), token('color.chart.categorical.3')];
@@ -47,13 +46,13 @@ export default class SwapUsageChart extends React.PureComponent<Props> {
         <h3>Swap usage</h3>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
-            <Pie data={data} dataKey="value" nameKey="name" animationDuration={1000} isAnimationActive={!prefersReducedMotion()}>
+            <Pie data={data} dataKey="value" nameKey="name" animationDuration={1000}>
               {
                 data.map((_, index) => <Cell key={COLORS[index]} fill={COLORS[index]} />)
               }
             </Pie>
             {sum === 0 && (
-              <Pie data={[{ name: 'No Data', value: 1 }]} dataKey="value" fill={token('color.chart.neutral')} animationDuration={1000} isAnimationActive={!prefersReducedMotion()} />
+              <Pie data={[{ name: 'No Data', value: 1 }]} dataKey="value" fill={token('color.chart.neutral')} animationDuration={1000} />
             )}
             {sum !== 0 && <Tooltip content={PieChartTooltip} />}
             <Legend />

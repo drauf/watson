@@ -22,7 +22,6 @@ const getProjects = () => {
           ...browser,
           colorScheme,
           viewport,
-          reducedMotion: 'reduce' as const,
         };
 
         projects.push({

@@ -5,7 +5,6 @@ import {
 import { token } from '@atlaskit/tokens';
 import ThreadDump from '../../types/ThreadDump';
 import TooltipContent from '../common/TooltipContent';
-import prefersReducedMotion from '../../common/prefersReducedMotion';
 
 interface Props {
   threadDumps: ThreadDump[];
@@ -81,9 +80,9 @@ export default class LoadAveragesChart extends React.PureComponent<Props> {
             <CartesianGrid stroke={token('color.chart.neutral')} strokeDasharray="5 5" />
             <Tooltip content={CustomTooltip} />
             <Legend />
-            <Line name="One minute" dataKey="oneMinute" stroke={token('color.chart.categorical.1')} animationDuration={1000} isAnimationActive={!prefersReducedMotion()} />
-            <Line name="Five minutes" dataKey="fiveMinutes" stroke={token('color.chart.categorical.2')} animationDuration={1000} isAnimationActive={!prefersReducedMotion()} />
-            <Line name="Fifteen minutes" dataKey="fifteenMinutes" stroke={token('color.chart.categorical.3')} animationDuration={1000} isAnimationActive={!prefersReducedMotion()} />
+            <Line name="One minute" dataKey="oneMinute" stroke={token('color.chart.categorical.1')} animationDuration={1000} />
+            <Line name="Five minutes" dataKey="fiveMinutes" stroke={token('color.chart.categorical.2')} animationDuration={1000} />
+            <Line name="Fifteen minutes" dataKey="fifteenMinutes" stroke={token('color.chart.categorical.3')} animationDuration={1000} />
           </LineChart>
         </ResponsiveContainer>
       </div>
