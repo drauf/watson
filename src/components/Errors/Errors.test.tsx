@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import NoCpuConsumersJfrDataError from './NoCpuConsumersJfrDataError';
 import NoCpuInfosError from './NoCpuInfosError';
 import NoThreadDumpsError from './NoThreadDumpsError';
+import NoCpuInfosAndThreadDumpPairError from './NoCpuInfosAndThreadDumpPairError';
+import PageNotFoundError from './PageNotFoundError';
 
 describe('no-data empty states', () => {
   it('explains missing thread CPU usage data', () => {
@@ -24,5 +26,19 @@ describe('no-data empty states', () => {
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('No thread dumps found');
     expect(screen.getByText('Upload at least one thread dump to use this view.')).toBeInTheDocument();
     expect(screen.getByRole('main')).toHaveAttribute('id', 'centered');
+  });
+
+  it('explains when CPU data cannot be matched to a thread dump', () => {
+    render(<NoCpuInfosAndThreadDumpPairError />);
+
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('CPU usage data could not be matched to a thread dump');
+    expect(screen.getByText(/captured at the same time/)).toBeInTheDocument();
+  });
+
+  it('explains an unknown route', () => {
+    render(<PageNotFoundError />);
+
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Page not found');
+    expect(screen.getByText("Oops, you've found a dead link.")).toBeInTheDocument();
   });
 });

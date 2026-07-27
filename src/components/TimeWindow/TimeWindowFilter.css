@@ -100,8 +100,8 @@
   -webkit-text-fill-color: var(--ds-text);
 }
 
-.time-window-inputs button,
-.time-window-dialog-actions button {
+.time-window-dialog-actions button,
+.time-window-inputs button:not(.primary) {
   box-sizing: border-box;
   min-height: 32px;
   padding: 0 var(--ds-space-150, 12px);
@@ -125,31 +125,14 @@
   -webkit-text-fill-color: var(--ds-text-disabled, #080f214a);
 }
 
-.time-window-inputs button:hover:not(:disabled),
 .time-window-dialog-actions button:hover:not(:disabled) {
   text-decoration: none;
   background: var(--ds-background-neutral-subtle-hovered, #0515240f);
 }
 
-.time-window-inputs button.primary {
-  color: var(--ds-text-inverse, #fff);
-  background: var(--ds-background-brand-bold, #1868db);
-  border-color: var(--ds-background-brand-bold, #1868db);
-  -webkit-text-fill-color: var(--ds-text-inverse, #fff);
-}
-
-.time-window-inputs button.primary:disabled,
-.time-window-inputs button.primary:disabled:hover {
-  color: var(--ds-text-disabled, #080f214a);
+.time-window-inputs button:hover:not(:disabled, .primary) {
   text-decoration: none;
-  background: var(--ds-background-disabled, #17171708);
-  border-color: var(--ds-border-disabled, #0515240f);
-  cursor: not-allowed;
-  -webkit-text-fill-color: var(--ds-text-disabled, #080f214a);
-}
-
-.time-window-inputs button.primary:hover:not(:disabled) {
-  background: var(--ds-background-brand-bold-hovered, #1558bc);
+  background: var(--ds-background-neutral-subtle-hovered, #0515240f);
 }
 
 .time-window-preview {

@@ -1,82 +1,16 @@
-#error-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.error-indicator {
-  display: flex;
-  flex-direction: column;
-  width: 600px;
-  padding: var(--ds-space-300, 24px) var(--ds-space-400, 32px);
-  background: var(--ds-background-accent-gray-subtlest);
-  border: 2px solid var(--ds-border-accent-blue);
-  border-radius: var(--ds-radius-medium, 6px);
-}
-
-.error-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  margin-bottom: var(--ds-space-250, 20px);
-}
-
-.error-header h4 {
+.error-indicator h2 {
   margin: 0;
-  color: var(--ds-text-accent-red);
-  font-weight: var(--ds-font-weight-bold);
-  font-size: 16px;
-}
-
-.error-details {
-  height: 40px;
-  min-height: 40px;
-  margin-bottom: var(--ds-space-250, 20px);
-  color: var(--ds-text-subtlest);
-  font-size: 14px;
 }
 
 .error-message {
-  max-width: 100%;
-  margin-bottom: var(--ds-space-200, 16px);
-  overflow: hidden;
-  color: var(--ds-text-subtle);
-  font-weight: var(--ds-font-weight-bold);
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  margin: var(--ds-space-150, 12px) 0 0;
+  color: var(--ds-text-subtle, #626f86);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .error-actions {
   display: flex;
-  justify-content: center;
-}
-
-.retry-button {
-  padding: 6px 9px;
-  color: var(--ds-text-inverse);
-  text-decoration: none;
-  background: var(--ds-background-accent-blue-bolder);
-  border-radius: var(--ds-radius-small, 3px);
-  -webkit-text-fill-color: var(--ds-text-inverse);
-}
-
-.retry-button:hover {
-  text-decoration: none;
-  background: var(--ds-background-accent-blue-bolder-hovered);
-}
-
-.retry-button:active {
-  background: var(--ds-background-accent-blue-bolder-pressed);
-}
-
-/* Overlay backdrop */
-.error-indicator::before {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: rgb(9 30 66 / 54%);
-  content: '';
+  justify-content: flex-end;
+  margin-top: var(--ds-space-250, 20px);
 }

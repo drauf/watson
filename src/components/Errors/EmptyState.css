@@ -1,12 +1,7 @@
 .empty-state-content {
-  box-sizing: border-box;
-  width: min(100%, 640px);
-  padding: var(--ds-space-300, 24px);
+  width: fit-content;
+  max-width: min(100%, 640px);
   text-align: left;
-  background: var(--ds-elevation-surface-raised, #fff);
-  border: 1px solid var(--ds-border, #091e4224);
-  border-radius: var(--ds-radius-xlarge, 12px);
-  box-shadow: var(--ds-elevation-shadow-raised, 0 1px 1px rgb(9 30 66 / 13%), 0 0 1px rgb(9 30 66 / 31%));
 }
 
 .empty-state-title {
@@ -19,21 +14,4 @@
   margin: var(--ds-space-100, 8px) 0 0;
   color: var(--ds-text-subtle, #626f86);
   font: var(--ds-font-body, normal 400 14px/20px "Atlassian Sans", sans-serif);
-}
-
-.empty-state-preview {
-  width: min(100% - var(--ds-space-400, 32px), 960px);
-  margin: var(--ds-space-300, 24px) auto;
-}
-
-.empty-state-preview-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--ds-space-200, 16px);
-  margin-top: var(--ds-space-200, 16px);
-}
-
-.empty-state-preview-item {
-  display: flex;
-  align-items: stretch;
 }

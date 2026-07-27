@@ -1,8 +1,12 @@
+import '../Container.css';
 import './EmptyState.css';
 
-interface Props {
+export interface EmptyStateContent {
   title: string;
   description: string;
+}
+
+interface Props extends EmptyStateContent {
   fullPage: boolean;
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ParseProgress } from '../../parser/AsyncParser';
+import '../Container.css';
 import './ProgressIndicator.css';
 
 interface Props {
