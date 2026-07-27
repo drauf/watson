@@ -21,15 +21,15 @@ describe('TimeWindowFilter', () => {
     expect(screen.queryByRole('button', { name: /time window/i })).not.toBeInTheDocument();
   });
 
-  it('matches the chevron state to the expanded controls', () => {
+  it('updates its expanded state when toggled', () => {
     renderFilter(createThreadDumps(2));
 
     const toggle = screen.getByRole('button', { name: /time window/i });
-    expect(toggle.querySelector('.chevron')).toHaveClass('rotate');
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
 
     fireEvent.click(toggle);
 
-    expect(toggle.querySelector('.chevron')).not.toHaveClass('rotate');
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
   });
 
   it('shows separate date and time inputs when thread dumps cross midnight', () => {

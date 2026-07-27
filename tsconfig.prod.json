@@ -5,6 +5,8 @@
       "./src/__mocks__/**",
       "./src/test-utils",
       "./src/**/*.test.tsx",
+      "./src/**/*.story.tsx",
+      "./playwright/**",
       ".e2e/**"
     ]
   }

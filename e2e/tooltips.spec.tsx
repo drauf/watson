@@ -1,5 +1,6 @@
 import { Page, expect } from '@playwright/test';
 import { test } from './e2e-common';
+import { waitForChartsToSettle, waitForTooltipToFinish } from './helpers/recharts';
 
 test.describe('Tooltips', () => {
   test.describe('Flame Graph Tooltips', () => {
@@ -97,7 +98,9 @@ test.describe('Tooltips', () => {
     async function testTooltipForChart(pageWithData: Page, chartId: string) {
       const chartArea = getRechartsWrapperForChart(pageWithData, chartId);
 
+      await waitForChartsToSettle(pageWithData, [chartId]);
       await chartArea.hover();
+      await waitForTooltipToFinish(pageWithData);
       await expect(pageWithData).toHaveScreenshot(`summary-${chartId}-tooltip.png`);
     }
 

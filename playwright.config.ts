@@ -6,39 +6,45 @@ const browsers = new Map([
 ]);
 
 const viewports = [
-  { width: 1680, height: 1050 }
+  { width: 1680, height: 1050 },
 ];
 
 const colorSchemes = ['light', 'dark'];
+const componentTestDirectory = './e2e/visual/components';
 
 const getProjects = () => {
   const projects = [];
 
-  projects.push({
-    name: 'disable animations',
-    testMatch: /global\.setup\.tsx/,
-  });
-
   for (const [browserName, browser] of browsers) {
     for (const viewport of viewports) {
       for (const colorScheme of colorSchemes) {
-        const project = {
-          name: `${browserName}-${colorScheme}`,
-          use: {
-            ...browser,
-            colorScheme: colorScheme,
-            viewport: viewport,
-            dependencies: ['disable animations'],
-          },
+        const browserSettings = {
+          ...browser,
+          colorScheme,
+          viewport,
         };
 
-        projects.push(project)
+        projects.push({
+          name: `${browserName}-${colorScheme}`,
+          testIgnore: /e2e\/visual\/components\//,
+          use: browserSettings,
+        });
+        projects.push({
+          name: `${browserName}-${colorScheme}-components`,
+          testDir: componentTestDirectory,
+          use: {
+            ...browserSettings,
+            baseURL: 'http://localhost:3000/playwright/gallery/index.html',
+            reuseContext: true,
+            serviceWorkers: 'block',
+          },
+        });
       }
     }
   }
 
   return projects;
-}
+};
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -63,14 +69,13 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'http://localhost:3000',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    /* Collect trace when retrying the failed test. */
     trace: 'on-first-retry',
   },
-
   /* Configure projects for major browsers */
   projects: getProjects(),
 
-  /* Run your local dev server before starting the tests */
+  /* Run the Vite dev server before starting the tests */
   webServer: {
     command: 'yarn start',
     url: 'http://localhost:3000',
