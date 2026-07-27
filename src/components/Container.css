@@ -56,8 +56,29 @@ main {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  height: calc(100vh - var(--watson-navigation-height));
-  min-height: calc(100vh - var(--watson-navigation-height));
-  padding: var(--ds-space-400, 32px) 0 calc(var(--ds-space-400, 32px) + var(--watson-navigation-height));
+  height: calc(100vh - var(--watson-navigation-height, 0px));
+  min-height: calc(100vh - var(--watson-navigation-height, 0px));
+  padding: var(--ds-space-400, 32px) 0 calc(var(--ds-space-400, 32px) + var(--watson-navigation-height, 0px));
   text-align: center;
+}
+
+#progress-container,
+#error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.progress-indicator,
+.error-indicator {
+  box-sizing: border-box;
+  width: min(100%, 600px);
+  padding: var(--ds-space-300, 24px);
+  color: var(--ds-text, #292a2e);
+  background: var(--ds-surface-overlay, #fff);
+  border: 1px solid var(--ds-border, #dfe1e6);
+  border-radius: var(--ds-radius-xlarge, 12px);
+  box-shadow: var(--ds-shadow-overlay, 0 8px 12px #1e1f2126);
 }

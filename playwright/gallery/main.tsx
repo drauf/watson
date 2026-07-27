@@ -69,4 +69,6 @@ window.unmount = async (): Promise<void> => {
   root = undefined;
 };
 
+document.documentElement.style.setProperty('--watson-navigation-height', '0px');
+rootElement.style.height = '100vh';
 document.body.classList.add('no-motion');

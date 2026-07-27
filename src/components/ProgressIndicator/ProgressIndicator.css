@@ -1,21 +1,6 @@
-#progress-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
 .progress-indicator {
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-  width: min(100%, 600px);
-  padding: var(--ds-space-300, 24px);
-  background: var(--ds-surface-overlay, #fff);
-  border: 1px solid var(--ds-border, #dfe1e6);
-  border-radius: var(--ds-radius-xlarge, 12px);
-  box-shadow: var(--ds-shadow-overlay, 0 8px 12px #1e1f2126);
 }
 
 .progress-header {
@@ -113,4 +98,3 @@
     opacity: 1;
   }
 }
-

@@ -1,11 +1,12 @@
-import EmptyState from './EmptyState';
+import EmptyState, { EmptyStateContent } from './EmptyState';
+
+export const pageNotFoundEmptyState: EmptyStateContent = {
+  title: 'Page not found',
+  description: "Oops, you've found a dead link.",
+};
 
 const PageNotFoundError = (): JSX.Element => (
-  <EmptyState
-    fullPage
-    title="Page not found"
-    description="Oops, you've found a dead link."
-  />
+  <EmptyState fullPage {...pageNotFoundEmptyState} />
 );
 
 export default PageNotFoundError;
