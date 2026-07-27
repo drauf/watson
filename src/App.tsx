@@ -14,7 +14,6 @@ import FlameGraphPage from './components/FlameGraph/FlameGraphPage';
 import ThreadsOverviewPage from './components/ThreadsOverview/ThreadsOverviewPage';
 import Index from './components/Index/Index';
 import HelpPage from './components/Help/HelpPage';
-import TestProgressPage from './components/ProgressIndicator/TestProgressPage';
 
 const routes = [
   {
@@ -66,14 +65,6 @@ const routes = [
     ],
   },
 ];
-
-if (import.meta.env.DEV) {
-  routes.push({
-    path: '/test/progress',
-    element: <TestProgressPage />,
-  });
-}
-
 const router = createHashRouter(routes);
 
 const App = () => (
