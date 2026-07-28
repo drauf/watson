@@ -56,7 +56,7 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     }
 
     return (
-      <main>
+      <main id="stuck-threads-page">
         <StuckThreadsSettings
           maxDifferingLines={this.state.maxDifferingLines}
           minClusterSize={this.state.minClusterSize}

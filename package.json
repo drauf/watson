@@ -13,6 +13,7 @@
     "url": "https://github.com/drauf/watson/issues"
   },
   "dependencies": {
+    "@atlaskit/button": "21.0.0",
     "@atlaskit/css-reset": "7.3.8",
     "@atlaskit/tokens": "7.0.0",
     "d3": "7.9.0",

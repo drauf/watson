@@ -1,3 +1,4 @@
+import Button from '@atlaskit/button';
 import {
   PointerEvent as ReactPointerEvent, useEffect, useMemo, useRef, useState,
 } from 'react';
@@ -357,9 +358,9 @@ const TimeWindowFilter = (): JSX.Element | null => {
                 onChange={(event) => setPreviewTimeBoundary('endEpoch', event.target.value)}
               />
             </label>
-            <button type="submit" className="primary" disabled={!hasPendingChanges}>Apply</button>
-            <button type="button" disabled={!hasPendingChanges} onClick={resetPreviewTimeWindow}>Reset</button>
-            <button type="button" onClick={() => setPreviewTimeWindow()}>Show all...</button>
+            <Button appearance="primary" type="submit" isDisabled={!hasPendingChanges}>Apply</Button>
+            <Button appearance="default" onClick={resetPreviewTimeWindow} isDisabled={!hasPendingChanges}>Reset</Button>
+            <Button appearance="default" onClick={() => setPreviewTimeWindow()}>Show all...</Button>
           </form>
 
           <p className={previewIsLarge && hasPendingChanges ? 'time-window-preview time-window-preview-warning' : 'time-window-preview'}>
@@ -399,8 +400,8 @@ const TimeWindowFilter = (): JSX.Element | null => {
             </div>
             <p>{largeRangeMessage}</p>
             <div className="time-window-dialog-actions">
-              <button type="button" onClick={() => setConfirmationOpen(false)}>Choose smaller window</button>
-              <button type="button" className="warning" onClick={applyLargePreview}>Analyze anyway</button>
+              <Button appearance="default" onClick={() => setConfirmationOpen(false)}>Choose smaller window</Button>
+              <Button appearance="warning" onClick={applyLargePreview}>Analyze anyway</Button>
             </div>
           </section>
         </div>

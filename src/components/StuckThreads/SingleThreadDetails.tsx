@@ -17,7 +17,6 @@ export default class SingleThreadDetails extends React.PureComponent<Props> {
       <>
         <OpenThreadDetailsButton
           text={Thread.getFormattedTime(thread)}
-          className="single-thread-details"
           thread={thread}
         />
 

@@ -1,13 +1,14 @@
 .group-details {
   display: flex;
   flex-wrap: wrap;
+  gap: var(--ds-space-075, 6px);
 }
 
-.group-details button {
-  min-width: 68px;
-  margin: var(--ds-space-075, 6px) 0 0;
-  font-weight: var(--ds-font-weight-bold);
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0;
+.group-details .stacktrace-container {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+#stuck-threads-page .group-details button {
+  font-variant-numeric: tabular-nums;
 }

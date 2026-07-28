@@ -53,8 +53,7 @@ header li + li {
   margin-top: 0;
 }
 
-header a,
-header button {
+header a {
   display: inline-flex;
   align-items: center;
   box-sizing: border-box;
@@ -77,8 +76,7 @@ header a.active {
   border-bottom: 3px solid var(--ds-link);
 }
 
-header a:hover,
-header button:hover {
+header a:hover {
   color: var(--ds-text);
   text-decoration: none;
   background: var(--ds-background-neutral-subtle-hovered, #0515240f);
@@ -91,8 +89,7 @@ header a.active:hover {
   -webkit-text-fill-color: var(--ds-link);
 }
 
-header a:focus-visible,
-header button:focus-visible {
+header a:focus-visible {
   outline: 2px solid var(--ds-border-focused, #0c66e4);
   outline-offset: 2px;
 }

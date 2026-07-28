@@ -1,3 +1,4 @@
+import Button from '@atlaskit/button';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';
@@ -18,16 +19,15 @@ const FullPageError: React.FC<Props> = ({ title, message }) => {
         <h2 id="error-title">{title}</h2>
         <p className="error-message">{message}</p>
         <div className="error-actions">
-          <button
-            type="button"
-            className="primary"
+          <Button
+            appearance="primary"
             onClick={() => {
               clearCurrentData();
               navigate(0);
             }}
           >
             Try again
-          </button>
+          </Button>
         </div>
       </section>
     </div>

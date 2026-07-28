@@ -6,43 +6,53 @@ interface Props {
   thread: Thread | undefined;
 }
 
+type CpuUsageAppearance = 'danger' | 'warning' | 'default';
+
+const getCpuUsage = (cpuUsage: string): string => `${cpuUsage}%`;
+
+// The numbers here are completely arbitrary
+const getAppearance = (cpuUsage: number): CpuUsageAppearance => {
+  if (cpuUsage > 78) {
+    return 'danger';
+  }
+  if (cpuUsage > 42) {
+    return 'default';
+  }
+  if (cpuUsage > 10) {
+    return 'warning';
+  }
+  return 'default';
+};
+
+const isMediumUsage = (cpuUsage: number): boolean => cpuUsage > 42 && cpuUsage <= 78;
+
 export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
-  private static getCpuUsage = (cpuUsage: string): string => `${cpuUsage}%`;
-
-  private static getClassName = (cpuUsage: string): string => {
-    const cpuUsageNumber = parseFloat(cpuUsage);
-
-    // The numbers here are completely arbitrary
-    if (cpuUsageNumber > 78) {
-      return 'high';
-    }
-    if (cpuUsageNumber > 42) {
-      return 'medium';
-    }
-    if (cpuUsageNumber > 10) {
-      return 'low';
-    }
-    return 'none';
-  };
-
   public override render(): JSX.Element {
     const { thread } = this.props;
 
     if (!thread) {
       return (
         <>
-          <button type="button" className="cpu-consumer-usage no-click">n/a</button>
+          <span className="cpu-consumer-usage no-click">n/a</span>
           {' '}
         </>
       );
     }
 
-    const cpuUsage = CpuConsumerSingleUsage.getCpuUsage(thread.cpuUsage);
-    const className = CpuConsumerSingleUsage.getClassName(thread.cpuUsage);
+    const cpuUsage = parseFloat(thread.cpuUsage);
+    const className = isMediumUsage(cpuUsage)
+      ? 'cpu-consumer-usage cpu-consumer-medium-button'
+      : 'cpu-consumer-usage';
 
     return (
       <>
-        <OpenThreadDetailsButton text={cpuUsage} className={`cpu-consumer-usage ${className}`} thread={thread} />
+        <OpenThreadDetailsButton
+          appearance={getAppearance(cpuUsage)}
+          className={className}
+          spacing="default"
+          text={getCpuUsage(thread.cpuUsage)}
+          thread={thread}
+        />
         {' '}
       </>
     );

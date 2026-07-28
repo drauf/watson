@@ -1,3 +1,4 @@
+import Button from '@atlaskit/button';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import React from 'react';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';
@@ -57,15 +58,15 @@ const Navigation: React.FC = () => {
           </ul>
         </nav>
 
-        <button
-          type="button"
+        <Button
+          appearance="subtle"
           onClick={() => {
             clearCurrentData();
             navigate('/');
           }}
         >
           Clear data
-        </button>
+        </Button>
       </div>
     </header>
   );

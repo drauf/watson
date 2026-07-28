@@ -3,8 +3,7 @@
   width: 100%;
 }
 
-.monitors-container div,
-.monitors-container button {
+.monitors-container div {
   max-width: 100%;
   padding-left: var(--ds-space-075, 6px);
   overflow: hidden;
@@ -15,4 +14,18 @@
 .monitors-container .left {
   width: 360px;
   min-width: 360px;
+}
+
+.waiting-list {
+  margin: var(--ds-space-100, 8px) 0;
+}
+
+.waiting-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-050, 4px);
+  align-items: flex-start;
+  margin: var(--ds-space-075, 6px) 0;
+  padding: 0;
+  list-style: none;
 }

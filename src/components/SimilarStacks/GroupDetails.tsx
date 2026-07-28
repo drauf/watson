@@ -1,3 +1,4 @@
+import Button from '@atlaskit/button';
 import React from 'react';
 import Thread from '../../types/Thread';
 import StackTrace from './StackTrace';
@@ -52,11 +53,11 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
           {collapsable > 0
             && (
               <li>
-                <button type="button" onClick={this.toggleExpand}>
+                <Button appearance="subtle" spacing="none" onClick={this.toggleExpand}>
                   {expanded
                     ? `Collapse threads list (hide ${collapsable} thread(s))`
                     : `Expand threads list (${collapsable} more thread(s) to show)`}
-                </button>
+                </Button>
               </li>
             )}
         </ul>

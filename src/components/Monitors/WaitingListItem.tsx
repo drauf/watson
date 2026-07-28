@@ -7,10 +7,9 @@ interface Props {
 }
 
 const WaitingListItem: React.FC<Props> = ({ thread }) => (
-  <>
-    <OpenThreadDetailsButton text={thread.name} className="waiting-for-lock" thread={thread} />
-    <br />
-  </>
+  <li>
+    <OpenThreadDetailsButton text={thread.name} thread={thread} />
+  </li>
 );
 
 export default React.memo(WaitingListItem);

@@ -1,3 +1,4 @@
+import Button from '@atlaskit/button';
 import React from 'react';
 import Thread from '../../types/Thread';
 import WaitingListItem from './WaitingListItem';
@@ -34,25 +35,26 @@ export default class WaitingList extends React.PureComponent<Props, State> {
     const threads = expanded ? waiting : waiting.slice(0, WaitingList.THREADS_TO_SHOW_WHEN_COLLAPSED);
 
     return (
-      <p>
+      <section className="waiting-list">
         <b>
           {waiting.length}
           {' '}
           thread(s) waiting for notification on lock:
         </b>
-        <br />
 
-        {threads.map((thread) => <WaitingListItem key={thread.uniqueId} thread={thread} />)}
+        <ul className="waiting-list-items">
+          {threads.map((thread) => <WaitingListItem key={thread.uniqueId} thread={thread} />)}
+        </ul>
 
         {collapsable > 0
           && (
-            <button type="button" onClick={this.toggleExpand}>
+            <Button appearance="default" onClick={this.toggleExpand}>
               {expanded
                 ? `Collapse threads list (hide ${collapsable} thread(s))`
                 : `Expand threads list (${collapsable} more thread(s) to show)`}
-            </button>
+            </Button>
           )}
-      </p>
+      </section>
     );
   }
 }
