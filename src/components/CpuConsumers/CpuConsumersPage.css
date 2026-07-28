@@ -1,9 +1,3 @@
-#consumers-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 #consumers-list .cpu-consumer-usage {
   display: inline-flex;
   justify-content: center;
@@ -29,10 +23,6 @@
 
 #consumers-list .cpu-consumer-medium-button:hover {
   background: var(--ds-background-accent-orange-bolder-hovered, #a54800) !important;
-}
-
-#consumers-list li {
-  margin-bottom: var(--ds-space-100);
 }
 
 .no-click {
