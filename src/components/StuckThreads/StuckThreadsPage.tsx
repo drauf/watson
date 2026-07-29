@@ -6,6 +6,7 @@ import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDu
 import Thread from '../../types/Thread';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
+import PaginatedCollection from '../common/PaginatedCollection';
 import StuckThreadsGroup from './StuckThreadsGroup';
 import StuckThreadsSettings from './StuckThreadsSettings';
 import './StuckThreadsPage.css';
@@ -56,7 +57,7 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     }
 
     return (
-      <main>
+      <main id="stuck-threads-page">
         <StuckThreadsSettings
           maxDifferingLines={this.state.maxDifferingLines}
           minClusterSize={this.state.minClusterSize}
@@ -78,12 +79,19 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
       return <h4>{StuckThreadsPage.N0_THREADS_MATCHING}</h4>;
     }
 
-    return clusters.map((group) => (
-      <StuckThreadsGroup
-        threadGroup={group}
-        maxDifferingLines={this.state.maxDifferingLines}
+    return (
+      <PaginatedCollection
+        items={clusters}
+        resetKey={`${this.state.maxDifferingLines}:${this.state.minClusterSize}:${this.state.withoutIdle}:${this.state.nameFilter}:${this.state.stackFilter}:${this.props.threadDumps.length}`}
+        getKey={(group) => group[0].uniqueId}
+        renderItem={(group) => (
+          <StuckThreadsGroup
+            threadGroup={group}
+            maxDifferingLines={this.state.maxDifferingLines}
+          />
+        )}
       />
-    ));
+    );
   };
 
   private filterThreads = (threadDumps: Map<number, Thread>[]): Thread[][] => threadDumps

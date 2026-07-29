@@ -1,0 +1,25 @@
+.group-header {
+  display: flex;
+  flex: 1;
+  gap: var(--ds-space-100);
+  align-items: center;
+  min-width: 0;
+}
+
+.group-header-leading {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: var(--ds-space-050);
+}
+
+.group-header-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.group-header-metadata {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: var(--ds-space-050);
+}

@@ -7,6 +7,7 @@ import ThreadDump from '../../types/ThreadDump';
 import NoCpuInfosAndThreadDumpPairError from '../Errors/NoCpuInfosAndThreadDumpPairError';
 import PageWithSettings from '../PageWithSettings';
 import CpuConsumer from './CpuConsumer';
+import { getCpuUsageSummary } from './cpuUsageSummary';
 import CpuConsumersList from './CpuConsumersList';
 import CpuConsumersSettings from './CpuConsumersSettings';
 import CpuConsumersMode from './CpuConsumersMode';
@@ -14,7 +15,6 @@ import './CpuConsumersPage.css';
 
 interface State {
   mode: CpuConsumersMode;
-  limit: number;
   threadDumps: ThreadDump[];
   nameFilter: string;
   stackFilter: string;
@@ -27,7 +27,6 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
     const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
 
     this.state = {
-      limit: 40,
       mode: CpuConsumersMode.Mean,
       threadDumps: nonEmptyThreadDumps,
       nameFilter: '',
@@ -46,18 +45,16 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
       <main>
         <CpuConsumersSettings
           mode={this.state.mode}
-          limit={this.state.limit}
           nameFilter={this.state.nameFilter}
           stackFilter={this.state.stackFilter}
           onModeChange={this.handleModeChange}
-          onLimitChange={this.handleIntegerChange}
           onRegExpChange={this.handleTextChange}
         />
 
         <CpuConsumersList
-          limit={this.state.limit}
           dumpsNumber={this.state.threadDumps.length}
           consumers={consumers}
+          resetKey={`${this.state.mode}:${this.state.nameFilter}:${this.state.stackFilter}:${this.state.threadDumps.length}`}
         />
       </main>
     );
@@ -99,36 +96,18 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
   };
 
   private calculateUsageFor = (threadsMap: Map<number, Thread>, calculationMode: CpuConsumersMode) => {
-    const threads = Array.from(threadsMap.values());
+    const summary = getCpuUsageSummary(threadsMap.values(), this.state.threadDumps.length);
 
-    let usage = 0;
     switch (calculationMode) {
       case CpuConsumersMode.Mean:
-        usage = threads.reduce(CpuConsumersPage.reduceSum, 0) / this.state.threadDumps.length;
-        break;
+        return new CpuConsumer(summary.mean, summary, threadsMap);
       case CpuConsumersMode.Median:
-        usage = CpuConsumersPage.calculateMedian(threads);
-        break;
+        return new CpuConsumer(summary.median, summary, threadsMap);
       case CpuConsumersMode.Max:
-        usage = threads.reduce(CpuConsumersPage.reduceMax, 0);
-        break;
+        return new CpuConsumer(summary.max, summary, threadsMap);
       default:
         throw new Error(`Unsupported calculation mode: ${calculationMode as CpuConsumersMode}`);
     }
-
-    return new CpuConsumer(usage, threadsMap);
-  };
-
-  private static reduceSum = (sum: number, currentThread: Thread): number => sum + parseFloat(currentThread.cpuUsage);
-
-  private static reduceMax = (maxValue: number, currentThread: Thread): number => ((parseFloat(currentThread.cpuUsage) > maxValue) ? parseFloat(currentThread.cpuUsage) : maxValue);
-
-  private static calculateMedian = (threads: Thread[]): number => {
-    const values = threads.slice();
-    values.sort((a, b) => parseFloat(a.cpuUsage) - parseFloat(b.cpuUsage));
-    const lowMiddle = Math.floor((values.length - 1) / 2);
-    const highMiddle = Math.ceil((values.length - 1) / 2);
-    return (parseFloat(values[lowMiddle].cpuUsage) + parseFloat(values[highMiddle].cpuUsage)) / 2;
   };
 }
 

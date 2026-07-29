@@ -1,23 +1,35 @@
+import Lozenge from '@atlaskit/lozenge/new';
 import React from 'react';
 import Thread from '../../types/Thread';
+import CollapsableGroup from '../CollapsableGroup';
+import GroupHeader from '../common/GroupHeader';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumerSingleUsage from './CpuConsumerSingleUsage';
-import '../common/ExpandableSurface.css';
 
 interface Props {
   dumpsNumber: number;
   consumer: CpuConsumer;
 }
 
-interface State {
-  collapsed: boolean;
-}
+const formatUsage = (usage: number): string => `${usage.toFixed(2)}%`;
 
-export default class CpuConsumerItem extends React.PureComponent<Props, State> {
-  private static formatConsumerHeader = (value: number, threads: IterableIterator<Thread>): string => (
-    `${value.toFixed(2)}% - "${CpuConsumerItem.getThreadName(threads)}"`
-  );
+const getUsageAppearance = (usage: number) => {
+  if (usage > 78) {
+    return 'danger' as const;
+  }
 
+  if (usage > 42) {
+    return 'warning' as const;
+  }
+
+  if (usage > 10) {
+    return 'information' as const;
+  }
+
+  return 'neutral' as const;
+};
+
+export default class CpuConsumerItem extends React.PureComponent<Props> {
   private static getThreadName = (threads: IterableIterator<Thread>): string => {
     for (const thread of threads) {
       if (thread) {
@@ -27,43 +39,46 @@ export default class CpuConsumerItem extends React.PureComponent<Props, State> {
     return '';
   };
 
-  constructor(props: Props) {
-    super(props);
-    this.state = { collapsed: false };
-  }
-
-  private toggleCollapsed = () => {
-    this.setState((previousState) => ({ collapsed: !previousState.collapsed }));
-  };
-
   public override render(): JSX.Element {
-    const { dumpsNumber, consumer } = this.props;
-    const { collapsed } = this.state;
+    const { consumer, dumpsNumber } = this.props;
+    const { max, mean, median } = consumer.summary;
+    const threadName = CpuConsumerItem.getThreadName(consumer.threadOccurrences.values());
     const threadsPadded: (Thread | undefined)[] = [];
+
     for (let i = 0; i < dumpsNumber; i++) {
       threadsPadded.push(consumer.threadOccurrences.get(i));
     }
 
-    return (
-      <li className={`cpu-consumer-item expandable-surface${collapsed ? '' : ' expandable-surface-expanded'}`}>
-        <button
-          type="button"
-          className="expandable-surface-toggle ellipsis"
-          aria-expanded={!collapsed}
-          onClick={this.toggleCollapsed}
-        >
-          <span className={collapsed ? 'chevron rotate' : 'chevron'} />
-          {CpuConsumerItem.formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurrences.values())}
-        </button>
-
-        {!collapsed && (
-          <span className="cpu-consumer-usages expandable-surface-content">
-            {threadsPadded.map((thread, index) => (
-              <CpuConsumerSingleUsage key={thread ? thread.uniqueId : `undefined_${index}`} thread={thread} />
-            ))}
-          </span>
+    const header = (
+      <GroupHeader
+        leading={(
+          <>
+            <Lozenge appearance={getUsageAppearance(mean)} trailingMetric={formatUsage(mean)}>
+              Mean
+            </Lozenge>
+            <Lozenge appearance={getUsageAppearance(median)} trailingMetric={formatUsage(median)}>
+              Median
+            </Lozenge>
+            <Lozenge appearance={getUsageAppearance(max)} trailingMetric={formatUsage(max)}>
+              Max
+            </Lozenge>
+          </>
         )}
-      </li>
+        title={threadName}
+        metadata={null}
+      />
     );
+    const content = (
+      <div className="cpu-consumer-usages">
+        {threadsPadded.map((thread, index) => (
+          <CpuConsumerSingleUsage
+            key={thread ? thread.uniqueId : `undefined_${index}`}
+            thread={thread}
+          />
+        ))}
+      </div>
+    );
+
+    return <CollapsableGroup header={header} content={content} />;
   }
 }

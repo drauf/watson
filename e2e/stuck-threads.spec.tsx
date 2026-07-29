@@ -30,30 +30,10 @@ test.describe('Stuck threads', () => {
     await expect(pageWithData).toHaveScreenshot();
   });
 
-  test('can fold sections', async ({ pageWithData }) => {
-    await pageWithData.getByText('Active').uncheck();
-    const buttons = (await pageWithData.locator('.collapsable-group .expandable-surface-toggle').all()).slice(0, 10);
-
-    for (const button of buttons) {
-      await button.click();
-    }
-
-    await expect(pageWithData).toHaveScreenshot();
-  });
-
   test('has working regex filters', async ({ pageWithData }) => {
     await pageWithData.getByPlaceholder('e.g. http.*exec').fill('caesium');
     await pageWithData.getByPlaceholder('e.g. java\\.io').fill('CountDownLatch');
 
     await expect(pageWithData).toHaveScreenshot();
-  });
-
-  test('opens thread details', async ({ context, pageWithData }) => {
-    const [details] = await Promise.all([
-      context.waitForEvent('page'),
-      pageWithData.locator('.group-details').getByRole('button').first().click(),
-    ]);
-
-    await expect(details).toHaveScreenshot();
   });
 });

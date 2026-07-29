@@ -15,8 +15,11 @@
   padding: var(--ds-space-200);
 }
 
-.details-header div {
-  padding: 0 var(--ds-space-200);
+.thread-details-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-100);
+  padding-left: var(--ds-space-200);
 }
 
 .details-body {
@@ -106,25 +109,3 @@
   border: 1px solid var(--ds-border-accent-yellow);
 }
 
-.high {
-  color: var(--ds-text-accent-red);
-  background: var(--ds-background-accent-red-subtler);
-  -webkit-text-fill-color: var(--ds-text-accent-red);
-}
-
-.medium {
-  color: var(--ds-text-accent-orange);
-  background: var(--ds-background-accent-orange-subtler);
-  -webkit-text-fill-color: var(--ds-text-accent-orange);
-}
-
-.low {
-  color: var(--ds-text-accent-yellow);
-  background: var(--ds-background-accent-yellow-subtler);
-  -webkit-text-fill-color: var(--ds-text-accent-yellow);
-}
-
-.none {
-  color: var(--ds-text-subtlest);
-  -webkit-text-fill-color: var(--ds-text-subtlest);
-}

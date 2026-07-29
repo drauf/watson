@@ -18,7 +18,7 @@ export default class MonitorOwner extends React.PureComponent<Props> {
       <p>
         <b>Held by:</b>
         <br />
-        <OpenThreadDetailsButton text={monitor.owner.name} className="monitor-owner" thread={monitor.owner} />
+        <OpenThreadDetailsButton text={monitor.owner.name} thread={monitor.owner} />
         <br />
       </p>
     );

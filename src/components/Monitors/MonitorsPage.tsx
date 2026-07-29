@@ -3,6 +3,7 @@ import { matchesRegexFilters } from '../../common/regexFiltering';
 import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
+import PaginatedCollection from '../common/PaginatedCollection';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeGroup from './MonitorOverTimeItem';
@@ -47,16 +48,23 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
           onRegExpChange={this.handleTextChange}
         />
 
-        {MonitorsPage.renderMonitors(filtered)}
+        {this.renderMonitors(filtered)}
       </main>
     );
   }
 
-  private static renderMonitors = (filtered: MonitorOverTime[]): React.ReactNode => {
+  private renderMonitors = (filtered: MonitorOverTime[]): React.ReactNode => {
     if (filtered.length === 0) {
       return <h4>{MonitorsPage.N0_MONITORS_MATCHING}</h4>;
     }
-    return filtered.map((monitor) => <MonitorOverTimeGroup key={monitor.uniqueId} monitor={monitor} />);
+    return (
+      <PaginatedCollection
+        items={filtered}
+        resetKey={`${this.state.withOwner}:${this.state.withoutIdle}:${this.state.withoutOwner}:${this.state.nameFilter}:${this.state.stackFilter}:${this.props.threadDumps.length}`}
+        getKey={(monitor) => monitor.uniqueId}
+        renderItem={(monitor) => <MonitorOverTimeGroup monitor={monitor} />}
+      />
+    );
   };
 
   private static getMonitorsOverTime = (threadDumps: ThreadDump[]): MonitorOverTime[] => {

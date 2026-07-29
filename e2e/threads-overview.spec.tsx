@@ -59,6 +59,21 @@ test.describe('Threads overview', () => {
       pageWithData.getByText('org.bouncycastle').click({ force: true }),
     ]);
 
-    await expect(details).toHaveScreenshot();
+    await expect(details.locator('.thread-details')).toBeVisible();
+    await expect(details.getByRole('heading', { level: 3 })).toBeVisible();
+    await expect(details.locator('.stacktrace-container code').first())
+      .toHaveCSS('font-family', /Atlassian Mono/);
+
+    // ThreadDetailsPopup mirrors <head> stylesheets into the popup document.
+    // This checks that a style added to the opener after the popup opened
+    // still reaches the popup, since Emotion/Compiled inject styles lazily.
+    await pageWithData.evaluate(() => {
+      const style = document.createElement('style');
+      style.id = 'thread-details-popup-style-sync-test';
+      style.textContent = '.thread-details { outline: 1px solid rgb(255, 0, 0); }';
+      document.head.append(style);
+    });
+    await expect(details.locator('.thread-details')).toHaveCSS('outline-width', '1px');
+    await pageWithData.evaluate(() => document.getElementById('thread-details-popup-style-sync-test')?.remove());
   });
 });

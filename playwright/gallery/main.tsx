@@ -1,4 +1,5 @@
 import React, { StrictMode } from 'react';
+import AppProvider from '@atlaskit/app-provider';
 import { flushSync } from 'react-dom';
 import { createRoot, Root } from 'react-dom/client';
 import '../../src/index.css';
@@ -58,7 +59,9 @@ window.mount = async ({ story, props = {} }: MountParams): Promise<void> => {
   flushSync(() => {
     root?.render(
       <StrictMode>
-        <Story {...props} />
+        <AppProvider defaultColorMode="auto">
+          <Story {...props} />
+        </AppProvider>
       </StrictMode>,
     );
   });

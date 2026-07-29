@@ -1,6 +1,9 @@
+import Lozenge from '@atlaskit/lozenge/new';
 import React from 'react';
+import { getRepresentativeStackLine, getStackCategories } from '../../common/stackCategories';
 import Thread from '../../types/Thread';
 import CollapsableGroup from '../CollapsableGroup';
+import GroupHeader from '../common/GroupHeader';
 import GroupDetails from './GroupDetails';
 
 interface Props {
@@ -8,28 +11,33 @@ interface Props {
   maxDifferingLines: number;
 }
 
+const getCategoryAppearance = () => 'accent-yellow' as const;
+
 export default class StuckThreadsGroup extends React.PureComponent<Props> {
   public override render(): JSX.Element | null {
-    const { threadGroup, maxDifferingLines } = this.props;
+    const { maxDifferingLines, threadGroup } = this.props;
 
     if (threadGroup.length === 0) {
       return null;
     }
 
-    const thread = threadGroup[0];
-    const header = (
-      <>
-        {threadGroup.length}
-        {' '}
-        similar stack(s) for
-        {' '}
-        &quot;
-        {thread.name}
-        &quot;
-      </>
-    );
-    const content = <GroupDetails threadGroup={threadGroup} maxDifferingLines={maxDifferingLines} />;
+    const categories = getStackCategories(threadGroup);
 
-    return <CollapsableGroup header={header} content={content} />;
+    const header = (
+      <GroupHeader
+        leading={<Lozenge appearance="neutral" trailingMetric={threadGroup.length.toString()}>Stuck threads</Lozenge>}
+        title={getRepresentativeStackLine(threadGroup)}
+        metadata={categories.map((category) => (
+          <Lozenge key={category} appearance={getCategoryAppearance()}>{category}</Lozenge>
+        ))}
+      />
+    );
+
+    return (
+      <CollapsableGroup
+        header={header}
+        content={<GroupDetails threadGroup={threadGroup} maxDifferingLines={maxDifferingLines} />}
+      />
+    );
   }
 }

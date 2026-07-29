@@ -23,7 +23,6 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--ds-space-200, 16px);
-  padding: var(--ds-space-100, 8px) 0;
 }
 
 #settings > div,

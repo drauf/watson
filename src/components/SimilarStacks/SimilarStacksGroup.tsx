@@ -1,6 +1,9 @@
+import Lozenge from '@atlaskit/lozenge/new';
 import React from 'react';
+import { getRepresentativeStackLine, getStackCategories } from '../../common/stackCategories';
 import Thread from '../../types/Thread';
 import CollapsableGroup from '../CollapsableGroup';
+import GroupHeader from '../common/GroupHeader';
 import GroupDetails from './GroupDetails';
 
 interface Props {
@@ -8,19 +11,28 @@ interface Props {
   linesToConsider: number;
 }
 
+const getCategoryAppearance = () => 'accent-yellow' as const;
+
 export default class SimilarStacksGroup extends React.PureComponent<Props> {
   public override render(): JSX.Element {
-    const { threadGroup, linesToConsider } = this.props;
+    const { linesToConsider, threadGroup } = this.props;
+    const categories = getStackCategories(threadGroup);
 
     const header = (
-      <>
-        {threadGroup.length}
-        {' '}
-        thread(s) with this stack:
-      </>
+      <GroupHeader
+        leading={<Lozenge appearance="neutral" trailingMetric={threadGroup.length.toString()}>Threads</Lozenge>}
+        title={getRepresentativeStackLine(threadGroup)}
+        metadata={categories.map((category) => (
+          <Lozenge key={category} appearance={getCategoryAppearance()}>{category}</Lozenge>
+        ))}
+      />
     );
-    const content = <GroupDetails threadGroup={threadGroup} linesToConsider={linesToConsider} />;
 
-    return <CollapsableGroup header={header} content={content} />;
+    return (
+      <CollapsableGroup
+        header={header}
+        content={<GroupDetails threadGroup={threadGroup} linesToConsider={linesToConsider} />}
+      />
+    );
   }
 }

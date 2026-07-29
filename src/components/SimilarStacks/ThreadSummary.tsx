@@ -28,7 +28,7 @@ export default class ThreadSummary extends React.PureComponent<Props> {
         <>
           , awaiting notification on
           {' '}
-          <OpenThreadDetailsButton text={`[${lockWaitingFor}]`} className="lock-owner" thread={lockOwner} />
+          <OpenThreadDetailsButton text={`[${lockWaitingFor}]`} thread={lockOwner} />
         </>
       );
     }
@@ -42,7 +42,7 @@ export default class ThreadSummary extends React.PureComponent<Props> {
 
     return (
       <li>
-        <OpenThreadDetailsButton text={`"${thread.name}"`} className="thread-summary" thread={thread} />
+        <OpenThreadDetailsButton text={thread.name} thread={thread} />
         {` ${Thread.getFormattedTime(thread)}`}
         {ThreadSummary.waitingForRender(thread, lockOwner)}
         {thread.locksHeld.length > 0 && `, holding [${locksHeld}]`}

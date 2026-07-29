@@ -1,15 +1,6 @@
-import { ThemeProvider } from '../../context/ThemeContext';
 import NoCpuInfosAndThreadDumpPairError from './NoCpuInfosAndThreadDumpPairError';
 import NoThreadDumpsError from './NoThreadDumpsError';
 
-export const NoThreadDumps = () => (
-  <ThemeProvider>
-    <NoThreadDumpsError />
-  </ThemeProvider>
-);
+export const NoThreadDumps = () => <NoThreadDumpsError />;
 
-export const UnmatchedCpuUsageData = () => (
-  <ThemeProvider>
-    <NoCpuInfosAndThreadDumpPairError />
-  </ThemeProvider>
-);
+export const UnmatchedCpuUsageData = () => <NoCpuInfosAndThreadDumpPairError />;

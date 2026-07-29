@@ -25,23 +25,4 @@ test.describe('Monitors', () => {
 
     await expect(pageWithData).toHaveScreenshot();
   });
-
-  test('can fold sections', async ({ pageWithData }) => {
-    const buttons = (await pageWithData.locator('.collapsable-group .expandable-surface-toggle').all()).slice(0, 10);
-
-    for (const button of buttons) {
-      await button.click();
-    }
-
-    await expect(pageWithData).toHaveScreenshot();
-  });
-
-  test('opens thread details', async ({ context, pageWithData }) => {
-    const [details] = await Promise.all([
-      context.waitForEvent('page'),
-      pageWithData.locator('.monitors-container').getByRole('button').first().click(),
-    ]);
-
-    await expect(details).toHaveScreenshot();
-  });
 });

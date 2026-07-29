@@ -1,5 +1,8 @@
 import React from 'react';
+import Lozenge from '@atlaskit/lozenge/new';
 import Thread from '../../types/Thread';
+import ThreadStatus from '../../types/ThreadStatus';
+import { getCpuUsageLozengeAppearance } from '../CpuConsumers/cpuUsageAppearance';
 
 interface Props {
   thread: Thread;
@@ -16,46 +19,36 @@ export default class ThreadDetailsHeader extends React.PureComponent<Props> {
     </h3>
   );
 
-  private static renderStatus = (thread: Thread) => (
-    <div>
-      State:
-      <span className={`thread-state ${thread.status}`}>
-        {thread.status.toLocaleUpperCase()}
-      </span>
-    </div>
-  );
-
-  private static getCpuUsageClassName = (cpuUsage: string): string => {
-    const cpuUsageNumber = parseFloat(cpuUsage);
-
-    // The numbers here are completely arbitrary
-    if (cpuUsageNumber > 78) {
-      return 'high';
+  private static getStatusAppearance = (status: ThreadStatus) => {
+    switch (status) {
+      case ThreadStatus.RUNNABLE:
+        return 'success' as const;
+      case ThreadStatus.BLOCKED:
+        return 'danger' as const;
+      case ThreadStatus.WAITING:
+        return 'discovery' as const;
+      case ThreadStatus.TIMED_WAITING:
+        return 'warning' as const;
+      default:
+        return 'neutral' as const;
     }
-    if (cpuUsageNumber > 42) {
-      return 'medium';
-    }
-    if (cpuUsageNumber > 10) {
-      return 'low';
-    }
-    return 'none';
   };
 
-  private static renderCpuUsage = (thread: Thread) => (
-    <div>
-      CPU usage:
-      <span className={`thread-state ${ThreadDetailsHeader.getCpuUsageClassName(thread.cpuUsage)}`}>
-        {thread.cpuUsage}
-        %
-      </span>
-    </div>
-  );
-
-  private static renderRunningFor = (thread: Thread) => (
-    <div>
-      Running for:
-      {' '}
-      {thread.runningFor}
+  private static renderMetadata = (thread: Thread) => (
+    <div className="thread-details-metadata">
+      <Lozenge
+        appearance={ThreadDetailsHeader.getStatusAppearance(thread.status)}
+        trailingMetric={thread.status.toLocaleUpperCase()}
+      >
+        Thread state
+      </Lozenge>
+      <Lozenge
+        appearance={getCpuUsageLozengeAppearance(parseFloat(thread.cpuUsage))}
+        trailingMetric={`${thread.cpuUsage}%`}
+      >
+        CPU usage
+      </Lozenge>
+      <Lozenge appearance="neutral" trailingMetric={thread.runningFor}>Running for</Lozenge>
     </div>
   );
 
@@ -65,9 +58,7 @@ export default class ThreadDetailsHeader extends React.PureComponent<Props> {
     return (
       <div className="details-header">
         {ThreadDetailsHeader.renderName(thread)}
-        {ThreadDetailsHeader.renderStatus(thread)}
-        {ThreadDetailsHeader.renderCpuUsage(thread)}
-        {ThreadDetailsHeader.renderRunningFor(thread)}
+        {ThreadDetailsHeader.renderMetadata(thread)}
       </div>
     );
   }

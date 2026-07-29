@@ -1,6 +1,6 @@
+import AppProvider from '@atlaskit/app-provider';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import './App.css';
-import { ThemeProvider } from './context/ThemeContext';
 import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
 import Container from './components/Container';
 import PageNotFoundError from './components/Errors/PageNotFoundError';
@@ -68,9 +68,9 @@ const routes = [
 const router = createHashRouter(routes);
 
 const App = () => (
-  <ThemeProvider>
+  <AppProvider defaultColorMode="auto">
     <RouterProvider router={router} />
-  </ThemeProvider>
+  </AppProvider>
 );
 
 export default App;

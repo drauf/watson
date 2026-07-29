@@ -12,54 +12,9 @@ html {
   scrollbar-gutter: stable;
 }
 
-button {
-  color: var(--ds-link);
-  all: unset;
-  -webkit-text-fill-color: var(--ds-link);
-}
-
 .default-color {
   color: var(--ds-text);
   -webkit-text-fill-color: var(--ds-text);
-}
-
-button:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-button.primary {
-  box-sizing: border-box;
-  min-height: 32px;
-  padding: 0 var(--ds-space-150, 12px);
-  color: var(--ds-text-inverse, #fff);
-  font: var(--ds-font-body, normal 400 14px/20px "Atlassian Sans", sans-serif);
-  font-weight: var(--ds-font-weight-medium, 500);
-  background: var(--ds-background-brand-bold, #1868db);
-  border: 1px solid var(--ds-background-brand-bold, #1868db);
-  border-radius: var(--ds-radius-medium, 6px);
-  cursor: pointer;
-  -webkit-text-fill-color: var(--ds-text-inverse, #fff);
-}
-
-button.primary:focus-visible {
-  outline: 2px solid var(--ds-border-focused, #0c66e4);
-  outline-offset: 2px;
-}
-
-button.primary:disabled,
-button.primary:disabled:hover {
-  color: var(--ds-text-disabled, #080f214a);
-  text-decoration: none;
-  background: var(--ds-background-disabled, #17171708);
-  border-color: var(--ds-border-disabled, #0515240f);
-  cursor: not-allowed;
-  -webkit-text-fill-color: var(--ds-text-disabled, #080f214a);
-}
-
-button.primary:hover:not(:disabled) {
-  text-decoration: none;
-  background: var(--ds-background-brand-bold-hovered, #1558bc);
 }
 
 input,
@@ -174,12 +129,14 @@ input::placeholder {
 }
 
 .stacktrace-container code {
-  width: calc(100% - 32px);
-  margin: 0 auto;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
   padding: 0 var(--ds-space-200);
-  overflow-x: hidden;
+  overflow: hidden;
   font: var(--ds-font-code);
-  line-height: 19px;
+  line-height: 1.2lh;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
