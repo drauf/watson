@@ -14,7 +14,6 @@ import './CpuConsumersPage.css';
 
 interface State {
   mode: CpuConsumersMode;
-  limit: number;
   threadDumps: ThreadDump[];
   nameFilter: string;
   stackFilter: string;
@@ -27,7 +26,6 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
     const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
 
     this.state = {
-      limit: 40,
       mode: CpuConsumersMode.Mean,
       threadDumps: nonEmptyThreadDumps,
       nameFilter: '',
@@ -46,18 +44,16 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
       <main>
         <CpuConsumersSettings
           mode={this.state.mode}
-          limit={this.state.limit}
           nameFilter={this.state.nameFilter}
           stackFilter={this.state.stackFilter}
           onModeChange={this.handleModeChange}
-          onLimitChange={this.handleIntegerChange}
           onRegExpChange={this.handleTextChange}
         />
 
         <CpuConsumersList
-          limit={this.state.limit}
           dumpsNumber={this.state.threadDumps.length}
           consumers={consumers}
+          resetKey={`${this.state.mode}:${this.state.nameFilter}:${this.state.stackFilter}:${this.state.threadDumps.length}`}
         />
       </main>
     );

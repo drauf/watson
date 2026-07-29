@@ -32,6 +32,7 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
 
     return (
       <CollapsableGroup
+        initiallyCollapsed
         header={<>{CpuConsumerItem.formatConsumerHeader(consumer.calculatedValue, consumer.threadOccurrences.values())}</>}
         content={(
           <span className="cpu-consumer-usages">

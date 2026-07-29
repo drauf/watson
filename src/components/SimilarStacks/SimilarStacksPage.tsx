@@ -4,6 +4,7 @@ import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
+import PaginatedCollection from '../common/PaginatedCollection';
 import SimilarStacksGroup from './SimilarStacksGroup';
 import SimilarStacksSettings from './SimilarStacksSettings';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
@@ -55,12 +56,19 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
     if (threadGroups.length === 0) {
       return <h4>{SimilarStacksPage.N0_THREADS_MATCHING}</h4>;
     }
-    return threadGroups.map((group) => (
-      <SimilarStacksGroup
-        threadGroup={group}
-        linesToConsider={this.state.linesToConsider}
+    return (
+      <PaginatedCollection
+        items={threadGroups}
+        resetKey={`${this.state.linesToConsider}:${this.state.minimumGroupSize}:${this.state.withoutIdle}:${this.state.nameFilter}:${this.state.stackFilter}:${this.props.threadDumps.length}`}
+        getKey={(group) => group[0].uniqueId}
+        renderItem={(group) => (
+          <SimilarStacksGroup
+            threadGroup={group}
+            linesToConsider={this.state.linesToConsider}
+          />
+        )}
       />
-    ));
+    );
   };
 
   private groupByStackTrace = (threadDumps: ThreadDump[], linesToConsider: number) => {

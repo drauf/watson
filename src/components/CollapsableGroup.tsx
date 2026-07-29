@@ -5,6 +5,7 @@ import './common/ExpandableSurface.css';
 interface Props {
   header: JSX.Element;
   content: JSX.Element[] | JSX.Element;
+  initiallyCollapsed: boolean;
 }
 
 interface State {
@@ -14,7 +15,7 @@ interface State {
 export default class CollapsableGroup extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { collapse: false };
+    this.state = { collapse: props.initiallyCollapsed };
   }
 
   private toggleCollapse = () => {

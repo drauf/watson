@@ -30,6 +30,6 @@ export default class StuckThreadsGroup extends React.PureComponent<Props> {
     );
     const content = <GroupDetails threadGroup={threadGroup} maxDifferingLines={maxDifferingLines} />;
 
-    return <CollapsableGroup header={header} content={content} />;
+    return <CollapsableGroup initiallyCollapsed header={header} content={content} />;
   }
 }

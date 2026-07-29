@@ -22,6 +22,6 @@ export default class MonitorOverTimeGroup extends React.PureComponent<Props> {
     );
     const content = (monitor.monitors.map((item) => <MonitorItem key={item.uniqueId} monitor={item} />));
 
-    return <CollapsableGroup header={header} content={content} />;
+    return <CollapsableGroup initiallyCollapsed header={header} content={content} />;
   }
 }

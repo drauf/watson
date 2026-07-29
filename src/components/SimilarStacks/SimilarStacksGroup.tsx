@@ -21,6 +21,6 @@ export default class SimilarStacksGroup extends React.PureComponent<Props> {
     );
     const content = <GroupDetails threadGroup={threadGroup} linesToConsider={linesToConsider} />;
 
-    return <CollapsableGroup header={header} content={content} />;
+    return <CollapsableGroup initiallyCollapsed header={header} content={content} />;
   }
 }
