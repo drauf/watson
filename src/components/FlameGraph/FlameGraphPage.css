@@ -2,6 +2,10 @@ svg div {
   cursor: pointer;
 }
 
+#flame-graph {
+  margin-top: var(--ds-space-200, 16px);
+}
+
 #flame-graph svg {
   display: block;
   margin: auto;

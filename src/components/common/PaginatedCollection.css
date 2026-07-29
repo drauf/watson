@@ -1,7 +1,12 @@
+.paginated-collection-actions {
+  display: flex;
+  gap: var(--ds-space-050);
+  justify-content: flex-end;
+}
+
 .paginated-collection {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--ds-space-100);
   align-items: center;
   justify-content: space-between;
   margin-top: var(--ds-space-200);

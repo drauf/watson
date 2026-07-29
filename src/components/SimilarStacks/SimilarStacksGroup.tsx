@@ -30,7 +30,6 @@ export default class SimilarStacksGroup extends React.PureComponent<Props> {
 
     return (
       <CollapsableGroup
-        initiallyCollapsed
         header={header}
         content={<GroupDetails threadGroup={threadGroup} linesToConsider={linesToConsider} />}
       />

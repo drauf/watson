@@ -79,6 +79,6 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
       </div>
     );
 
-    return <CollapsableGroup initiallyCollapsed header={header} content={content} />;
+    return <CollapsableGroup header={header} content={content} />;
   }
 }
