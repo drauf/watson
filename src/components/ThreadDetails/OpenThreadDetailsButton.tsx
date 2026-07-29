@@ -7,7 +7,7 @@ interface Props {
   text: string;
   className?: string;
   thread: Thread;
-  appearance?: 'danger' | 'warning' | 'default' | 'subtle';
+  appearance?: 'danger' | 'warning' | 'primary' | 'default' | 'subtle';
   spacing?: 'default' | 'compact';
   shouldFitContainer?: boolean;
 }

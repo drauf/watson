@@ -71,7 +71,10 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
     const content = (
       <div className="cpu-consumer-usages">
         {threadsPadded.map((thread, index) => (
-          <CpuConsumerSingleUsage key={thread ? thread.uniqueId : `undefined_${index}`} thread={thread} />
+          <CpuConsumerSingleUsage
+            key={thread ? thread.uniqueId : `undefined_${index}`}
+            thread={thread}
+          />
         ))}
       </div>
     );

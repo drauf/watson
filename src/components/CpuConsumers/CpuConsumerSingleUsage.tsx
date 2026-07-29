@@ -6,7 +6,7 @@ interface Props {
   thread: Thread | undefined;
 }
 
-type CpuUsageAppearance = 'danger' | 'warning' | 'default';
+type CpuUsageAppearance = 'danger' | 'warning' | 'primary' | 'default';
 
 const getCpuUsage = (cpuUsage: string): string => `${cpuUsage}%`;
 
@@ -16,16 +16,13 @@ const getAppearance = (cpuUsage: number): CpuUsageAppearance => {
     return 'danger';
   }
   if (cpuUsage > 42) {
-    return 'default';
+    return 'warning';
   }
   if (cpuUsage > 10) {
-    return 'warning';
+    return 'primary';
   }
   return 'default';
 };
-
-const isMediumUsage = (cpuUsage: number): boolean => cpuUsage > 42 && cpuUsage <= 78;
-
 export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const { thread } = this.props;
@@ -40,9 +37,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
     }
 
     const cpuUsage = parseFloat(thread.cpuUsage);
-    const className = isMediumUsage(cpuUsage)
-      ? 'cpu-consumer-usage cpu-consumer-medium-button'
-      : 'cpu-consumer-usage';
+    const className = 'cpu-consumer-usage';
 
     return (
       <>
