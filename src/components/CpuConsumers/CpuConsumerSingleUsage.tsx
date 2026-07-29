@@ -49,7 +49,8 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
         <OpenThreadDetailsButton
           appearance={getAppearance(cpuUsage)}
           className={className}
-          spacing="default"
+          shouldFitContainer
+          spacing="compact"
           text={getCpuUsage(thread.cpuUsage)}
           thread={thread}
         />

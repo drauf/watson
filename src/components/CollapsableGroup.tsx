@@ -33,7 +33,7 @@ export default class CollapsableGroup extends React.PureComponent<Props, State> 
         <h5 className="collapsable-group-heading">
           <button
             type="button"
-            className="expandable-surface-toggle ellipsis"
+            className="expandable-surface-toggle"
             aria-expanded={!collapse}
             onClick={this.toggleCollapse}
           >

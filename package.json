@@ -15,6 +15,7 @@
   "dependencies": {
     "@atlaskit/button": "20.5.0",
     "@atlaskit/css-reset": "7.3.8",
+    "@atlaskit/lozenge": "14.1.5",
     "@atlaskit/pagination": "15.2.2",
     "@atlaskit/tokens": "7.0.0",
     "@compiled/react": "0.18.6",

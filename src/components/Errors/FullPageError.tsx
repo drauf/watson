@@ -1,4 +1,4 @@
-import Button from '@atlaskit/button';
+import Button from '@atlaskit/button/new';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';

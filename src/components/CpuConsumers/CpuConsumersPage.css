@@ -1,27 +1,32 @@
+#consumers-list .cpu-consumer-usages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-050);
+}
+
 #consumers-list .cpu-consumer-usage {
   display: inline-flex;
-  justify-content: center;
   width: 80px;
   min-width: 80px;
-  margin: var(--ds-space-025);
   font-weight: var(--ds-font-weight-bold);
 }
 
 #consumers-list .cpu-consumer-usage.no-click {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   padding: var(--ds-space-050) var(--ds-space-100);
-  text-align: center;
 }
 
-#consumers-list .cpu-consumer-medium-button {
+#consumers-list .cpu-consumer-medium-button button {
   color: var(--ds-text-inverse, #fff) !important;
   background: var(--ds-background-accent-orange-bolder, #c25100) !important;
   border-color: var(--ds-background-accent-orange-bolder, #c25100) !important;
   -webkit-text-fill-color: var(--ds-text-inverse, #fff);
 }
 
-#consumers-list .cpu-consumer-medium-button:hover {
+#consumers-list .cpu-consumer-medium-button button:hover {
   background: var(--ds-background-accent-orange-bolder-hovered, #a54800) !important;
 }
 

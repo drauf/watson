@@ -1,4 +1,4 @@
-import Button from '@atlaskit/button';
+import Button from '@atlaskit/button/new';
 import React from 'react';
 import Thread from '../../types/Thread';
 import StackTrace from './StackTrace';
@@ -30,6 +30,8 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
     return [];
   };
 
+  private static getThreadLabel = (count: number): string => (count === 1 ? 'thread' : 'threads');
+
   private toggleExpand = () => {
     this.setState((prevState) => ({ expanded: !prevState.expanded }));
   };
@@ -53,10 +55,10 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
           {collapsable > 0
             && (
               <li>
-                <Button appearance="subtle" spacing="none" onClick={this.toggleExpand}>
+                <Button appearance="subtle" spacing="compact" onClick={this.toggleExpand}>
                   {expanded
-                    ? `Collapse threads list (hide ${collapsable} thread(s))`
-                    : `Expand threads list (${collapsable} more thread(s) to show)`}
+                    ? `Collapse thread list (hide ${collapsable} ${GroupDetails.getThreadLabel(collapsable)})`
+                    : `Expand thread list (${collapsable} more ${GroupDetails.getThreadLabel(collapsable)} to show)`}
                 </Button>
               </li>
             )}

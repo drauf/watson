@@ -19,12 +19,13 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
     return (
       <section id="settings">
         <div className="filters">
-          <b>CPU usage calculation:</b>
+          <b>Sort threads by</b>
 
           <label className={mode === CpuConsumersMode.Mean ? 'checked' : ''}>
             <input
-              type="checkbox"
+              type="radio"
               checked={mode === CpuConsumersMode.Mean}
+              name="cpu-consumer-sort-mode"
               onChange={onModeChange(CpuConsumersMode.Mean)}
             />
             Mean
@@ -32,8 +33,9 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
 
           <label className={mode === CpuConsumersMode.Median ? 'checked' : ''}>
             <input
-              type="checkbox"
+              type="radio"
               checked={mode === CpuConsumersMode.Median}
+              name="cpu-consumer-sort-mode"
               onChange={onModeChange(CpuConsumersMode.Median)}
             />
             Median
@@ -41,12 +43,15 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
 
           <label className={mode === CpuConsumersMode.Max ? 'checked' : ''}>
             <input
-              type="checkbox"
+              type="radio"
               checked={mode === CpuConsumersMode.Max}
+              name="cpu-consumer-sort-mode"
               onChange={onModeChange(CpuConsumersMode.Max)}
             />
             Max
           </label>
+
+          <b>CPU usage</b>
         </div>
 
         <div className="settings-row">

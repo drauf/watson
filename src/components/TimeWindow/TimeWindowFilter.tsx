@@ -1,4 +1,4 @@
-import Button from '@atlaskit/button';
+import Button from '@atlaskit/button/new';
 import {
   PointerEvent as ReactPointerEvent, useEffect, useMemo, useRef, useState,
 } from 'react';

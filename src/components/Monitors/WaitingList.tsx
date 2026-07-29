@@ -1,4 +1,4 @@
-import Button from '@atlaskit/button';
+import Button from '@atlaskit/button/new';
 import React from 'react';
 import Thread from '../../types/Thread';
 import WaitingListItem from './WaitingListItem';
@@ -18,6 +18,8 @@ export default class WaitingList extends React.PureComponent<Props, State> {
     super(props);
     this.state = { expanded: false };
   }
+
+  private static getThreadLabel = (count: number): string => (count === 1 ? 'thread' : 'threads');
 
   private toggleExpand = () => {
     this.setState((prevState) => ({ expanded: !prevState.expanded }));
@@ -39,7 +41,9 @@ export default class WaitingList extends React.PureComponent<Props, State> {
         <b>
           {waiting.length}
           {' '}
-          thread(s) waiting for notification on lock:
+          {WaitingList.getThreadLabel(waiting.length)}
+          {' '}
+          waiting for notification on lock:
         </b>
 
         <ul className="waiting-list-items">
@@ -50,8 +54,8 @@ export default class WaitingList extends React.PureComponent<Props, State> {
           && (
             <Button appearance="default" onClick={this.toggleExpand}>
               {expanded
-                ? `Collapse threads list (hide ${collapsable} thread(s))`
-                : `Expand threads list (${collapsable} more thread(s) to show)`}
+                ? `Collapse thread list (hide ${collapsable} ${WaitingList.getThreadLabel(collapsable)})`
+                : `Expand thread list (${collapsable} more ${WaitingList.getThreadLabel(collapsable)} to show)`}
             </Button>
           )}
       </section>
