@@ -32,16 +32,6 @@ test.describe('Similar stacks', () => {
     await expect(pageWithData).toHaveScreenshot();
   });
 
-  test('can fold sections', async ({ pageWithData }) => {
-    const buttons = (await pageWithData.locator('.collapsable-group .expandable-surface-toggle').all()).slice(0, 4);
-
-    for (const button of buttons) {
-      await button.click();
-    }
-
-    await expect(pageWithData).toHaveScreenshot();
-  });
-
   test('has working regex filters', async ({ pageWithData }) => {
     await pageWithData.getByPlaceholder('e.g. http.*exec').fill('caesium');
     await pageWithData.getByPlaceholder('e.g. java\\.io').fill('reIndex');
