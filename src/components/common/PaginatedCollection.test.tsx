@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
+import CollapsableGroup from '../CollapsableGroup';
 import PaginatedCollection from './PaginatedCollection';
 
 const items = Array.from({ length: 45 }, (_, index) => index + 1);
@@ -50,4 +51,57 @@ test('resets to the first page when the result key changes', () => {
 
   expect(screen.getByTestId('item-1')).toBeInTheDocument();
   expect(screen.queryByTestId('item-21')).not.toBeInTheDocument();
+});
+
+test('shows collapse controls for a single group', () => {
+  render(
+    <PaginatedCollection
+      items={[1]}
+      resetKey="single"
+      getKey={(item) => item}
+      renderItem={renderItem}
+    />,
+  );
+
+  expect(screen.getByRole('button', { name: 'Expand all' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Collapse all' })).toBeInTheDocument();
+});
+
+test('reapplies Expand all after an individual group is collapsed', () => {
+  render(
+    <PaginatedCollection
+      items={[1]}
+      resetKey="groups"
+      getKey={(item) => item}
+      renderItem={(item) => (
+        <CollapsableGroup
+          header={(
+            <span>
+              Group
+              {item}
+            </span>
+)}
+          content={(
+            <span>
+              Details
+              {item}
+            </span>
+)}
+        />
+      )}
+    />,
+  );
+
+  const groupToggle = screen.getByRole('button', { name: 'Group1' });
+  fireEvent.click(screen.getByRole('button', { name: 'Expand all' }));
+  expect(screen.getByText('Details1')).toBeInTheDocument();
+
+  fireEvent.click(groupToggle);
+  expect(screen.queryByText('Details1')).not.toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button', { name: 'Expand all' }));
+  expect(screen.getByText('Details1')).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }));
+  expect(screen.queryByText('Details1')).not.toBeInTheDocument();
 });
