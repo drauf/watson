@@ -1,6 +1,5 @@
 import React from 'react';
 import Lozenge from '@atlaskit/lozenge/new';
-import { ThemeProvider } from '../context/ThemeContext';
 import GroupHeader from './common/GroupHeader';
 import CollapsableGroup from './CollapsableGroup';
 import './Container.css';
@@ -10,20 +9,18 @@ interface StoryProps {
 }
 
 const GroupStory = ({ header }: StoryProps): JSX.Element => (
-  <ThemeProvider>
-    <main>
-      <section id="settings" style={{ width: '100%' }}>
-        <CollapsableGroup
-          header={header}
-          content={(
-            <p>
-              The group body contains representative analysis details. It is hidden until the group is expanded.
-            </p>
-          )}
-        />
-      </section>
-    </main>
-  </ThemeProvider>
+  <main>
+    <section id="settings" style={{ width: '100%' }}>
+      <CollapsableGroup
+        header={header}
+        content={(
+          <p>
+            The group body contains representative analysis details. It is hidden until the group is expanded.
+          </p>
+        )}
+      />
+    </section>
+  </main>
 );
 
 export const Basic = (): JSX.Element => (

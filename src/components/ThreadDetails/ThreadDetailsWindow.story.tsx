@@ -1,5 +1,4 @@
 import React from 'react';
-import { ThemeProvider } from '../../context/ThemeContext';
 import Lock from '../../types/Lock';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
@@ -61,11 +60,9 @@ const popupSize = {
 };
 
 const ThreadDetailsStory: React.FC<StoryProps> = ({ thread }) => (
-  <ThemeProvider>
-    <div data-testid="thread-details-popup" style={popupSize}>
-      <ThreadDetailsWindow thread={thread} />
-    </div>
-  </ThemeProvider>
+  <div data-testid="thread-details-popup" style={popupSize}>
+    <ThreadDetailsWindow thread={thread} />
+  </div>
 );
 
 export const WaitingThreadWithLocks = () => <ThreadDetailsStory thread={createBlockedThread()} />;

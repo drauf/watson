@@ -1,6 +1,5 @@
 import { ReactNode, useEffect } from 'react';
 import '../Container.css';
-import { ThemeProvider } from '../../context/ThemeContext';
 import { TimeWindowProvider, useTimeWindow } from '../../context/TimeWindowContext';
 import {
   crossMidnightThreadDumps,
@@ -16,15 +15,13 @@ interface StoryProps {
 }
 
 const TimeWindowStory = ({ threadDumps, children }: StoryProps): JSX.Element => (
-  <ThemeProvider>
-    <TimeWindowProvider threadDumps={threadDumps}>
-      <main>
-        <section id="settings" style={{ width: '100%' }}>
-          {children}
-        </section>
-      </main>
-    </TimeWindowProvider>
-  </ThemeProvider>
+  <TimeWindowProvider threadDumps={threadDumps}>
+    <main>
+      <section id="settings" style={{ width: '100%' }}>
+        {children}
+      </section>
+    </main>
+  </TimeWindowProvider>
 );
 
 const PendingLargeRange = (): JSX.Element => {

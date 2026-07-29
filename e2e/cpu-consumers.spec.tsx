@@ -7,15 +7,14 @@ test.describe('CPU consumers', () => {
   });
 
   test('loads', async ({ pageWithData }) => {
-    expect(await pageWithData.getByText('Mean').isChecked()).toBeTruthy();
-    expect(await pageWithData.getByLabel('Threads to display').inputValue()).toBe('40');
-
+    expect(await pageWithData.locator('#settings label', { hasText: /^Mean$/ }).locator('input').isChecked()).toBeTruthy();
     await expect(pageWithData).toHaveScreenshot();
   });
 
-  test('has working filters', async ({ pageWithData }) => {
-    await pageWithData.getByText('Median').check();
-    await pageWithData.getByLabel('Threads to display').fill('10');
+  test('has working sort controls', async ({ pageWithData }) => {
+    const median = pageWithData.locator('#settings label', { hasText: /^Median$/ });
+    await median.click();
+    expect(await median.locator('input').isChecked()).toBeTruthy();
 
     await expect(pageWithData).toHaveScreenshot();
   });

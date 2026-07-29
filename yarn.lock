@@ -110,7 +110,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/app-provider@npm:^5.1.0":
+"@atlaskit/app-provider@npm:^5.1.0, @atlaskit/app-provider@npm:^5.1.1":
   version: 5.1.1
   resolution: "@atlaskit/app-provider@npm:5.1.1"
   dependencies:
@@ -233,16 +233,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/css-reset@npm:7.3.8":
-  version: 7.3.8
-  resolution: "@atlaskit/css-reset@npm:7.3.8"
+"@atlaskit/css-reset@npm:8.1.1":
+  version: 8.1.1
+  resolution: "@atlaskit/css-reset@npm:8.1.1"
   dependencies:
-    "@atlaskit/theme": "npm:^21.0.0"
-    "@atlaskit/tokens": "npm:^7.0.0"
+    "@atlaskit/tokens": "npm:^16.0.0"
     "@babel/runtime": "npm:^7.0.0"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/a9cde2887e8b84f9d63974c9e3deac0ca0c1f13eaa10cd9f46a7022c33f671cb51e17da70395996aa8167ce40866bc297a78fc66495a5fb65634edf3425df3c6
+  checksum: 10c0/3a62bb3f45caaccfa5e05f8fdc93bfee6e2f80e7d086015395afc1add64cd8a01658893db653dc88c7e621b78cb5680781b0c9da88025d13c7e20e9147921792
   languageName: node
   linkType: hard
 
@@ -698,20 +697,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/theme@npm:^21.0.0":
-  version: 21.0.1
-  resolution: "@atlaskit/theme@npm:21.0.1"
-  dependencies:
-    "@atlaskit/codemod-utils": "npm:^4.2.0"
-    "@atlaskit/ds-lib": "npm:^5.1.0"
-    "@atlaskit/tokens": "npm:^7.0.0"
-    "@babel/runtime": "npm:^7.0.0"
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/c3dac5edcf3d948228fa9c7fbecb8c029d3840ca811c426fc9019dcea1c6f0e2f4599da41a0c167400bf0cff48af8aa3c99acf3dba208a66503ced01090b6944
-  languageName: node
-  linkType: hard
-
 "@atlaskit/tile@npm:^2.3.0":
   version: 2.3.1
   resolution: "@atlaskit/tile@npm:2.3.1"
@@ -728,23 +713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:7.0.0, @atlaskit/tokens@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@atlaskit/tokens@npm:7.0.0"
-  dependencies:
-    "@atlaskit/ds-lib": "npm:^5.1.0"
-    "@atlaskit/platform-feature-flags": "npm:^1.1.0"
-    "@babel/runtime": "npm:^7.0.0"
-    "@babel/traverse": "npm:^7.23.2"
-    "@babel/types": "npm:^7.20.0"
-    bind-event-listener: "npm:^3.0.0"
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/15c8f54a57f4171de28fad315bf9956a155a56673ea773d79f0cec06cb32489869fab318cb199b4fdb0e98e44b9a5daa37bd4ce93887fdeb65d6c6d3fdf6862c
-  languageName: node
-  linkType: hard
-
-"@atlaskit/tokens@npm:^16.0.0, @atlaskit/tokens@npm:^16.3.0":
+"@atlaskit/tokens@npm:16.3.0, @atlaskit/tokens@npm:^16.0.0, @atlaskit/tokens@npm:^16.3.0":
   version: 16.3.0
   resolution: "@atlaskit/tokens@npm:16.3.0"
   dependencies:
@@ -774,6 +743,22 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/e5518d8b5edd0f2f3f233378560181ca692dbc30900c464257a0ea9477fd458877d50e721272b276a373a3a221d88607586abd41f41e6a9fd2f1820d6540b86f
+  languageName: node
+  linkType: hard
+
+"@atlaskit/tokens@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@atlaskit/tokens@npm:7.0.0"
+  dependencies:
+    "@atlaskit/ds-lib": "npm:^5.1.0"
+    "@atlaskit/platform-feature-flags": "npm:^1.1.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@babel/traverse": "npm:^7.23.2"
+    "@babel/types": "npm:^7.20.0"
+    bind-event-listener: "npm:^3.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/15c8f54a57f4171de28fad315bf9956a155a56673ea773d79f0cec06cb32489869fab318cb199b4fdb0e98e44b9a5daa37bd4ce93887fdeb65d6c6d3fdf6862c
   languageName: node
   linkType: hard
 
@@ -12532,12 +12517,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "watson@workspace:."
   dependencies:
+    "@atlaskit/app-provider": "npm:^5.1.1"
     "@atlaskit/button": "npm:20.5.0"
-    "@atlaskit/css-reset": "npm:7.3.8"
+    "@atlaskit/css-reset": "npm:8.1.1"
     "@atlaskit/lozenge": "npm:14.1.5"
     "@atlaskit/pagination": "npm:15.2.2"
     "@atlaskit/stylelint-design-system": "npm:4.1.3"
-    "@atlaskit/tokens": "npm:7.0.0"
+    "@atlaskit/tokens": "npm:16.3.0"
     "@babel/core": "npm:7.29.7"
     "@compiled/react": "npm:0.18.6"
     "@playwright/test": "npm:1.62.0"

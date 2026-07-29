@@ -1,6 +1,5 @@
 import React from 'react';
 import { ParseProgress } from '../../parser/AsyncParser';
-import { ThemeProvider } from '../../context/ThemeContext';
 import ProgressIndicator from './ProgressIndicator';
 
 const createProgress = (overrides: Partial<ParseProgress> = {}): ParseProgress => ({
@@ -19,9 +18,7 @@ interface StoryProps {
 }
 
 const ProgressIndicatorStory: React.FC<StoryProps> = ({ progress }) => (
-  <ThemeProvider>
-    <ProgressIndicator progress={progress} />
-  </ThemeProvider>
+  <ProgressIndicator progress={progress} />
 );
 
 export const Reading = () => <ProgressIndicatorStory progress={createProgress()} />;
