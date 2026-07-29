@@ -1,70 +1,52 @@
 import React, { useCallback, useState } from 'react';
 import './ThreadDetailsWindow.css';
-import NewWindow from 'react-new-window';
 import Thread from '../../types/Thread';
+import ThreadDetailsPopup from './ThreadDetailsPopup';
 import ThreadDetailsWindow from './ThreadDetailsWindow';
 
 export const THREAD_DETAILS_WINDOW_WIDTH = 960;
 export const THREAD_DETAILS_WINDOW_HEIGHT = 700;
 
-const popupFontSources = [
-  ['Atlassian Sans', 'link[href*="AtlassianSans-latin.woff2"]'],
-  ['Atlassian Mono', 'link[href*="AtlassianMono-latin.woff2"]'],
-] as const;
-
-const loadPopupFonts = (window: Window) => {
-  popupFontSources.forEach(([family, selector]) => {
-    const source = document.head.querySelector<HTMLLinkElement>(selector);
-    if (!source) return;
-
-    new FontFace(family, `url("${source.href}")`)
-      .load()
-      .then((font) => window.document.fonts.add(font))
-      .catch(() => undefined);
-  });
-};
+const popupFeatures = [
+  `width=${THREAD_DETAILS_WINDOW_WIDTH}`,
+  `height=${THREAD_DETAILS_WINDOW_HEIGHT}`,
+  'titlebar=no',
+  'menubar=no',
+  'location=no',
+  'toolbar=no',
+  'status=no',
+].join(',');
 
 export default function useOpenThreadDetails(thread: Thread | undefined) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const open = useCallback((e?: React.MouseEvent) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-    setIsOpen(true);
-  }, []);
+  const [popup, setPopup] = useState<{ window: Window; container: HTMLElement } | null>(null);
 
   const close = useCallback(() => {
-    setIsOpen(false);
-  }, []);
+    if (popup && !popup.window.closed) popup.window.close();
+    setPopup(null);
+  }, [popup]);
 
-  const onOpen = useCallback((window: Window) => {
-    // Copy CSS custom properties from :root
-    const rootStyles = getComputedStyle(document.documentElement);
-    const cssVars = Array.from(rootStyles).filter((prop) => prop.startsWith('--'));
-    cssVars.forEach((varName) => {
-      const value = rootStyles.getPropertyValue(varName);
-      window.document.documentElement.style.setProperty(varName, value);
-    });
-    loadPopupFonts(window);
-  }, []);
+  const open = useCallback((event?: React.MouseEvent) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+    if (!thread) return;
 
-  const WindowComponent = thread && isOpen ? (
-    <NewWindow
-      title={`${Thread.getFormattedTime(thread)} - ${thread.name}`}
-      onUnload={close}
-      onOpen={onOpen}
-      features={{
-        width: THREAD_DETAILS_WINDOW_WIDTH,
-        height: THREAD_DETAILS_WINDOW_HEIGHT,
-        titlebar: 0,
-        menubar: 0,
-        location: 0,
-        toolbar: 0,
-        status: 0,
-      }}
-    >
+    const newPopup = window.open(
+      '',
+      '_blank',
+      popupFeatures,
+    );
+    if (!newPopup) return;
+
+    newPopup.document.title = `${Thread.getFormattedTime(thread)} - ${thread.name}`;
+    const container = newPopup.document.createElement('div');
+    newPopup.document.body.replaceChildren(container);
+    setPopup({ window: newPopup, container });
+  }, [thread]);
+
+  const WindowComponent = thread && popup ? (
+    <ThreadDetailsPopup popup={popup.window} container={popup.container} onClose={close}>
       <ThreadDetailsWindow thread={thread} />
-    </NewWindow>
+    </ThreadDetailsPopup>
   ) : null;
 
   return { open, close, WindowComponent };

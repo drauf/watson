@@ -129,12 +129,14 @@ input::placeholder {
 }
 
 .stacktrace-container code {
-  width: calc(100% - 32px);
-  margin: 0 auto;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
   padding: 0 var(--ds-space-200);
-  overflow-x: hidden;
+  overflow: hidden;
   font: var(--ds-font-code);
-  line-height: 19px;
+  line-height: 1.2lh;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
