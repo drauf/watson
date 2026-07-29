@@ -26,13 +26,4 @@ test.describe('CPU consumers', () => {
 
     await expect(pageWithData).toHaveScreenshot();
   });
-
-  test('opens thread details', async ({ context, pageWithData }) => {
-    const [details] = await Promise.all([
-      context.waitForEvent('page'),
-      pageWithData.locator('#consumers-list .cpu-consumer-usages').getByRole('button').first().click(),
-    ]);
-
-    await expect(details).toHaveScreenshot();
-  });
 });

@@ -1,28 +1,13 @@
 import React from 'react';
 import Thread from '../../types/Thread';
 import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
+import getCpuUsageAppearance from './cpuUsageAppearance';
 
 interface Props {
   thread: Thread | undefined;
 }
 
-type CpuUsageAppearance = 'danger' | 'warning' | 'primary' | 'default';
-
 const getCpuUsage = (cpuUsage: string): string => `${cpuUsage}%`;
-
-// The numbers here are completely arbitrary
-const getAppearance = (cpuUsage: number): CpuUsageAppearance => {
-  if (cpuUsage > 78) {
-    return 'danger';
-  }
-  if (cpuUsage > 42) {
-    return 'warning';
-  }
-  if (cpuUsage > 10) {
-    return 'primary';
-  }
-  return 'default';
-};
 export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const { thread } = this.props;
@@ -42,7 +27,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
     return (
       <>
         <OpenThreadDetailsButton
-          appearance={getAppearance(cpuUsage)}
+          appearance={getCpuUsageAppearance(cpuUsage)}
           className={className}
           shouldFitContainer
           spacing="compact"

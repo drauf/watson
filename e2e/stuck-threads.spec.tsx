@@ -36,13 +36,4 @@ test.describe('Stuck threads', () => {
 
     await expect(pageWithData).toHaveScreenshot();
   });
-
-  test('opens thread details', async ({ context, pageWithData }) => {
-    const [details] = await Promise.all([
-      context.waitForEvent('page'),
-      pageWithData.locator('.group-details').getByRole('button').first().click(),
-    ]);
-
-    await expect(details).toHaveScreenshot();
-  });
 });

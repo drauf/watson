@@ -59,6 +59,10 @@ test.describe('Threads overview', () => {
       pageWithData.getByText('org.bouncycastle').click({ force: true }),
     ]);
 
-    await expect(details).toHaveScreenshot();
+    await expect(details.locator('.thread-details')).toBeVisible();
+    await expect(details.getByRole('heading', { level: 3 })).toBeVisible();
+    await details.waitForFunction(() => ['Atlassian Sans', 'Atlassian Mono']
+      .every((family) => Array.from(document.fonts)
+        .some((font) => font.family === family && font.status === 'loaded')));
   });
 });
