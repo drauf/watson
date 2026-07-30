@@ -10,7 +10,7 @@ test.describe('Stuck threads', () => {
   });
 
   test('loads', async ({ pageWithData }) => {
-    expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
+    await expect(pageWithData.getByRole('button', { name: 'Active', exact: true })).toHaveAttribute('aria-pressed', 'true');
     expect(await pageWithData.getByLabel(MIN_STACKS).inputValue()).toBe('10');
     expect(await pageWithData.getByLabel(MAX_LINES).inputValue()).toBe('5');
 

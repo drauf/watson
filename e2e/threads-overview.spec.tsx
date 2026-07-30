@@ -10,13 +10,13 @@ test.describe('Threads overview', () => {
   });
 
   test('loads', async ({ pageWithData }) => {
-    expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
-    expect(await pageWithData.getByText('Non-JVM').isChecked()).toBeTruthy();
-    expect(await pageWithData.getByText('Tomcat', { exact: true }).isChecked()).toBeFalsy();
-    expect(await pageWithData.getByText('Non-Tomcat').isChecked()).toBeFalsy();
-    expect(await pageWithData.getByText('Database').isChecked()).toBeFalsy();
-    expect(await pageWithData.getByText('Lucene', { exact: true }).isChecked()).toBeFalsy();
-    expect(await pageWithData.getByText('High CPU usage').isChecked()).toBeFalsy();
+    await expect(pageWithData.getByRole('button', { name: 'Active', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    await expect(pageWithData.getByRole('button', { name: 'Non-JVM', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    await expect(pageWithData.getByRole('button', { name: 'Tomcat', exact: true })).toHaveAttribute('aria-pressed', 'false');
+    await expect(pageWithData.getByRole('button', { name: 'Non-Tomcat', exact: true })).toHaveAttribute('aria-pressed', 'false');
+    await expect(pageWithData.getByRole('button', { name: 'Database', exact: true })).toHaveAttribute('aria-pressed', 'false');
+    await expect(pageWithData.getByRole('button', { name: 'Lucene', exact: true })).toHaveAttribute('aria-pressed', 'false');
+    await expect(pageWithData.getByRole('button', { name: 'High CPU usage', exact: true })).toHaveAttribute('aria-pressed', 'false');
     expect(await pageWithData.getByLabel(NAME_REGEXP).inputValue()).toBe('');
     expect(await pageWithData.getByLabel(STACK_REGEXP).inputValue()).toBe('');
 
@@ -24,22 +24,29 @@ test.describe('Threads overview', () => {
   });
 
   test('has working pre-configured filters', async ({ pageWithData }) => {
-    await pageWithData.getByText('Active').uncheck();
-    await pageWithData.getByText('Tomcat', { exact: true }).check();
+    const active = pageWithData.getByRole('button', { name: 'Active', exact: true });
+    const tomcat = pageWithData.getByRole('button', { name: 'Tomcat', exact: true });
+    const lucene = pageWithData.getByRole('button', { name: 'Lucene', exact: true });
+    const highCpuUsage = pageWithData.getByRole('button', { name: 'High CPU usage', exact: true });
+    const nonTomcat = pageWithData.getByRole('button', { name: 'Non-Tomcat', exact: true });
+    const database = pageWithData.getByRole('button', { name: 'Database', exact: true });
+
+    await active.click();
+    await tomcat.click();
     await expect(pageWithData).toHaveScreenshot();
 
-    await pageWithData.getByText('Active').check();
-    await pageWithData.getByText('Tomcat', { exact: true }).uncheck();
-    await pageWithData.getByText('Lucene', { exact: true }).check();
+    await active.click();
+    await tomcat.click();
+    await lucene.click();
     await expect(pageWithData).toHaveScreenshot();
 
-    await pageWithData.getByText('Lucene', { exact: true }).uncheck();
-    await pageWithData.getByText('High CPU usage').check();
+    await lucene.click();
+    await highCpuUsage.click();
     await expect(pageWithData).toHaveScreenshot();
 
-    await pageWithData.getByText('High CPU usage').uncheck();
-    await pageWithData.getByText('Non-Tomcat').check();
-    await pageWithData.getByText('Database').check();
+    await highCpuUsage.click();
+    await nonTomcat.click();
+    await database.click();
     await expect(pageWithData).toHaveScreenshot();
   });
 
@@ -50,6 +57,13 @@ test.describe('Threads overview', () => {
 
   test('has working RegExp stack trace filter', async ({ pageWithData }) => {
     await pageWithData.getByLabel(STACK_REGEXP).fill('(jdk)|(sun)');
+    await expect(pageWithData).toHaveScreenshot();
+  });
+
+  test('shows an empty state when no threads match', async ({ pageWithData }) => {
+    await pageWithData.getByLabel(NAME_REGEXP).fill('^does-not-exist$');
+
+    await expect(pageWithData.getByText('No threads match the selected criteria.')).toBeVisible();
     await expect(pageWithData).toHaveScreenshot();
   });
 

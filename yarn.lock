@@ -96,21 +96,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/app-provider@npm:^1.8.0":
-  version: 1.8.1
-  resolution: "@atlaskit/app-provider@npm:1.8.1"
-  dependencies:
-    "@atlaskit/platform-feature-flags": "npm:^1.0.0"
-    "@atlaskit/tokens": "npm:^3.3.0"
-    "@babel/runtime": "npm:^7.0.0"
-    bind-event-listener: "npm:^3.0.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/6e699b963b058e0aef585c459cc12ef5be85ad84e3b54bccbb04f997f685f47d4d8753d98c80a6183a745ad092d7f2ac484e969b939efed57bef410d626767d4
-  languageName: node
-  linkType: hard
-
-"@atlaskit/app-provider@npm:^5.1.0, @atlaskit/app-provider@npm:^5.1.1":
+"@atlaskit/app-provider@npm:5.1.1, @atlaskit/app-provider@npm:^5.1.0":
   version: 5.1.1
   resolution: "@atlaskit/app-provider@npm:5.1.1"
   dependencies:
@@ -124,6 +110,20 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/16ce1658f1d2392263ac4b4ac23dc27db0b0a8ea3838d75b937589a6d49ba8db8de54745fb0bec233fc0162faaf857b6248b6d7f5971c725436446c8ef9e1d9c
+  languageName: node
+  linkType: hard
+
+"@atlaskit/app-provider@npm:^1.8.0":
+  version: 1.8.1
+  resolution: "@atlaskit/app-provider@npm:1.8.1"
+  dependencies:
+    "@atlaskit/platform-feature-flags": "npm:^1.0.0"
+    "@atlaskit/tokens": "npm:^3.3.0"
+    "@babel/runtime": "npm:^7.0.0"
+    bind-event-listener: "npm:^3.0.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/6e699b963b058e0aef585c459cc12ef5be85ad84e3b54bccbb04f997f685f47d4d8753d98c80a6183a745ad092d7f2ac484e969b939efed57bef410d626767d4
   languageName: node
   linkType: hard
 
@@ -377,7 +377,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/datetime-picker@npm:^18.2.0":
+"@atlaskit/datetime-picker@npm:18.2.0":
   version: 18.2.0
   resolution: "@atlaskit/datetime-picker@npm:18.2.0"
   dependencies:
@@ -405,7 +405,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/dropdown-menu@npm:^17.2.0":
+"@atlaskit/dropdown-menu@npm:17.2.0":
   version: 17.2.0
   resolution: "@atlaskit/dropdown-menu@npm:17.2.0"
   dependencies:
@@ -476,7 +476,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/empty-state@npm:^11.1.4":
+"@atlaskit/empty-state@npm:11.1.4":
   version: 11.1.4
   resolution: "@atlaskit/empty-state@npm:11.1.4"
   dependencies:
@@ -547,7 +547,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/form@npm:^16.1.4":
+"@atlaskit/form@npm:16.1.4":
   version: 16.1.4
   resolution: "@atlaskit/form@npm:16.1.4"
   dependencies:
@@ -571,7 +571,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/heading@npm:^6.2.0, @atlaskit/heading@npm:^6.2.3":
+"@atlaskit/heading@npm:6.2.3, @atlaskit/heading@npm:^6.2.0":
   version: 6.2.3
   resolution: "@atlaskit/heading@npm:6.2.3"
   dependencies:
@@ -601,6 +601,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/icon@npm:37.2.0, @atlaskit/icon@npm:^37.0.0, @atlaskit/icon@npm:^37.1.0, @atlaskit/icon@npm:^37.2.0":
+  version: 37.2.0
+  resolution: "@atlaskit/icon@npm:37.2.0"
+  dependencies:
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/tile": "npm:^2.3.0"
+    "@atlaskit/tokens": "npm:^16.3.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@compiled/react": "npm:^1.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/0e458af2d76aa351e3c8a9b67fe654e2685350a3b918cde80da499a95d1942668b66ecf468aece2abfe5e6db98c3164e4eb714cd97a3c576492d6a05c0b72808
+  languageName: node
+  linkType: hard
+
 "@atlaskit/icon@npm:^23.10.0, @atlaskit/icon@npm:^23.6.0, @atlaskit/icon@npm:^23.9.0":
   version: 23.11.0
   resolution: "@atlaskit/icon@npm:23.11.0"
@@ -613,21 +628,6 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/f16fb44a160e24ea2def1ca5ce398be899a76f42f554685c3db662ef8d180192060c2741cfb1107d2aedc271f754ccdfab0dea555ce594ce1020f8f200374857
-  languageName: node
-  linkType: hard
-
-"@atlaskit/icon@npm:^37.0.0, @atlaskit/icon@npm:^37.1.0, @atlaskit/icon@npm:^37.2.0":
-  version: 37.2.0
-  resolution: "@atlaskit/icon@npm:37.2.0"
-  dependencies:
-    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tile": "npm:^2.3.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
-    "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/0e458af2d76aa351e3c8a9b67fe654e2685350a3b918cde80da499a95d1942668b66ecf468aece2abfe5e6db98c3164e4eb714cd97a3c576492d6a05c0b72808
   languageName: node
   linkType: hard
 
@@ -753,7 +753,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/modal-dialog@npm:^16.2.2":
+"@atlaskit/modal-dialog@npm:16.2.2":
   version: 16.2.2
   resolution: "@atlaskit/modal-dialog@npm:16.2.2"
   dependencies:
@@ -1048,7 +1048,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/section-message@npm:^9.2.5":
+"@atlaskit/section-message@npm:9.2.5":
   version: 9.2.5
   resolution: "@atlaskit/section-message@npm:9.2.5"
   dependencies:
@@ -13434,21 +13434,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "watson@workspace:."
   dependencies:
-    "@atlaskit/app-provider": "npm:^5.1.1"
+    "@atlaskit/app-provider": "npm:5.1.1"
     "@atlaskit/button": "npm:20.5.0"
     "@atlaskit/checkbox": "npm:18.2.1"
     "@atlaskit/css-reset": "npm:8.1.1"
-    "@atlaskit/datetime-picker": "npm:^18.2.0"
-    "@atlaskit/dropdown-menu": "npm:^17.2.0"
-    "@atlaskit/empty-state": "npm:^11.1.4"
-    "@atlaskit/form": "npm:^16.1.4"
-    "@atlaskit/heading": "npm:^6.2.3"
-    "@atlaskit/icon": "npm:^37.2.0"
+    "@atlaskit/datetime-picker": "npm:18.2.0"
+    "@atlaskit/dropdown-menu": "npm:17.2.0"
+    "@atlaskit/empty-state": "npm:11.1.4"
+    "@atlaskit/form": "npm:16.1.4"
+    "@atlaskit/heading": "npm:6.2.3"
+    "@atlaskit/icon": "npm:37.2.0"
     "@atlaskit/lozenge": "npm:14.1.5"
-    "@atlaskit/modal-dialog": "npm:^16.2.2"
+    "@atlaskit/modal-dialog": "npm:16.2.2"
     "@atlaskit/pagination": "npm:15.2.2"
     "@atlaskit/primitives": "npm:22.2.0"
-    "@atlaskit/section-message": "npm:^9.2.5"
+    "@atlaskit/section-message": "npm:9.2.5"
     "@atlaskit/select": "npm:22.6.0"
     "@atlaskit/stylelint-design-system": "npm:4.1.3"
     "@atlaskit/textfield": "npm:9.1.1"

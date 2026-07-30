@@ -29,7 +29,7 @@ test.describe('Error and empty-state visual states', () => {
 
   test('renders a no-thread-dumps state', async ({ mount, page }) => {
     const component = await mount('components/Errors/EmptyState/NoThreadDumps');
-    const panel = component.locator('.empty-state-content');
+    const panel = component.getByRole('heading', { name: 'No thread dumps found' }).locator('..');
 
     await expect(panel).toBeVisible();
     await expectPanelScreenshot(page, panel, 'no-thread-dumps.png');
@@ -37,7 +37,7 @@ test.describe('Error and empty-state visual states', () => {
 
   test('renders a long empty-state message', async ({ mount, page }) => {
     const component = await mount('components/Errors/EmptyState/UnmatchedCpuUsageData');
-    const panel = component.locator('.empty-state-content');
+    const panel = component.getByRole('heading', { name: 'CPU usage data could not be matched to a thread dump' }).locator('..');
 
     await expect(panel).toBeVisible();
     await expectPanelScreenshot(page, panel, 'unmatched-cpu-usage-data.png');

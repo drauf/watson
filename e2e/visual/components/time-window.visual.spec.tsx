@@ -16,8 +16,8 @@ test.describe('Time window visual states', () => {
     await component.getByRole('button', { name: /time window/i }).click();
 
     const timeWindow = component.locator('.expandable-surface');
-    await expect(timeWindow.getByLabel('From date')).toHaveValue('2026-07-23');
-    await expect(timeWindow.getByLabel('To date')).toHaveValue('2026-07-24');
+    await expect(timeWindow.getByTestId('from-date-picker--container')).toContainText('2026-07-23');
+    await expect(timeWindow.getByTestId('to-date-picker--container')).toContainText('2026-07-24');
     await expect(timeWindow).toHaveScreenshot('time-window-cross-midnight.png');
   });
 
@@ -32,12 +32,9 @@ test.describe('Time window visual states', () => {
   });
 
   test('renders the large-range confirmation dialog', async ({ mount }) => {
-    const component = await mount('components/TimeWindow/TimeWindowFilter/PendingLargeRangeWarning');
+    const component = await mount('components/TimeWindow/TimeWindowFilter/LargeRangeDialog');
+    const dialog = component.locator('xpath=..').getByRole('dialog', { name: 'Large time window selected' });
 
-    await component.getByRole('button', { name: /time window/i }).click();
-    await component.getByRole('button', { name: 'Apply' }).click();
-
-    const dialog = component.getByRole('alertdialog', { name: 'Large time window selected' });
     await expect(dialog).toBeVisible();
     await expect(dialog).toHaveScreenshot('time-window-large-range-dialog.png');
   });
