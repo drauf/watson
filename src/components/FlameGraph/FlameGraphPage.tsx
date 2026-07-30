@@ -2,6 +2,7 @@ import { StackFrame } from 'd3-flame-graph';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import { matchesNameFilter, matchesStackFilter } from '../../common/regexFiltering';
 import { isIdleInSnapshot } from '../../common/threadFilters';
+import EmptyState from '../Errors/EmptyState';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import ThreadDump from '../../types/ThreadDump';
 import FlameGraph from './FlameGraph';
@@ -173,7 +174,11 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
           onRegExpChange={this.handleTextChange}
         />
 
-        <FlameGraph chartData={chartData} />
+        {chartData.children.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <FlameGraph chartData={chartData} />
+        )}
       </main>
     );
   }

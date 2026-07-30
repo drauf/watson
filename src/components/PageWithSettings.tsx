@@ -1,8 +1,6 @@
 import React, { ComponentState } from 'react';
 
 export default class PageWithSettings<P, S> extends React.PureComponent<P, S> {
-  protected static N0_THREADS_MATCHING = 'No threads match the selected criteria.';
-
   protected static N0_MONITORS_MATCHING = 'No monitors match the selected criteria.';
 
   // for some reason eslint thinks properties below are unused

@@ -7,21 +7,25 @@ test.describe('Monitors', () => {
   });
 
   test('loads', async ({ pageWithData }) => {
-    expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
+    await expect(pageWithData.getByRole('button', { name: 'Active', exact: true })).toHaveAttribute('aria-pressed', 'true');
 
     await expect(pageWithData).toHaveScreenshot();
   });
 
   test('has working filters', async ({ pageWithData }) => {
-    await pageWithData.getByText('Active').uncheck();
-    await pageWithData.getByText('Unowned locks').check();
+    const active = pageWithData.getByRole('button', { name: 'Active', exact: true });
+    const unownedLocks = pageWithData.getByRole('button', { name: 'Unowned locks', exact: true });
+    await active.click();
+    await unownedLocks.click();
+    await expect(active).toHaveAttribute('aria-pressed', 'false');
+    await expect(unownedLocks).toHaveAttribute('aria-pressed', 'true');
 
     await expect(pageWithData).toHaveScreenshot();
   });
 
   test('shows empty state', async ({ pageWithData }) => {
-    await pageWithData.getByText('Owned locks', { exact: true }).check();
-    await pageWithData.getByText('Unowned locks').check();
+    await pageWithData.getByRole('button', { name: 'Owned locks', exact: true }).click();
+    await pageWithData.getByRole('button', { name: 'Unowned locks', exact: true }).click();
 
     await expect(pageWithData).toHaveScreenshot();
   });

@@ -17,14 +17,17 @@ header {
 
 .header-section {
   display: flex;
+  gap: var(--ds-space-150, 12px);
   align-items: center;
   padding: 0 var(--ds-space-200, 16px);
 }
 
 header h1 {
-  margin: 0 var(--ds-space-200, 16px) 0 0;
-  color: var(--ds-text-brand);
   font-size: 29px;
+}
+
+header [data-testid='watson-logo'] {
+  color: var(--ds-text-brand) !important;
 }
 
 header nav {

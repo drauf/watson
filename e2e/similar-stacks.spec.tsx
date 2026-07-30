@@ -10,7 +10,7 @@ test.describe('Similar stacks', () => {
   });
 
   test('loads', async ({ pageWithData }) => {
-    expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
+    await expect(pageWithData.getByRole('button', { name: 'Active', exact: true })).toHaveAttribute('aria-pressed', 'true');
 
     expect(await pageWithData.getByLabel(COMPARISON_DEPTH).inputValue()).toBe('30');
     expect(await pageWithData.getByLabel(MINIMUM_GROUP_SIZE).inputValue()).toBe('5');
@@ -19,7 +19,9 @@ test.describe('Similar stacks', () => {
   });
 
   test('has working filters', async ({ pageWithData }) => {
-    await pageWithData.getByText('Active').uncheck();
+    const active = pageWithData.getByRole('button', { name: 'Active', exact: true });
+    await active.click();
+    await expect(active).toHaveAttribute('aria-pressed', 'false');
     await pageWithData.getByLabel(COMPARISON_DEPTH).fill('4');
     await pageWithData.getByLabel(MINIMUM_GROUP_SIZE).fill('600');
 

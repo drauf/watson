@@ -1,3 +1,4 @@
+import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import Monitor from './Monitor';
 import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
@@ -15,12 +16,12 @@ export default class MonitorOwner extends React.PureComponent<Props> {
     }
 
     return (
-      <p>
-        <b>Held by:</b>
+      <Text as="p">
+        <Text as="strong" weight="bold">Held by:</Text>
         <br />
         <OpenThreadDetailsButton text={monitor.owner.name} thread={monitor.owner} />
         <br />
-      </p>
+      </Text>
     );
   }
 }

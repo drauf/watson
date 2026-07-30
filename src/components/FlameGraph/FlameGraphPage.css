@@ -26,8 +26,9 @@ svg div {
 }
 
 .d3-flame-graph-label {
-  color: unset;
-  font-weight: unset;
-  font-size: unset;
-  font-family: unset;
+  color: var(--ds-text) !important;
+  font-size: var(--ds-font-size-075);
+  font-family: var(--ds-font-family-monospace);
+  fill: currentcolor;
+  dominant-baseline: middle;
 }

@@ -7,16 +7,11 @@
 }
 
 .help-page h2 {
-  margin-bottom: var(--ds-space-200);
   color: var(--ds-text-brand);
 }
 
-.help-page p {
-  margin-bottom: var(--ds-space-200);
-}
-
 .help-page ul {
-  margin-bottom: var(--ds-space-200);
+  margin: 0;
   padding-left: var(--ds-space-300);
 }
 

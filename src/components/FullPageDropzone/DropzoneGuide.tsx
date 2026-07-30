@@ -1,3 +1,5 @@
+import Stack from '@atlaskit/primitives/stack';
+import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import OutboundLink from './OutboundLink';
 
@@ -19,31 +21,31 @@ export default class DropzoneGuide extends React.PureComponent {
         role="complementary"
         onClick={DropzoneGuide.stopPropagation}
       >
-        <h5>
-          Watson analyzes JVM thread dumps and CPU usage, filtering out idle threads to show you what matters most.
-        </h5>
+        <Stack space="space.100" alignInline="center">
+          <Text as="p" size="medium" weight="bold">
+            Watson analyzes JVM thread dumps and CPU usage, filtering out idle threads to show you what matters most.
+          </Text>
 
-        <p>
-          It runs entirely in your browser - your files never leave your machine.
-        </p>
+          <Text as="p">It runs entirely in your browser - your files never leave your machine.</Text>
 
-        <p>
-          Found a bug or have a suggestion?
-          {' '}
-          <OutboundLink to={DropzoneGuide.SOURCE_CODE_LINK}>
-            GitHub
-          </OutboundLink>
-          ,
-          {' '}
-          <OutboundLink to={DropzoneGuide.SLACK_CONNECT_DOCS_LINK}>
-            Slack
-          </OutboundLink>
-          , or
-          {' '}
-          <a href="mailto:drauf@atlassian.com">email</a>
-          {' '}
-          (drauf@atlassian.com).
-        </p>
+          <Text as="p">
+            Found a bug or have a suggestion?
+            {' '}
+            <OutboundLink to={DropzoneGuide.SOURCE_CODE_LINK}>
+              GitHub
+            </OutboundLink>
+            ,
+            {' '}
+            <OutboundLink to={DropzoneGuide.SLACK_CONNECT_DOCS_LINK}>
+              Slack
+            </OutboundLink>
+            , or
+            {' '}
+            <a href="mailto:drauf@atlassian.com">email</a>
+            {' '}
+            (drauf@atlassian.com).
+          </Text>
+        </Stack>
       </div>
     );
   }

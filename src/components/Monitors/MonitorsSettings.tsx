@@ -1,3 +1,5 @@
+import ButtonGroup from '@atlaskit/button/button-group';
+import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import Filter from '../Filter/Filter';
 import RegexFilters from '../common/RegexFilters';
@@ -23,31 +25,33 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
       <section id="settings">
         <TimeWindowFilter />
         <div className="filters">
-          <b>Filters:</b>
+          <Text weight="bold">Filters:</Text>
 
-          <Filter
-            name="withoutIdle"
-            displayName="Active"
-            checked={withoutIdle}
-            onChange={onFilterChange}
-            tooltip="Hide idle thread pool and queue monitoring patterns"
-          />
+          <ButtonGroup>
+            <Filter
+              name="withoutIdle"
+              displayName="Active"
+              checked={withoutIdle}
+              onChange={onFilterChange}
+              tooltip="Hide idle thread pool and queue monitoring patterns"
+            />
 
-          <Filter
-            name="withOwner"
-            displayName="Owned locks"
-            checked={withOwner}
-            onChange={onFilterChange}
-            tooltip="Show only locks that have an owning thread - indicates active lock usage"
-          />
+            <Filter
+              name="withOwner"
+              displayName="Owned locks"
+              checked={withOwner}
+              onChange={onFilterChange}
+              tooltip="Show only locks that have an owning thread - indicates active lock usage"
+            />
 
-          <Filter
-            name="withoutOwner"
-            displayName="Unowned locks"
-            checked={withoutOwner}
-            onChange={onFilterChange}
-            tooltip="Show only locks without owners - potential deadlock or contention areas"
-          />
+            <Filter
+              name="withoutOwner"
+              displayName="Unowned locks"
+              checked={withoutOwner}
+              onChange={onFilterChange}
+              tooltip="Show only locks without owners - potential deadlock or contention areas"
+            />
+          </ButtonGroup>
         </div>
 
         <RegexFilters

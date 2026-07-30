@@ -2,6 +2,8 @@ import {
   CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipContentProps, XAxis, YAxis,
 } from 'recharts';
 import { token } from '@atlaskit/tokens';
+import Heading from '@atlaskit/heading';
+import Text from '@atlaskit/primitives/text';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';
@@ -30,7 +32,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Ele
 
     return (
       <TooltipContent>
-        <p>
+        <Text as="p">
           {`${time} - ${threadsCount}`}
           {' '}
           running
@@ -41,7 +43,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Ele
           {' '}
           <i>top</i>
           )
-        </p>
+        </Text>
 
         Top 10
         {' '}
@@ -76,15 +78,15 @@ const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
   if (data.length === 0) {
     return (
       <div className="chart">
-        <h3>Running processes</h3>
-        <p>No data</p>
+        <Heading as="h3" size="medium">Running processes</Heading>
+        <Text as="p">No data</Text>
       </div>
     );
   }
 
   return (
     <div id="running-processes-chart" className="chart">
-      <h3>Running processes</h3>
+      <Heading as="h3" size="medium">Running processes</Heading>
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={data}>
           <XAxis dataKey="name" />

@@ -1,3 +1,4 @@
+import EmptyState from '../Errors/EmptyState';
 import { matchesRegexFilters } from '../../common/regexFiltering';
 import { isIdleInSnapshot } from '../../common/threadFilters';
 import Thread from '../../types/Thread';
@@ -54,7 +55,9 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
   private renderThreadGroups = (threadGroups: Thread[][]) => {
     if (threadGroups.length === 0) {
-      return <h4>{SimilarStacksPage.N0_THREADS_MATCHING}</h4>;
+      return (
+        <EmptyState description="Adjust the filters or grouping settings and try again." />
+      );
     }
     return (
       <PaginatedCollection

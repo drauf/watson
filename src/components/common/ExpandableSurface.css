@@ -45,14 +45,3 @@
   outline: 2px solid var(--ds-border-focused);
   outline-offset: 2px;
 }
-
-.expandable-surface-toggle .chevron {
-  top: 0;
-  flex: 0 0 24px;
-  margin-right: var(--ds-space-075, 6px);
-}
-
-/* Match Confluence's disclosure affordance: the 24px hit area tints on hover */
-.expandable-surface-toggle:hover .chevron {
-  background: var(--ds-background-neutral-subtle-hovered, #0515240f);
-}

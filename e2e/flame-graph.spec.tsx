@@ -12,13 +12,15 @@ test.describe('Flame graph', () => {
   });
 
   test('loads', async ({ pageWithData }) => {
-    expect(await pageWithData.getByText('Active').isChecked()).toBeTruthy();
+    await expect(pageWithData.getByRole('button', { name: 'Active', exact: true })).toHaveAttribute('aria-pressed', 'true');
 
     await expect(pageWithData).toHaveScreenshot();
   });
 
   test('has working filters', async ({ pageWithData }) => {
-    await pageWithData.getByText('Active').uncheck();
+    const active = pageWithData.getByRole('button', { name: 'Active', exact: true });
+    await active.click();
+    await expect(active).toHaveAttribute('aria-pressed', 'false');
     await waitForAnimationToFinish(pageWithData);
 
     await expect(pageWithData).toHaveScreenshot();
@@ -41,6 +43,13 @@ test.describe('Flame graph', () => {
     await pageWithData.getByPlaceholder('e.g. java\\.io').fill('^com\\.codebarrel');
     await waitForAnimationToFinish(pageWithData);
 
+    await expect(pageWithData).toHaveScreenshot();
+  });
+
+  test('shows an empty state when no threads match', async ({ pageWithData }) => {
+    await pageWithData.getByLabel('Thread name pattern').fill('^does-not-exist$');
+
+    await expect(pageWithData.getByText('No threads match the selected criteria.')).toBeVisible();
     await expect(pageWithData).toHaveScreenshot();
   });
 });

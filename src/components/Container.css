@@ -44,6 +44,14 @@ main {
   align-items: center;
 }
 
+#regexp-filters {
+  width: min(100%, 36rem);
+}
+
+#regexp-filters > * {
+  flex: 1 1 16rem;
+}
+
 /* Keep filter-chip rows visually associated with the controls immediately below them */
 #settings > .filters + .settings-row {
   margin-top: calc(-1 * var(--ds-space-050, 4px));
@@ -67,7 +75,8 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  box-sizing: border-box;
+  min-height: 100dvh;
 }
 
 .progress-indicator,

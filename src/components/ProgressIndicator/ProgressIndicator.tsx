@@ -1,3 +1,4 @@
+import Heading from '@atlaskit/heading';
 import React from 'react';
 import { ParseProgress } from '../../parser/AsyncParser';
 import '../Container.css';
@@ -50,7 +51,7 @@ const ProgressIndicator: React.FC<Props> = ({ progress }) => {
     <div id="progress-container">
       <div className="progress-indicator">
         <div className="progress-header">
-          <h4>{getPhaseText(progress.phase)}</h4>
+          <Heading as="h4" size="small">{getPhaseText(progress.phase)}</Heading>
           <span className="progress-percentage">
             {Math.round(progress.percentage)}
             %

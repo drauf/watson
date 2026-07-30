@@ -8,7 +8,6 @@
   max-width: 800px;
   padding: var(--ds-space-100) var(--ds-space-150);
   color: var(--ds-text);
-  font-weight: var(--ds-font-weight-semibold);
   line-height: 1.4;
   white-space: normal;
   word-wrap: break-word;

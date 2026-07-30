@@ -1,4 +1,3 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { clearOldData } from './common/threadDumpsStorageService';
 import './index.css';
@@ -12,8 +11,7 @@ if (domNode === null) {
   throw new Error('Root element not found');
 }
 
-createRoot(domNode).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+// StrictMode is intentionally omitted: its development-only double-render of effects
+// exposes a portal cleanup bug in the current @atlaskit/modal-dialog and
+// @atlaskit/dropdown-menu versions, leaving orphaned empty portal containers behind.
+createRoot(domNode).render(<App />);

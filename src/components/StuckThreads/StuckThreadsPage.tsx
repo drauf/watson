@@ -1,4 +1,5 @@
 import React from 'react';
+import EmptyState from '../Errors/EmptyState';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import { matchesRegexFilters } from '../../common/regexFiltering';
 import { isIdleInSnapshot } from '../../common/threadFilters';
@@ -76,7 +77,9 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
   private renderStuckThreads = (clusters: Thread[][]): React.ReactNode => {
     if (clusters.length === 0) {
-      return <h4>{StuckThreadsPage.N0_THREADS_MATCHING}</h4>;
+      return (
+        <EmptyState description="Adjust the filters or clustering settings and try again." />
+      );
     }
 
     return (

@@ -1,5 +1,5 @@
+import Button from '@atlaskit/button/new';
 import React from 'react';
-import './Filter.css';
 import SmartTooltip from '../common/SmartTooltip';
 
 interface Props {
@@ -10,28 +10,28 @@ interface Props {
   tooltip: string;
 }
 
-export default class Filter extends React.PureComponent<Props> {
-  public override render(): JSX.Element {
-    const {
-      name, displayName, checked, onChange, tooltip,
-    } = this.props;
+const Filter: React.FC<Props> = ({
+  name, displayName, checked, onChange, tooltip,
+}) => {
+  const handleClick = () => {
+    const event = new Event('change', { bubbles: true }) as unknown as React.ChangeEvent<HTMLInputElement>;
+    Object.defineProperty(event, 'target', { value: { checked: !checked, name }, enumerable: true });
+    onChange(event);
+  };
 
-    const labelElement = (
-      <label className={checked ? 'checked' : ''}>
-        <input
-          type="checkbox"
-          name={name}
-          checked={checked}
-          onChange={onChange}
-        />
-        {displayName}
-      </label>
-    );
+  const button = (
+    <Button
+      appearance="default"
+      isSelected={checked}
+      onClick={handleClick}
+      aria-label={displayName}
+      aria-pressed={checked}
+    >
+      {displayName}
+    </Button>
+  );
 
-    return tooltip ? (
-      <SmartTooltip tooltip={tooltip}>
-        {labelElement}
-      </SmartTooltip>
-    ) : labelElement;
-  }
-}
+  return tooltip ? <SmartTooltip tooltip={tooltip}>{button}</SmartTooltip> : button;
+};
+
+export default Filter;

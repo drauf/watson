@@ -1,3 +1,4 @@
+import Heading from '@atlaskit/heading';
 import React from 'react';
 import Monitor from './Monitor';
 import MonitorOwner from './MonitorOwner';
@@ -17,7 +18,7 @@ export default class MonitorItem extends React.PureComponent<Props> {
     return (
       <div className="monitors-container">
         <div className="left">
-          <h5>{monitor.time}</h5>
+          <Heading as="h5" size="xsmall">{monitor.time}</Heading>
           {javaClass}
         </div>
         <div>

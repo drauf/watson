@@ -1,4 +1,5 @@
 import React from 'react';
+import EmptyState from '../Errors/EmptyState';
 import { matchesRegexFilters } from '../../common/regexFiltering';
 import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
@@ -55,7 +56,9 @@ class MonitorsPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
   private renderMonitors = (filtered: MonitorOverTime[]): React.ReactNode => {
     if (filtered.length === 0) {
-      return <h4>{MonitorsPage.N0_MONITORS_MATCHING}</h4>;
+      return (
+        <EmptyState title={MonitorsPage.N0_MONITORS_MATCHING} />
+      );
     }
     return (
       <PaginatedCollection

@@ -1,3 +1,4 @@
+import Heading from '@atlaskit/heading';
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import { Navigate } from 'react-router-dom';
@@ -110,8 +111,8 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
             <input {...getInputProps()} />
             {
               isDragActive
-                ? <h4>Drop files here...</h4>
-                : <h4>Drop files or folders here, or click to browse</h4>
+                ? <Heading as="h4" size="large">Drop files here...</Heading>
+                : <Heading as="h4" size="large">Drop files or folders here, or click to browse</Heading>
             }
             <DropzoneGuide />
           </div>

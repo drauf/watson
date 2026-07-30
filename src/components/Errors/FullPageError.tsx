@@ -1,4 +1,5 @@
 import Button from '@atlaskit/button/new';
+import Heading from '@atlaskit/heading';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';
@@ -16,7 +17,7 @@ const FullPageError: React.FC<Props> = ({ title, message }) => {
   return (
     <div id="error-container">
       <section className="error-indicator" aria-labelledby="error-title">
-        <h2 id="error-title">{title}</h2>
+        <Heading size="large" id="error-title" as="h2">{title}</Heading>
         <p className="error-message">{message}</p>
         <div className="error-actions">
           <Button

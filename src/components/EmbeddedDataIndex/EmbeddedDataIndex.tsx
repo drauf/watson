@@ -1,3 +1,4 @@
+import Heading from '@atlaskit/heading';
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import JSZip from 'jszip';
@@ -55,7 +56,7 @@ export default class EmbeddedDataIndex extends React.PureComponent<Props, State>
   public override render(): JSX.Element {
     const { parsedDataKey, hasCpuUsageInfo, loadingEmbeddedData } = this.state;
     if (loadingEmbeddedData) {
-      return <h1>Loading...</h1>;
+      return <Heading as="h1" size="xlarge">Loading...</Heading>;
     }
 
     if (parsedDataKey) {
@@ -70,7 +71,7 @@ export default class EmbeddedDataIndex extends React.PureComponent<Props, State>
     }
 
     return (
-      <h1>Loading...</h1>
+      <Heading as="h1" size="xlarge">Loading...</Heading>
     );
   }
 }
