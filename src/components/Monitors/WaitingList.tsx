@@ -1,4 +1,5 @@
 import Button from '@atlaskit/button/new';
+import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import Thread from '../../types/Thread';
 import WaitingListItem from './WaitingListItem';
@@ -38,13 +39,13 @@ export default class WaitingList extends React.PureComponent<Props, State> {
 
     return (
       <section className="waiting-list">
-        <b>
+        <Text as="strong" weight="bold">
           {waiting.length}
           {' '}
           {WaitingList.getThreadLabel(waiting.length)}
           {' '}
           waiting for notification on lock:
-        </b>
+        </Text>
 
         <ul className="waiting-list-items">
           {threads.map((thread) => <WaitingListItem key={thread.uniqueId} thread={thread} />)}

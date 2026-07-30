@@ -12,6 +12,7 @@ export default class SingleThreadDetails extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const { thread, maxDifferingLines, showStackTrace } = this.props;
     const stack = thread.stackTrace.slice(0, Math.max(maxDifferingLines, 10));
+    const lineOccurrences = new Map<string, number>();
 
     return (
       <>
@@ -22,7 +23,11 @@ export default class SingleThreadDetails extends React.PureComponent<Props> {
 
         {showStackTrace && (
           <p className="stacktrace-container">
-            {stack.map((line) => (<code>{line}</code>))}
+            {stack.map((line) => {
+              const occurrence = lineOccurrences.get(line) ?? 0;
+              lineOccurrences.set(line, occurrence + 1);
+              return <code key={`${line}:${occurrence}`}>{line}</code>;
+            })}
           </p>
         )}
       </>

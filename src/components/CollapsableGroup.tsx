@@ -1,3 +1,4 @@
+import ChevronDownIcon from '@atlaskit/icon/core/chevron-down';
 import React from 'react';
 import './CollapsableGroup.css';
 import './common/ExpandableSurface.css';
@@ -54,7 +55,9 @@ class CollapsableGroup extends React.PureComponent<Props, State> {
             aria-expanded={!collapse}
             onClick={this.toggleCollapse}
           >
-            <span className={collapse ? 'chevron rotate' : 'chevron'} />
+            <span className={collapse ? 'collapsable-group-chevron collapsable-group-chevron-collapsed' : 'collapsable-group-chevron'}>
+              <ChevronDownIcon label="" size="small" />
+            </span>
             {header}
           </button>
         </h5>

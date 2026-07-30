@@ -1,3 +1,4 @@
+import Heading from '@atlaskit/heading';
 import React from 'react';
 import Lozenge from '@atlaskit/lozenge/new';
 import Thread from '../../types/Thread';
@@ -10,13 +11,13 @@ interface Props {
 
 export default class ThreadDetailsHeader extends React.PureComponent<Props> {
   private static renderName = (thread: Thread) => (
-    <h3>
+    <Heading as="h3" size="medium">
       {Thread.getFormattedTime(thread)}
       {' '}
       -
       {' '}
       <i>{thread.name}</i>
-    </h3>
+    </Heading>
   );
 
   private static getStatusAppearance = (status: ThreadStatus) => {

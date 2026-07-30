@@ -6,7 +6,7 @@ describe('NoThreadDumpsError', () => {
     render(<NoThreadDumpsError />);
 
     expect(screen.getByRole('main')).toHaveAttribute('id', 'centered');
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('No thread dumps found');
+    expect(screen.getByRole('heading')).toHaveTextContent('No thread dumps found');
     expect(screen.getByText('Upload at least one thread dump to use this view.')).toBeInTheDocument();
   });
 });

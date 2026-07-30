@@ -1,23 +1,32 @@
-import '../Container.css';
-import './EmptyState.css';
+import EmptyStateComponent from '@atlaskit/empty-state';
+
+const DEFAULT_TITLE = 'No threads match the selected criteria.';
+const DEFAULT_DESCRIPTION = 'Adjust the filters and try again.';
 
 export interface EmptyStateContent {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
 interface Props extends EmptyStateContent {
-  fullPage: boolean;
+  fullPage?: boolean;
 }
 
-const EmptyState = ({ title, description, fullPage }: Props): JSX.Element => {
+const EmptyState = ({ title = DEFAULT_TITLE, description = DEFAULT_DESCRIPTION, fullPage = false }: Props): JSX.Element => {
   const content = (
-    <div className="empty-state-content">
-      <h2 className="empty-state-title">{title}</h2>
-      <p className="empty-state-description">{description}</p>
-    </div>
+    <EmptyStateComponent
+      header={title}
+      description={description}
+    />
   );
 
   return fullPage ? <main id="centered">{content}</main> : content;
 };
+
+EmptyState.defaultProps = {
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
+  fullPage: false,
+};
+
 export default EmptyState;

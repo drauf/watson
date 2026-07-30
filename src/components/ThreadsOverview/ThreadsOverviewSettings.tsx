@@ -1,3 +1,5 @@
+import ButtonGroup from '@atlaskit/button/button-group';
+import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import Filter from '../Filter/Filter';
 import RegexFilters from '../common/RegexFilters';
@@ -37,63 +39,65 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
       <section id="settings">
         <TimeWindowFilter />
         <div className="filters">
-          <b>Filters:</b>
+          <Text weight="bold">Filters:</Text>
 
-          <Filter
-            name="active"
-            displayName="Active"
-            checked={active}
-            onChange={onFilterChange}
-            tooltip="Show only threads that changed state between dumps or are experiencing contention"
-          />
+          <ButtonGroup>
+            <Filter
+              name="active"
+              displayName="Active"
+              checked={active}
+              onChange={onFilterChange}
+              tooltip="Show only threads that changed state between dumps or are experiencing contention"
+            />
 
-          <Filter
-            name="nonJvm"
-            displayName="Non-JVM"
-            checked={nonJvm}
-            onChange={onFilterChange}
-            tooltip="Hide JVM housekeeping threads (GC, compiler, etc.)"
-          />
+            <Filter
+              name="nonJvm"
+              displayName="Non-JVM"
+              checked={nonJvm}
+              onChange={onFilterChange}
+              tooltip="Hide JVM housekeeping threads (GC, compiler, etc.)"
+            />
 
-          <Filter
-            name="tomcat"
-            displayName="Tomcat"
-            checked={tomcat}
-            onChange={onFilterChange}
-            tooltip="Show only HTTP request processing threads"
-          />
+            <Filter
+              name="tomcat"
+              displayName="Tomcat"
+              checked={tomcat}
+              onChange={onFilterChange}
+              tooltip="Show only HTTP request processing threads"
+            />
 
-          <Filter
-            name="nonTomcat"
-            displayName="Non-Tomcat"
-            checked={nonTomcat}
-            onChange={onFilterChange}
-            tooltip="Hide HTTP request processing threads"
-          />
+            <Filter
+              name="nonTomcat"
+              displayName="Non-Tomcat"
+              checked={nonTomcat}
+              onChange={onFilterChange}
+              tooltip="Hide HTTP request processing threads"
+            />
 
-          <Filter
-            name="database"
-            displayName="Database"
-            checked={database}
-            onChange={onFilterChange}
-            tooltip="Show only threads performing database queries and operations"
-          />
+            <Filter
+              name="database"
+              displayName="Database"
+              checked={database}
+              onChange={onFilterChange}
+              tooltip="Show only threads performing database queries and operations"
+            />
 
-          <Filter
-            name="lucene"
-            displayName="Lucene"
-            checked={lucene}
-            onChange={onFilterChange}
-            tooltip="Show only threads performing search indexing and queries"
-          />
+            <Filter
+              name="lucene"
+              displayName="Lucene"
+              checked={lucene}
+              onChange={onFilterChange}
+              tooltip="Show only threads performing search indexing and queries"
+            />
 
-          <Filter
-            name="usingCpu"
-            displayName="High CPU usage"
-            checked={usingCpu}
-            onChange={onFilterChange}
-            tooltip="Show only threads using more than 10% CPU"
-          />
+            <Filter
+              name="usingCpu"
+              displayName="High CPU usage"
+              checked={usingCpu}
+              onChange={onFilterChange}
+              tooltip="Show only threads using more than 10% CPU"
+            />
+          </ButtonGroup>
         </div>
 
         <RegexFilters

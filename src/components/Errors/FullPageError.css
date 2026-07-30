@@ -1,7 +1,3 @@
-.error-indicator h2 {
-  margin: 0;
-}
-
 .error-message {
   margin: var(--ds-space-150, 12px) 0 0;
   color: var(--ds-text-subtle, #626f86);

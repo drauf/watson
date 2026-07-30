@@ -1,3 +1,6 @@
+import ButtonGroup from '@atlaskit/button/button-group';
+import Button from '@atlaskit/button/new';
+import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import CpuConsumersMode from './CpuConsumersMode';
 import RegexFilters from '../common/RegexFilters';
@@ -6,9 +9,15 @@ interface Props {
   mode: CpuConsumersMode;
   nameFilter: string;
   stackFilter: string;
-  onModeChange: (mode: number) => React.ChangeEventHandler<HTMLInputElement>;
+  onModeChange: (mode: CpuConsumersMode) => void;
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
 }
+
+const sortModes = [
+  { mode: CpuConsumersMode.Mean, label: 'Mean' },
+  { mode: CpuConsumersMode.Median, label: 'Median' },
+  { mode: CpuConsumersMode.Max, label: 'Max' },
+];
 
 export default class CpuConsumersSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {
@@ -19,39 +28,23 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
     return (
       <section id="settings">
         <div className="filters">
-          <b>Sort threads by</b>
+          <Text weight="bold">Sort threads by</Text>
 
-          <label className={mode === CpuConsumersMode.Mean ? 'checked' : ''}>
-            <input
-              type="radio"
-              checked={mode === CpuConsumersMode.Mean}
-              name="cpu-consumer-sort-mode"
-              onChange={onModeChange(CpuConsumersMode.Mean)}
-            />
-            Mean
-          </label>
+          <ButtonGroup>
+            {sortModes.map(({ mode: sortMode, label }) => (
+              <Button
+                key={sortMode}
+                appearance="default"
+                isSelected={mode === sortMode}
+                onClick={() => onModeChange(sortMode)}
+                aria-pressed={mode === sortMode}
+              >
+                {label}
+              </Button>
+            ))}
+          </ButtonGroup>
 
-          <label className={mode === CpuConsumersMode.Median ? 'checked' : ''}>
-            <input
-              type="radio"
-              checked={mode === CpuConsumersMode.Median}
-              name="cpu-consumer-sort-mode"
-              onChange={onModeChange(CpuConsumersMode.Median)}
-            />
-            Median
-          </label>
-
-          <label className={mode === CpuConsumersMode.Max ? 'checked' : ''}>
-            <input
-              type="radio"
-              checked={mode === CpuConsumersMode.Max}
-              name="cpu-consumer-sort-mode"
-              onChange={onModeChange(CpuConsumersMode.Max)}
-            />
-            Max
-          </label>
-
-          <b>CPU usage</b>
+          <Text weight="bold">CPU usage</Text>
         </div>
 
         <div className="settings-row">

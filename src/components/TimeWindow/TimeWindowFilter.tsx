@@ -1,4 +1,11 @@
+import ButtonGroup from '@atlaskit/button/button-group';
 import Button from '@atlaskit/button/new';
+import { DatePicker } from '@atlaskit/datetime-picker';
+import SectionMessage from '@atlaskit/section-message';
+import Textfield from '@atlaskit/textfield';
+import Inline from '@atlaskit/primitives/inline';
+import Stack from '@atlaskit/primitives/stack';
+import Text from '@atlaskit/primitives/text';
 import {
   PointerEvent as ReactPointerEvent, useEffect, useMemo, useRef, useState,
 } from 'react';
@@ -9,8 +16,9 @@ import {
   TimeWindow,
 } from '../../common/timeWindow';
 import { useTimeWindow } from '../../context/TimeWindowContext';
+import CollapsableGroup from '../CollapsableGroup';
+import LargeRangeConfirmationDialog from './LargeRangeConfirmationDialog';
 import './TimeWindowFilter.css';
-import '../common/ExpandableSurface.css';
 
 const MAX_RECOMMENDED_THREAD_DUMPS = 100;
 
@@ -62,8 +70,10 @@ const positionForEpoch = (epoch: number, bounds: TimeWindow): number => (
   (epoch - bounds.startEpoch) / (bounds.endEpoch - bounds.startEpoch)
 );
 
+const TIME_INPUT_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)(:([0-5]\d))?$/;
+
 const updateEpochFromTimeInput = (value: string, currentEpoch: number): number | undefined => {
-  if (!value) {
+  if (!TIME_INPUT_PATTERN.test(value)) {
     return undefined;
   }
 
@@ -98,17 +108,6 @@ const updateEpochFromDateInput = (value: string, currentEpoch: number): number |
   return Number.isNaN(epoch) ? undefined : epoch;
 };
 
-const WarningIcon = ({ className }: { className: string }): JSX.Element => (
-  <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
-    <path
-      clipRule="evenodd"
-      d="M6.242 1.169c.757-1.396 2.76-1.396 3.516 0l5.9 10.878C16.381 13.379 15.416 15 13.9 15H2.1C.584 15-.38 13.38.342 12.047zM7.25 9.5v-5h1.5v5zM8 12.75a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
-      fill="currentColor"
-      fillRule="evenodd"
-    />
-  </svg>
-);
-
 const TimeWindowFilter = (): JSX.Element | null => {
   const {
     allThreadDumps,
@@ -120,7 +119,6 @@ const TimeWindowFilter = (): JSX.Element | null => {
     resetPreviewTimeWindow,
     setPreviewTimeWindow,
   } = useTimeWindow();
-  const [expanded, setExpanded] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [dragMode, setDragMode] = useState<DragMode>();
   const dragStartPosition = useRef<number | undefined>(undefined);
@@ -270,143 +268,134 @@ const TimeWindowFilter = (): JSX.Element | null => {
     ? `Applying this range will show ${previewThreadDumpCount} thread dumps. Large ranges can slow analysis pages.`
     : `Applying this range will show ${previewThreadDumpCount} thread dumps.`;
   const previewMessage = hasPendingChanges ? pendingChangesMessage : noPendingChangesMessage;
+  const previewIsWarning = (previewIsLarge && hasPendingChanges) || (appliedIsLarge && !hasPendingChanges);
+  const previewTitle = previewIsWarning ? 'Large time window' : 'Time window';
   const largeRangeMessage = `The selected time window covers ${previewThreadDumpCount} thread dumps from ${formatWindow(previewWindow)}.\nLarge time windows can slow analysis pages.`;
   const selectionStart = positionForEpoch(previewWindow.startEpoch, bounds) * 100;
   const selectionWidth = (positionForEpoch(previewWindow.endEpoch, bounds) * 100) - selectionStart;
-  return (
-    <section className={`expandable-surface${expanded ? ' expandable-surface-expanded' : ''}`}>
-      <button
-        type="button"
-        className="time-window-toggle expandable-surface-toggle"
-        aria-expanded={expanded}
-        onClick={() => setExpanded((current) => !current)}
-      >
-        <span className={expanded ? 'chevron' : 'chevron rotate'} />
-        <span className="time-window-title">Time window</span>
-        <span className="time-window-summary">{appliedSummary}</span>
-      </button>
+  const header = (
+    <Inline as="span" alignBlock="center" space="space.150">
+      <Text as="span" weight="bold">Time window</Text>
+      <Text as="span" color="color.text.subtle">{appliedSummary}</Text>
+    </Inline>
+  );
 
-      {expanded && (
-        <div className="time-window-controls">
-          <div ref={timeline} className="time-window-timeline" aria-label="Time window timeline">
-            <span
-              className="time-window-selection"
-              style={{ left: `${selectionStart}%`, width: `${selectionWidth}%` }}
-              onPointerDown={(event) => startDragging('window', event)}
-            >
-              <span
-                className="time-window-handle time-window-handle-start"
-                onPointerDown={(event) => {
-                  event.stopPropagation();
-                  startDragging('start', event);
-                }}
-              />
-              <span
-                className="time-window-handle time-window-handle-end"
-                onPointerDown={(event) => {
-                  event.stopPropagation();
-                  startDragging('end', event);
-                }}
-              />
-            </span>
-            <div className="time-window-labels">
-              <span>{formatTime(bounds.startEpoch)}</span>
-              <span>{formatTime(bounds.endEpoch)}</span>
-            </div>
-          </div>
+  const content = (
+    <Stack space="space.100">
+      <SectionMessage appearance={previewIsWarning ? 'warning' : 'information'} title={previewTitle}>
+        {previewMessage}
+      </SectionMessage>
 
-          <form
-            className="time-window-inputs"
-            onSubmit={(event) => {
-              event.preventDefault();
-              applyPreview();
+      <div ref={timeline} className="time-window-timeline" aria-label="Time window timeline">
+        <div
+          className="time-window-selection"
+          style={{ left: `${selectionStart}%`, width: `${selectionWidth}%` }}
+          onPointerDown={(event) => startDragging('window', event)}
+        >
+          <div
+            className="time-window-handle time-window-handle-start"
+            onPointerDown={(event) => {
+              event.stopPropagation();
+              startDragging('start', event);
             }}
-          >
-            <label>
-              From
-              {includesMultipleDays && (
-                <input
-                  aria-label="From date"
-                  type="date"
-                  value={formatDate(previewWindow.startEpoch)}
-                  onChange={(event) => setPreviewDateBoundary('startEpoch', event.target.value)}
+          />
+          <div
+            className="time-window-handle time-window-handle-end"
+            onPointerDown={(event) => {
+              event.stopPropagation();
+              startDragging('end', event);
+            }}
+          />
+        </div>
+        <div className="time-window-labels">
+          <Text as="span">{formatTime(bounds.startEpoch)}</Text>
+          <Text as="span">{formatTime(bounds.endEpoch)}</Text>
+        </div>
+      </div>
+
+      <form
+        className="time-window-inputs"
+        onSubmit={(event) => {
+          event.preventDefault();
+          applyPreview();
+        }}
+      >
+        <Stack space="space.150">
+          <Inline space="space.200" shouldWrap>
+            <Stack space="space.050">
+              <Text as="span" weight="bold">From</Text>
+              <Inline space="space.050">
+                {includesMultipleDays && (
+                  <DatePicker
+                    dateFormat="YYYY-MM-DD"
+                    label="From date"
+                    testId="from-date-picker"
+                    value={formatDate(previewWindow.startEpoch)}
+                    onChange={(value) => setPreviewDateBoundary('startEpoch', value)}
+                  />
+                )}
+                <Textfield
+                  aria-label="From time"
+                  testId="from-time-input"
+                  placeholder="HH:mm:ss"
+                  inputMode="numeric"
+                  value={formatTime(previewWindow.startEpoch)}
+                  onChange={(event) => setPreviewTimeBoundary('startEpoch', (event.target as HTMLInputElement).value)}
                 />
-              )}
-              <input
-                aria-label="From time"
-                type="time"
-                step="1"
-                value={formatTime(previewWindow.startEpoch)}
-                onChange={(event) => setPreviewTimeBoundary('startEpoch', event.target.value)}
-              />
-            </label>
-            <label>
-              to
-              {includesMultipleDays && (
-                <input
-                  aria-label="To date"
-                  type="date"
-                  value={formatDate(previewWindow.endEpoch)}
-                  onChange={(event) => setPreviewDateBoundary('endEpoch', event.target.value)}
+              </Inline>
+            </Stack>
+            <Stack space="space.050">
+              <Text as="span" weight="bold">To</Text>
+              <Inline space="space.050">
+                {includesMultipleDays && (
+                  <DatePicker
+                    dateFormat="YYYY-MM-DD"
+                    label="To date"
+                    testId="to-date-picker"
+                    value={formatDate(previewWindow.endEpoch)}
+                    onChange={(value) => setPreviewDateBoundary('endEpoch', value)}
+                  />
+                )}
+                <Textfield
+                  aria-label="To time"
+                  testId="to-time-input"
+                  placeholder="HH:mm:ss"
+                  inputMode="numeric"
+                  value={formatTime(previewWindow.endEpoch)}
+                  onChange={(event) => setPreviewTimeBoundary('endEpoch', (event.target as HTMLInputElement).value)}
                 />
-              )}
-              <input
-                aria-label="To time"
-                type="time"
-                step="1"
-                value={formatTime(previewWindow.endEpoch)}
-                onChange={(event) => setPreviewTimeBoundary('endEpoch', event.target.value)}
-              />
-            </label>
-            <Button appearance="primary" type="submit" isDisabled={!hasPendingChanges}>Apply</Button>
+              </Inline>
+            </Stack>
+          </Inline>
+          <ButtonGroup>
+            <Button
+              appearance="primary"
+              type="button"
+              onClick={applyPreview}
+              isDisabled={!hasPendingChanges}
+            >
+              Apply
+            </Button>
             <Button appearance="default" onClick={resetPreviewTimeWindow} isDisabled={!hasPendingChanges}>Reset</Button>
             <Button appearance="default" onClick={() => setPreviewTimeWindow()}>Show all...</Button>
-          </form>
+          </ButtonGroup>
+        </Stack>
+      </form>
+    </Stack>
+  );
 
-          <p className={previewIsLarge && hasPendingChanges ? 'time-window-preview time-window-preview-warning' : 'time-window-preview'}>
-            {previewIsLarge && hasPendingChanges && <WarningIcon className="time-window-preview-warning-icon" />}
-            <span>{previewMessage}</span>
-          </p>
-        </div>
-      )}
+  return (
+    <>
+      <CollapsableGroup header={header} content={content} />
 
       {confirmationOpen && (
-        <div className="time-window-dialog-backdrop">
-          <button
-            type="button"
-            className="time-window-dialog-dismiss"
-            aria-label="Close dialog"
-            onClick={() => setConfirmationOpen(false)}
-          />
-          <section
-            className="time-window-dialog"
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="large-time-window-title"
-          >
-            <div className="time-window-dialog-header">
-              <div className="time-window-dialog-title">
-                <WarningIcon className="time-window-dialog-warning-icon" />
-                <h2 id="large-time-window-title">Large time window selected</h2>
-              </div>
-              <button
-                type="button"
-                className="time-window-dialog-close"
-                aria-label="Close dialog"
-                onClick={() => setConfirmationOpen(false)}
-              >
-                ×
-              </button>
-            </div>
-            <p>{largeRangeMessage}</p>
-            <div className="time-window-dialog-actions">
-              <Button appearance="default" onClick={() => setConfirmationOpen(false)}>Choose smaller window</Button>
-              <Button appearance="warning" onClick={applyLargePreview}>Analyze anyway</Button>
-            </div>
-          </section>
-        </div>
+        <LargeRangeConfirmationDialog
+          message={largeRangeMessage}
+          onClose={() => setConfirmationOpen(false)}
+          onAnalyze={applyLargePreview}
+        />
       )}
-    </section>
+    </>
   );
 };
 

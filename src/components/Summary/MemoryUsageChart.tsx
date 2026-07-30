@@ -3,6 +3,8 @@ import {
   Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip,
 } from 'recharts';
 import { token } from '@atlaskit/tokens';
+import Heading from '@atlaskit/heading';
+import Text from '@atlaskit/primitives/text';
 import MemoryUsage from '../../types/MemoryUsage';
 import ThreadDump from '../../types/ThreadDump';
 import labelFormatter from './LabelFormatter';
@@ -25,8 +27,8 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
     if (memoryUsages.length === 0) {
       return (
         <div className="chart">
-          <h3>Memory usage</h3>
-          <p>No data</p>
+          <Heading as="h3" size="medium">Memory usage</Heading>
+          <Text as="p">No data</Text>
         </div>
       );
     }
@@ -43,7 +45,7 @@ export default class MemoryUsageChart extends React.PureComponent<Props> {
 
     return (
       <div id="memory-usage-chart">
-        <h3>Memory usage</h3>
+        <Heading as="h3" size="medium">Memory usage</Heading>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
             <Pie data={data} dataKey="value" nameKey="name" isAnimationActive={false}>

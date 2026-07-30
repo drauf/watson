@@ -1,9 +1,9 @@
-import React from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import { matchesRegexFilters } from '../../common/regexFiltering';
 import { WithThreadDumpsProps, withAllThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import EmptyState from '../Errors/EmptyState';
 import NoCpuInfosAndThreadDumpPairError from '../Errors/NoCpuInfosAndThreadDumpPairError';
 import PageWithSettings from '../PageWithSettings';
 import CpuConsumer from './CpuConsumer';
@@ -51,16 +51,28 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
           onRegExpChange={this.handleTextChange}
         />
 
-        <CpuConsumersList
-          dumpsNumber={this.state.threadDumps.length}
-          consumers={consumers}
-          resetKey={`${this.state.mode}:${this.state.nameFilter}:${this.state.stackFilter}:${this.state.threadDumps.length}`}
-        />
+        {this.renderConsumers(consumers)}
       </main>
     );
   }
 
-  private handleModeChange = (mode: number): React.ChangeEventHandler<HTMLInputElement> => () => {
+  private renderConsumers = (consumers: CpuConsumer[]): JSX.Element => {
+    if (consumers.length === 0) {
+      return (
+        <EmptyState />
+      );
+    }
+
+    return (
+      <CpuConsumersList
+        dumpsNumber={this.state.threadDumps.length}
+        consumers={consumers}
+        resetKey={`${this.state.mode}:${this.state.nameFilter}:${this.state.stackFilter}:${this.state.threadDumps.length}`}
+      />
+    );
+  };
+
+  private handleModeChange = (mode: CpuConsumersMode): void => {
     this.setState({ mode });
   };
 

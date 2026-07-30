@@ -11,9 +11,16 @@ describe('EmptyState', () => {
       />,
     );
 
-    expect(screen.getByRole('heading', { level: 2, name: 'No matching threads' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'No matching threads' })).toBeInTheDocument();
     expect(screen.getByText('Change the filters and try again.')).toBeInTheDocument();
     expect(screen.queryByRole('main')).not.toBeInTheDocument();
+  });
+
+  it('uses the common filter title and guidance by default', () => {
+    render(<EmptyState fullPage={false} />);
+
+    expect(screen.getByRole('heading', { name: 'No threads match the selected criteria.' })).toBeInTheDocument();
+    expect(screen.getByText('Adjust the filters and try again.')).toBeInTheDocument();
   });
 
   it('centers its content when used as a full-page state', () => {

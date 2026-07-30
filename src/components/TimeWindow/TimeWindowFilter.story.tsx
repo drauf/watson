@@ -7,6 +7,7 @@ import {
   normalTimeWindowThreadDumps,
 } from '../../test-fixtures/threadDumps';
 import ThreadDump from '../../types/ThreadDump';
+import LargeRangeConfirmationDialog from './LargeRangeConfirmationDialog';
 import TimeWindowFilter from './TimeWindowFilter';
 
 interface StoryProps {
@@ -57,4 +58,12 @@ export const PendingLargeRangeWarning = (): JSX.Element => (
   <TimeWindowStory threadDumps={largeRangeThreadDumps}>
     <PendingLargeRange />
   </TimeWindowStory>
+);
+
+export const LargeRangeDialog = (): JSX.Element => (
+  <LargeRangeConfirmationDialog
+    message="The selected time window covers 294 thread dumps from 2026-07-23 23:55:00 to 2026-07-24 00:10:00. Large time windows can slow analysis pages."
+    onClose={() => undefined}
+    onAnalyze={() => undefined}
+  />
 );

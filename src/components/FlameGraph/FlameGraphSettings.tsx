@@ -1,3 +1,5 @@
+import ButtonGroup from '@atlaskit/button/button-group';
+import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import Filter from '../Filter/Filter';
 import RegexFilters from '../common/RegexFilters';
@@ -28,23 +30,25 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
         <section id="settings">
           <TimeWindowFilter />
           <div className="filters">
-            <b>Filters:</b>
+            <Text weight="bold">Filters:</Text>
 
-            <Filter
-              name="withoutIdle"
-              displayName="Active"
-              checked={withoutIdle}
-              onChange={onFilterChange}
-              tooltip="Hide threads waiting for I/O or in thread pools"
-            />
+            <ButtonGroup>
+              <Filter
+                name="withoutIdle"
+                displayName="Active"
+                checked={withoutIdle}
+                onChange={onFilterChange}
+                tooltip="Hide threads waiting for I/O or in thread pools"
+              />
 
-            <Filter
-              name="usingCpu"
-              displayName="High CPU usage"
-              checked={usingCpu}
-              onChange={onFilterChange}
-              tooltip="Show only threads using more than 10% CPU - focuses on actual performance hotspots"
-            />
+              <Filter
+                name="usingCpu"
+                displayName="High CPU usage"
+                checked={usingCpu}
+                onChange={onFilterChange}
+                tooltip="Show only threads using more than 10% CPU - focuses on actual performance hotspots"
+              />
+            </ButtonGroup>
           </div>
 
           <RegexFilters

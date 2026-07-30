@@ -2,6 +2,7 @@ import getThreadsOverTime from '../../common/getThreadsOverTime';
 import { isActiveOverTime } from '../../common/threadFilters';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
+import EmptyState from '../Errors/EmptyState';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
 import ThreadsOverviewFilteringSummary from './ThreadsOverviewFilteringSummary';
@@ -82,11 +83,15 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
           <ThreadsOverviewLegend />
         </section>
 
-        <ThreadsOverviewTable
-          dates={dates}
-          threadDumps={filteredDumps}
-          matchingStackFilter={matchingStackFilter}
-        />
+        {filteredDumps.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <ThreadsOverviewTable
+            dates={dates}
+            threadDumps={filteredDumps}
+            matchingStackFilter={matchingStackFilter}
+          />
+        )}
       </main>
     );
   }

@@ -1,3 +1,6 @@
+import Heading from '@atlaskit/heading';
+import Stack from '@atlaskit/primitives/stack';
+import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import OutboundLink from '../FullPageDropzone/OutboundLink';
 import './HelpPage.css';
@@ -8,43 +11,45 @@ const EMAIL = 'drauf@atlassian.com';
 
 const HelpPage: React.FC = () => (
   <main className="help-page">
-    <h2>Glad you&apos;re here</h2>
+    <Stack space="space.200">
+      <Heading as="h2" size="large">Glad you&apos;re here</Heading>
 
-    <p>
-      Watson is a passion project, and I genuinely love hearing from the people who use it.
-      Questions, bug reports, and ideas for improvements are all very welcome - you are never
-      bothering me. If something is confusing, broken, or missing, I would much rather hear
-      about it than not, and I am always happy to help or make improvements.
-    </p>
+      <Text as="p">
+        Watson is a passion project, and I genuinely love hearing from the people who use it.
+        Questions, bug reports, and ideas for improvements are all very welcome - you are never
+        bothering me. If something is confusing, broken, or missing, I would much rather hear
+        about it than not, and I am always happy to help or make improvements.
+      </Text>
 
-    <p>
-      Watson runs entirely in your browser - your thread dumps and CPU data never leave your
-      machine.
-    </p>
+      <Text as="p">
+        Watson runs entirely in your browser - your thread dumps and CPU data never leave your
+        machine.
+      </Text>
 
-    <p>Here is how to reach me:</p>
+      <Text as="p">Here is how to reach me:</Text>
 
-    <ul>
-      <li>
-        <OutboundLink to={SLACK_CONNECT_DOCS_LINK}>Slack</OutboundLink>
-        {' '}
-        - start a direct message with me
-      </li>
-      <li>
-        <OutboundLink to={SOURCE_CODE_LINK}>GitHub</OutboundLink>
-        {' '}
-        - open an issue or a pull request
-      </li>
-      <li>
-        <a href={`mailto:${EMAIL}`}>email</a>
-        {' '}
-        -
-        {' '}
-        {EMAIL}
-      </li>
-    </ul>
+      <ul>
+        <li>
+          <OutboundLink to={SLACK_CONNECT_DOCS_LINK}>Slack</OutboundLink>
+          {' '}
+          - start a direct message with me
+        </li>
+        <li>
+          <OutboundLink to={SOURCE_CODE_LINK}>GitHub</OutboundLink>
+          {' '}
+          - open an issue or a pull request
+        </li>
+        <li>
+          <a href={`mailto:${EMAIL}`}>email</a>
+          {' '}
+          -
+          {' '}
+          {EMAIL}
+        </li>
+      </ul>
 
-    <p>Thanks for using Watson - I hope it makes your day a little easier.</p>
+      <Text as="p">Thanks for using Watson - I hope it makes your day a little easier.</Text>
+    </Stack>
   </main>
 );
 

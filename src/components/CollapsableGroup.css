@@ -5,3 +5,31 @@
 .collapsable-group-heading {
   margin: 0;
 }
+
+.collapsable-group-chevron {
+  display: inline-flex;
+  flex: 0 0 24px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  margin-right: var(--ds-space-075, 6px);
+  color: var(--ds-icon, #292a2e);
+  border-radius: var(--ds-radius-small, 4px);
+  transition: background-color 0.1s ease-out;
+}
+
+.collapsable-group-chevron svg {
+  transform-origin: center;
+  transition: transform 0.1s ease-out;
+}
+
+.collapsable-group-chevron-collapsed svg {
+  transform: rotate(-90deg);
+}
+
+/* Match Confluence's disclosure affordance: the 24px icon hit area tints on hover */
+.expandable-surface-toggle:hover .collapsable-group-chevron {
+  background: var(--ds-background-neutral-subtle-hovered, #0515240f);
+}

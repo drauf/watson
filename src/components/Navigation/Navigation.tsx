@@ -1,6 +1,8 @@
 import Button from '@atlaskit/button/new';
+import RefreshIcon from '@atlaskit/icon/core/refresh';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import React from 'react';
+import Heading from '@atlaskit/heading';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import './Navigation.css';
@@ -10,6 +12,8 @@ interface LinkProps {
   pageLink: string;
   displayName: string;
 }
+
+const RefreshButtonIcon = () => <RefreshIcon label="" />;
 
 const StyledNavLink: React.FC<LinkProps> = (props: LinkProps) => {
   const { hash, pageLink, displayName: name } = props;
@@ -32,9 +36,9 @@ const Navigation: React.FC = () => {
   return (
     <header>
       <div className="header-section">
-        <h1>
+        <Heading as="h1" size="xlarge" testId="watson-logo">
           Watson
-        </h1>
+        </Heading>
 
         <nav>
           <ul>
@@ -50,16 +54,17 @@ const Navigation: React.FC = () => {
       </div>
 
       <div className="header-section">
-        <ThemeSwitcher />
-
         <nav aria-label="Utility navigation">
           <ul>
             <StyledNavLink hash={hash} pageLink="help" displayName="Help & feedback" />
           </ul>
         </nav>
 
+        <ThemeSwitcher />
+
         <Button
           appearance="subtle"
+          iconBefore={RefreshButtonIcon}
           onClick={() => {
             clearCurrentData();
             navigate('/');

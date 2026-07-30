@@ -3,6 +3,8 @@ import {
   CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, TooltipContentProps, XAxis, YAxis,
 } from 'recharts';
 import { token } from '@atlaskit/tokens';
+import Heading from '@atlaskit/heading';
+import Text from '@atlaskit/primitives/text';
 import ThreadDump from '../../types/ThreadDump';
 import TooltipContent from '../common/TooltipContent';
 
@@ -21,12 +23,12 @@ const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Ele
   if (active && payload) {
     return (
       <TooltipContent>
-        <p>
+        <Text as="p">
           Load averages at
           {' '}
           {label}
           :
-        </p>
+        </Text>
 
         <ul>
           {payload.map((item) => (
@@ -64,15 +66,15 @@ export default class LoadAveragesChart extends React.PureComponent<Props> {
     if (data.length === 0) {
       return (
         <div className="chart">
-          <h3>Load averages</h3>
-          <p>No data</p>
+          <Heading as="h3" size="medium">Load averages</Heading>
+          <Text as="p">No data</Text>
         </div>
       );
     }
 
     return (
       <div id="load-averages-chart" className="chart">
-        <h3>Load averages</h3>
+        <Heading as="h3" size="medium">Load averages</Heading>
         <ResponsiveContainer width="100%" height={350}>
           <LineChart data={data}>
             <XAxis dataKey="name" />
