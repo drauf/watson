@@ -289,30 +289,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/calendar@npm:^18.3.0":
-  version: 18.3.6
-  resolution: "@atlaskit/calendar@npm:18.3.6"
-  dependencies:
-    "@atlaskit/analytics-next": "npm:^12.3.0"
-    "@atlaskit/button": "npm:^24.3.0"
-    "@atlaskit/css": "npm:^1.0.0"
-    "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/heading": "npm:^7.0.0"
-    "@atlaskit/icon": "npm:^37.2.0"
-    "@atlaskit/locale": "npm:^5.0.0"
-    "@atlaskit/platform-feature-flags": "npm:^2.1.0"
-    "@atlaskit/primitives": "npm:^22.2.0"
-    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
-    "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
-    date-fns: "npm:^2.17.0"
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/13632343b77f647a09945429f22b4495e8f3e54b8192be2c5009ba2396ce94a13d12b9da48256d2afbd23650f8b879e2d9ea0ab119d61dce19ea2264d8283aaf
-  languageName: node
-  linkType: hard
-
 "@atlaskit/checkbox@npm:18.2.1":
   version: 18.2.1
   resolution: "@atlaskit/checkbox@npm:18.2.1"
@@ -374,34 +350,6 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/ecec4b7e9b7751f3c610ec463fe66a8463fac38d30c9cb442bcb5df88cb728dd2ac3f76339a63b0d3962c170bb9377df97b00e18355e9dd560c97227b73d6a15
-  languageName: node
-  linkType: hard
-
-"@atlaskit/datetime-picker@npm:18.2.0":
-  version: 18.2.0
-  resolution: "@atlaskit/datetime-picker@npm:18.2.0"
-  dependencies:
-    "@atlaskit/analytics-next": "npm:^12.3.0"
-    "@atlaskit/button": "npm:^24.3.0"
-    "@atlaskit/calendar": "npm:^18.3.0"
-    "@atlaskit/css": "npm:^1.0.0"
-    "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/icon": "npm:^37.2.0"
-    "@atlaskit/layering": "npm:^5.0.0"
-    "@atlaskit/locale": "npm:^5.0.0"
-    "@atlaskit/platform-feature-flags": "npm:^2.1.0"
-    "@atlaskit/popper": "npm:^8.4.0"
-    "@atlaskit/primitives": "npm:^22.2.0"
-    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/select": "npm:^22.6.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
-    "@atlaskit/top-layer": "npm:^2.0.0"
-    "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
-    date-fns: "npm:^2.17.0"
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/2a0dbb60f73c5bff96d2213396fb93e572f99b06ea126aa1f2354aec15d5afd785304fc7da3a1f719f5e750ad1d44a747756558777c0313ffe3d866f167298fb
   languageName: node
   linkType: hard
 
@@ -586,21 +534,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/heading@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@atlaskit/heading@npm:7.0.0"
-  dependencies:
-    "@atlaskit/primitives": "npm:^22.2.0"
-    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
-    "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/34ee8965b1a187a98b5ff30be03124736e8c7f8d9789d6e6fc801fc7946f161e60889f4c20cb050e4d7223625a32a15d3bed3eabae4655889f08c4010bb61bf0
-  languageName: node
-  linkType: hard
-
 "@atlaskit/icon@npm:37.2.0, @atlaskit/icon@npm:^37.0.0, @atlaskit/icon@npm:^37.1.0, @atlaskit/icon@npm:^37.2.0":
   version: 37.2.0
   resolution: "@atlaskit/icon@npm:37.2.0"
@@ -695,18 +628,6 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/a29a087d64c84fd7b4ba9ac089ddc98030f8964823009f71c3a91fc14dd9d6b17f84eeea5007073560d3684e6935ec45111107a44e36234e28f648278012332c
-  languageName: node
-  linkType: hard
-
-"@atlaskit/locale@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@atlaskit/locale@npm:5.0.0"
-  dependencies:
-    "@atlaskit/select": "npm:^22.0.0"
-    "@babel/runtime": "npm:^7.0.0"
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/969bc45889bf92d9f032d8eee41d5a93ff9e92243a55ce7463e9b062d438fbc852ba4a1b4f0b8104b411dfc3e5ec9226c46b0f7f97886c65665a0c3a0751f580
   languageName: node
   linkType: hard
 
@@ -1068,7 +989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/select@npm:22.6.0, @atlaskit/select@npm:^22.0.0, @atlaskit/select@npm:^22.6.0":
+"@atlaskit/select@npm:22.6.0":
   version: 22.6.0
   resolution: "@atlaskit/select@npm:22.6.0"
   dependencies:
@@ -1689,7 +1610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.0, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.21.0":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.0, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3":
   version: 7.29.7
   resolution: "@babel/runtime@npm:7.29.7"
   checksum: 10c0/ca11572f7146b21e0bde6a9ed4bb6a89eafbee5f0944c7eb54d0d8a2dac962c33638a1d611e14faa71dfbb92b4b5f9236232208568a6b7d5c6f3f39ddb91771e
@@ -5824,15 +5745,6 @@ __metadata:
     es-errors: "npm:^1.3.0"
     is-data-view: "npm:^1.0.1"
   checksum: 10c0/fa7aa40078025b7810dcffc16df02c480573b7b53ef1205aa6a61533011005c1890e5ba17018c692ce7c900212b547262d33279fde801ad9843edc0863bf78c4
-  languageName: node
-  linkType: hard
-
-"date-fns@npm:^2.17.0":
-  version: 2.30.0
-  resolution: "date-fns@npm:2.30.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.21.0"
-  checksum: 10c0/e4b521fbf22bc8c3db332bbfb7b094fd3e7627de0259a9d17c7551e2d2702608a7307a449206065916538e384f37b181565447ce2637ae09828427aed9cb5581
   languageName: node
   linkType: hard
 
@@ -13438,7 +13350,6 @@ __metadata:
     "@atlaskit/button": "npm:20.5.0"
     "@atlaskit/checkbox": "npm:18.2.1"
     "@atlaskit/css-reset": "npm:8.1.1"
-    "@atlaskit/datetime-picker": "npm:18.2.0"
     "@atlaskit/dropdown-menu": "npm:17.2.0"
     "@atlaskit/empty-state": "npm:11.1.4"
     "@atlaskit/form": "npm:16.1.4"

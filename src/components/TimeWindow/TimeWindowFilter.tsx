@@ -1,8 +1,6 @@
 import ButtonGroup from '@atlaskit/button/button-group';
 import Button from '@atlaskit/button/new';
-import { DatePicker } from '@atlaskit/datetime-picker';
 import SectionMessage from '@atlaskit/section-message';
-import Textfield from '@atlaskit/textfield';
 import Inline from '@atlaskit/primitives/inline';
 import Stack from '@atlaskit/primitives/stack';
 import Text from '@atlaskit/primitives/text';
@@ -70,44 +68,6 @@ const positionForEpoch = (epoch: number, bounds: TimeWindow): number => (
   (epoch - bounds.startEpoch) / (bounds.endEpoch - bounds.startEpoch)
 );
 
-const TIME_INPUT_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)(:([0-5]\d))?$/;
-
-const updateEpochFromTimeInput = (value: string, currentEpoch: number): number | undefined => {
-  if (!TIME_INPUT_PATTERN.test(value)) {
-    return undefined;
-  }
-
-  const [hours, minutes, seconds = '0'] = value.split(':');
-  const currentDate = new Date(currentEpoch);
-  return Date.UTC(
-    currentDate.getUTCFullYear(),
-    currentDate.getUTCMonth(),
-    currentDate.getUTCDate(),
-    Number(hours),
-    Number(minutes),
-    Number(seconds),
-  );
-};
-
-const updateEpochFromDateInput = (value: string, currentEpoch: number): number | undefined => {
-  if (!value) {
-    return undefined;
-  }
-
-  const [year, month, day] = value.split('-');
-  const currentDate = new Date(currentEpoch);
-  const epoch = Date.UTC(
-    Number(year),
-    Number(month) - 1,
-    Number(day),
-    currentDate.getUTCHours(),
-    currentDate.getUTCMinutes(),
-    currentDate.getUTCSeconds(),
-  );
-
-  return Number.isNaN(epoch) ? undefined : epoch;
-};
-
 const TimeWindowFilter = (): JSX.Element | null => {
   const {
     allThreadDumps,
@@ -127,7 +87,6 @@ const TimeWindowFilter = (): JSX.Element | null => {
 
   const appliedWindow = appliedTimeWindow ?? bounds;
   const previewWindow = previewTimeWindow ?? bounds;
-  const includesMultipleDays = bounds ? !sameCalendarDay(bounds.startEpoch, bounds.endEpoch) : false;
   const timestamps = useMemo(() => getThreadDumpTimestamps(allThreadDumps), [allThreadDumps]);
   const previewThreadDumpCount = useMemo(
     () => (previewWindow ? filterThreadDumpsByTimeWindow(allThreadDumps, previewWindow).length : 0),
@@ -214,7 +173,7 @@ const TimeWindowFilter = (): JSX.Element | null => {
     return null;
   }
 
-  const startDragging = (mode: DragMode, event: ReactPointerEvent<HTMLSpanElement>) => {
+  const startDragging = (mode: DragMode, event: ReactPointerEvent<HTMLDivElement>) => {
     const rect = timeline.current?.getBoundingClientRect();
     if (!rect) {
       return;
@@ -224,26 +183,6 @@ const TimeWindowFilter = (): JSX.Element | null => {
     dragStartWindow.current = previewWindow;
     setDragMode(mode);
     event.preventDefault();
-  };
-
-  const setPreviewBoundary = (boundary: 'startEpoch' | 'endEpoch', epoch: number | undefined) => {
-    if (epoch === undefined) {
-      return;
-    }
-
-    const boundedEpoch = clamp(epoch, bounds.startEpoch, bounds.endEpoch);
-    setPreviewTimeWindow({
-      startEpoch: boundary === 'startEpoch' ? Math.min(boundedEpoch, previewWindow.endEpoch) : previewWindow.startEpoch,
-      endEpoch: boundary === 'endEpoch' ? Math.max(boundedEpoch, previewWindow.startEpoch) : previewWindow.endEpoch,
-    });
-  };
-
-  const setPreviewTimeBoundary = (boundary: 'startEpoch' | 'endEpoch', value: string) => {
-    setPreviewBoundary(boundary, updateEpochFromTimeInput(value, previewWindow[boundary]));
-  };
-
-  const setPreviewDateBoundary = (boundary: 'startEpoch' | 'endEpoch', value: string) => {
-    setPreviewBoundary(boundary, updateEpochFromDateInput(value, previewWindow[boundary]));
   };
 
   const applyPreview = () => {
@@ -267,7 +206,9 @@ const TimeWindowFilter = (): JSX.Element | null => {
   const pendingChangesMessage = previewIsLarge
     ? `Applying this range will show ${previewThreadDumpCount} thread dumps. Large ranges can slow analysis pages.`
     : `Applying this range will show ${previewThreadDumpCount} thread dumps.`;
-  const previewMessage = hasPendingChanges ? pendingChangesMessage : noPendingChangesMessage;
+  const previewMessage = `Selected range: ${formatWindow(previewWindow)}. ${
+    hasPendingChanges ? pendingChangesMessage : noPendingChangesMessage
+  }`;
   const previewIsWarning = (previewIsLarge && hasPendingChanges) || (appliedIsLarge && !hasPendingChanges);
   const previewTitle = previewIsWarning ? 'Large time window' : 'Time window';
   const largeRangeMessage = `The selected time window covers ${previewThreadDumpCount} thread dumps from ${formatWindow(previewWindow)}.\nLarge time windows can slow analysis pages.`;
@@ -313,74 +254,18 @@ const TimeWindowFilter = (): JSX.Element | null => {
         </div>
       </div>
 
-      <form
-        className="time-window-inputs"
-        onSubmit={(event) => {
-          event.preventDefault();
-          applyPreview();
-        }}
-      >
-        <Stack space="space.150">
-          <Inline space="space.200" shouldWrap>
-            <Stack space="space.050">
-              <Text as="span" weight="bold">From</Text>
-              <Inline space="space.050">
-                {includesMultipleDays && (
-                  <DatePicker
-                    dateFormat="YYYY-MM-DD"
-                    label="From date"
-                    testId="from-date-picker"
-                    value={formatDate(previewWindow.startEpoch)}
-                    onChange={(value) => setPreviewDateBoundary('startEpoch', value)}
-                  />
-                )}
-                <Textfield
-                  aria-label="From time"
-                  testId="from-time-input"
-                  placeholder="HH:mm:ss"
-                  inputMode="numeric"
-                  value={formatTime(previewWindow.startEpoch)}
-                  onChange={(event) => setPreviewTimeBoundary('startEpoch', (event.target as HTMLInputElement).value)}
-                />
-              </Inline>
-            </Stack>
-            <Stack space="space.050">
-              <Text as="span" weight="bold">To</Text>
-              <Inline space="space.050">
-                {includesMultipleDays && (
-                  <DatePicker
-                    dateFormat="YYYY-MM-DD"
-                    label="To date"
-                    testId="to-date-picker"
-                    value={formatDate(previewWindow.endEpoch)}
-                    onChange={(value) => setPreviewDateBoundary('endEpoch', value)}
-                  />
-                )}
-                <Textfield
-                  aria-label="To time"
-                  testId="to-time-input"
-                  placeholder="HH:mm:ss"
-                  inputMode="numeric"
-                  value={formatTime(previewWindow.endEpoch)}
-                  onChange={(event) => setPreviewTimeBoundary('endEpoch', (event.target as HTMLInputElement).value)}
-                />
-              </Inline>
-            </Stack>
-          </Inline>
-          <ButtonGroup>
-            <Button
-              appearance="primary"
-              type="button"
-              onClick={applyPreview}
-              isDisabled={!hasPendingChanges}
-            >
-              Apply
-            </Button>
-            <Button appearance="default" onClick={resetPreviewTimeWindow} isDisabled={!hasPendingChanges}>Reset</Button>
-            <Button appearance="default" onClick={() => setPreviewTimeWindow()}>Show all...</Button>
-          </ButtonGroup>
-        </Stack>
-      </form>
+      <ButtonGroup>
+        <Button
+          appearance="primary"
+          type="button"
+          onClick={applyPreview}
+          isDisabled={!hasPendingChanges}
+        >
+          Apply
+        </Button>
+        <Button appearance="default" onClick={resetPreviewTimeWindow} isDisabled={!hasPendingChanges}>Reset</Button>
+        <Button appearance="default" onClick={() => setPreviewTimeWindow()}>Show all...</Button>
+      </ButtonGroup>
     </Stack>
   );
 

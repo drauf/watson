@@ -10,14 +10,13 @@ test.describe('Time window visual states', () => {
     await expect(timeWindow).toHaveScreenshot('time-window-collapsed.png');
   });
 
-  test('renders cross-midnight date and time controls', async ({ mount }) => {
+  test('renders a cross-midnight timeline range', async ({ mount }) => {
     const component = await mount('components/TimeWindow/TimeWindowFilter/CrossMidnight');
 
     await component.getByRole('button', { name: /time window/i }).click();
 
     const timeWindow = component.locator('.expandable-surface');
-    await expect(timeWindow.getByTestId('from-date-picker--container')).toContainText('2026-07-23');
-    await expect(timeWindow.getByTestId('to-date-picker--container')).toContainText('2026-07-24');
+    await expect(timeWindow.getByText(/^Selected range: 2026-07-23 23:59:00 - 2026-07-24 00:01:00\./)).toBeVisible();
     await expect(timeWindow).toHaveScreenshot('time-window-cross-midnight.png');
   });
 
