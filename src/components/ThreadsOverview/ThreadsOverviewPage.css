@@ -35,6 +35,14 @@
   cursor: pointer;
 }
 
+.threads-overview-table td:not(.unknown, .name):hover {
+  box-shadow: inset 0 0 0 999px color-mix(
+    in srgb,
+    var(--ds-background-inverse-subtle-hovered) 30%,
+    transparent
+  );
+}
+
 .threads-overview-table .hover-popup-trigger {
   display: block;
   min-width: 0;
