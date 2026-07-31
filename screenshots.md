@@ -12,7 +12,6 @@ Displays running processes, memory and swap usage, and load averages, based on t
 High-level overview of threads' state over time. Includes pre-built filters and allows manual filtering with regular expressions by thread names or stack frames. Very colorful to make it obvious when a thread changes states.
 
 ![Threads overview page](e2e/threads-overview.spec.tsx-snapshots/Threads-overview-loads-1-chrome-light-linux.png)
-![Threads overview page with regexp filter](e2e/threads-overview.spec.tsx-snapshots/Threads-overview-has-working-RegExp-thread-name-filter-1-chrome-light-linux.png)
 
 ## Thread details
 On most pages clicking a thread's name will open a pop-up like below. It includes colored stack frames to make it easier to notice JDK methods, database calls, Atlassian's and 3rd party code.
