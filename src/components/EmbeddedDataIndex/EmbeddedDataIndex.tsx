@@ -1,5 +1,5 @@
 import Heading from '@atlaskit/heading';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Navigate } from 'react-router-dom';
 import JSZip from 'jszip';
 import { setParsedData } from '../../common/threadDumpsStorageService';

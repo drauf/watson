@@ -1,5 +1,5 @@
 import ChevronDownIcon from '@atlaskit/icon/core/chevron-down';
-import React from 'react';
+import React, { type JSX } from 'react';
 import './CollapsableGroup.css';
 import CollapsableGroupControlContext from './CollapsableGroupControlContext';
 

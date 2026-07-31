@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import {
   Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip,
 } from 'recharts';

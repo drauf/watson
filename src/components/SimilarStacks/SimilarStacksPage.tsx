@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import EmptyState from '../Errors/EmptyState';
 import { groupSimilarStacks, SimilarStacksFilters } from './similarStacksGrouping';
 import Thread from '../../types/Thread';

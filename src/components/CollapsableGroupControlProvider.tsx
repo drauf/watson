@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import CollapsableGroupControlContext from './CollapsableGroupControlContext';
 
 interface Props {

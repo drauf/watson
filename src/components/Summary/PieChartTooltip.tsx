@@ -1,4 +1,5 @@
 import { TooltipContentProps } from 'recharts';
+import type { JSX } from 'react';
 import PopupContent from '../common/PopupContent';
 
 export interface ChartData {

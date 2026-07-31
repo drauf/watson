@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import EmptyState, { EmptyStateContent } from './EmptyState';
 
 export const noThreadCpuUsageDataEmptyState: EmptyStateContent = {

@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import ThreadsOverviewTable from './ThreadsOverviewTable';

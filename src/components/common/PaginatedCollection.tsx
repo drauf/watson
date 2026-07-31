@@ -1,6 +1,6 @@
 import Button from '@atlaskit/button/new';
 import Pagination from '@atlaskit/pagination';
-import React from 'react';
+import React, { type JSX } from 'react';
 import './PaginatedCollection.css';
 import CollapsableGroupControlProvider from '../CollapsableGroupControlProvider';
 

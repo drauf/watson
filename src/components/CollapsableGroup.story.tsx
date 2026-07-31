@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import Lozenge from '@atlaskit/lozenge/new';
 import GroupHeader from './common/GroupHeader';
 import CollapsableGroup from './CollapsableGroup';

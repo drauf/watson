@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import PaginatedCollection from '../common/PaginatedCollection';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumerItem from './CpuConsumerItem';

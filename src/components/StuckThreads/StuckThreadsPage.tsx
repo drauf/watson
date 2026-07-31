@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import EmptyState from '../Errors/EmptyState';
 import { getStuckThreadClusters, StuckThreadsFilters } from './stuckThreadClustering';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';

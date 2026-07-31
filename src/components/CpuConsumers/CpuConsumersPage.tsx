@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { calculateCpuConsumers, CpuConsumerFilters } from './cpuConsumerCalculation';
 import { WithThreadDumpsProps, withAllThreadDumps } from '../../common/withThreadDumps';
 import ThreadDump from '../../types/ThreadDump';

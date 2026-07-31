@@ -1,5 +1,5 @@
 import Button from '@atlaskit/button/new';
-import React from 'react';
+import React, { type JSX } from 'react';
 import Thread from '../../types/Thread';
 import StackTrace from './StackTrace';
 import ThreadSummary from './ThreadSummary';

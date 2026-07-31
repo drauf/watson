@@ -1,5 +1,5 @@
 import Lozenge from '@atlaskit/lozenge/new';
-import React from 'react';
+import React, { type JSX } from 'react';
 import CollapsableGroup from '../CollapsableGroup';
 import GroupHeader from '../common/GroupHeader';
 import MonitorItem from './MonitorItem';

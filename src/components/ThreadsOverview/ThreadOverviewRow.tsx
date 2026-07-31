@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import HoverPopup from '../common/HoverPopup';
 import Thread from '../../types/Thread';
 import ThreadsOverviewItem from './ThreadOverviewItem';

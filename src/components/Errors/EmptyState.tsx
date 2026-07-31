@@ -1,5 +1,7 @@
 import EmptyStateComponent from '@atlaskit/empty-state';
 
+import type { JSX } from 'react';
+
 const DEFAULT_TITLE = 'No threads match the selected criteria.';
 const DEFAULT_DESCRIPTION = 'Adjust the filters and try again.';
 

@@ -1,7 +1,7 @@
 import ButtonGroup from '@atlaskit/button/button-group';
 import Button from '@atlaskit/button/new';
 import Text from '@atlaskit/primitives/text';
-import React from 'react';
+import React, { type JSX } from 'react';
 import CpuConsumersMode from './CpuConsumersMode';
 import RegexFilters from '../common/RegexFilters';
 

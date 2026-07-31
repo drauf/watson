@@ -4,6 +4,7 @@ import {
 import { token } from '@atlaskit/tokens';
 import Heading from '@atlaskit/heading';
 import Text from '@atlaskit/primitives/text';
+import type { JSX } from 'react';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';

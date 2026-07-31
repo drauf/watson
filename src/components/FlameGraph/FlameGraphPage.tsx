@@ -1,4 +1,5 @@
 import { StackFrame } from 'd3-flame-graph';
+import type { JSX } from 'react';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import { filterFlameGraphThreads, FlameGraphFilters } from './flameGraphFiltering';
 import EmptyState from '../Errors/EmptyState';

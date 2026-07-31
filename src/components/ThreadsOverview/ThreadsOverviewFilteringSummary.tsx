@@ -1,6 +1,6 @@
 import Inline from '@atlaskit/primitives/inline';
 import Text from '@atlaskit/primitives/text';
-import React from 'react';
+import React, { type JSX } from 'react';
 import Thread from '../../types/Thread';
 
 interface Props {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import EmbeddedDataIndex from '../EmbeddedDataIndex/EmbeddedDataIndex';
 import FullPageDropzone from '../FullPageDropzone/FullPageDropzone';
