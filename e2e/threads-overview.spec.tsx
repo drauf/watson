@@ -19,8 +19,10 @@ test.describe('Threads overview', () => {
     await expect(pageWithData.getByRole('button', { name: 'High CPU usage', exact: true })).toHaveAttribute('aria-pressed', 'false');
     expect(await pageWithData.getByLabel(NAME_REGEXP).inputValue()).toBe('');
     expect(await pageWithData.getByLabel(STACK_REGEXP).inputValue()).toBe('');
+    expect(await pageWithData.getByLabel('Table column width').inputValue()).toBe('160');
+    expect(await pageWithData.getByLabel('Stack preview lines').inputValue()).toBe('10');
 
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Threads-overview-loads-1.png');
   });
 
   test('has working pre-configured filters', async ({ pageWithData }) => {
@@ -33,38 +35,38 @@ test.describe('Threads overview', () => {
 
     await active.click();
     await tomcat.click();
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Threads-overview-has-working-pre-configured-filters-1.png');
 
     await active.click();
     await tomcat.click();
     await lucene.click();
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Threads-overview-has-working-pre-configured-filters-2.png');
 
     await lucene.click();
     await highCpuUsage.click();
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Threads-overview-has-working-pre-configured-filters-3.png');
 
     await highCpuUsage.click();
     await nonTomcat.click();
     await database.click();
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Threads-overview-has-working-pre-configured-filters-4.png');
   });
 
   test('has working RegExp thread name filter', async ({ pageWithData }) => {
     await pageWithData.getByLabel(NAME_REGEXP).fill('^http');
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Threads-overview-has-working-RegExp-thread-name-filter-1.png');
   });
 
   test('has working RegExp stack trace filter', async ({ pageWithData }) => {
     await pageWithData.getByLabel(STACK_REGEXP).fill('(jdk)|(sun)');
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Threads-overview-has-working-RegExp-stack-trace-filter-1.png');
   });
 
   test('shows an empty state when no threads match', async ({ pageWithData }) => {
     await pageWithData.getByLabel(NAME_REGEXP).fill('^does-not-exist$');
 
     await expect(pageWithData.getByText('No threads match the selected criteria.')).toBeVisible();
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Threads-overview-shows-an-empty-state-when-no-threads-match-1.png');
   });
 
   test('opens thread details', async ({ context, pageWithData }) => {

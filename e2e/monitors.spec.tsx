@@ -9,7 +9,7 @@ test.describe('Monitors', () => {
   test('loads', async ({ pageWithData }) => {
     await expect(pageWithData.getByRole('button', { name: 'Active', exact: true })).toHaveAttribute('aria-pressed', 'true');
 
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Monitors-loads-1.png');
   });
 
   test('has working filters', async ({ pageWithData }) => {
@@ -20,13 +20,13 @@ test.describe('Monitors', () => {
     await expect(active).toHaveAttribute('aria-pressed', 'false');
     await expect(unownedLocks).toHaveAttribute('aria-pressed', 'true');
 
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Monitors-has-working-filters-1.png');
   });
 
   test('shows empty state', async ({ pageWithData }) => {
     await pageWithData.getByRole('button', { name: 'Owned locks', exact: true }).click();
     await pageWithData.getByRole('button', { name: 'Unowned locks', exact: true }).click();
 
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Monitors-shows-empty-state-1.png');
   });
 });

@@ -8,7 +8,7 @@ test.describe('CPU consumers', () => {
 
   test('loads', async ({ pageWithData }) => {
     await expect(pageWithData.getByRole('button', { name: 'Mean', exact: true })).toHaveAttribute('aria-pressed', 'true');
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('CPU-consumers-loads-1.png');
   });
 
   test('has working sort controls', async ({ pageWithData }) => {
@@ -16,20 +16,20 @@ test.describe('CPU consumers', () => {
     await median.click();
     await expect(median).toHaveAttribute('aria-pressed', 'true');
 
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('CPU-consumers-has-working-sort-controls-1.png');
   });
 
   test('has working regex filters', async ({ pageWithData }) => {
     await pageWithData.getByPlaceholder('e.g. http.*exec').fill('exec');
     await pageWithData.getByPlaceholder('e.g. java\\.io').fill('java');
 
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('CPU-consumers-has-working-regex-filters-1.png');
   });
 
   test('shows an empty state when no CPU consumers match', async ({ pageWithData }) => {
     await pageWithData.getByLabel('Thread name pattern').fill('^does-not-exist$');
 
     await expect(pageWithData.getByText('No threads match the selected criteria.')).toBeVisible();
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('CPU-consumers-shows-an-empty-state-when-no-CPU-consumers-match-1.png');
   });
 });

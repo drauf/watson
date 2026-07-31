@@ -5,11 +5,11 @@ test.describe('Main page', () => {
   test('loads', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page).toHaveScreenshot();
+    await expect(page).toHaveScreenshot('Main-page-loads-1.png');
   });
 
   test('redirects after uploading files', async ({ pageWithData }) => {
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Main-page-redirects-after-uploading-files-1.png');
   });
 
   test('opens the theme picker beside its trigger', async ({ pageWithData }) => {
