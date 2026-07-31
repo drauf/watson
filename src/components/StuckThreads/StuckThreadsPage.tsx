@@ -1,8 +1,6 @@
 import React from 'react';
 import EmptyState from '../Errors/EmptyState';
-import getThreadsOverTime from '../../common/getThreadsOverTime';
-import { matchesRegexFilters } from '../../common/regexFiltering';
-import { isIdleInSnapshot } from '../../common/threadFilters';
+import { getStuckThreadClusters, StuckThreadsFilters } from './stuckThreadClustering';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
@@ -49,9 +47,8 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
   public override render(): JSX.Element {
     const threadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
-    const threadOverTime = getThreadsOverTime(threadDumps);
-    const filtered = this.filterThreads(threadOverTime);
-    const clusters = this.buildClusters(filtered);
+    const filters: StuckThreadsFilters = this.state;
+    const clusters = getStuckThreadClusters(threadDumps, filters);
 
     if (threadDumps.length === 0) {
       return <NoThreadDumpsError />;
@@ -95,74 +92,6 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
         )}
       />
     );
-  };
-
-  private filterThreads = (threadDumps: Map<number, Thread>[]): Thread[][] => threadDumps
-    .map((threadDump) => this.filterThread(threadDump))
-    .filter((dump) => dump.length > 0);
-
-  private filterThread = (threadOverTime: Map<number, Thread>): Thread[] => {
-    const filtered = [];
-
-    for (const thread of threadOverTime) {
-      if (!this.state.withoutIdle || !isIdleInSnapshot(thread[1])) {
-        if (matchesRegexFilters(thread[1], this.state.nameFilter, this.state.stackFilter)) {
-          filtered.push(thread[1]);
-        }
-      }
-    }
-
-    return filtered;
-  };
-
-  private buildClusters = (threadDumps: Thread[][]): Thread[][] => {
-    const clusters: Thread[][] = [];
-
-    for (const threadOverTime of threadDumps) {
-      this.getClustersFromThread(threadOverTime)
-        .filter((c) => c.length >= this.state.minClusterSize)
-        .forEach((c) => clusters.push(c));
-    }
-
-    return clusters.sort((c1, c2) => c2.length - c1.length);
-  };
-
-  private getClustersFromThread = (threadOverTime: Thread[]): Thread[][] => {
-    const clusters = [];
-
-    let currentCluster = [threadOverTime[0]];
-    for (let i = 1; i < threadOverTime.length; i++) {
-      const previous = threadOverTime[i - 1];
-      const current = threadOverTime[i];
-
-      if (this.areThreadsSimilarEnough(previous, current)) {
-        currentCluster.push(current);
-      } else {
-        clusters.push(currentCluster);
-        currentCluster = [current];
-      }
-    }
-
-    clusters.push(currentCluster);
-    return clusters;
-  };
-
-  private areThreadsSimilarEnough = (t1: Thread, t2: Thread): boolean => {
-    const stack1 = t1.stackTrace;
-    const stack2 = t2.stackTrace;
-
-    if (Math.abs(stack1.length - stack2.length) > this.state.maxDifferingLines) {
-      return false;
-    }
-
-    const limit = Math.max(stack1.length, stack2.length);
-    for (let i = limit; i >= 0; i--) {
-      if (stack1[i] !== stack2[i]) {
-        return (i <= this.state.maxDifferingLines);
-      }
-    }
-
-    return true;
   };
 }
 

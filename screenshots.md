@@ -36,9 +36,9 @@ Groups threads with similar stack traces, often helpful when debugging lock cont
 ## Stuck threads
 Displays threads whose stack traces remained almost the same over time
 
-![Stuck threads with filters](e2e/stuck-threads.spec.tsx-snapshots/Stuck-threads-has-working-filters-1-chrome-light-linux.png)
+![Stuck threads](e2e/stuck-threads.spec.tsx-snapshots/Stuck-threads-loads-1-chrome-light-linux.png)
 
 ## Monitors
 Displays locks ordered by the amount of threads waiting for them
 
-![Monitors page with filters](e2e/monitors.spec.tsx-snapshots/Monitors-has-working-filters-1-chrome-light-linux.png)
+![Monitors page](e2e/monitors.spec.tsx-snapshots/Monitors-loads-1-chrome-light-linux.png)

@@ -20,6 +20,15 @@ export const setNumberInput = async (input: Locator, value: string): Promise<voi
   await input.press('Tab');
 };
 
+export const expandRepresentativeGroup = async (page: Page): Promise<void> => {
+  const toggles = page.locator('.collapsable-group-toggle');
+  const count = await toggles.count();
+
+  if (count > 1) {
+    await toggles.nth(Math.min(2, count - 1)).click();
+  }
+};
+
 const clearData = async (page: Page) => {
   await page.getByText('Clear data').click();
 };
