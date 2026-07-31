@@ -1,10 +1,8 @@
 import { StackFrame } from 'd3-flame-graph';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
-import { matchesNameFilter, matchesStackFilter } from '../../common/regexFiltering';
-import { isIdleInSnapshot } from '../../common/threadFilters';
+import { filterFlameGraphThreads, FlameGraphFilters } from './flameGraphFiltering';
 import EmptyState from '../Errors/EmptyState';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
-import ThreadDump from '../../types/ThreadDump';
 import FlameGraph from './FlameGraph';
 import PageWithSettings from '../PageWithSettings';
 import FlameGraphSettings from './FlameGraphSettings';
@@ -124,43 +122,14 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     return root;
   };
 
-  private filterThreads = (threadDumps: ThreadDump[]): Thread[] => {
-    let threads: Thread[] = [];
-
-    for (const threadDump of threadDumps) {
-      for (const thread of threadDump.threads) {
-        if (!this.state.withoutIdle || !isIdleInSnapshot(thread)) {
-          threads.push(thread);
-        }
-      }
-    }
-
-    threads = FlameGraphPage.filterByName(threads, this.state.nameFilter);
-    threads = FlameGraphPage.filterByStackTrace(threads, this.state.stackFilter);
-    threads = FlameGraphPage.filterByCpuUsage(threads, this.state.usingCpu);
-
-    return threads;
-  };
-
-  private static filterByName = (threads: Thread[], nameFilter: string): Thread[] => threads.filter((thread) => matchesNameFilter(thread, nameFilter));
-
-  private static filterByStackTrace = (threads: Thread[], stackFilter: string): Thread[] => threads.filter((thread) => matchesStackFilter(thread, stackFilter));
-
-  private static filterByCpuUsage = (threads: Thread[], shouldFilter: boolean): Thread[] => {
-    if (!shouldFilter) {
-      return threads;
-    }
-
-    return threads.filter((thread) => parseFloat(thread.cpuUsage) >= 10);
-  };
-
   public override render(): JSX.Element {
     const { threadDumps } = this.props;
     if (!threadDumps.some((dump) => dump.threads.length > 0)) {
       return <NoThreadDumpsError />;
     }
 
-    const filteredThreads = this.filterThreads(threadDumps);
+    const filters: FlameGraphFilters = this.state;
+    const filteredThreads = filterFlameGraphThreads(threadDumps, filters);
     const chartData: StackFrame = FlameGraphPage.calculateChartData(filteredThreads);
 
     return (

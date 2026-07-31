@@ -26,7 +26,7 @@ A classical flame graph with the ability to zoom by clicking on a frame
 ## CPU consumers
 Allows quickly finding threads that use the most CPU
 
-![CPU consumers page with regex filters](e2e/cpu-consumers.spec.tsx-snapshots/CPU-consumers-has-working-regex-filters-1-chrome-light-linux.png)
+![CPU consumers page](e2e/cpu-consumers.spec.tsx-snapshots/CPU-consumers-loads-1-chrome-light-linux.png)
 
 ## Similar stacks
 Groups threads with similar stack traces, often helpful when debugging lock contention issues
