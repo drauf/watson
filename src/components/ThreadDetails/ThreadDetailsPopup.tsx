@@ -60,7 +60,7 @@ const ThreadDetailsPopup: React.FC<Props> = ({
     };
   }, [onClose, popup]);
 
-  return container ? (createPortal(children, container) as unknown as React.ReactElement) : null;
+  return container ? (createPortal(children, container)) : null;
 };
 
 export default ThreadDetailsPopup;

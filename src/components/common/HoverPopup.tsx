@@ -14,7 +14,7 @@ const CLOSE_DELAY_MS = 100;
 // Atlaskit Popup owns placement; this adapter supplies reusable hover open/close behavior for React triggers.
 const HoverPopup: React.FC<Props> = ({ children, content }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout>>();
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const cancelClose = useCallback(() => {
     if (closeTimer.current) {

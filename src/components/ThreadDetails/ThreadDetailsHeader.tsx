@@ -1,5 +1,5 @@
 import Heading from '@atlaskit/heading';
-import React from 'react';
+import React, { type JSX } from 'react';
 import Lozenge from '@atlaskit/lozenge/new';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';

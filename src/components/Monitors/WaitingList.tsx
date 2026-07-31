@@ -1,6 +1,6 @@
 import Button from '@atlaskit/button/new';
 import Text from '@atlaskit/primitives/text';
-import React from 'react';
+import React, { type JSX } from 'react';
 import Thread from '../../types/Thread';
 import WaitingListItem from './WaitingListItem';
 

@@ -1,4 +1,5 @@
 import { StackFrame } from 'd3-flame-graph';
+import type { JSX } from 'react';
 import FlameGraph from './FlameGraph';
 import './FlameGraphPage.css';
 

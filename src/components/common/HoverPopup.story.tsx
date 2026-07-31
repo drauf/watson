@@ -1,5 +1,5 @@
 import Button from '@atlaskit/button/new';
-import React from 'react';
+import React, { type JSX } from 'react';
 import HoverPopup from './HoverPopup';
 
 const popupDetails = (

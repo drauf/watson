@@ -1,5 +1,5 @@
 import Text from '@atlaskit/primitives/text';
-import React from 'react';
+import React, { type JSX } from 'react';
 import Monitor from './Monitor';
 import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
 

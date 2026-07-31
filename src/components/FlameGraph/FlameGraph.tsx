@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { select } from 'd3';
 import flamegraph, { StackFrame, ChartNode } from 'd3-flame-graph';
 import getColorForStackLine from '../../common/getColorForStackLine';

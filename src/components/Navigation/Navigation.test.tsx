@@ -5,6 +5,7 @@ import {
 import {
   describe, expect, it, vi,
 } from 'vitest';
+import type { JSX } from 'react';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';
 import Navigation from './Navigation';
 

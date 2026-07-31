@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, type JSX } from 'react';
 import '../Container.css';
 import { TimeWindowProvider, useTimeWindow } from '../../context/TimeWindowContext';
 import {

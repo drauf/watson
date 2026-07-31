@@ -5,7 +5,12 @@ import Inline from '@atlaskit/primitives/inline';
 import Stack from '@atlaskit/primitives/stack';
 import Text from '@atlaskit/primitives/text';
 import {
-  PointerEvent as ReactPointerEvent, useEffect, useMemo, useRef, useState,
+  PointerEvent as ReactPointerEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type JSX,
 } from 'react';
 import {
   filterThreadDumpsByTimeWindow,

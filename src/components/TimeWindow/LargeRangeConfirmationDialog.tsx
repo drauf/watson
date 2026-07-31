@@ -4,6 +4,8 @@ import ModalDialog, {
 } from '@atlaskit/modal-dialog';
 import Text from '@atlaskit/primitives/text';
 
+import type { JSX } from 'react';
+
 interface Props {
   message: string;
   onClose: () => void;

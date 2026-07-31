@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
+import type { JSX } from 'react';
 import CollapsableGroup from '../CollapsableGroup';
 import PaginatedCollection from './PaginatedCollection';
 

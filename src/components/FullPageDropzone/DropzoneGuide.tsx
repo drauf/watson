@@ -1,6 +1,6 @@
 import Stack from '@atlaskit/primitives/stack';
 import Text from '@atlaskit/primitives/text';
-import React from 'react';
+import React, { type JSX } from 'react';
 import OutboundLink from './OutboundLink';
 
 export default class DropzoneGuide extends React.PureComponent {

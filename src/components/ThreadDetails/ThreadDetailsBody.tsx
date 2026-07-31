@@ -1,6 +1,6 @@
 import Heading from '@atlaskit/heading';
 import Text from '@atlaskit/primitives/text';
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, type JSX } from 'react';
 import getColorForStackLine from '../../common/getColorForStackLine';
 import Thread from '../../types/Thread';
 

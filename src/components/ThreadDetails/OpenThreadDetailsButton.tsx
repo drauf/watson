@@ -1,3 +1,5 @@
+/* React 19 removed function-component defaultProps; parameter defaults below are the replacement. */
+/* eslint-disable react/require-default-props */
 import Button from '@atlaskit/button/new';
 import React from 'react';
 import Thread from '../../types/Thread';
@@ -13,14 +15,19 @@ interface Props {
 }
 
 const OpenThreadDetailsButton: React.FC<Props> = ({
-  text, className, thread, appearance, spacing, shouldFitContainer,
+  text,
+  className = '',
+  thread,
+  appearance = 'default',
+  spacing = 'compact',
+  shouldFitContainer = false,
 }) => {
   const { open, WindowComponent } = useOpenThreadDetails(thread);
   const button = (
     <Button
-      appearance={appearance ?? 'default'}
-      shouldFitContainer={shouldFitContainer ?? false}
-      spacing={spacing ?? 'compact'}
+      appearance={appearance}
+      shouldFitContainer={shouldFitContainer}
+      spacing={spacing}
       onClick={open}
     >
       {text}
@@ -34,12 +41,4 @@ const OpenThreadDetailsButton: React.FC<Props> = ({
     </>
   );
 };
-
-OpenThreadDetailsButton.defaultProps = {
-  className: '',
-  appearance: 'default',
-  spacing: 'compact',
-  shouldFitContainer: false,
-};
-
 export default OpenThreadDetailsButton;

@@ -1,6 +1,6 @@
 import ButtonGroup from '@atlaskit/button/button-group';
 import Text from '@atlaskit/primitives/text';
-import React from 'react';
+import React, { type JSX } from 'react';
 import Filter from '../Filter/Filter';
 import RegexFilters from '../common/RegexFilters';
 import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';

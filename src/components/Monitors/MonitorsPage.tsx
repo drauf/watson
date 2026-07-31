@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import EmptyState from '../Errors/EmptyState';
 import { filterMonitors, MonitorFilters } from './monitorFiltering';
 import ThreadDump from '../../types/ThreadDump';

@@ -1,5 +1,5 @@
 import Lozenge from '@atlaskit/lozenge/new';
-import React from 'react';
+import React, { type JSX } from 'react';
 import { getRepresentativeStackLine, getStackCategories } from '../../common/stackCategories';
 import Thread from '../../types/Thread';
 import CollapsableGroup from '../CollapsableGroup';

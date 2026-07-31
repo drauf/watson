@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 export default class ThreadsOverviewLegend extends React.PureComponent {
   public override render(): JSX.Element {

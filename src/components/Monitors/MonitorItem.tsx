@@ -1,5 +1,5 @@
 import Heading from '@atlaskit/heading';
-import React from 'react';
+import React, { type JSX } from 'react';
 import Monitor from './Monitor';
 import MonitorOwner from './MonitorOwner';
 import WaitingList from './WaitingList';

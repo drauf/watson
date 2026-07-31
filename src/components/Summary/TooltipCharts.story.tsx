@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import LoadAverages from '../../types/LoadAverage';
 import MemoryUnit from '../../types/MemoryUnit';
 import MemoryUsage from '../../types/MemoryUsage';
