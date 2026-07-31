@@ -35,6 +35,10 @@ main {
   line-height: normal;
 }
 
+#settings > section > .hover-popup-trigger:nth-child(-n + 2) {
+  flex-basis: 16rem;
+}
+
 #centered {
   display: flex;
   flex-direction: column;

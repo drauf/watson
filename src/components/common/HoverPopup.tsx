@@ -44,6 +44,7 @@ const HoverPopup: React.FC<Props> = ({ children, content }) => {
     ({ ref, ...triggerProps }: TriggerProps) => (
       <div
         {...triggerProps}
+        className="hover-popup-trigger"
         ref={ref}
         onBlur={close}
         onFocus={open}
