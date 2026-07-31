@@ -4,7 +4,7 @@ import {
 
 const panelMargin = 20;
 
-const expectPanelScreenshot = async (page: Page, panel: Locator, name: string): Promise<void> => {
+const getPanelClip = async (page: Page, panel: Locator) => {
   const panelBounds = await panel.boundingBox();
   const viewport = page.viewportSize();
 
@@ -12,7 +12,7 @@ const expectPanelScreenshot = async (page: Page, panel: Locator, name: string): 
     throw new Error('Expected a visible panel in a configured viewport');
   }
 
-  const clip = {
+  return {
     x: Math.max(0, panelBounds.x - panelMargin),
     y: Math.max(0, panelBounds.y - panelMargin),
     width: Math.min(viewport.width, panelBounds.x + panelBounds.width + panelMargin)
@@ -20,8 +20,6 @@ const expectPanelScreenshot = async (page: Page, panel: Locator, name: string): 
     height: Math.min(viewport.height, panelBounds.y + panelBounds.height + panelMargin)
       - Math.max(0, panelBounds.y - panelMargin),
   };
-
-  await expect(page).toHaveScreenshot(name, { clip });
 };
 
 test.describe('Error and empty-state visual states', () => {
@@ -32,7 +30,7 @@ test.describe('Error and empty-state visual states', () => {
     const panel = component.getByRole('heading', { name: 'No thread dumps found' }).locator('..');
 
     await expect(panel).toBeVisible();
-    await expectPanelScreenshot(page, panel, 'no-thread-dumps.png');
+    await expect(page).toHaveScreenshot('no-thread-dumps.png', { clip: await getPanelClip(page, panel) });
   });
 
   test('renders a long empty-state message', async ({ mount, page }) => {
@@ -40,7 +38,7 @@ test.describe('Error and empty-state visual states', () => {
     const panel = component.getByRole('heading', { name: 'CPU usage data could not be matched to a thread dump' }).locator('..');
 
     await expect(panel).toBeVisible();
-    await expectPanelScreenshot(page, panel, 'unmatched-cpu-usage-data.png');
+    await expect(page).toHaveScreenshot('unmatched-cpu-usage-data.png', { clip: await getPanelClip(page, panel) });
   });
 
   test('renders the retry error', async ({ mount, page }) => {
@@ -48,7 +46,7 @@ test.describe('Error and empty-state visual states', () => {
     const panel = component.locator('.error-indicator');
 
     await expect(panel).toBeVisible();
-    await expectPanelScreenshot(page, panel, 'full-page-error.png');
+    await expect(page).toHaveScreenshot('full-page-error.png', { clip: await getPanelClip(page, panel) });
   });
 
   test('renders keyboard focus for the retry action', async ({ mount, page }) => {
@@ -58,6 +56,6 @@ test.describe('Error and empty-state visual states', () => {
 
     await page.keyboard.press('Tab');
     await expect(retryButton).toBeFocused();
-    await expectPanelScreenshot(page, panel, 'full-page-error-focused.png');
+    await expect(page).toHaveScreenshot('full-page-error-focused.png', { clip: await getPanelClip(page, panel) });
   });
 });

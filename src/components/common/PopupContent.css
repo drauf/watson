@@ -8,11 +8,30 @@
   background-color: var(--ds-surface-overlay);
   border-radius: var(--ds-radius-large, 8px);
   box-shadow: var(--ds-shadow-overlay);
-  pointer-events: none;
+}
+
+[data-testid='hover-popup'] {
+  pointer-events: none !important;
 }
 
 .cursor-popup .popup-content {
   -webkit-text-fill-color: var(--ds-text);
+}
+
+.popup-content p {
+  margin: 0;
+}
+
+.popup-content hr {
+  margin: var(--ds-space-100) 0;
+  border: 0;
+  border-top: 1px solid var(--ds-border);
+}
+
+.popup-content ol,
+.popup-content ul {
+  margin: var(--ds-space-050) 0 0;
+  padding-inline-start: var(--ds-space-300);
 }
 
 .popup-content code {

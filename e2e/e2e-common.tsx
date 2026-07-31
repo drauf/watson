@@ -1,4 +1,6 @@
-import { test as base, Page } from '@playwright/test';
+import {
+  expect, Locator, Page, test as base,
+} from '@playwright/test';
 import fs from 'fs';
 
 const getFilesFromPath = (path: string) => fs.readdirSync(path, { withFileTypes: true })
@@ -8,7 +10,14 @@ const getFilesFromPath = (path: string) => fs.readdirSync(path, { withFileTypes:
 const loadData = async (page: Page, dataLocation: string) => {
   await page.goto('/');
   await page.setInputFiles('input[type="file"]', getFilesFromPath(dataLocation));
-  await page.getByText('Clear data').isVisible();
+  await expect(page.getByText('Clear data')).toBeVisible();
+};
+
+export const setNumberInput = async (input: Locator, value: string): Promise<void> => {
+  await input.click();
+  await input.press('ControlOrMeta+A');
+  await input.pressSequentially(value);
+  await input.press('Tab');
 };
 
 const clearData = async (page: Page) => {

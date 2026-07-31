@@ -44,12 +44,14 @@ const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Ele
           <i>top</i>
           )
         </Text>
-
-        Top 10
-        {' '}
-        <i>jstack</i>
-        {' '}
-        threads:
+        <hr />
+        <Text as="p">
+          Top 10
+          {' '}
+          <i>jstack</i>
+          {' '}
+          threads:
+        </Text>
         <ol>
           {threadNames.length > 0
             ? threadNames.map((name) => <li key={name}>{name}</li>)

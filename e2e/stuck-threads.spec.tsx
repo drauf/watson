@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from './e2e-common';
+import { setNumberInput, test } from './e2e-common';
 
 test.describe('Stuck threads', () => {
   const MIN_STACKS = 'Detection threshold';
@@ -18,14 +18,18 @@ test.describe('Stuck threads', () => {
   });
 
   test('has working filters', async ({ pageWithData }) => {
-    await pageWithData.getByLabel(MIN_STACKS).fill('5');
-    await pageWithData.getByLabel(MAX_LINES).fill('30');
+    const detectionThreshold = pageWithData.getByLabel(MIN_STACKS);
+    const similarityTolerance = pageWithData.getByLabel(MAX_LINES);
+    await setNumberInput(detectionThreshold, '5');
+    await setNumberInput(similarityTolerance, '30');
+    await expect(detectionThreshold).toHaveValue('5');
+    await expect(similarityTolerance).toHaveValue('30');
 
     await expect(pageWithData).toHaveScreenshot('Stuck-threads-has-working-filters-1.png');
   });
 
   test('shows empty state', async ({ pageWithData }) => {
-    await pageWithData.getByLabel(MIN_STACKS).fill('2137');
+    await setNumberInput(pageWithData.getByLabel(MIN_STACKS), '2137');
 
     await expect(pageWithData).toHaveScreenshot('Stuck-threads-shows-empty-state-1.png');
   });

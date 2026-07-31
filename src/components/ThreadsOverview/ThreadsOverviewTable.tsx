@@ -17,16 +17,23 @@ export default class ThreadsOverviewTable extends React.PureComponent<Props> {
       dates, threadDumps, matchingStackFilter, dumpColumnWidth, stackPreviewLines,
     } = this.props;
 
+    const nameColumnWidth = 240;
+    const minimumTableWidth = dumpColumnWidth === 0
+      ? undefined
+      : nameColumnWidth + (dumpColumnWidth * dates.length);
+
     return (
       <div className="threads-overview-table-container">
-        <table className={`threads-overview-table${dumpColumnWidth === 0 ? ' threads-overview-table-fit-columns' : ''}`}>
+        <table
+          className={`threads-overview-table${dumpColumnWidth === 0 ? ' threads-overview-table-fit-columns' : ''}`}
+          style={{ minWidth: minimumTableWidth }}
+        >
           <colgroup>
-            <col className="threads-overview-name-column" />
+            <col className="threads-overview-name-column" style={{ width: nameColumnWidth }} />
             {dates.map((date) => (
               <col
                 className="threads-overview-dump-column"
                 key={date}
-                style={dumpColumnWidth === 0 ? undefined : { width: dumpColumnWidth }}
               />
             ))}
           </colgroup>

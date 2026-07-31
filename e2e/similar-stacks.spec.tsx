@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from './e2e-common';
+import { setNumberInput, test } from './e2e-common';
 
 test.describe('Similar stacks', () => {
   const COMPARISON_DEPTH = 'Comparison depth';
@@ -22,14 +22,18 @@ test.describe('Similar stacks', () => {
     const active = pageWithData.getByRole('button', { name: 'Active', exact: true });
     await active.click();
     await expect(active).toHaveAttribute('aria-pressed', 'false');
-    await pageWithData.getByLabel(COMPARISON_DEPTH).fill('4');
-    await pageWithData.getByLabel(MINIMUM_GROUP_SIZE).fill('600');
+    const comparisonDepth = pageWithData.getByLabel(COMPARISON_DEPTH);
+    const minimumGroupSize = pageWithData.getByLabel(MINIMUM_GROUP_SIZE);
+    await setNumberInput(comparisonDepth, '4');
+    await setNumberInput(minimumGroupSize, '600');
+    await expect(comparisonDepth).toHaveValue('4');
+    await expect(minimumGroupSize).toHaveValue('600');
 
     await expect(pageWithData).toHaveScreenshot('Similar-stacks-has-working-filters-1.png');
   });
 
   test('shows empty state', async ({ pageWithData }) => {
-    await pageWithData.getByLabel(MINIMUM_GROUP_SIZE).fill('2137');
+    await setNumberInput(pageWithData.getByLabel(MINIMUM_GROUP_SIZE), '2137');
 
     await expect(pageWithData).toHaveScreenshot('Similar-stacks-shows-empty-state-1.png');
   });

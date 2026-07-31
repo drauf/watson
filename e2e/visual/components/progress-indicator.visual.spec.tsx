@@ -1,22 +1,37 @@
 import { expect, test } from '@playwright/test';
 
-const stories = [
-  ['reading', 'Reading'],
-  ['parsing', 'Parsing'],
-  ['grouping', 'Grouping'],
-  ['complete', 'Complete'],
-] as const;
-
 test.describe('Progress indicator visual states', () => {
   test.describe.configure({ mode: 'serial' });
 
-  for (const [name, story] of stories) {
-    test(`renders ${name} progress`, async ({ mount }) => {
-      const component = await mount(`components/ProgressIndicator/ProgressIndicator/${story}`);
-      const progressIndicator = component.locator('.progress-indicator');
+  test('renders reading progress', async ({ mount }) => {
+    const component = await mount('components/ProgressIndicator/ProgressIndicator/Reading');
+    const progressIndicator = component.locator('.progress-indicator');
 
-      await expect(progressIndicator).toBeVisible();
-      await expect(progressIndicator).toHaveScreenshot(`progress-${name}.png`);
-    });
-  }
+    await expect(progressIndicator).toBeVisible();
+    await expect(progressIndicator).toHaveScreenshot('progress-reading.png');
+  });
+
+  test('renders parsing progress', async ({ mount }) => {
+    const component = await mount('components/ProgressIndicator/ProgressIndicator/Parsing');
+    const progressIndicator = component.locator('.progress-indicator');
+
+    await expect(progressIndicator).toBeVisible();
+    await expect(progressIndicator).toHaveScreenshot('progress-parsing.png');
+  });
+
+  test('renders grouping progress', async ({ mount }) => {
+    const component = await mount('components/ProgressIndicator/ProgressIndicator/Grouping');
+    const progressIndicator = component.locator('.progress-indicator');
+
+    await expect(progressIndicator).toBeVisible();
+    await expect(progressIndicator).toHaveScreenshot('progress-grouping.png');
+  });
+
+  test('renders complete progress', async ({ mount }) => {
+    const component = await mount('components/ProgressIndicator/ProgressIndicator/Complete');
+    const progressIndicator = component.locator('.progress-indicator');
+
+    await expect(progressIndicator).toBeVisible();
+    await expect(progressIndicator).toHaveScreenshot('progress-complete.png');
+  });
 });

@@ -4,6 +4,7 @@
 
 .threads-overview-table {
   position: relative;
+  width: 100%;
   min-width: 100%;
   padding: 20px 4px 4px;
   table-layout: fixed;
@@ -13,14 +14,6 @@
 
 .threads-overview-name-column {
   width: 240px;
-}
-
-.threads-overview-dump-column {
-  width: 160px;
-}
-
-.threads-overview-table-fit-columns .threads-overview-dump-column {
-  width: auto;
 }
 
 .threads-overview-table th,

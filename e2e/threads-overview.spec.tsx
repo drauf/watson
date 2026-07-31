@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from './e2e-common';
+import { setNumberInput, test } from './e2e-common';
 
 test.describe('Threads overview', () => {
   const NAME_REGEXP = 'Thread name pattern';
@@ -23,6 +23,25 @@ test.describe('Threads overview', () => {
     expect(await pageWithData.getByLabel('Stack preview lines').inputValue()).toBe('10');
 
     await expect(pageWithData).toHaveScreenshot('Threads-overview-loads-1.png');
+  });
+
+  test('updates dump column width', async ({ pageWithData }) => {
+    const tableColumnWidth = pageWithData.getByLabel('Table column width');
+    const stackPreviewLines = pageWithData.getByLabel('Stack preview lines');
+    await setNumberInput(tableColumnWidth, '240');
+    await expect(tableColumnWidth).toHaveValue('240');
+
+    const configuredDumpColumnWidth = await pageWithData.locator('.threads-overview-dump-column').first().evaluate(
+      (column) => parseFloat(getComputedStyle(column).width),
+    );
+    expect(configuredDumpColumnWidth).toBeGreaterThanOrEqual(239);
+
+    await setNumberInput(tableColumnWidth, '0');
+    await setNumberInput(stackPreviewLines, '12');
+    await expect(stackPreviewLines).toHaveValue('12');
+
+    await expect(pageWithData.locator('.threads-overview-table')).toHaveClass(/threads-overview-table-fit-columns/);
+    await expect(pageWithData).toHaveScreenshot('Threads-overview-updates-dump-column-width-1.png');
   });
 
   test('has working pre-configured filters', async ({ pageWithData }) => {
@@ -68,7 +87,6 @@ test.describe('Threads overview', () => {
     await expect(pageWithData.getByText('No threads match the selected criteria.')).toBeVisible();
     await expect(pageWithData).toHaveScreenshot('Threads-overview-shows-an-empty-state-when-no-threads-match-1.png');
   });
-
   test('opens thread details', async ({ context, pageWithData }) => {
     const [details] = await Promise.all([
       context.waitForEvent('page'),

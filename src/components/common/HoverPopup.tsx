@@ -65,6 +65,7 @@ const HoverPopup: React.FC<Props> = ({ children, content }) => {
       isOpen={isOpen}
       onClose={close}
       placement="auto-end"
+      testId="hover-popup"
       trigger={renderTrigger}
     />
   );
