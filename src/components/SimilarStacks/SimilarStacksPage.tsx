@@ -1,8 +1,6 @@
 import EmptyState from '../Errors/EmptyState';
-import { matchesRegexFilters } from '../../common/regexFiltering';
-import { isIdleInSnapshot } from '../../common/threadFilters';
+import { groupSimilarStacks, SimilarStacksFilters } from './similarStacksGrouping';
 import Thread from '../../types/Thread';
-import ThreadDump from '../../types/ThreadDump';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
 import PaginatedCollection from '../common/PaginatedCollection';
@@ -28,7 +26,8 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
   };
 
   public override render(): JSX.Element {
-    const threadGroups = this.groupByStackTrace(this.props.threadDumps, this.state.linesToConsider)
+    const filters: SimilarStacksFilters = this.state;
+    const threadGroups = groupSimilarStacks(this.props.threadDumps, filters)
       .filter((group) => group.length >= this.state.minimumGroupSize);
 
     if (!this.props.threadDumps.some((dump) => dump.threads.length > 0)) {
@@ -72,46 +71,6 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
         )}
       />
     );
-  };
-
-  private groupByStackTrace = (threadDumps: ThreadDump[], linesToConsider: number) => {
-    const grouped = new Map<string, Thread[]>();
-
-    threadDumps.forEach((threadDump) => {
-      threadDump.threads.forEach((thread) => {
-        const stackTrace = this.getStackTrace(thread, linesToConsider);
-
-        if (!stackTrace) {
-          return;
-        }
-
-        let similarStacks = grouped.get(stackTrace);
-        if (!similarStacks) {
-          similarStacks = [];
-        }
-        similarStacks.push(thread);
-
-        grouped.set(stackTrace, similarStacks);
-      });
-    });
-
-    return Array.from(grouped.values()).sort((t1, t2) => t2.length - t1.length);
-  };
-
-  private getStackTrace = (thread: Thread, linesToConsider: number): string | null => {
-    if (this.state.withoutIdle && isIdleInSnapshot(thread)) {
-      return null;
-    }
-
-    if (!matchesRegexFilters(thread, this.state.nameFilter, this.state.stackFilter)) {
-      return null;
-    }
-
-    if (linesToConsider < 1) {
-      return thread.stackTrace.toString();
-    }
-
-    return thread.stackTrace.slice(0, linesToConsider).toString();
   };
 }
 

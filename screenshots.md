@@ -12,7 +12,6 @@ Displays running processes, memory and swap usage, and load averages, based on t
 High-level overview of threads' state over time. Includes pre-built filters and allows manual filtering with regular expressions by thread names or stack frames. Very colorful to make it obvious when a thread changes states.
 
 ![Threads overview page](e2e/threads-overview.spec.tsx-snapshots/Threads-overview-loads-1-chrome-light-linux.png)
-![Threads overview page with regexp filter](e2e/threads-overview.spec.tsx-snapshots/Threads-overview-has-working-RegExp-thread-name-filter-1-chrome-light-linux.png)
 
 ## Thread details
 On most pages clicking a thread's name will open a pop-up like below. It includes colored stack frames to make it easier to notice JDK methods, database calls, Atlassian's and 3rd party code.
@@ -27,7 +26,7 @@ A classical flame graph with the ability to zoom by clicking on a frame
 ## CPU consumers
 Allows quickly finding threads that use the most CPU
 
-![CPU consumers page with regex filters](e2e/cpu-consumers.spec.tsx-snapshots/CPU-consumers-has-working-regex-filters-1-chrome-light-linux.png)
+![CPU consumers page](e2e/cpu-consumers.spec.tsx-snapshots/CPU-consumers-loads-1-chrome-light-linux.png)
 
 ## Similar stacks
 Groups threads with similar stack traces, often helpful when debugging lock contention issues
@@ -37,9 +36,9 @@ Groups threads with similar stack traces, often helpful when debugging lock cont
 ## Stuck threads
 Displays threads whose stack traces remained almost the same over time
 
-![Stuck threads with filters](e2e/stuck-threads.spec.tsx-snapshots/Stuck-threads-has-working-filters-1-chrome-light-linux.png)
+![Stuck threads](e2e/stuck-threads.spec.tsx-snapshots/Stuck-threads-loads-1-chrome-light-linux.png)
 
 ## Monitors
 Displays locks ordered by the amount of threads waiting for them
 
-![Monitors page with filters](e2e/monitors.spec.tsx-snapshots/Monitors-has-working-filters-1-chrome-light-linux.png)
+![Monitors page](e2e/monitors.spec.tsx-snapshots/Monitors-loads-1-chrome-light-linux.png)

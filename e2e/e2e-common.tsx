@@ -1,5 +1,5 @@
 import {
-  expect, Locator, Page, test as base,
+  expect, Page, test as base,
 } from '@playwright/test';
 import fs from 'fs';
 
@@ -13,11 +13,13 @@ const loadData = async (page: Page, dataLocation: string) => {
   await expect(page.getByText('Clear data')).toBeVisible();
 };
 
-export const setNumberInput = async (input: Locator, value: string): Promise<void> => {
-  await input.click();
-  await input.press('ControlOrMeta+A');
-  await input.pressSequentially(value);
-  await input.press('Tab');
+export const expandRepresentativeGroup = async (page: Page): Promise<void> => {
+  const toggles = page.locator('.collapsable-group-toggle');
+  const count = await toggles.count();
+
+  if (count > 1) {
+    await toggles.nth(Math.min(2, count - 1)).click();
+  }
 };
 
 const clearData = async (page: Page) => {
