@@ -1,6 +1,6 @@
 import Button from '@atlaskit/button/new';
 import React from 'react';
-import SmartTooltip from '../common/SmartTooltip';
+import HoverPopup from '../common/HoverPopup';
 
 interface Props {
   name: string;
@@ -31,7 +31,7 @@ const Filter: React.FC<Props> = ({
     </Button>
   );
 
-  return tooltip ? <SmartTooltip tooltip={tooltip}>{button}</SmartTooltip> : button;
+  return tooltip ? <HoverPopup content={tooltip}>{button}</HoverPopup> : button;
 };
 
 export default Filter;

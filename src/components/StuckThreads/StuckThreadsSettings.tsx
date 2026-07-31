@@ -3,8 +3,8 @@ import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import TextField from '@atlaskit/textfield';
 import { Field } from '@atlaskit/form';
+import HoverPopup from '../common/HoverPopup';
 import Filter from '../Filter/Filter';
-import SmartTooltip from '../common/SmartTooltip';
 import RegexFilters from '../common/RegexFilters';
 import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
 
@@ -28,7 +28,8 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
     return (
       <section id="settings">
         <TimeWindowFilter />
-        <div className="filters">
+
+        <section className="filters">
           <Text weight="bold">Filters:</Text>
 
           <ButtonGroup>
@@ -40,38 +41,42 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
               tooltip="Hide threads waiting for I/O or in thread pools"
             />
           </ButtonGroup>
-        </div>
+        </section>
 
-        <div className="settings-row">
+        <section>
           <RegexFilters
             nameFilter={nameFilter}
             stackFilter={stackFilter}
             onRegExpChange={onRegExpChange}
           />
 
-          <SmartTooltip tooltip={(
-            <div>
-              <div><Text as="strong" weight="bold">Minimum threads to detect stuck pattern</Text></div>
-              <div>How many threads must have similar stacks to be considered stuck</div>
-              <div>
-                •
-                <Text as="strong" weight="bold">2-3:</Text>
-                {' '}
-                Detect any repeated pattern
-              </div>
-              <div>
-                •
-                <Text as="strong" weight="bold">5-10:</Text>
-                {' '}
-                Focus on significant stuck patterns
-              </div>
-              <div>
-                •
-                <Text as="strong" weight="bold">15+:</Text>
-                {' '}
-                Only major blocking issues
-              </div>
-            </div>
+          <HoverPopup
+            content={(
+              <>
+                <Text as="p" weight="bold">Minimum threads to detect stuck pattern</Text>
+                <Text as="p">How many threads must have similar stacks to be considered stuck</Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">2-3:</Text>
+                  {' '}
+                  Detect any repeated pattern
+                </Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">5-10:</Text>
+                  {' '}
+                  Focus on significant stuck patterns
+                </Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">15+:</Text>
+                  {' '}
+                  Only major blocking issues
+                </Text>
+              </>
             )}
           >
             <Field label="Detection threshold" name="minClusterSize" defaultValue={minClusterSize}>
@@ -86,31 +91,35 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
                 />
               )}
             </Field>
-          </SmartTooltip>
+          </HoverPopup>
 
-          <SmartTooltip tooltip={(
-            <div>
-              <div><Text as="strong" weight="bold">Stack trace similarity tolerance</Text></div>
-              <div>Maximum different frames allowed between thread dumps</div>
-              <div>
-                •
-                <Text as="strong" weight="bold">0-2:</Text>
-                {' '}
-                Very strict matching (identical stacks)
-              </div>
-              <div>
-                •
-                <Text as="strong" weight="bold">3-5:</Text>
-                {' '}
-                Allow minor variations
-              </div>
-              <div>
-                •
-                <Text as="strong" weight="bold">10+:</Text>
-                {' '}
-                Loose matching for broader patterns
-              </div>
-            </div>
+          <HoverPopup
+            content={(
+              <>
+                <Text as="p" weight="bold">Stack trace similarity tolerance</Text>
+                <Text as="p">Maximum different frames allowed between thread dumps</Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">0-2:</Text>
+                  {' '}
+                  Very strict matching (identical stacks)
+                </Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">3-5:</Text>
+                  {' '}
+                  Allow minor variations
+                </Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">10+:</Text>
+                  {' '}
+                  Loose matching for broader patterns
+                </Text>
+              </>
             )}
           >
             <Field label="Similarity tolerance" name="maxDifferingLines" defaultValue={maxDifferingLines}>
@@ -124,8 +133,8 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
                 />
               )}
             </Field>
-          </SmartTooltip>
-        </div>
+          </HoverPopup>
+        </section>
       </section>
     );
   }

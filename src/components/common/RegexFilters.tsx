@@ -2,7 +2,7 @@ import { Field } from '@atlaskit/form';
 import Text from '@atlaskit/primitives/text';
 import Textfield from '@atlaskit/textfield';
 import React from 'react';
-import SmartTooltip from './SmartTooltip';
+import HoverPopup from './HoverPopup';
 
 interface Props {
   nameFilter: string;
@@ -11,82 +11,94 @@ interface Props {
 }
 
 const threadNameTooltip = (
-  <div>
-    <div><Text as="strong" weight="bold">Filter threads by name using regex patterns</Text></div>
-    <div>Match threads whose names contain specific text or patterns.</div>
-    <br />
-    <div>Common pattern types:</div>
-    <div><Text as="strong" weight="bold">Starts with:</Text></div>
-    <div>
+  <>
+    <Text as="p" weight="bold">Filter threads by name using regex patterns</Text>
+    <Text as="p">Match threads whose names contain specific text or patterns.</Text>
+    <hr />
+    <Text as="p">Common pattern types:</Text>
+    <Text as="p" weight="bold">Starts with:</Text>
+    <Text as="p">
       •
+      {' '}
       <code>^http-nio-</code>
       {' '}
       → HTTP connector threads
-    </div>
-    <div><Text as="strong" weight="bold">Contains anywhere:</Text></div>
-    <div>
+    </Text>
+    <Text as="p" weight="bold">Contains anywhere:</Text>
+    <Text as="p">
       •
+      {' '}
       <code>webhook</code>
       {' '}
       → Webhook processing threads
-    </div>
-    <div><Text as="strong" weight="bold">This OR that:</Text></div>
-    <div>
+    </Text>
+    <Text as="p" weight="bold">This OR that:</Text>
+    <Text as="p">
       •
+      {' '}
       <code>(scheduler|timer)</code>
       {' '}
       → Scheduled task threads
-    </div>
-    <div><Text as="strong" weight="bold">Exclude pattern:</Text></div>
-    <div>
+    </Text>
+    <Text as="p" weight="bold">Exclude pattern:</Text>
+    <Text as="p">
       •
+      {' '}
       <code>^(?!.*RMI)</code>
       {' '}
       → Exclude RMI threads
-    </div>
-  </div>
+    </Text>
+  </>
 );
 
 const stackTraceTooltip = (
-  <div>
-    <div><Text as="strong" weight="bold">Filter threads by stack trace using regex patterns</Text></div>
-    <div>Match threads with specific method calls or class names in their call stack.</div>
-    <br />
-    <div>Common pattern types:</div>
-    <div><Text as="strong" weight="bold">Contains anywhere:</Text></div>
-    <div>
+  <>
+    <Text as="p" weight="bold">Filter threads by stack trace using regex patterns</Text>
+    <Text as="p">Match threads with specific method calls or class names in their call stack.</Text>
+    <hr />
+    <Text as="p">Common pattern types:</Text>
+    <Text as="p" weight="bold">Contains anywhere:</Text>
+    <Text as="p">
       •
+      {' '}
       <code>SQLException</code>
       {' '}
       → Database errors
-    </div>
-    <div><Text as="strong" weight="bold">Starts with:</Text></div>
-    <div>
+    </Text>
+    <Text as="p" weight="bold">Starts with:</Text>
+    <Text as="p">
       •
+      {' '}
       <code>^com\.atlassian\.webhook\.</code>
       {' '}
       → Webhook processing
-    </div>
-    <div><Text as="strong" weight="bold">This OR that:</Text></div>
-    <div>
+    </Text>
+    <Text as="p" weight="bold">This OR that:</Text>
+    <Text as="p">
       •
+      {' '}
       <code>(lucene|elasticsearch)</code>
       {' '}
       → Search operations
-    </div>
-    <div><Text as="strong" weight="bold">Exclude pattern:</Text></div>
-    <div>
+    </Text>
+    <Text as="p" weight="bold">Exclude pattern:</Text>
+    <Text as="p">
       •
+      {' '}
       <code>^(?!.*\.wait\()</code>
       {' '}
       → Exclude waiting threads
-    </div>
-  </div>
+    </Text>
+  </>
 );
 
-const RegexFilters: React.FC<Props> = ({ nameFilter, stackFilter, onRegExpChange }) => (
-  <div className="settings-row" id="regexp-filters">
-    <SmartTooltip tooltip={threadNameTooltip}>
+const RegexFilters: React.FC<Props> = ({
+  nameFilter,
+  stackFilter,
+  onRegExpChange,
+}) => (
+  <>
+    <HoverPopup content={threadNameTooltip}>
       <Field label="Thread name pattern" name="nameFilter" defaultValue={nameFilter}>
         {({ fieldProps }) => (
           <Textfield
@@ -97,9 +109,9 @@ const RegexFilters: React.FC<Props> = ({ nameFilter, stackFilter, onRegExpChange
           />
         )}
       </Field>
-    </SmartTooltip>
+    </HoverPopup>
 
-    <SmartTooltip tooltip={stackTraceTooltip}>
+    <HoverPopup content={stackTraceTooltip}>
       <Field label="Stack trace pattern" name="stackFilter" defaultValue={stackFilter}>
         {({ fieldProps }) => (
           <Textfield
@@ -110,8 +122,9 @@ const RegexFilters: React.FC<Props> = ({ nameFilter, stackFilter, onRegExpChange
           />
         )}
       </Field>
-    </SmartTooltip>
-  </div>
+    </HoverPopup>
+
+  </>
 );
 
 export default RegexFilters;

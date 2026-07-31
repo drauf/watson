@@ -1,5 +1,5 @@
 import { TooltipContentProps } from 'recharts';
-import TooltipContent from '../common/TooltipContent';
+import PopupContent from '../common/PopupContent';
 
 export interface ChartData {
   name: string;
@@ -12,12 +12,12 @@ const PieChartTooltip = ({ active, payload }: TooltipContentProps): JSX.Element 
     const { name, label } = payload[0].payload as ChartData;
 
     return (
-      <TooltipContent>
+      <PopupContent>
         {name}
         :
         {' '}
         {label}
-      </TooltipContent>
+      </PopupContent>
     );
   }
 

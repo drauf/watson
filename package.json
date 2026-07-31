@@ -25,6 +25,7 @@
     "@atlaskit/lozenge": "14.1.5",
     "@atlaskit/modal-dialog": "16.2.2",
     "@atlaskit/pagination": "15.2.2",
+    "@atlaskit/popup": "1.6.2",
     "@atlaskit/primitives": "22.2.0",
     "@atlaskit/section-message": "9.2.5",
     "@atlaskit/select": "22.6.0",

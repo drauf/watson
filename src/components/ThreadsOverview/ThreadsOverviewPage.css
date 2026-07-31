@@ -1,5 +1,10 @@
+.threads-overview-table-container {
+  overflow-x: auto;
+}
+
 .threads-overview-table {
   position: relative;
+  width: 100%;
   min-width: 100%;
   padding: 20px 4px 4px;
   table-layout: fixed;
@@ -7,23 +12,65 @@
   border-spacing: 0;
 }
 
+.threads-overview-name-column {
+  width: 240px;
+}
+
 .threads-overview-table th,
 .threads-overview-table td {
-  padding: 2px;
+  padding: var(--ds-space-050);
   overflow: hidden;
-  color: var(--ds-text-subtle);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.threads-overview-table td {
-  width: 100%;
-  height: 100%;
+.threads-overview-table td:not(.unknown, .name) {
   cursor: pointer;
 }
 
-td.name {
+.threads-overview-table td:not(.unknown, .name):hover {
+  box-shadow: inset 0 0 0 999px color-mix(
+    in srgb,
+    var(--ds-background-inverse-subtle-hovered) 30%,
+    transparent
+  );
+}
+
+.threads-overview-table .hover-popup-trigger {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.threads-overview-table td.name {
   font-weight: var(--ds-font-weight-bold);
+}
+
+.thread-stack-popup-stack {
+  display: grid;
+  gap: var(--ds-space-050);
+  min-width: 0;
+  margin-top: var(--ds-space-100, 8px);
+}
+
+.thread-stack-popup-stack code {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  color: inherit;
+  color: var(--ds-text-code-default);
+  font: var(--ds-font-code);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: transparent;
+  border-radius: 0;
+}
+
+.thread-stack-popup-more {
+  margin: var(--ds-space-050, 4px) 0 0;
+  color: var(--ds-text-subtle);
 }
 
 #heading {
@@ -36,8 +83,7 @@ td.name {
 }
 
 #thread-overview-legend {
-  height: 32px;
-  margin-bottom: 16px;
+  margin-bottom: var(--ds-space-200);
   padding: 0;
   table-layout: fixed;
   border-collapse: separate;
@@ -46,5 +92,5 @@ td.name {
 
 #thread-overview-legend th,
 #thread-overview-legend td {
-  padding: 1px;
+  padding: var(--ds-space-025);
 }

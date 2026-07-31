@@ -29,7 +29,8 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
       <section id="heading">
         <section id="settings">
           <TimeWindowFilter />
-          <div className="filters">
+
+          <section className="filters">
             <Text weight="bold">Filters:</Text>
 
             <ButtonGroup>
@@ -49,13 +50,15 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
                 tooltip="Show only threads using more than 10% CPU - focuses on actual performance hotspots"
               />
             </ButtonGroup>
-          </div>
+          </section>
 
-          <RegexFilters
-            nameFilter={nameFilter}
-            stackFilter={stackFilter}
-            onRegExpChange={onRegExpChange}
-          />
+          <section>
+            <RegexFilters
+              nameFilter={nameFilter}
+              stackFilter={stackFilter}
+              onRegExpChange={onRegExpChange}
+            />
+          </section>
         </section>
       </section>
     );

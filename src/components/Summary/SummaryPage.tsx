@@ -4,7 +4,6 @@ import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
 import RunningProcessesChart from './RunningProcessesChart';
 import './SummaryPage.css';
-import '../common/SmartTooltip.css';
 import SwapUsageChart from './SwapUsageChart';
 import { useAllThreadDumps } from '../../common/withThreadDumps';
 

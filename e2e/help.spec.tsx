@@ -8,6 +8,6 @@ test.describe('Help page', () => {
     await expect(pageWithData.getByRole('heading', { name: "Glad you're here" })).toBeVisible();
     await expect(pageWithData.getByRole('link', { name: 'GitHub' })).toBeVisible();
 
-    await expect(pageWithData).toHaveScreenshot();
+    await expect(pageWithData).toHaveScreenshot('Help-page-loads-1.png');
   });
 });

@@ -5,7 +5,7 @@ test.describe('Time window visual states', () => {
   test('renders a collapsed same-day control', async ({ mount }) => {
     const component = await mount('components/TimeWindow/TimeWindowFilter/Normal');
 
-    const timeWindow = component.locator('.expandable-surface');
+    const timeWindow = component.locator('.collapsable-group');
     await expect(timeWindow.getByRole('button', { name: /time window/i })).toHaveAttribute('aria-expanded', 'false');
     await expect(timeWindow).toHaveScreenshot('time-window-collapsed.png');
   });
@@ -15,7 +15,7 @@ test.describe('Time window visual states', () => {
 
     await component.getByRole('button', { name: /time window/i }).click();
 
-    const timeWindow = component.locator('.expandable-surface');
+    const timeWindow = component.locator('.collapsable-group');
     await expect(timeWindow.getByText(/^Selected range: 2026-07-23 23:59:00 - 2026-07-24 00:01:00\./)).toBeVisible();
     await expect(timeWindow).toHaveScreenshot('time-window-cross-midnight.png');
   });
@@ -25,7 +25,7 @@ test.describe('Time window visual states', () => {
 
     await component.getByRole('button', { name: /time window/i }).click();
 
-    const timeWindow = component.locator('.expandable-surface');
+    const timeWindow = component.locator('.collapsable-group');
     await expect(timeWindow.getByText(/large ranges can slow analysis pages/i)).toBeVisible();
     await expect(timeWindow).toHaveScreenshot('time-window-large-range-warning.png');
   });

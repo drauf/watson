@@ -23,38 +23,20 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--ds-space-200, 16px);
+  width: 100%;
 }
 
-#settings > div,
-.settings-row {
+#settings > section {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ds-space-100, 8px);
   align-items: center;
+  width: 100%;
   line-height: normal;
 }
 
-#settings label input {
-  margin: 0;
-}
-
-#settings > div:not(.filters) label {
-  display: inline-flex;
-  gap: var(--ds-space-050, 4px);
-  align-items: center;
-}
-
-#regexp-filters {
-  width: min(100%, 36rem);
-}
-
-#regexp-filters > * {
-  flex: 1 1 16rem;
-}
-
-/* Keep filter-chip rows visually associated with the controls immediately below them */
-#settings > .filters + .settings-row {
-  margin-top: calc(-1 * var(--ds-space-050, 4px));
+#settings > section > .hover-popup-trigger:nth-child(-n + 2) {
+  flex-basis: 16rem;
 }
 
 #centered {

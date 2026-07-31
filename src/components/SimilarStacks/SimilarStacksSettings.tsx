@@ -3,8 +3,8 @@ import Text from '@atlaskit/primitives/text';
 import React from 'react';
 import TextField from '@atlaskit/textfield';
 import { Field } from '@atlaskit/form';
+import HoverPopup from '../common/HoverPopup';
 import Filter from '../Filter/Filter';
-import SmartTooltip from '../common/SmartTooltip';
 import RegexFilters from '../common/RegexFilters';
 import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
 
@@ -28,7 +28,8 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
     return (
       <section id="settings">
         <TimeWindowFilter />
-        <div className="filters">
+
+        <section className="filters">
           <Text weight="bold">Filters:</Text>
 
           <ButtonGroup>
@@ -40,38 +41,42 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
               tooltip="Hide threads waiting for I/O or in thread pools"
             />
           </ButtonGroup>
-        </div>
+        </section>
 
-        <div className="settings-row">
+        <section>
           <RegexFilters
             nameFilter={nameFilter}
             stackFilter={stackFilter}
             onRegExpChange={onRegExpChange}
           />
 
-          <SmartTooltip tooltip={(
-            <div>
-              <div><Text as="strong" weight="bold">Stack trace depth for comparison</Text></div>
-              <div>How many stack frames to compare when grouping threads</div>
-              <div>
-                •
-                <Text as="strong" weight="bold">5-10:</Text>
-                {' '}
-                Focus on immediate call context
-              </div>
-              <div>
-                •
-                <Text as="strong" weight="bold">15-20:</Text>
-                {' '}
-                Balanced detail level
-              </div>
-              <div>
-                •
-                <Text as="strong" weight="bold">30+:</Text>
-                {' '}
-                Very detailed grouping
-              </div>
-            </div>
+          <HoverPopup
+            content={(
+              <>
+                <Text as="p" weight="bold">Stack trace depth for comparison</Text>
+                <Text as="p">How many stack frames to compare when grouping threads</Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">5-10:</Text>
+                  {' '}
+                  Focus on immediate call context
+                </Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">15-20:</Text>
+                  {' '}
+                  Balanced detail level
+                </Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">30+:</Text>
+                  {' '}
+                  Very detailed grouping
+                </Text>
+              </>
             )}
           >
             <Field label="Comparison depth" name="linesToConsider" defaultValue={linesToConsider}>
@@ -85,31 +90,35 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
                 />
               )}
             </Field>
-          </SmartTooltip>
+          </HoverPopup>
 
-          <SmartTooltip tooltip={(
-            <div>
-              <div><Text as="strong" weight="bold">Minimum threads per group</Text></div>
-              <div>Only show groups with at least this many similar threads</div>
-              <div>
-                •
-                <Text as="strong" weight="bold">2-3:</Text>
-                {' '}
-                Show all similar patterns
-              </div>
-              <div>
-                •
-                <Text as="strong" weight="bold">5-10:</Text>
-                {' '}
-                Focus on common patterns
-              </div>
-              <div>
-                •
-                <Text as="strong" weight="bold">20+:</Text>
-                {' '}
-                Only show very frequent patterns
-              </div>
-            </div>
+          <HoverPopup
+            content={(
+              <>
+                <Text as="p" weight="bold">Minimum threads per group</Text>
+                <Text as="p">Only show groups with at least this many similar threads</Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">2-3:</Text>
+                  {' '}
+                  Show all similar patterns
+                </Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">5-10:</Text>
+                  {' '}
+                  Focus on common patterns
+                </Text>
+                <Text as="p">
+                  •
+                  {' '}
+                  <Text as="strong" weight="bold">20+:</Text>
+                  {' '}
+                  Only show very frequent patterns
+                </Text>
+              </>
             )}
           >
             <Field label="Minimum group size" name="minimumGroupSize" defaultValue={minimumGroupSize}>
@@ -123,8 +132,8 @@ export default class SimilarStacksSettings extends React.PureComponent<Props> {
                 />
               )}
             </Field>
-          </SmartTooltip>
-        </div>
+          </HoverPopup>
+        </section>
       </section>
     );
   }
