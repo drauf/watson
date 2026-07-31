@@ -7,7 +7,7 @@ import Text from '@atlaskit/primitives/text';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';
-import TooltipContent from '../common/TooltipContent';
+import PopupContent from '../common/PopupContent';
 
 interface Props {
   threadDumps: ThreadDump[];
@@ -31,7 +31,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Ele
     const threadsCount: number = payload[0].value ? Number(payload[0].value) : 0;
 
     return (
-      <TooltipContent>
+      <PopupContent>
         <Text as="p">
           {`${time} - ${threadsCount}`}
           {' '}
@@ -55,7 +55,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Ele
             ? threadNames.map((name) => <li key={name}>{name}</li>)
             : <li>none</li>}
         </ol>
-      </TooltipContent>
+      </PopupContent>
     );
   }
 

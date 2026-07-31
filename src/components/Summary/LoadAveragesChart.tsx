@@ -6,7 +6,7 @@ import { token } from '@atlaskit/tokens';
 import Heading from '@atlaskit/heading';
 import Text from '@atlaskit/primitives/text';
 import ThreadDump from '../../types/ThreadDump';
-import TooltipContent from '../common/TooltipContent';
+import PopupContent from '../common/PopupContent';
 
 interface Props {
   threadDumps: ThreadDump[];
@@ -22,7 +22,7 @@ interface ChartData {
 const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Element | null => {
   if (active && payload) {
     return (
-      <TooltipContent>
+      <PopupContent>
         <Text as="p">
           Load averages at
           {' '}
@@ -40,7 +40,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Ele
             </li>
           ))}
         </ul>
-      </TooltipContent>
+      </PopupContent>
     );
   }
 

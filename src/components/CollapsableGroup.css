@@ -1,8 +1,23 @@
 .collapsable-group {
+  display: block;
   margin: var(--ds-space-100) 0;
+  padding: var(--ds-space-050) var(--ds-space-100);
+  background: transparent;
+  border: 1px solid var(--ds-border-disabled, #091e4224);
+  border-radius: var(--ds-radius-medium, 6px);
+  transition: border-color 0.1s ease-out;
+}
+
+.collapsable-group-expanded {
+  border-color: var(--ds-border, #dfe1e6);
+}
+
+.collapsable-group:hover:not(.collapsable-group-expanded) {
+  border-color: var(--ds-border, #dfe1e6);
 }
 
 .collapsable-group-heading {
+  width: 100%;
   margin: 0;
 }
 
@@ -20,6 +35,10 @@
   transition: background-color 0.1s ease-out;
 }
 
+.collapsable-group-heading:hover .collapsable-group-chevron {
+  background: var(--ds-background-neutral-subtle-hovered);
+}
+
 .collapsable-group-chevron svg {
   transform-origin: center;
   transition: transform 0.1s ease-out;
@@ -29,7 +48,33 @@
   transform: rotate(-90deg);
 }
 
-/* Match Confluence's disclosure affordance: the 24px icon hit area tints on hover */
-.expandable-surface-toggle:hover .collapsable-group-chevron {
-  background: var(--ds-background-neutral-subtle-hovered, #0515240f);
+.collapsable-group-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 24px;
+  padding: 0;
+  color: var(--ds-text, #172b4d);
+  font: inherit;
+  font-weight: var(--ds-font-weight-semibold, 600);
+  line-height: 24px;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.collapsable-group-toggle:hover {
+  text-decoration: none;
+}
+
+.collapsable-group-content {
+  display: block;
+  width: 100%;
+  padding-top: var(--ds-space-050);
+}
+
+.collapsable-group-toggle:focus-visible {
+  outline: 2px solid var(--ds-border-focused);
+  outline-offset: 2px;
 }

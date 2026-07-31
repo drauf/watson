@@ -1,6 +1,6 @@
 .error-message {
   margin: var(--ds-space-150, 12px) 0 0;
-  color: var(--ds-text-subtle, #626f86);
+  color: var(--ds-text-subtle);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }

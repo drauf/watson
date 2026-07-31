@@ -24,7 +24,8 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
     return (
       <section id="settings">
         <TimeWindowFilter />
-        <div className="filters">
+
+        <section className="filters">
           <Text weight="bold">Filters:</Text>
 
           <ButtonGroup>
@@ -52,13 +53,15 @@ export default class MonitorsSettings extends React.PureComponent<Props> {
               tooltip="Show only locks without owners - potential deadlock or contention areas"
             />
           </ButtonGroup>
-        </div>
+        </section>
 
-        <RegexFilters
-          nameFilter={nameFilter}
-          stackFilter={stackFilter}
-          onRegExpChange={onRegExpChange}
-        />
+        <section>
+          <RegexFilters
+            nameFilter={nameFilter}
+            stackFilter={stackFilter}
+            onRegExpChange={onRegExpChange}
+          />
+        </section>
       </section>
     );
   }

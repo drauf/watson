@@ -1,7 +1,6 @@
 import ChevronDownIcon from '@atlaskit/icon/core/chevron-down';
 import React from 'react';
 import './CollapsableGroup.css';
-import './common/ExpandableSurface.css';
 import CollapsableGroupControlContext from './CollapsableGroupControlContext';
 
 interface Props {
@@ -46,12 +45,12 @@ class CollapsableGroup extends React.PureComponent<Props, State> {
 
     return (
       <section
-        className={`collapsable-group expandable-surface${collapse ? '' : ' expandable-surface-expanded'}`}
+        className={`collapsable-group${collapse ? '' : ' collapsable-group-expanded'}`}
       >
         <h5 className="collapsable-group-heading">
           <button
             type="button"
-            className="expandable-surface-toggle"
+            className="collapsable-group-toggle"
             aria-expanded={!collapse}
             onClick={this.toggleCollapse}
           >
@@ -62,7 +61,7 @@ class CollapsableGroup extends React.PureComponent<Props, State> {
           </button>
         </h5>
 
-        {!collapse && <div className="expandable-surface-content">{content}</div>}
+        {!collapse && <div className="collapsable-group-content">{content}</div>}
       </section>
     );
   }

@@ -27,7 +27,7 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
 
     return (
       <section id="settings">
-        <div className="filters">
+        <section className="filters">
           <Text weight="bold">Sort threads by</Text>
 
           <ButtonGroup>
@@ -45,15 +45,15 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
           </ButtonGroup>
 
           <Text weight="bold">CPU usage</Text>
-        </div>
+        </section>
 
-        <div className="settings-row">
+        <section>
           <RegexFilters
             nameFilter={nameFilter}
             stackFilter={stackFilter}
             onRegExpChange={onRegExpChange}
           />
-        </div>
+        </section>
       </section>
     );
   }

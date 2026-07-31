@@ -1,6 +1,7 @@
 import { createRoot, Root } from 'react-dom/client';
 import { ChartNode } from 'd3-flame-graph';
-import SmartTooltip from '../common/SmartTooltip';
+import CursorPopup from '../common/CursorPopup';
+import PopupContent from '../common/PopupContent';
 
 const topParent = (node: ChartNode): ChartNode => {
   let result = node;
@@ -32,39 +33,38 @@ export function customTooltip() {
     const percentage = ((samples / totalSamples) * 100).toFixed(2);
 
     const tooltipContent = (
-      <>
-        <div>
-          {samples}
-          {' '}
-          samples (
-          {percentage}
-          %)
-        </div>
-        {parsedStackFrame.packageName && (
-          <div>
-            Package:
+      <PopupContent>
+        <dl>
+          <dt>Samples</dt>
+          <dd>
+            {samples}
             {' '}
-            {parsedStackFrame.packageName}
-          </div>
-        )}
-        {parsedStackFrame.rawClassName && (
-          <div>
-            Class:
-            {' '}
-            {parsedStackFrame.rawClassName}
-          </div>
-        )}
-        {parsedStackFrame.rawMethodName && (
-          <div>
-            Method:
-            {' '}
-            {parsedStackFrame.rawMethodName}
-          </div>
-        )}
-        <div>
-          {parsedStackFrame.line}
-        </div>
-      </>
+            (
+            {percentage}
+            %)
+          </dd>
+          {parsedStackFrame.packageName && (
+            <>
+              <dt>Package</dt>
+              <dd>{parsedStackFrame.packageName}</dd>
+            </>
+          )}
+          {parsedStackFrame.rawClassName && (
+            <>
+              <dt>Class</dt>
+              <dd>{parsedStackFrame.rawClassName}</dd>
+            </>
+          )}
+          {parsedStackFrame.rawMethodName && (
+            <>
+              <dt>Method</dt>
+              <dd>{parsedStackFrame.rawMethodName}</dd>
+            </>
+          )}
+          <dt>Frame</dt>
+          <dd>{parsedStackFrame.line}</dd>
+        </dl>
+      </PopupContent>
     );
 
     root?.render(
@@ -74,13 +74,9 @@ export function customTooltip() {
         top: y,
       }}
       >
-        <SmartTooltip
-          key={`${x}-${y}`}
-          tooltip={tooltipContent}
-          alwaysVisible
-        >
+        <CursorPopup key={`${x}-${y}`} content={tooltipContent}>
           &#x200b;
-        </SmartTooltip>
+        </CursorPopup>
       </div>,
     );
     return tip;

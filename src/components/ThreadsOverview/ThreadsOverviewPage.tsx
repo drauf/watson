@@ -21,6 +21,8 @@ interface State {
   usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
+  dumpColumnWidth: number;
+  stackPreviewLines: number;
 }
 
 class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
@@ -34,6 +36,8 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
     usingCpu: false,
     nameFilter: '',
     stackFilter: '',
+    dumpColumnWidth: 160,
+    stackPreviewLines: 10,
   };
 
   private jvmRegex = /^Attach Listener|^C[12] CompilerThread|^G1 Concurrent |^G1 Main|^Gang worker#|^GC Daemon|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
@@ -69,6 +73,10 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
             usingCpu={this.state.usingCpu}
             nameFilter={this.state.nameFilter}
             stackFilter={this.state.stackFilter}
+            dumpColumnWidth={this.state.dumpColumnWidth}
+            stackPreviewLines={this.state.stackPreviewLines}
+            onColumnWidthChange={this.handleColumnWidthChange}
+            onStackPreviewLinesChange={this.handleStackPreviewLinesChange}
             onFilterChange={this.handleFilterChange}
             onRegExpChange={this.handleTextChange}
           />
@@ -90,11 +98,29 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
             dates={dates}
             threadDumps={filteredDumps}
             matchingStackFilter={matchingStackFilter}
+            dumpColumnWidth={this.state.dumpColumnWidth}
+            stackPreviewLines={this.state.stackPreviewLines}
           />
         )}
       </main>
     );
   }
+
+  private handleColumnWidthChange: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    const dumpColumnWidth = target.valueAsNumber;
+
+    if (Number.isFinite(dumpColumnWidth) && dumpColumnWidth >= 0) {
+      this.setState({ dumpColumnWidth });
+    }
+  };
+
+  private handleStackPreviewLinesChange: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    const stackPreviewLines = target.valueAsNumber;
+
+    if (Number.isFinite(stackPreviewLines) && stackPreviewLines >= 1) {
+      this.setState({ stackPreviewLines });
+    }
+  };
 
   private isFilteredByStack = (): boolean => this.state.stackFilter.length > 0
     || this.state.lucene
