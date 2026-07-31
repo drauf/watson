@@ -31,7 +31,7 @@
   text-overflow: ellipsis;
 }
 
-.threads-overview-table td {
+.threads-overview-table td:not(.unknown, .name) {
   cursor: pointer;
 }
 
