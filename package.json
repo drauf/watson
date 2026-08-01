@@ -64,7 +64,7 @@
     "browserslist": "4.28.6",
     "eslint": "9.39.5",
     "eslint-config-airbnb-extended": "3.1.1",
-    "jsdom": "29.1.1",
+    "jsdom": "30.0.1",
     "node-gyp": "11.4.2",
     "rollup": "4.62.2",
     "stylelint": "15.10.3",
