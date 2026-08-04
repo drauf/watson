@@ -25,7 +25,7 @@ const createDates = (dumpCount: number): string[] => Array.from(
   (_, index) => `10:${String(index * 5).padStart(2, '0')}:00`,
 );
 
-const Basic = (): JSX.Element => (
+export const Basic = (): JSX.Element => (
   <main className="full-width-page">
     <section data-testid="three-dump-table">
       <ThreadsOverviewTable
@@ -40,6 +40,31 @@ const Basic = (): JSX.Element => (
       <ThreadsOverviewTable
         dates={createDates(12)}
         rows={createThreadOverviewRows(createTableRows(12))}
+        matchingStackFilter={new Set()}
+        dumpColumnWidth={160}
+        stackPreviewLines={10}
+      />
+    </section>
+  </main>
+);
+
+const createLargeTableRows = (): Map<number, Thread>[] => Array.from(
+  { length: 1000 },
+  (_, rowIndex) => new Map(Array.from(
+    { length: 100 },
+    (_unused, dumpIndex) => [
+      dumpIndex,
+      createThread(rowIndex + 1, `worker-${rowIndex}`, dumpIndex),
+    ],
+  )),
+);
+
+export const Large = (): JSX.Element => (
+  <main className="full-width-page">
+    <section data-testid="large-table">
+      <ThreadsOverviewTable
+        dates={createDates(100)}
+        rows={createThreadOverviewRows(createLargeTableRows())}
         matchingStackFilter={new Set()}
         dumpColumnWidth={160}
         stackPreviewLines={10}

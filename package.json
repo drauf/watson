@@ -32,6 +32,7 @@
     "@atlaskit/textfield": "^9.1.1",
     "@atlaskit/tokens": "^16.3.0",
     "@compiled/react": "^1.0.0",
+    "@tanstack/react-virtual": "^3.14.9",
     "d3": "7.9.0",
     "d3-flame-graph": "5.0.0",
     "flatted": "3.4.3",
