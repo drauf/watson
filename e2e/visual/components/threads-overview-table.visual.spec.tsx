@@ -9,7 +9,9 @@ test.describe('Threads overview table', () => {
 
   test('renders bold timestamp headers', async ({ mount }) => {
     const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/Basic');
-    const timestampHeader = component.getByRole('columnheader', { name: '10:00:00' });
+    const timestampHeader = component
+      .getByTestId('three-dump-table')
+      .getByRole('columnheader', { name: '10:00:00' });
 
     const fontWeight = await timestampHeader.evaluate(
       (element) => Number.parseInt(getComputedStyle(element).fontWeight, 10),
@@ -48,7 +50,7 @@ test.describe('Threads overview table', () => {
     await body.evaluate((element) => {
       const scrollElement = element as HTMLElement;
       scrollElement.scrollLeft = 8000;
-      scrollElement.scrollTop = 14000;
+      scrollElement.scrollTop = 16000;
       scrollElement.dispatchEvent(new Event('scroll'));
     });
 
@@ -59,7 +61,7 @@ test.describe('Threads overview table', () => {
     )).toBe('translateX(-8000px)');
     await expect.poll(() => component.locator('.threads-overview-grid-names-content').evaluate(
       (element) => (element as HTMLElement).style.transform,
-    )).toBe('translateY(-14000px)');
+    )).toBe('translateY(-16000px)');
     expect(await component.locator('[role="gridcell"]').count()).toBeLessThan(1000);
   });
 });

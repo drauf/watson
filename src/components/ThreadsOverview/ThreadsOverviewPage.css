@@ -4,8 +4,8 @@
 
 .threads-overview-grid {
   display: grid;
-  grid-template-rows: 28px minmax(0, 1fr);
-  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-rows: var(--threads-overview-grid-header-height) minmax(0, 1fr);
+  grid-template-columns: var(--threads-overview-grid-name-column-width) minmax(0, 1fr);
   min-width: 0;
 }
 
@@ -21,7 +21,7 @@
   grid-column: 1;
   padding: var(--ds-space-050);
   overflow: hidden;
-  font-weight: var(--ds-font-weight-bold);
+  font-weight: var(--ds-font-weight-bold, 700);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -41,7 +41,7 @@
 }
 
 .threads-overview-grid-header-content {
-  height: 28px;
+  height: var(--threads-overview-grid-header-height);
   will-change: transform;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .threads-overview-grid-header-cell {
-  height: 28px;
+  height: var(--threads-overview-grid-header-height);
   font-weight: var(--ds-font-weight-bold, 700);
 }
 
@@ -69,12 +69,12 @@
 }
 
 .threads-overview-grid-names-content {
-  width: 240px;
+  width: var(--threads-overview-grid-name-column-width);
   will-change: transform;
 }
 
 .threads-overview-grid-name-cell {
-  width: 240px;
+  width: var(--threads-overview-grid-name-column-width);
   font-weight: var(--ds-font-weight-bold, 700);
 }
 
