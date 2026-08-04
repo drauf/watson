@@ -60,4 +60,28 @@ describe('HoverPopup', () => {
 
     expect(screen.getByText('Thread details')).toBeVisible();
   });
+
+  it('evaluates lazy content only after the popup opens', () => {
+    const renderContent = vi.fn(() => 'Stack preview');
+    const { rerender } = render(
+      <HoverPopup renderContent={renderContent}>
+        <button type="button">Trigger</button>
+      </HoverPopup>,
+    );
+    const trigger = screen.getByText('Trigger').parentElement as HTMLDivElement;
+
+    expect(renderContent).not.toHaveBeenCalled();
+
+    rerender(
+      <HoverPopup renderContent={renderContent}>
+        <button type="button">Trigger</button>
+      </HoverPopup>,
+    );
+    expect(renderContent).not.toHaveBeenCalled();
+
+    fireEvent.mouseEnter(trigger);
+
+    expect(renderContent).toHaveBeenCalledOnce();
+    expect(screen.getByText('Stack preview')).toBeVisible();
+  });
 });

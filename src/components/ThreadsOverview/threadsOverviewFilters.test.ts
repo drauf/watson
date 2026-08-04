@@ -6,6 +6,7 @@ import {
   isFilteredByStack,
   ThreadsOverviewFilters,
 } from './threadsOverviewFilters';
+import { ThreadOverviewDataRow } from './threadsOverviewRows';
 
 const defaultFilters = (): ThreadsOverviewFilters => ({
   active: false,
@@ -27,24 +28,35 @@ const createThread = (id: number, name: string, stackTrace: string[] = [], cpuUs
   return thread;
 };
 
+const createRow = (thread: Thread): ThreadOverviewDataRow => ({
+  id: thread.id,
+  name: thread.name,
+  threadsByDump: new Map([[0, thread]]),
+});
+
 describe('threadsOverviewFilters', () => {
   it('filters thread rows by name, CPU usage, and JVM classification', () => {
     const httpThread = createThread(1, 'http-nio-8080-exec-1', ['app.Request.handle'], '12.50');
     const jvmThread = createThread(2, 'GC Daemon', ['java.lang.System.gc']);
     const workerThread = createThread(3, 'worker-1', ['app.Work.run']);
     const rows = [
-      new Map([[0, httpThread]]),
-      new Map([[0, jvmThread]]),
-      new Map([[0, workerThread]]),
+      createRow(httpThread),
+      createRow(jvmThread),
+      createRow(workerThread),
     ];
 
-    expect(filterThreads(rows, { ...defaultFilters(), tomcat: true, usingCpu: true })).toEqual([rows[0]]);
-    expect(filterThreads(rows, { ...defaultFilters(), nonJvm: true })).toEqual([rows[0], rows[2]]);
-    expect(filterThreads(rows, { ...defaultFilters(), nameFilter: '^worker' })).toEqual([rows[2]]);
+    const cpuTomcatRows = filterThreads(rows, { ...defaultFilters(), tomcat: true, usingCpu: true });
+    const nonJvmRows = filterThreads(rows, { ...defaultFilters(), nonJvm: true });
+    const workerRows = filterThreads(rows, { ...defaultFilters(), nameFilter: '^worker' });
+
+    expect(cpuTomcatRows).toEqual([rows[0]]);
+    expect(cpuTomcatRows[0]).toBe(rows[0]);
+    expect(nonJvmRows).toEqual([rows[0], rows[2]]);
+    expect(workerRows).toEqual([rows[2]]);
   });
 
   it('ignores an invalid name regular expression', () => {
-    const rows = [new Map([[0, createThread(1, 'worker-1')]])];
+    const rows = [createRow(createThread(1, 'worker-1'))];
 
     expect(filterThreads(rows, { ...defaultFilters(), nameFilter: '[' })).toEqual(rows);
   });
@@ -56,8 +68,8 @@ describe('threadsOverviewFilters', () => {
     ]);
     const luceneOnlyThread = createThread(2, 'index', ['org.apache.lucene.index.Writer']);
     const rows = [
-      new Map([[0, luceneDatabaseThread]]),
-      new Map([[0, luceneOnlyThread]]),
+      createRow(luceneDatabaseThread),
+      createRow(luceneOnlyThread),
     ];
     const filters = { ...defaultFilters(), lucene: true, database: true };
 

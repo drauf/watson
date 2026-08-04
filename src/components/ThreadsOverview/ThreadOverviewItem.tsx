@@ -2,12 +2,12 @@ import React from 'react';
 import HoverPopup from '../common/HoverPopup';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
-import useOpenThreadDetails from '../ThreadDetails/useOpenThreadDetails';
 
 interface Props {
   thread: Thread | undefined;
   isMatchingStackFilter: boolean;
   stackPreviewLines: number;
+  onOpenThreadDetails: (thread: Thread) => void;
 }
 
 const getClassName = (isMatchingStackFilter: boolean, status: ThreadStatus) => {
@@ -56,8 +56,8 @@ const ThreadsOverviewItem: React.FC<Props> = ({
   thread,
   isMatchingStackFilter,
   stackPreviewLines,
+  onOpenThreadDetails,
 }) => {
-  const { open, WindowComponent } = useOpenThreadDetails(thread);
   if (!thread) {
     return <td className="unknown" aria-label="Unknown thread" />;
   }
@@ -65,14 +65,11 @@ const ThreadsOverviewItem: React.FC<Props> = ({
   const className = getClassName(isMatchingStackFilter, thread.status);
 
   return (
-    <>
-      <td className={className} onClick={open}>
-        <HoverPopup content={renderStackPopupContent(thread, stackPreviewLines)}>
-          {thread.stackTrace[0]}
-        </HoverPopup>
-      </td>
-      {WindowComponent}
-    </>
+    <td className={className} onClick={() => onOpenThreadDetails(thread)}>
+      <HoverPopup renderContent={() => renderStackPopupContent(thread, stackPreviewLines)}>
+        {thread.stackTrace[0]}
+      </HoverPopup>
+    </td>
   );
 };
 

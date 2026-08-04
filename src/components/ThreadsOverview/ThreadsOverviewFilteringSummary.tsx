@@ -1,25 +1,28 @@
 import Inline from '@atlaskit/primitives/inline';
 import Text from '@atlaskit/primitives/text';
 import React, { type JSX } from 'react';
-import Thread from '../../types/Thread';
+import { ThreadOverviewDataRow } from './threadsOverviewRows';
 
 interface Props {
   isFilteredByStack: boolean;
   threadsNumber: number;
-  threadDumps: Map<number, Thread>[];
+  rows: ThreadOverviewDataRow[];
   matchingStackFilter: Set<number>;
 }
 
-const nonEmptyCounter = (sum: number, currentGroup: Map<number, Thread>): number => sum + Array.from(currentGroup.values()).length;
+const nonEmptyCounter = (sum: number, row: ThreadOverviewDataRow): number => sum + row.threadsByDump.size;
 
 export default class ThreadsOverviewFilteringSummary extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const {
-      isFilteredByStack, threadsNumber, threadDumps, matchingStackFilter,
+      isFilteredByStack, threadsNumber, rows, matchingStackFilter,
     } = this.props;
-    const matchingThreads = threadDumps.length;
+    const matchingThreads = rows.length;
     const matchingSnapshots = matchingStackFilter.size;
-    const totalSnapshots = threadDumps.reduce(nonEmptyCounter, 0);
+    const totalSnapshots = rows.reduce(nonEmptyCounter, 0);
+    const matchingSnapshotPercentage = totalSnapshots === 0
+      ? '0.0'
+      : ((matchingSnapshots / totalSnapshots) * 100).toFixed(1);
     const isFilteredByName = threadsNumber !== matchingThreads;
 
     if (!isFilteredByName && !isFilteredByStack) {
@@ -55,7 +58,7 @@ export default class ThreadsOverviewFilteringSummary extends React.PureComponent
             {totalSnapshots}
             {' '}
             thread snapshots (
-            {((matchingSnapshots / totalSnapshots) * 100).toFixed(1)}
+            {matchingSnapshotPercentage}
             %)
           </Text>
         )}

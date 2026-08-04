@@ -17,7 +17,7 @@ import ThreadStatus from '../types/ThreadStatus';
  * @param threadTimeSeries Same thread sampled across multiple dumps
  * @returns true if thread should be shown in timeline analysis
  */
-export function isActiveOverTime(threadTimeSeries: Map<number, Thread>): boolean {
+export function isActiveOverTime(threadTimeSeries: ReadonlyMap<number, Thread>): boolean {
   let previousStatus: ThreadStatus | undefined;
 
   for (const thread of threadTimeSeries.values()) {

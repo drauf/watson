@@ -1,5 +1,5 @@
 import { isActiveOverTime } from '../../common/threadFilters';
-import Thread from '../../types/Thread';
+import { ThreadOverviewDataRow } from './threadsOverviewRows';
 
 export interface ThreadsOverviewFilters {
   active: boolean;
@@ -18,12 +18,12 @@ const tomcatRegex = /^https?-.*exec/;
 const luceneRegex = /org\.apache\.lucene/;
 const databaseRegex = /database|sql|query|jdbc|jooq|postgres|mysql|oracle|c3p0/i;
 
-const matchesName = (threads: Map<number, Thread>, regex: RegExp): boolean => Array.from(
-  threads.values(),
+const matchesName = (row: ThreadOverviewDataRow, regex: RegExp): boolean => Array.from(
+  row.threadsByDump.values(),
 ).some((thread) => regex.test(thread.name));
 
-const isUsingCpu = (threads: Map<number, Thread>): boolean => Array.from(
-  threads.values(),
+const isUsingCpu = (row: ThreadOverviewDataRow): boolean => Array.from(
+  row.threadsByDump.values(),
 ).some((thread) => parseFloat(thread.cpuUsage) >= 10);
 
 const toOptionalRegex = (value: string): RegExp | undefined => {
@@ -39,18 +39,18 @@ const toOptionalRegex = (value: string): RegExp | undefined => {
 };
 
 export const filterThreads = (
-  threadDumps: Map<number, Thread>[],
+  rows: ThreadOverviewDataRow[],
   filters: ThreadsOverviewFilters,
-): Map<number, Thread>[] => {
+): ThreadOverviewDataRow[] => {
   const nameRegex = toOptionalRegex(filters.nameFilter);
 
-  return threadDumps
-    .filter((threads) => !filters.active || isActiveOverTime(threads))
-    .filter((threads) => !filters.usingCpu || isUsingCpu(threads))
-    .filter((threads) => !filters.nonJvm || !matchesName(threads, jvmRegex))
-    .filter((threads) => !filters.tomcat || matchesName(threads, tomcatRegex))
-    .filter((threads) => !filters.nonTomcat || !matchesName(threads, tomcatRegex))
-    .filter((threads) => !nameRegex || matchesName(threads, nameRegex));
+  return rows
+    .filter((row) => !filters.active || isActiveOverTime(row.threadsByDump))
+    .filter((row) => !filters.usingCpu || isUsingCpu(row))
+    .filter((row) => !filters.nonJvm || !matchesName(row, jvmRegex))
+    .filter((row) => !filters.tomcat || matchesName(row, tomcatRegex))
+    .filter((row) => !filters.nonTomcat || !matchesName(row, tomcatRegex))
+    .filter((row) => !nameRegex || matchesName(row, nameRegex));
 };
 
 const getStackTraceFilters = (filters: ThreadsOverviewFilters): RegExp[] => {
@@ -71,7 +71,7 @@ const getStackTraceFilters = (filters: ThreadsOverviewFilters): RegExp[] => {
 };
 
 export const getThreadsMatchingStackFilter = (
-  threadDumps: Map<number, Thread>[],
+  rows: ThreadOverviewDataRow[],
   filters: ThreadsOverviewFilters,
 ): Set<number> => {
   const stackTraceFilters = getStackTraceFilters(filters);
@@ -80,8 +80,8 @@ export const getThreadsMatchingStackFilter = (
   }
 
   return new Set(
-    threadDumps
-      .flatMap((threads) => Array.from(threads.values()))
+    rows
+      .flatMap((row) => Array.from(row.threadsByDump.values()))
       .filter((thread) => stackTraceFilters.every((filter) => thread.stackTrace.some((line) => filter.test(line))))
       .map((thread) => thread.uniqueId),
   );
