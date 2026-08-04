@@ -13,7 +13,6 @@ export const getAvailableThreadsOverviewGridHeight = (
   threadsOverviewGridMetrics.headerHeight + threadsOverviewGridMetrics.rowHeight,
   viewportHeight - gridTop - threadsOverviewGridMetrics.viewportBottomGutter,
 );
-
 export const getResolvedThreadsOverviewDumpColumnWidth = (
   dumpColumnWidth: number,
   dumpCount: number,

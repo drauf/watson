@@ -133,7 +133,7 @@
 
 #heading {
   width: 80%;
-  margin: auto;
+  margin-inline: auto;
 }
 
 #matching-summary {

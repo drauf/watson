@@ -8,6 +8,30 @@ test.describe('Threads overview', () => {
     await expect(pageWithData).toHaveScreenshot('Threads-overview-loads-1.png');
   });
 
+  test('expands the virtual grid after collapsing an applied time range', async ({ pageWithData }) => {
+    await pageWithData.getByText('Threads overview').click();
+
+    const timeWindowToggle = pageWithData.getByRole('button', { name: /time window/i });
+    await timeWindowToggle.click();
+    const timeline = pageWithData.getByLabel('Time window timeline');
+    const timelineBox = await timeline.boundingBox();
+    if (!timelineBox) throw new Error('Time window timeline is not visible');
+
+    const startHandle = timeline.locator('.time-window-handle-start');
+    await startHandle.hover();
+    await pageWithData.mouse.down();
+    await pageWithData.mouse.move(timelineBox.x + timelineBox.width / 2, timelineBox.y + timelineBox.height / 2);
+    await pageWithData.mouse.up();
+    await pageWithData.getByRole('button', { name: 'Apply' }).click();
+
+    const grid = pageWithData.getByRole('grid');
+    const heightBeforeCollapse = await grid.evaluate((element) => element.getBoundingClientRect().height);
+    await timeWindowToggle.click();
+
+    await expect.poll(async () => grid.evaluate((element) => element.getBoundingClientRect().height))
+      .toBeGreaterThan(heightBeforeCollapse);
+  });
+
   test('opens a styled thread details window', async ({ context, pageWithData }) => {
     await pageWithData.getByText('Threads overview').click();
 

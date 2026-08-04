@@ -65,19 +65,6 @@ const ThreadsOverviewVirtualGrid: React.FC<Props> = ({
     overscan: 1,
   });
 
-  const updateAvailableGridHeight = useCallback(() => {
-    const grid = gridRef.current;
-    if (!grid) return;
-
-    const nextHeight = getAvailableThreadsOverviewGridHeight(
-      window.innerHeight,
-      grid.getBoundingClientRect().top,
-    );
-    setAvailableGridHeight((currentHeight) => (
-      currentHeight === nextHeight ? currentHeight : nextHeight
-    ));
-  }, []);
-
   useEffect(() => {
     if (previousRowIdsRef.current === rowIds) return;
 
@@ -91,10 +78,32 @@ const ThreadsOverviewVirtualGrid: React.FC<Props> = ({
   useEffect(() => {
     columnVirtualizer.measure();
   }, [columnVirtualizer, resolvedDumpColumnWidth]);
+  const updateAvailableGridHeight = useCallback(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const nextHeight = getAvailableThreadsOverviewGridHeight(
+      window.innerHeight,
+      grid.getBoundingClientRect().top,
+    );
+    setAvailableGridHeight((currentHeight) => (
+      currentHeight === nextHeight ? currentHeight : nextHeight
+    ));
+  }, []);
   useLayoutEffect(() => {
     updateAvailableGridHeight();
     window.addEventListener('resize', updateAvailableGridHeight);
-    return () => window.removeEventListener('resize', updateAvailableGridHeight);
+
+    if (!window.ResizeObserver) {
+      return () => window.removeEventListener('resize', updateAvailableGridHeight);
+    }
+
+    const layoutObserver = new ResizeObserver(updateAvailableGridHeight);
+    layoutObserver.observe(document.getElementById('settings') ?? document.body);
+    return () => {
+      window.removeEventListener('resize', updateAvailableGridHeight);
+      layoutObserver.disconnect();
+    };
   }, [dates.length, dumpColumnWidth, rowIds, stackPreviewLines, updateAvailableGridHeight]);
   useEffect(() => {
     const scrollElement = scrollElementRef.current;
