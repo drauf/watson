@@ -8,6 +8,9 @@ interface Props {
   isMatchingStackFilter: boolean;
   stackPreviewLines: number;
   onOpenThreadDetails: (thread: Thread) => void;
+  rowIndex: number;
+  columnIndex: number;
+  style: React.CSSProperties;
 }
 
 const getClassName = (isMatchingStackFilter: boolean, status: ThreadStatus) => {
@@ -52,24 +55,56 @@ const renderStackPopupContent = (thread: Thread, stackPreviewLines: number) => {
   );
 };
 
+const openThreadDetailsOnKeyDown = (
+  event: React.KeyboardEvent<HTMLDivElement>,
+  thread: Thread,
+  onOpenThreadDetails: (threadToOpen: Thread) => void,
+): void => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+
+  event.preventDefault();
+  onOpenThreadDetails(thread);
+};
+
 const ThreadsOverviewItem: React.FC<Props> = ({
   thread,
   isMatchingStackFilter,
   stackPreviewLines,
   onOpenThreadDetails,
+  rowIndex,
+  columnIndex,
+  style,
 }) => {
   if (!thread) {
-    return <td className="unknown" aria-label="Unknown thread" />;
+    return (
+      <div
+        className="threads-overview-grid-cell unknown"
+        role="gridcell"
+        aria-rowindex={rowIndex}
+        aria-colindex={columnIndex}
+        aria-label="Unknown thread"
+        style={style}
+      />
+    );
   }
 
   const className = getClassName(isMatchingStackFilter, thread.status);
 
   return (
-    <td className={className} onClick={() => onOpenThreadDetails(thread)}>
+    <div
+      className={`threads-overview-grid-cell ${className}`}
+      role="gridcell"
+      aria-rowindex={rowIndex}
+      aria-colindex={columnIndex}
+      tabIndex={0}
+      onClick={() => onOpenThreadDetails(thread)}
+      onKeyDown={(event) => openThreadDetailsOnKeyDown(event, thread, onOpenThreadDetails)}
+      style={style}
+    >
       <HoverPopup renderContent={() => renderStackPopupContent(thread, stackPreviewLines)}>
         {thread.stackTrace[0]}
       </HoverPopup>
-    </td>
+    </div>
   );
 };
 
