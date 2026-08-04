@@ -17,11 +17,26 @@ const popupFeatures = [
   'status=no',
 ].join(',');
 
+export interface ThreadDetailsPopupWindow {
+  popup: Window;
+  container: HTMLElement;
+}
+
+export const openThreadDetailsPopup = (thread: Thread): ThreadDetailsPopupWindow | null => {
+  const popup = window.open('', '_blank', popupFeatures);
+  if (!popup) return null;
+
+  popup.document.title = `${Thread.getFormattedTime(thread)} - ${thread.name}`;
+  const container = popup.document.createElement('div');
+  popup.document.body.replaceChildren(container);
+  return { popup, container };
+};
+
 export default function useOpenThreadDetails(thread: Thread | undefined) {
-  const [popup, setPopup] = useState<{ window: Window; container: HTMLElement } | null>(null);
+  const [popup, setPopup] = useState<ThreadDetailsPopupWindow | null>(null);
 
   const close = useCallback(() => {
-    if (popup && !popup.window.closed) popup.window.close();
+    if (popup && !popup.popup.closed) popup.popup.close();
     setPopup(null);
   }, [popup]);
 
@@ -30,21 +45,11 @@ export default function useOpenThreadDetails(thread: Thread | undefined) {
     event?.stopPropagation();
     if (!thread) return;
 
-    const newPopup = window.open(
-      '',
-      '_blank',
-      popupFeatures,
-    );
-    if (!newPopup) return;
-
-    newPopup.document.title = `${Thread.getFormattedTime(thread)} - ${thread.name}`;
-    const container = newPopup.document.createElement('div');
-    newPopup.document.body.replaceChildren(container);
-    setPopup({ window: newPopup, container });
+    setPopup(openThreadDetailsPopup(thread));
   }, [thread]);
 
   const WindowComponent = thread && popup ? (
-    <ThreadDetailsPopup popup={popup.window} container={popup.container} onClose={close}>
+    <ThreadDetailsPopup popup={popup.popup} container={popup.container} onClose={close}>
       <ThreadDetailsWindow thread={thread} />
     </ThreadDetailsPopup>
   ) : null;

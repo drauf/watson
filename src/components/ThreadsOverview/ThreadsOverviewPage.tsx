@@ -15,6 +15,7 @@ import ThreadsOverviewLegend from './ThreadsOverviewLegend';
 import './ThreadsOverviewPage.css';
 import ThreadsOverviewSettings from './ThreadsOverviewSettings';
 import ThreadsOverviewTable from './ThreadsOverviewTable';
+import { createThreadOverviewRows, ThreadOverviewDataRow } from './threadsOverviewRows';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 
 interface State {
@@ -31,6 +32,14 @@ interface State {
 }
 
 class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
+  private cachedThreadDumps: ThreadDump[] | undefined;
+
+  private cachedOverviewData: {
+    nonEmptyThreadDumps: ThreadDump[];
+    rows: ThreadOverviewDataRow[];
+    dates: (string | null)[];
+  } | undefined;
+
   public override state = {
     active: true,
     nonJvm: true,
@@ -46,12 +55,10 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
   };
 
   public override render(): JSX.Element {
-    const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
-    const threadOverTime = getThreadsOverTime(nonEmptyThreadDumps);
+    const { nonEmptyThreadDumps, rows, dates } = this.getData();
     const filters: ThreadsOverviewFilters = this.state;
-    const filteredDumps = filterThreads(threadOverTime, filters);
-    const matchingStackFilter = getThreadsMatchingStackFilter(filteredDumps, filters);
-    const dates = nonEmptyThreadDumps.map((dump) => ThreadDump.getFormattedTime(dump));
+    const filteredRows = filterThreads(rows, filters);
+    const matchingStackFilter = getThreadsMatchingStackFilter(filteredRows, filters);
     const filteredByStack = isFilteredByStack(filters);
 
     if (nonEmptyThreadDumps.length === 0) {
@@ -81,27 +88,45 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
 
           <ThreadsOverviewFilteringSummary
             isFilteredByStack={filteredByStack}
-            threadsNumber={threadOverTime.length}
-            threadDumps={filteredDumps}
+            threadsNumber={rows.length}
+            rows={filteredRows}
             matchingStackFilter={matchingStackFilter}
           />
 
           <ThreadsOverviewLegend />
         </section>
 
-        {filteredDumps.length === 0 ? (
-          <EmptyState />
-        ) : (
+        {filteredRows.length === 0 && <EmptyState />}
+        <div hidden={filteredRows.length === 0}>
           <ThreadsOverviewTable
             dates={dates}
-            threadDumps={filteredDumps}
+            rows={filteredRows}
             matchingStackFilter={matchingStackFilter}
             dumpColumnWidth={this.state.dumpColumnWidth}
             stackPreviewLines={this.state.stackPreviewLines}
           />
-        )}
+        </div>
       </main>
     );
+  }
+
+  private getData(): {
+    nonEmptyThreadDumps: ThreadDump[];
+    rows: ThreadOverviewDataRow[];
+    dates: (string | null)[];
+  } {
+    if (this.cachedThreadDumps === this.props.threadDumps && this.cachedOverviewData) {
+      return this.cachedOverviewData;
+    }
+
+    const nonEmptyThreadDumps = this.props.threadDumps.filter((dump) => dump.threads.length > 0);
+    this.cachedThreadDumps = this.props.threadDumps;
+    this.cachedOverviewData = {
+      nonEmptyThreadDumps,
+      rows: createThreadOverviewRows(getThreadsOverTime(nonEmptyThreadDumps)),
+      dates: nonEmptyThreadDumps.map((dump) => ThreadDump.getFormattedTime(dump)),
+    };
+    return this.cachedOverviewData;
   }
 
   private handleColumnWidthChange: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {

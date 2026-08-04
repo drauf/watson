@@ -2,6 +2,7 @@ import type { JSX } from 'react';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import ThreadsOverviewTable from './ThreadsOverviewTable';
+import { createThreadOverviewRows } from './threadsOverviewRows';
 import './ThreadsOverviewPage.css';
 
 const createThread = (id: number, name: string, dumpIndex: number): Thread => {
@@ -29,7 +30,7 @@ const Basic = (): JSX.Element => (
     <section data-testid="three-dump-table">
       <ThreadsOverviewTable
         dates={createDates(3)}
-        threadDumps={createTableRows(3)}
+        rows={createThreadOverviewRows(createTableRows(3))}
         matchingStackFilter={new Set()}
         dumpColumnWidth={160}
         stackPreviewLines={10}
@@ -38,7 +39,7 @@ const Basic = (): JSX.Element => (
     <section data-testid="many-dump-table">
       <ThreadsOverviewTable
         dates={createDates(12)}
-        threadDumps={createTableRows(12)}
+        rows={createThreadOverviewRows(createTableRows(12))}
         matchingStackFilter={new Set()}
         dumpColumnWidth={160}
         stackPreviewLines={10}

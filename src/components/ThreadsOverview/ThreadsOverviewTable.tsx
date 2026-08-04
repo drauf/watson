@@ -1,20 +1,74 @@
 import React, { type JSX } from 'react';
 import HoverPopup from '../common/HoverPopup';
 import Thread from '../../types/Thread';
+import ThreadDetailsPopup from '../ThreadDetails/ThreadDetailsPopup';
+import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
+import { openThreadDetailsPopup } from '../ThreadDetails/useOpenThreadDetails';
+import type { ThreadDetailsPopupWindow } from '../ThreadDetails/useOpenThreadDetails';
 import ThreadOverviewRow from './ThreadOverviewRow';
+import type { ThreadOverviewDataRow } from './threadsOverviewRows';
 
 interface Props {
   dates: (string | null)[];
-  threadDumps: Map<number, Thread>[];
+  rows: ThreadOverviewDataRow[];
   matchingStackFilter: Set<number>;
   dumpColumnWidth: number;
   stackPreviewLines: number;
 }
 
-export default class ThreadsOverviewTable extends React.PureComponent<Props> {
+interface OpenThreadDetails extends ThreadDetailsPopupWindow {
+  thread: Thread;
+}
+
+interface State {
+  openDetailsVersion: number;
+}
+
+export default class ThreadsOverviewTable extends React.PureComponent<Props, State> {
+  private readonly openDetails = new Map<number, OpenThreadDetails>();
+
+  private isUnmounting = false;
+
+  public constructor(props: Props) {
+    super(props);
+    this.state = { openDetailsVersion: 0 };
+  }
+
+  public override componentWillUnmount(): void {
+    this.isUnmounting = true;
+    this.openDetails.forEach(({ popup }) => {
+      if (!popup.closed) popup.close();
+    });
+    this.openDetails.clear();
+  }
+
+  private handleOpenThreadDetails = (thread: Thread): void => {
+    const existing = this.openDetails.get(thread.uniqueId);
+    if (existing && !existing.popup.closed) {
+      existing.popup.focus();
+      return;
+    }
+
+    const popup = openThreadDetailsPopup(thread);
+    if (!popup) return;
+
+    this.openDetails.set(thread.uniqueId, { thread, ...popup });
+    this.refreshOpenDetails();
+  };
+
+  private handleCloseThreadDetails = (uniqueId: number): void => {
+    this.openDetails.delete(uniqueId);
+    this.refreshOpenDetails();
+  };
+
+  private refreshOpenDetails(): void {
+    if (this.isUnmounting) return;
+    this.setState(({ openDetailsVersion }) => ({ openDetailsVersion: openDetailsVersion + 1 }));
+  }
+
   public override render(): JSX.Element {
     const {
-      dates, threadDumps, matchingStackFilter, dumpColumnWidth, stackPreviewLines,
+      dates, rows, matchingStackFilter, dumpColumnWidth, stackPreviewLines,
     } = this.props;
 
     const nameColumnWidth = 240;
@@ -50,17 +104,28 @@ export default class ThreadsOverviewTable extends React.PureComponent<Props> {
             </tr>
           </thead>
           <tbody>
-            {threadDumps.map((threads) => (
+            {rows.map((row) => (
               <ThreadOverviewRow
-                key={(threads.values().next().value as Thread).uniqueId}
+                key={row.id}
                 total={dates.length}
-                threads={threads}
+                row={row}
                 matchingStackFilter={matchingStackFilter}
                 stackPreviewLines={stackPreviewLines}
+                onOpenThreadDetails={this.handleOpenThreadDetails}
               />
             ))}
           </tbody>
         </table>
+        {Array.from(this.openDetails.values()).map(({ thread, popup, container }) => (
+          <ThreadDetailsPopup
+            key={thread.uniqueId}
+            popup={popup}
+            container={container}
+            onClose={() => this.handleCloseThreadDetails(thread.uniqueId)}
+          >
+            <ThreadDetailsWindow thread={thread} />
+          </ThreadDetailsPopup>
+        ))}
       </div>
     );
   }
