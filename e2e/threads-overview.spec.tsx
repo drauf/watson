@@ -8,28 +8,32 @@ test.describe('Threads overview', () => {
     await expect(pageWithData).toHaveScreenshot('Threads-overview-loads-1.png');
   });
 
-  test('expands the virtual grid after collapsing an applied time range', async ({ pageWithData }) => {
+  test('scrolls settings out while keeping grid panes frozen', async ({ pageWithData }) => {
     await pageWithData.getByText('Threads overview').click();
 
-    const timeWindowToggle = pageWithData.getByRole('button', { name: /time window/i });
-    await timeWindowToggle.click();
-    const timeline = pageWithData.getByLabel('Time window timeline');
-    const timelineBox = await timeline.boundingBox();
-    if (!timelineBox) throw new Error('Time window timeline is not visible');
-
-    const startHandle = timeline.locator('.time-window-handle-start');
-    await startHandle.hover();
-    await pageWithData.mouse.down();
-    await pageWithData.mouse.move(timelineBox.x + timelineBox.width / 2, timelineBox.y + timelineBox.height / 2);
-    await pageWithData.mouse.up();
-    await pageWithData.getByRole('button', { name: 'Apply' }).click();
-
+    const workspace = pageWithData.locator('.threads-overview-workspace');
+    const heading = pageWithData.locator('#heading');
     const grid = pageWithData.getByRole('grid');
-    const heightBeforeCollapse = await grid.evaluate((element) => element.getBoundingClientRect().height);
-    await timeWindowToggle.click();
+    const header = grid.locator('.threads-overview-grid-header');
+    const names = grid.locator('.threads-overview-grid-names');
+    const [workspaceTop, workspaceLeft] = await Promise.all([
+      workspace.evaluate((element) => element.getBoundingClientRect().top),
+      workspace.evaluate((element) => element.getBoundingClientRect().left),
+    ]);
 
-    await expect.poll(async () => grid.evaluate((element) => element.getBoundingClientRect().height))
-      .toBeGreaterThan(heightBeforeCollapse);
+    await expect.poll(async () => pageWithData.evaluate(() => document.documentElement.scrollHeight))
+      .toBeLessThanOrEqual(await pageWithData.evaluate(() => window.innerHeight));
+
+    await workspace.evaluate((element) => element.scrollTo({ top: element.scrollHeight }));
+
+    await expect.poll(async () => heading.evaluate((element) => element.getBoundingClientRect().bottom))
+      .toBeLessThan(workspaceTop);
+    await expect.poll(async () => header.evaluate((element) => element.getBoundingClientRect().top))
+      .toBeLessThanOrEqual(workspaceTop + 1);
+
+    await workspace.evaluate((element) => element.scrollTo({ left: 240 }));
+    await expect.poll(async () => names.evaluate((element) => element.getBoundingClientRect().left))
+      .toBeGreaterThanOrEqual(workspaceLeft);
   });
 
   test('opens a styled thread details window', async ({ context, pageWithData }) => {

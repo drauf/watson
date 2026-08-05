@@ -15,18 +15,18 @@ vi.mock('@tanstack/react-virtual', () => ({
     getItemKey,
   }: {
     count: number;
-    estimateSize: () => number;
+    estimateSize: (index: number) => number;
     getItemKey?: (index: number) => string | number;
   }) => {
-    const size = estimateSize();
+    const sizes = Array.from({ length: count }, (_unused, index) => estimateSize(index));
     return {
-      getVirtualItems: () => Array.from({ length: count }, (_, index) => ({
+      getVirtualItems: () => sizes.map((size, index) => ({
         index,
         key: getItemKey ? getItemKey(index) : index,
-        start: index * size,
+        start: sizes.slice(0, index).reduce((total, currentSize) => total + currentSize, 0),
         size,
       })),
-      getTotalSize: () => count * size,
+      getTotalSize: () => sizes.reduce((total, size) => total + size, 0),
       measure: vi.fn(),
     };
   }),
@@ -49,13 +49,19 @@ const createRow = (thread: Thread, threadsByDump = new Map([[0, thread]])): Thre
   threadsByDump,
 });
 
-const grid = (rows: ThreadOverviewDataRow[], onOpenThreadDetails = vi.fn(), dumpColumnWidth = 160) => (
+const grid = (
+  rows: ThreadOverviewDataRow[],
+  onOpenThreadDetails = vi.fn(),
+  dumpColumnWidth = 160,
+  getScrollElement = () => document.documentElement,
+) => (
   <ThreadsOverviewVirtualGrid
     dates={['10:00:00', '10:00:05', '10:00:10']}
     rows={rows}
     matchingStackFilter={new Set()}
     dumpColumnWidth={dumpColumnWidth}
     stackPreviewLines={10}
+    getScrollElement={getScrollElement}
     onOpenThreadDetails={onOpenThreadDetails}
   />
 );
@@ -73,15 +79,21 @@ describe('ThreadsOverviewVirtualGrid', () => {
 
     expect(screen.getByRole('grid')).toHaveAttribute('aria-colcount', '4');
     expect(container.querySelector('.threads-overview-grid-corner')).toHaveTextContent('Thread Name / Time');
-    expect(container.querySelector('.threads-overview-grid-header-content')).toHaveStyle({ width: '480px' });
+    expect(screen.getByRole('grid')).toHaveAttribute(
+      'style',
+      expect.stringContaining('--threads-overview-grid-data-width: 480px'),
+    );
     expect(screen.getByText(thread.name)).toBeInTheDocument();
   });
 
   it('uses the readable minimum width in fit-columns mode', () => {
     const thread = createThread(1, 'worker-1', ['app.Work.run']);
-    const { container } = render(grid([createRow(thread)], vi.fn(), 0));
+    render(grid([createRow(thread)], vi.fn(), 0));
 
-    expect(container.querySelector('.threads-overview-grid-header-content')).toHaveStyle({ width: '144px' });
+    expect(screen.getByRole('grid')).toHaveAttribute(
+      'style',
+      expect.stringContaining('--threads-overview-grid-data-width: 144px'),
+    );
   });
 
   it('opens a thread from keyboard activation', () => {
@@ -92,23 +104,5 @@ describe('ThreadsOverviewVirtualGrid', () => {
     fireEvent.keyDown(screen.getByText('first.frame'), { key: 'Enter' });
 
     expect(onOpenThreadDetails).toHaveBeenCalledWith(thread);
-  });
-
-  it('resets vertical scroll only when row membership changes', () => {
-    const firstThread = createThread(1, 'worker-1', ['first.frame']);
-    const secondThread = createThread(2, 'worker-2', ['second.frame']);
-    const { container, rerender } = render(grid([createRow(firstThread), createRow(secondThread)]));
-    const body = screen.getByTestId('threads-overview-grid-body');
-
-    body.scrollTop = 64;
-    fireEvent.scroll(body);
-    expect(container.querySelector('.threads-overview-grid-names-content')).toHaveStyle({ transform: 'translateY(-64px)' });
-
-    rerender(grid([createRow(firstThread), createRow(secondThread)], vi.fn(), 0));
-    expect(body.scrollTop).toBe(64);
-
-    rerender(grid([createRow(secondThread)]));
-    expect(body.scrollTop).toBe(0);
-    expect(container.querySelector('.threads-overview-grid-names-content')).toHaveStyle({ transform: 'translateY(0px)' });
   });
 });

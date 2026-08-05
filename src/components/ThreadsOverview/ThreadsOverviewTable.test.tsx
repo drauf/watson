@@ -37,6 +37,7 @@ const renderTable = () => render(
     matchingStackFilter={new Set()}
     dumpColumnWidth={160}
     stackPreviewLines={10}
+    getScrollElement={() => document.documentElement}
   />,
 );
 

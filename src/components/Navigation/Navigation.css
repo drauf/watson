@@ -8,8 +8,9 @@ header {
   flex-wrap: nowrap;
   align-items: stretch;
   justify-content: space-between;
+  box-sizing: border-box;
   width: 100%;
-  min-height: var(--watson-navigation-height);
+  height: var(--watson-navigation-height);
   font-weight: var(--ds-font-weight-bold);
   background: var(--ds-surface-raised);
   border-bottom: 1px solid var(--ds-border);

@@ -11,6 +11,7 @@ interface Props {
   matchingStackFilter: Set<number>;
   dumpColumnWidth: number;
   stackPreviewLines: number;
+  getScrollElement: () => HTMLElement | null;
 }
 
 const ThreadsOverviewTable: React.FC<Props> = (props) => {

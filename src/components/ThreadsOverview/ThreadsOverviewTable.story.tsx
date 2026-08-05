@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { useCallback, useState, type JSX } from 'react';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import ThreadsOverviewTable from './ThreadsOverviewTable';
@@ -27,34 +27,45 @@ const createDates = (dumpCount: number): string[] => Array.from(
 
 interface TablePreviewProps {
   testId: string;
-  children: JSX.Element;
+  children: (getScrollElement: () => HTMLElement | null) => JSX.Element;
 }
 
-const TablePreview = ({ testId, children }: TablePreviewProps): JSX.Element => (
-  <section data-testid={testId} style={{ height: 320 }}>
-    {children}
-  </section>
-);
+const TablePreview = ({ testId, children }: TablePreviewProps): JSX.Element => {
+  const [scrollElement, setScrollElement] = useState<HTMLElement | null>(null);
+  const setScrollElementRef = useCallback((element: HTMLElement | null) => setScrollElement(element), []);
+
+  return (
+    <section ref={setScrollElementRef} data-testid={testId} style={{ height: 320, overflow: 'auto' }}>
+      {scrollElement && children(() => scrollElement)}
+    </section>
+  );
+};
 
 export const Basic = (): JSX.Element => (
   <main className="full-width-page">
     <TablePreview testId="three-dump-table">
-      <ThreadsOverviewTable
-        dates={createDates(3)}
-        rows={createThreadOverviewRows(createTableRows(3))}
-        matchingStackFilter={new Set()}
-        dumpColumnWidth={160}
-        stackPreviewLines={10}
-      />
+      {(getScrollElement) => (
+        <ThreadsOverviewTable
+          dates={createDates(3)}
+          rows={createThreadOverviewRows(createTableRows(3))}
+          matchingStackFilter={new Set()}
+          dumpColumnWidth={160}
+          stackPreviewLines={10}
+          getScrollElement={getScrollElement}
+        />
+      )}
     </TablePreview>
     <TablePreview testId="many-dump-table">
-      <ThreadsOverviewTable
-        dates={createDates(12)}
-        rows={createThreadOverviewRows(createTableRows(12))}
-        matchingStackFilter={new Set()}
-        dumpColumnWidth={160}
-        stackPreviewLines={10}
-      />
+      {(getScrollElement) => (
+        <ThreadsOverviewTable
+          dates={createDates(12)}
+          rows={createThreadOverviewRows(createTableRows(12))}
+          matchingStackFilter={new Set()}
+          dumpColumnWidth={160}
+          stackPreviewLines={10}
+          getScrollElement={getScrollElement}
+        />
+      )}
     </TablePreview>
   </main>
 );
@@ -73,13 +84,16 @@ const createLargeTableRows = (): Map<number, Thread>[] => Array.from(
 export const Large = (): JSX.Element => (
   <main className="full-width-page">
     <TablePreview testId="large-table">
-      <ThreadsOverviewTable
-        dates={createDates(100)}
-        rows={createThreadOverviewRows(createLargeTableRows())}
-        matchingStackFilter={new Set()}
-        dumpColumnWidth={160}
-        stackPreviewLines={10}
-      />
+      {(getScrollElement) => (
+        <ThreadsOverviewTable
+          dates={createDates(100)}
+          rows={createThreadOverviewRows(createLargeTableRows())}
+          matchingStackFilter={new Set()}
+          dumpColumnWidth={160}
+          stackPreviewLines={10}
+          getScrollElement={getScrollElement}
+        />
+      )}
     </TablePreview>
   </main>
 );

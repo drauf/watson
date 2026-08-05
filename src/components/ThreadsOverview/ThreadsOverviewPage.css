@@ -1,12 +1,28 @@
+.threads-overview-table-workspace,
 .threads-overview-table-container {
+  width: 100%;
   min-width: 0;
+  min-height: 100%;
+}
+
+.threads-overview-workspace {
+  align-items: stretch;
+  height: calc(100dvh - var(--watson-navigation-height, 0px));
+  padding-top: 0;
+  overflow: auto;
+}
+
+.threads-overview-workspace #heading {
+  box-sizing: border-box;
+  padding-top: var(--ds-space-150, 12px);
 }
 
 .threads-overview-grid {
   display: grid;
   grid-template-rows: var(--threads-overview-grid-header-height) minmax(0, 1fr);
-  grid-template-columns: var(--threads-overview-grid-name-column-width) minmax(0, 1fr);
+  grid-template-columns: var(--threads-overview-grid-name-column-width) var(--threads-overview-grid-data-width);
   min-width: 0;
+  min-height: 100%;
 }
 
 .threads-overview-grid-corner,
@@ -16,9 +32,14 @@
 }
 
 .threads-overview-grid-corner {
-  z-index: 2;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
   grid-row: 1;
   grid-column: 1;
+  align-items: center;
   padding: var(--ds-space-050);
   overflow: hidden;
   font-weight: var(--ds-font-weight-bold, 700);
@@ -27,7 +48,9 @@
 }
 
 .threads-overview-grid-header {
-  z-index: 1;
+  position: sticky;
+  top: 0;
+  z-index: 2;
   grid-row: 1;
   grid-column: 2;
   overflow: hidden;
@@ -41,8 +64,8 @@
 }
 
 .threads-overview-grid-header-content {
+  width: var(--threads-overview-grid-data-width);
   height: var(--threads-overview-grid-header-height);
-  will-change: transform;
 }
 
 .threads-overview-grid-header-cell,
@@ -57,11 +80,15 @@
 }
 
 .threads-overview-grid-header-cell {
+  display: flex;
+  align-items: center;
   height: var(--threads-overview-grid-header-height);
   font-weight: var(--ds-font-weight-bold, 700);
 }
 
 .threads-overview-grid-names {
+  position: sticky;
+  left: 0;
   z-index: 1;
   grid-row: 2;
   grid-column: 1;
@@ -70,7 +97,7 @@
 
 .threads-overview-grid-names-content {
   width: var(--threads-overview-grid-name-column-width);
-  will-change: transform;
+  height: calc(100% - var(--threads-overview-grid-header-height));
 }
 
 .threads-overview-grid-name-cell {
@@ -83,7 +110,7 @@
   grid-column: 2;
   min-width: 0;
   min-height: 0;
-  overflow: auto;
+  overflow: visible;
 }
 
 .threads-overview-grid-cell:not(.unknown) {
@@ -96,6 +123,10 @@
     var(--ds-background-inverse-subtle-hovered) 30%,
     transparent
   );
+}
+
+.threads-overview-grid-body-content {
+  width: var(--threads-overview-grid-data-width);
 }
 
 .threads-overview-grid .hover-popup-trigger {
