@@ -13,8 +13,13 @@
 }
 
 .threads-overview-workspace #heading {
+  position: sticky;
+  top: auto;
+  left: 10%;
+  z-index: 4;
   box-sizing: border-box;
   padding-top: var(--ds-space-150, 12px);
+  background: var(--ds-surface, #fff);
 }
 
 .threads-overview-grid {

@@ -24,7 +24,12 @@ test.describe('Threads overview', () => {
     await expect.poll(async () => pageWithData.evaluate(() => document.documentElement.scrollHeight))
       .toBeLessThanOrEqual(await pageWithData.evaluate(() => window.innerHeight));
 
-    await workspace.evaluate((element) => element.scrollTo({ top: element.scrollHeight }));
+    await workspace.evaluate((element) => element.scrollTo({ left: 240 }));
+    const headingGutter = await workspace.evaluate((element) => element.clientWidth * 0.1);
+    await expect.poll(async () => heading.evaluate((element) => element.getBoundingClientRect().left))
+      .toBeGreaterThanOrEqual(workspaceLeft + headingGutter - 1);
+
+    await workspace.evaluate((element) => element.scrollTo({ top: element.scrollHeight, left: 0 }));
 
     await expect.poll(async () => heading.evaluate((element) => element.getBoundingClientRect().bottom))
       .toBeLessThan(workspaceTop);
