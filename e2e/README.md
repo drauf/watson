@@ -28,4 +28,4 @@ Run a focused component visual spec with:
 
 The runner copies the workspace into an isolated container worktree before installing dependencies. This prevents Linux native Yarn builds from overwriting host-native `.yarn/unplugged` artifacts. When updating snapshots, it copies only `*-snapshots` files back to the workspace.
 
-The container supplies the Linux browser dependencies. The `playwright install` command downloads the browser revisions required by the pinned `@playwright/test` package, because the matching `v1.62.0` container image is not yet available. See the upstream release-image issue: https://github.com/microsoft/playwright/issues/41987.
+The container image is pinned to the same version as `@playwright/test` so it supplies the required Linux browser dependencies and browser revisions.
