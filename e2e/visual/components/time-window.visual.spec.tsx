@@ -16,25 +16,7 @@ test.describe('Time window visual states', () => {
     await component.getByRole('button', { name: /time window/i }).click();
 
     const timeWindow = component.locator('.collapsable-group');
-    await expect(timeWindow.getByText(/^Selected range: 2026-07-23 23:59:00 - 2026-07-24 00:01:00\./)).toBeVisible();
+    await expect(timeWindow.getByText(/^Selected: 2026-07-23 23:59:00 - 2026-07-24 00:01:00 · 2 of 2 thread dumps$/)).toBeVisible();
     await expect(timeWindow).toHaveScreenshot('time-window-cross-midnight.png');
-  });
-
-  test('renders a pending large-range warning', async ({ mount }) => {
-    const component = await mount('components/TimeWindow/TimeWindowFilter/PendingLargeRangeWarning');
-
-    await component.getByRole('button', { name: /time window/i }).click();
-
-    const timeWindow = component.locator('.collapsable-group');
-    await expect(timeWindow.getByText(/large ranges can slow analysis pages/i)).toBeVisible();
-    await expect(timeWindow).toHaveScreenshot('time-window-large-range-warning.png');
-  });
-
-  test('renders the large-range confirmation dialog', async ({ mount }) => {
-    const component = await mount('components/TimeWindow/TimeWindowFilter/LargeRangeDialog');
-    const dialog = component.locator('xpath=..').getByRole('dialog', { name: 'Large time window selected' });
-
-    await expect(dialog).toBeVisible();
-    await expect(dialog).toHaveScreenshot('time-window-large-range-dialog.png');
   });
 });

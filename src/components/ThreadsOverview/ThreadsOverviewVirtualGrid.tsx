@@ -2,11 +2,10 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import React, {
   useCallback, useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
-import HoverPopup from '../common/HoverPopup';
 import Thread from '../../types/Thread';
+import HoverPopup from '../common/HoverPopup';
 import ThreadsOverviewItem from './ThreadOverviewItem';
 import {
-  getAvailableThreadsOverviewGridHeight,
   getResolvedThreadsOverviewDumpColumnWidth,
   threadsOverviewGridMetrics,
 } from './threadsOverviewGridMetrics';
@@ -18,27 +17,23 @@ interface Props {
   matchingStackFilter: Set<number>;
   dumpColumnWidth: number;
   stackPreviewLines: number;
+  getScrollElement: () => HTMLElement | null;
   onOpenThreadDetails: (thread: Thread) => void;
 }
-
-// Virtualized body cells are absolutely positioned, so frozen headers and names
-// live in separate regions synchronized with the scrollable body.
+// The workspace owns both scroll axes. Frozen panes are CSS-sticky while cells
+// remain absolutely positioned and virtualized within the grid's content area.
 const ThreadsOverviewVirtualGrid: React.FC<Props> = ({
   dates,
   rows,
   matchingStackFilter,
   dumpColumnWidth,
   stackPreviewLines,
+  getScrollElement,
   onOpenThreadDetails,
 }) => {
-  const rowIds = rows.map((row) => row.id).join(',');
   const gridRef = useRef<HTMLDivElement>(null);
-  const headerContentRef = useRef<HTMLDivElement>(null);
-  const namesContentRef = useRef<HTMLDivElement>(null);
-  const previousRowIdsRef = useRef(rowIds);
-  const scrollElementRef = useRef<HTMLDivElement>(null);
-  const [availableGridHeight, setAvailableGridHeight] = useState(0);
   const [bodyWidth, setBodyWidth] = useState(0);
+  const [rowScrollMargin, setRowScrollMargin] = useState(0);
 
   const resolvedDumpColumnWidth = getResolvedThreadsOverviewDumpColumnWidth(
     dumpColumnWidth,
@@ -50,81 +45,75 @@ const ThreadsOverviewVirtualGrid: React.FC<Props> = ({
   // eslint-disable-next-line react-hooks/incompatible-library
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    getScrollElement: () => scrollElementRef.current,
+    getScrollElement,
     estimateSize: () => threadsOverviewGridMetrics.rowHeight,
     getItemKey: (index) => rows[index].id,
     initialRect: { width: 1024, height: 700 },
     overscan: 2,
+    scrollMargin: rowScrollMargin,
   });
+  // Index zero reserves the frozen thread-name column in the shared horizontal scroll space.
+
   const columnVirtualizer = useVirtualizer({
-    count: dates.length,
-    getScrollElement: () => scrollElementRef.current,
+    count: dates.length + 1,
+    getScrollElement,
     horizontal: true,
-    estimateSize: () => resolvedDumpColumnWidth,
+    estimateSize: (index) => (
+      index === 0 ? threadsOverviewGridMetrics.threadNameColumnWidth : resolvedDumpColumnWidth
+    ),
     initialRect: { width: 1024, height: 700 },
     overscan: 1,
   });
 
-  const updateAvailableGridHeight = useCallback(() => {
+  const updateWorkspaceLayout = useCallback(() => {
     const grid = gridRef.current;
-    if (!grid) return;
+    const scrollElement = getScrollElement();
+    if (!grid || !scrollElement) return;
 
-    const nextHeight = getAvailableThreadsOverviewGridHeight(
-      window.innerHeight,
-      grid.getBoundingClientRect().top,
+    const gridRect = grid.getBoundingClientRect();
+    const scrollRect = scrollElement.getBoundingClientRect();
+    const nextMargin = Math.max(
+      0,
+      gridRect.top - scrollRect.top + scrollElement.scrollTop + threadsOverviewGridMetrics.headerHeight,
     );
-    setAvailableGridHeight((currentHeight) => (
-      currentHeight === nextHeight ? currentHeight : nextHeight
+
+    setRowScrollMargin((currentMargin) => (
+      currentMargin === nextMargin ? currentMargin : nextMargin
     ));
-  }, []);
+    setBodyWidth(Math.max(0, scrollElement.clientWidth - threadsOverviewGridMetrics.threadNameColumnWidth));
+  }, [getScrollElement]);
 
-  useEffect(() => {
-    if (previousRowIdsRef.current === rowIds) return;
+  useLayoutEffect(() => {
+    updateWorkspaceLayout();
+    window.addEventListener('resize', updateWorkspaceLayout);
 
-    previousRowIdsRef.current = rowIds;
-    const scrollElement = scrollElementRef.current;
-    if (!scrollElement) return;
+    if (!window.ResizeObserver) {
+      return () => window.removeEventListener('resize', updateWorkspaceLayout);
+    }
 
-    scrollElement.scrollTop = 0;
-    if (namesContentRef.current) namesContentRef.current.style.transform = 'translateY(0px)';
-  }, [rowIds]);
+    const observer = new ResizeObserver(updateWorkspaceLayout);
+    observer.observe(getScrollElement() ?? document.body);
+    observer.observe(document.getElementById('heading') ?? document.body);
+    return () => {
+      window.removeEventListener('resize', updateWorkspaceLayout);
+      observer.disconnect();
+    };
+  }, [getScrollElement, updateWorkspaceLayout]);
   useEffect(() => {
     columnVirtualizer.measure();
   }, [columnVirtualizer, resolvedDumpColumnWidth]);
-  useLayoutEffect(() => {
-    updateAvailableGridHeight();
-    window.addEventListener('resize', updateAvailableGridHeight);
-    return () => window.removeEventListener('resize', updateAvailableGridHeight);
-  }, [dates.length, dumpColumnWidth, rowIds, stackPreviewLines, updateAvailableGridHeight]);
-  useEffect(() => {
-    const scrollElement = scrollElementRef.current;
-    if (!scrollElement || !window.ResizeObserver) return undefined;
-
-    const updateBodyWidth = () => setBodyWidth(scrollElement.clientWidth);
-    const observer = new ResizeObserver(updateBodyWidth);
-    updateBodyWidth();
-    observer.observe(scrollElement);
-    return () => observer.disconnect();
-  }, []);
-
-  const handleScroll: React.UIEventHandler<HTMLDivElement> = ({ currentTarget }) => {
-    if (headerContentRef.current) {
-      headerContentRef.current.style.transform = `translateX(${-currentTarget.scrollLeft}px)`;
-    }
-    if (namesContentRef.current) {
-      namesContentRef.current.style.transform = `translateY(${-currentTarget.scrollTop}px)`;
-    }
-  };
 
   const virtualRows = rowVirtualizer.getVirtualItems();
-  const virtualColumns = columnVirtualizer.getVirtualItems();
+  const virtualColumns = columnVirtualizer.getVirtualItems().filter((column) => column.index > 0);
   const totalHeight = rowVirtualizer.getTotalSize();
   const totalWidth = columnVirtualizer.getTotalSize();
-  const gridHeight = availableGridHeight || threadsOverviewGridMetrics.headerHeight + totalHeight;
+  const dataWidth = totalWidth - threadsOverviewGridMetrics.threadNameColumnWidth;
   const gridStyle = {
     '--threads-overview-grid-header-height': `${threadsOverviewGridMetrics.headerHeight}px`,
     '--threads-overview-grid-name-column-width': `${threadsOverviewGridMetrics.threadNameColumnWidth}px`,
-    height: gridHeight,
+    '--threads-overview-grid-data-width': `${dataWidth}px`,
+    height: threadsOverviewGridMetrics.headerHeight + totalHeight,
+    width: totalWidth,
   } as React.CSSProperties;
 
   return (
@@ -140,35 +129,30 @@ const ThreadsOverviewVirtualGrid: React.FC<Props> = ({
         Thread Name / Time
       </div>
       <div className="threads-overview-grid-header" role="row">
-        <div
-          ref={headerContentRef}
-          className="threads-overview-grid-header-content"
-          style={{ width: totalWidth }}
-        >
-          {virtualColumns.map((column) => (
-            <div
-              key={column.key}
-              className="threads-overview-grid-header-cell"
-              role="columnheader"
-              aria-colindex={column.index + 2}
-              style={{
-                transform: `translateX(${column.start}px)`,
-                width: column.size,
-              }}
-            >
-              <HoverPopup content={dates[column.index] || ''}>
-                {dates[column.index]}
-              </HoverPopup>
-            </div>
-          ))}
+        <div className="threads-overview-grid-header-content">
+          {virtualColumns.map((column) => {
+            const dumpIndex = column.index - 1;
+            return (
+              <div
+                key={column.key}
+                className="threads-overview-grid-header-cell"
+                role="columnheader"
+                aria-colindex={column.index + 1}
+                style={{
+                  transform: `translateX(${column.start - threadsOverviewGridMetrics.threadNameColumnWidth}px)`,
+                  width: column.size,
+                }}
+              >
+                <HoverPopup content={dates[dumpIndex] || ''}>
+                  {dates[dumpIndex]}
+                </HoverPopup>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="threads-overview-grid-names">
-        <div
-          ref={namesContentRef}
-          className="threads-overview-grid-names-content"
-          style={{ height: totalHeight }}
-        >
+        <div className="threads-overview-grid-names-content">
           {virtualRows.map((row) => {
             const threadRow = rows[row.index];
             return (
@@ -178,7 +162,7 @@ const ThreadsOverviewVirtualGrid: React.FC<Props> = ({
                 role="rowheader"
                 aria-rowindex={row.index + 1}
                 style={{
-                  transform: `translateY(${row.start}px)`,
+                  transform: `translateY(${row.start - rowScrollMargin}px)`,
                   height: row.size,
                 }}
               >
@@ -188,20 +172,13 @@ const ThreadsOverviewVirtualGrid: React.FC<Props> = ({
           })}
         </div>
       </div>
-      <div
-        ref={scrollElementRef}
-        className="threads-overview-grid-body"
-        data-testid="threads-overview-grid-body"
-        onScroll={handleScroll}
-      >
-        <div
-          className="threads-overview-grid-body-content"
-          style={{ height: totalHeight, width: totalWidth }}
-        >
+      <div className="threads-overview-grid-body" data-testid="threads-overview-grid-body">
+        <div className="threads-overview-grid-body-content">
           {virtualRows.flatMap((row) => {
             const threadRow = rows[row.index];
             return virtualColumns.map((column) => {
-              const thread = threadRow.threadsByDump.get(column.index);
+              const dumpIndex = column.index - 1;
+              const thread = threadRow.threadsByDump.get(dumpIndex);
               return (
                 <ThreadsOverviewItem
                   key={`${row.key}-${column.key}`}
@@ -210,9 +187,9 @@ const ThreadsOverviewVirtualGrid: React.FC<Props> = ({
                   stackPreviewLines={stackPreviewLines}
                   onOpenThreadDetails={onOpenThreadDetails}
                   rowIndex={row.index + 1}
-                  columnIndex={column.index + 2}
+                  columnIndex={column.index + 1}
                   style={{
-                    transform: `translate(${column.start}px, ${row.start}px)`,
+                    transform: `translate(${column.start - threadsOverviewGridMetrics.threadNameColumnWidth}px, ${row.start - rowScrollMargin}px)`,
                     width: column.size,
                     height: row.size,
                   }}

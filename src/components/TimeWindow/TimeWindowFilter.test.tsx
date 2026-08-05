@@ -1,5 +1,5 @@
 import {
-  fireEvent, render, screen, waitFor,
+  fireEvent, render, screen,
 } from '@testing-library/react';
 import { TimeWindowProvider } from '../../context/TimeWindowContext';
 import ThreadDump from '../../types/ThreadDump';
@@ -61,13 +61,13 @@ describe('TimeWindowFilter', () => {
     fireEvent.click(screen.getByRole('button', { name: /time window/i }));
     dragStartHandle(50);
 
-    expect(screen.getByText(/Selected range: 09:00:01 - 09:00:02\. Applying this range will show 2 thread dumps\./)).toBeInTheDocument();
+    expect(screen.getByText(/Selected: 09:00:01 - 09:00:02 · 2 of 3 thread dumps/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Apply' })).toBeEnabled();
     expect(screen.getByText(/showing\s*3\s*of\s*3\s*thread dumps/i)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: 'Apply' }));
 
-    expect(screen.getByText(/No changes to apply/)).toBeInTheDocument();
+    expect(screen.getByText(/Selected: 09:00:01 - 09:00:02 · 2 of 3 thread dumps/)).toBeInTheDocument();
     expect(screen.getByText(/showing\s*2\s*of\s*3\s*thread dumps/i)).toBeInTheDocument();
   });
 
@@ -80,7 +80,7 @@ describe('TimeWindowFilter', () => {
     dragStartHandle(100);
     fireEvent.click(screen.getByRole('button', { name: 'Reset' }));
 
-    expect(screen.getByText(/No changes to apply/)).toBeInTheDocument();
+    expect(screen.getByText(/Selected: 09:00:01 - 09:00:02 · 2 of 3 thread dumps/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
     expect(screen.getByText(/showing\s*2\s*of\s*3\s*thread dumps/i)).toBeInTheDocument();
   });
@@ -91,29 +91,23 @@ describe('TimeWindowFilter', () => {
     fireEvent.click(screen.getByRole('button', { name: /time window/i }));
     dragStartHandle(50);
     fireEvent.click(screen.getByRole('button', { name: 'Apply' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Show all...' }));
+    fireEvent.click(screen.getByRole('button', { name: 'All thread dumps' }));
 
-    expect(screen.getByText(/Selected range: 09:00:00 - 09:00:02\. Applying this range will show 3 thread dumps\./)).toBeInTheDocument();
+    expect(screen.getByText(/Selected: 09:00:00 - 09:00:02 · 3 of 3 thread dumps/)).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Apply' }));
 
-    expect(screen.getByText(/No changes to apply/)).toBeInTheDocument();
+    expect(screen.getByText(/Selected: 09:00:00 - 09:00:02 · 3 of 3 thread dumps/)).toBeInTheDocument();
     expect(screen.getByText(/showing\s*3\s*of\s*3\s*thread dumps/i)).toBeInTheDocument();
   });
 
-  it('confirms before applying a dragged preview with more than 100 thread dumps', async () => {
+  it('applies a large preview without confirmation', () => {
     renderFilter(createThreadDumps(102));
 
     fireEvent.click(screen.getByRole('button', { name: /time window/i }));
     dragStartHandle(1);
     fireEvent.click(screen.getByRole('button', { name: 'Apply' }));
 
-    const dialog = screen.getByRole('dialog', { name: 'Large time window selected' });
-    expect(dialog).toHaveTextContent(/covers\s*101\s*thread dumps/);
-
-    fireEvent.click(screen.getByRole('button', { name: 'Close dialog' }));
-
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog', { name: 'Large time window selected' })).not.toBeInTheDocument();
-    });
+    expect(screen.getByText(/showing\s*101\s*of\s*102\s*thread dumps/i)).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });

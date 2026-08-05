@@ -1,6 +1,5 @@
 import ButtonGroup from '@atlaskit/button/button-group';
 import Button from '@atlaskit/button/new';
-import SectionMessage from '@atlaskit/section-message';
 import Inline from '@atlaskit/primitives/inline';
 import Stack from '@atlaskit/primitives/stack';
 import Text from '@atlaskit/primitives/text';
@@ -20,10 +19,7 @@ import {
 } from '../../common/timeWindow';
 import { useTimeWindow } from '../../context/TimeWindowContext';
 import CollapsableGroup from '../CollapsableGroup';
-import LargeRangeConfirmationDialog from './LargeRangeConfirmationDialog';
 import './TimeWindowFilter.css';
-
-const MAX_RECOMMENDED_THREAD_DUMPS = 100;
 
 type DragMode = 'start' | 'end' | 'window';
 
@@ -84,7 +80,6 @@ const TimeWindowFilter = (): JSX.Element | null => {
     resetPreviewTimeWindow,
     setPreviewTimeWindow,
   } = useTimeWindow();
-  const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [dragMode, setDragMode] = useState<DragMode>();
   const dragStartPosition = useRef<number | undefined>(undefined);
   const dragStartWindow = useRef<TimeWindow | undefined>(undefined);
@@ -98,7 +93,6 @@ const TimeWindowFilter = (): JSX.Element | null => {
     [allThreadDumps, previewWindow],
   );
   const hasPendingChanges = Boolean(appliedWindow && previewWindow && !timeWindowEquals(appliedWindow, previewWindow));
-  const previewIsLarge = previewThreadDumpCount > MAX_RECOMMENDED_THREAD_DUMPS;
   const appliedThreadDumpCount = appliedWindow
     ? filterThreadDumpsByTimeWindow(allThreadDumps, appliedWindow).length
     : allThreadDumps.length;
@@ -190,33 +184,7 @@ const TimeWindowFilter = (): JSX.Element | null => {
     event.preventDefault();
   };
 
-  const applyPreview = () => {
-    if (previewIsLarge) {
-      setConfirmationOpen(true);
-      return;
-    }
-
-    applyPreviewTimeWindow();
-  };
-
-  const applyLargePreview = () => {
-    applyPreviewTimeWindow();
-    setConfirmationOpen(false);
-  };
-
-  const appliedIsLarge = appliedThreadDumpCount > MAX_RECOMMENDED_THREAD_DUMPS;
-  const noPendingChangesMessage = appliedIsLarge
-    ? `Showing ${appliedThreadDumpCount} thread dumps, which may make analysis pages slow.`
-    : 'No changes to apply.';
-  const pendingChangesMessage = previewIsLarge
-    ? `Applying this range will show ${previewThreadDumpCount} thread dumps. Large ranges can slow analysis pages.`
-    : `Applying this range will show ${previewThreadDumpCount} thread dumps.`;
-  const previewMessage = `Selected range: ${formatWindow(previewWindow)}. ${
-    hasPendingChanges ? pendingChangesMessage : noPendingChangesMessage
-  }`;
-  const previewIsWarning = (previewIsLarge && hasPendingChanges) || (appliedIsLarge && !hasPendingChanges);
-  const previewTitle = previewIsWarning ? 'Large time window' : 'Time window';
-  const largeRangeMessage = `The selected time window covers ${previewThreadDumpCount} thread dumps from ${formatWindow(previewWindow)}.\nLarge time windows can slow analysis pages.`;
+  const previewSummary = `Selected: ${formatWindow(previewWindow)} · ${previewThreadDumpCount} of ${allThreadDumps.length} thread dumps`;
   const selectionStart = positionForEpoch(previewWindow.startEpoch, bounds) * 100;
   const selectionWidth = (positionForEpoch(previewWindow.endEpoch, bounds) * 100) - selectionStart;
   const header = (
@@ -228,10 +196,6 @@ const TimeWindowFilter = (): JSX.Element | null => {
 
   const content = (
     <Stack space="space.100">
-      <SectionMessage appearance={previewIsWarning ? 'warning' : 'information'} title={previewTitle}>
-        {previewMessage}
-      </SectionMessage>
-
       <div ref={timeline} className="time-window-timeline" aria-label="Time window timeline">
         <div
           className="time-window-selection"
@@ -259,34 +223,24 @@ const TimeWindowFilter = (): JSX.Element | null => {
         </div>
       </div>
 
+      <Text color="color.text.subtle">{previewSummary}</Text>
+
       <ButtonGroup>
         <Button
           appearance="primary"
           type="button"
-          onClick={applyPreview}
+          onClick={applyPreviewTimeWindow}
           isDisabled={!hasPendingChanges}
         >
           Apply
         </Button>
         <Button appearance="default" onClick={resetPreviewTimeWindow} isDisabled={!hasPendingChanges}>Reset</Button>
-        <Button appearance="default" onClick={() => setPreviewTimeWindow()}>Show all...</Button>
+        <Button appearance="default" onClick={() => setPreviewTimeWindow()}>All thread dumps</Button>
       </ButtonGroup>
     </Stack>
   );
 
-  return (
-    <>
-      <CollapsableGroup header={header} content={content} />
-
-      {confirmationOpen && (
-        <LargeRangeConfirmationDialog
-          message={largeRangeMessage}
-          onClose={() => setConfirmationOpen(false)}
-          onAnalyze={applyLargePreview}
-        />
-      )}
-    </>
-  );
+  return <CollapsableGroup header={header} content={content} />;
 };
 
 export default TimeWindowFilter;

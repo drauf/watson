@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { createRef, type JSX } from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import {
   filterThreads,
@@ -32,6 +32,8 @@ interface State {
 }
 
 class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
+  private readonly workspaceRef = createRef<HTMLElement>();
+
   private cachedThreadDumps: ThreadDump[] | undefined;
 
   private cachedOverviewData: {
@@ -66,7 +68,7 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
     }
 
     return (
-      <main className="full-width-page">
+      <main ref={this.workspaceRef} className="full-width-page threads-overview-workspace">
         <section id="heading">
           <ThreadsOverviewSettings
             active={this.state.active}
@@ -97,18 +99,21 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
         </section>
 
         {filteredRows.length === 0 && <EmptyState />}
-        <div hidden={filteredRows.length === 0}>
+        <div hidden={filteredRows.length === 0} className="threads-overview-table-workspace">
           <ThreadsOverviewTable
             dates={dates}
             rows={filteredRows}
             matchingStackFilter={matchingStackFilter}
             dumpColumnWidth={this.state.dumpColumnWidth}
             stackPreviewLines={this.state.stackPreviewLines}
+            getScrollElement={this.getWorkspaceElement}
           />
         </div>
       </main>
     );
   }
+
+  private getWorkspaceElement = (): HTMLElement | null => this.workspaceRef.current;
 
   private getData(): {
     nonEmptyThreadDumps: ThreadDump[];
