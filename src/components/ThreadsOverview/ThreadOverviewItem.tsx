@@ -2,6 +2,7 @@ import React from 'react';
 import HoverPopup from '../common/HoverPopup';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
+import { getThreadStatusAppearance } from '../../common/threadStatusAppearance';
 
 interface Props {
   thread: Thread | undefined;
@@ -14,8 +15,8 @@ interface Props {
 }
 
 const getClassName = (isMatchingStackFilter: boolean, status: ThreadStatus) => {
-  const statusClass = status.toString();
-  return isMatchingStackFilter ? `${statusClass}-matching` : statusClass;
+  const appearance = getThreadStatusAppearance(status);
+  return `threads-overview-status-${appearance}${isMatchingStackFilter ? ' threads-overview-status-matching' : ''}`;
 };
 
 const renderStackPopupContent = (thread: Thread, stackPreviewLines: number) => {

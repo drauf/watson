@@ -97,7 +97,7 @@ describe('regexFiltering', () => {
       expect(matchesStackFilter(thread, 'SQLException')).toBe(false);
       expect(matchesStackFilter(thread, 'database')).toBe(false);
       expect(matchesStackFilter(thread, 'spring')).toBe(false);
-      expect(matchesStackFilter(thread, 'elasticsearch')).toBe(false);
+      expect(matchesStackFilter(thread, 'opensearch')).toBe(false);
     });
 
     it('handles invalid regex gracefully', () => {

@@ -57,7 +57,7 @@ describe('ThreadsOverviewItem', () => {
     fireEvent.click(cell);
     fireEvent.keyDown(cell, { key: ' ' });
 
-    expect(cell).toHaveClass('runnable-matching');
+    expect(cell).toHaveClass('threads-overview-status-success', 'threads-overview-status-matching');
     expect(cell).toHaveAttribute('tabindex', '0');
     expect(cell).toHaveAttribute('aria-rowindex', '2');
     expect(cell).toHaveAttribute('aria-colindex', '4');

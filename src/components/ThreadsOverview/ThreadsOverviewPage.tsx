@@ -19,11 +19,13 @@ import { createThreadOverviewRows, ThreadOverviewDataRow } from './threadsOvervi
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 
 interface State {
+  active: boolean;
   nonJvm: boolean;
-  tomcat: boolean;
-  nonTomcat: boolean;
+  http: boolean;
+  nonHttp: boolean;
   database: boolean;
-  lucene: boolean;
+  indexSearch: boolean;
+  crowd: boolean;
   usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
@@ -45,10 +47,11 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
   public override state = {
     active: true,
     nonJvm: true,
-    tomcat: false,
-    nonTomcat: false,
+    http: false,
+    nonHttp: false,
     database: false,
-    lucene: false,
+    indexSearch: false,
+    crowd: false,
     usingCpu: false,
     nameFilter: '',
     stackFilter: '',
@@ -73,10 +76,11 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
           <ThreadsOverviewSettings
             active={this.state.active}
             nonJvm={this.state.nonJvm}
-            tomcat={this.state.tomcat}
-            nonTomcat={this.state.nonTomcat}
+            http={this.state.http}
+            nonHttp={this.state.nonHttp}
             database={this.state.database}
-            lucene={this.state.lucene}
+            indexSearch={this.state.indexSearch}
+            crowd={this.state.crowd}
             usingCpu={this.state.usingCpu}
             nameFilter={this.state.nameFilter}
             stackFilter={this.state.stackFilter}

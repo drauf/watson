@@ -2,8 +2,8 @@ import Heading from '@atlaskit/heading';
 import React, { type JSX } from 'react';
 import Lozenge from '@atlaskit/lozenge/new';
 import Thread from '../../types/Thread';
-import ThreadStatus from '../../types/ThreadStatus';
 import { getCpuUsageLozengeAppearance } from '../CpuConsumers/cpuUsageAppearance';
+import { getThreadStatusAppearance } from '../../common/threadStatusAppearance';
 
 interface Props {
   thread: Thread;
@@ -20,25 +20,10 @@ export default class ThreadDetailsHeader extends React.PureComponent<Props> {
     </Heading>
   );
 
-  private static getStatusAppearance = (status: ThreadStatus) => {
-    switch (status) {
-      case ThreadStatus.RUNNABLE:
-        return 'success' as const;
-      case ThreadStatus.BLOCKED:
-        return 'danger' as const;
-      case ThreadStatus.WAITING:
-        return 'discovery' as const;
-      case ThreadStatus.TIMED_WAITING:
-        return 'warning' as const;
-      default:
-        return 'neutral' as const;
-    }
-  };
-
   private static renderMetadata = (thread: Thread) => (
     <div className="thread-details-metadata">
       <Lozenge
-        appearance={ThreadDetailsHeader.getStatusAppearance(thread.status)}
+        appearance={getThreadStatusAppearance(thread.status)}
         trailingMetric={thread.status.toLocaleUpperCase()}
       >
         Thread state

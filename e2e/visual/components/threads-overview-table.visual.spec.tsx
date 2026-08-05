@@ -24,6 +24,27 @@ test.describe('Threads overview table', () => {
     expect(alignItems).toBe('center');
   });
 
+  test('distinguishes subtle and bold status cell treatments', async ({ mount }) => {
+    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/Basic');
+    const normal = component.locator('.threads-overview-status-success:not(.threads-overview-status-matching)').first();
+    const matching = component.locator('.threads-overview-status-success.threads-overview-status-matching').first();
+
+    const [normalColors, matchingColors] = await Promise.all([
+      normal.evaluate((element) => ({
+        background: getComputedStyle(element).backgroundColor,
+        text: getComputedStyle(element).color,
+      })),
+      matching.evaluate((element) => ({
+        background: getComputedStyle(element).backgroundColor,
+        text: getComputedStyle(element).color,
+      })),
+    ]);
+
+    expect(normalColors.background).not.toBe('rgba(0, 0, 0, 0)');
+    expect(matchingColors.background).not.toBe(normalColors.background);
+    expect(matchingColors.text).not.toBe(normalColors.text);
+  });
+
   test('stretches a small table beyond its configured minimum width', async ({ mount }) => {
     const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/Basic');
     const preview = component.getByTestId('three-dump-table');

@@ -4,18 +4,20 @@ import { ThreadOverviewDataRow } from './threadsOverviewRows';
 export interface ThreadsOverviewFilters {
   active: boolean;
   nonJvm: boolean;
-  tomcat: boolean;
-  nonTomcat: boolean;
+  http: boolean;
+  nonHttp: boolean;
   database: boolean;
-  lucene: boolean;
+  indexSearch: boolean;
+  crowd: boolean;
   usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
 }
 
 const jvmRegex = /^Attach Listener|^C[12] CompilerThread|^G1 Concurrent |^G1 Main|^Gang worker#|^GC Daemon|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
-const tomcatRegex = /^https?-.*exec/;
-const luceneRegex = /org\.apache\.lucene/;
+const httpRegex = /^https?-.*exec/;
+const indexSearchRegex = /org\.apache\.lucene|org\.opensearch/;
+const crowdRegex = /com\.atlassian\.(?:crowd\.(?!filter\.)|jira\.crowd\.)/;
 const databaseRegex = /database|sql|query|jdbc|jooq|postgres|mysql|oracle|c3p0/i;
 
 const matchesName = (row: ThreadOverviewDataRow, regex: RegExp): boolean => Array.from(
@@ -48,8 +50,8 @@ export const filterThreads = (
     .filter((row) => !filters.active || isActiveOverTime(row.threadsByDump))
     .filter((row) => !filters.usingCpu || isUsingCpu(row))
     .filter((row) => !filters.nonJvm || !matchesName(row, jvmRegex))
-    .filter((row) => !filters.tomcat || matchesName(row, tomcatRegex))
-    .filter((row) => !filters.nonTomcat || !matchesName(row, tomcatRegex))
+    .filter((row) => !filters.http || matchesName(row, httpRegex))
+    .filter((row) => !filters.nonHttp || !matchesName(row, httpRegex))
     .filter((row) => !nameRegex || matchesName(row, nameRegex));
 };
 
@@ -60,8 +62,11 @@ const getStackTraceFilters = (filters: ThreadsOverviewFilters): RegExp[] => {
   if (stackRegex) {
     stackTraceFilters.push(stackRegex);
   }
-  if (filters.lucene) {
-    stackTraceFilters.push(luceneRegex);
+  if (filters.indexSearch) {
+    stackTraceFilters.push(indexSearchRegex);
+  }
+  if (filters.crowd) {
+    stackTraceFilters.push(crowdRegex);
   }
   if (filters.database) {
     stackTraceFilters.push(databaseRegex);
@@ -88,5 +93,5 @@ export const getThreadsMatchingStackFilter = (
 };
 
 export const isFilteredByStack = (filters: ThreadsOverviewFilters): boolean => Boolean(
-  filters.stackFilter || filters.lucene || filters.database,
+  filters.stackFilter || filters.indexSearch || filters.crowd || filters.database,
 );

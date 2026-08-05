@@ -11,10 +11,11 @@ import { ThreadOverviewDataRow } from './threadsOverviewRows';
 const defaultFilters = (): ThreadsOverviewFilters => ({
   active: false,
   nonJvm: false,
-  tomcat: false,
-  nonTomcat: false,
+  http: false,
+  nonHttp: false,
   database: false,
-  lucene: false,
+  indexSearch: false,
+  crowd: false,
   usingCpu: false,
   nameFilter: '',
   stackFilter: '',
@@ -45,12 +46,14 @@ describe('threadsOverviewFilters', () => {
       createRow(workerThread),
     ];
 
-    const cpuTomcatRows = filterThreads(rows, { ...defaultFilters(), tomcat: true, usingCpu: true });
+    const cpuHttpRows = filterThreads(rows, { ...defaultFilters(), http: true, usingCpu: true });
+    const nonHttpRows = filterThreads(rows, { ...defaultFilters(), nonHttp: true });
     const nonJvmRows = filterThreads(rows, { ...defaultFilters(), nonJvm: true });
     const workerRows = filterThreads(rows, { ...defaultFilters(), nameFilter: '^worker' });
 
-    expect(cpuTomcatRows).toEqual([rows[0]]);
-    expect(cpuTomcatRows[0]).toBe(rows[0]);
+    expect(cpuHttpRows).toEqual([rows[0]]);
+    expect(cpuHttpRows[0]).toBe(rows[0]);
+    expect(nonHttpRows).toEqual([rows[1], rows[2]]);
     expect(nonJvmRows).toEqual([rows[0], rows[2]]);
     expect(workerRows).toEqual([rows[2]]);
   });
@@ -66,15 +69,29 @@ describe('threadsOverviewFilters', () => {
       'org.apache.lucene.search.IndexSearcher.search',
       'org.postgresql.jdbc.PgStatement.execute',
     ]);
-    const luceneOnlyThread = createThread(2, 'index', ['org.apache.lucene.index.Writer']);
+    const openSearchOnlyThread = createThread(2, 'index', ['org.opensearch.index.engine.OpenSearchEngine.index']);
+    const crowdOnlyThread = createThread(3, 'directory', ['com.atlassian.crowd.directory.DirectoryManager.findUser']);
+    const jiraSearchOnlyThread = createThread(4, 'jira-search', ['com.atlassian.jira.search.SearchService.search']);
+    const jiraCrowdOnlyThread = createThread(5, 'jira-crowd', ['com.atlassian.jira.crowd.embedded.CrowdDirectoryService.findUser']);
+    const crowdFilterThread = createThread(6, 'http', ['com.atlassian.crowd.filter.CrowdHttpFilter.doFilter']);
     const rows = [
       createRow(luceneDatabaseThread),
-      createRow(luceneOnlyThread),
+      createRow(openSearchOnlyThread),
+      createRow(crowdOnlyThread),
+      createRow(jiraSearchOnlyThread),
+      createRow(jiraCrowdOnlyThread),
+      createRow(crowdFilterThread),
     ];
-    const filters = { ...defaultFilters(), lucene: true, database: true };
+    const filters = { ...defaultFilters(), indexSearch: true, database: true };
 
     expect(getThreadsMatchingStackFilter(rows, filters)).toEqual(new Set([luceneDatabaseThread.uniqueId]));
     expect(isFilteredByStack(filters)).toBe(true);
+    expect(getThreadsMatchingStackFilter(rows, { ...defaultFilters(), indexSearch: true })).toEqual(
+      new Set([luceneDatabaseThread.uniqueId, openSearchOnlyThread.uniqueId]),
+    );
+    expect(getThreadsMatchingStackFilter(rows, { ...defaultFilters(), crowd: true })).toEqual(
+      new Set([crowdOnlyThread.uniqueId, jiraCrowdOnlyThread.uniqueId]),
+    );
   });
 
   it('does not report stack filtering when no stack filter is active', () => {
