@@ -73,12 +73,14 @@ describe('threadsOverviewFilters', () => {
     const crowdOnlyThread = createThread(3, 'directory', ['com.atlassian.crowd.directory.DirectoryManager.findUser']);
     const jiraSearchOnlyThread = createThread(4, 'jira-search', ['com.atlassian.jira.search.SearchService.search']);
     const jiraCrowdOnlyThread = createThread(5, 'jira-crowd', ['com.atlassian.jira.crowd.embedded.CrowdDirectoryService.findUser']);
+    const crowdFilterThread = createThread(6, 'http', ['com.atlassian.crowd.filter.CrowdHttpFilter.doFilter']);
     const rows = [
       createRow(luceneDatabaseThread),
       createRow(openSearchOnlyThread),
       createRow(crowdOnlyThread),
       createRow(jiraSearchOnlyThread),
       createRow(jiraCrowdOnlyThread),
+      createRow(crowdFilterThread),
     ];
     const filters = { ...defaultFilters(), indexSearch: true, database: true };
 

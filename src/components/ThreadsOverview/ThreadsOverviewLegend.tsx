@@ -1,4 +1,21 @@
 import React, { type JSX } from 'react';
+import ThreadStatus from '../../types/ThreadStatus';
+import { getThreadStatusAppearance } from '../../common/threadStatusAppearance';
+
+const legendStatuses = [
+  { status: ThreadStatus.RUNNABLE, label: 'Runnable' },
+  { status: ThreadStatus.BLOCKED, label: 'Blocked' },
+  { status: ThreadStatus.WAITING, label: 'Waiting' },
+  { status: ThreadStatus.TIMED_WAITING, label: 'Timed waiting' },
+];
+
+const statusClassName = (status: ThreadStatus, isMatching = false): string => (
+  `threads-overview-status-${getThreadStatusAppearance(status)}${isMatching ? ' threads-overview-status-matching' : ''}`
+);
+
+const renderStatusCells = (isMatching = false): JSX.Element[] => legendStatuses.map(({ status }) => (
+  <td key={status} className={statusClassName(status, isMatching)}>com.atlassian.watson</td>
+));
 
 export default class ThreadsOverviewLegend extends React.PureComponent {
   public override render(): JSX.Element {
@@ -7,26 +24,17 @@ export default class ThreadsOverviewLegend extends React.PureComponent {
         <thead>
           <tr>
             <th>Legend</th>
-            <th>Runnable</th>
-            <th>Blocked</th>
-            <th>Waiting</th>
-            <th>Timed waiting</th>
+            {legendStatuses.map(({ status, label }) => <th key={status}>{label}</th>)}
           </tr>
         </thead>
         <tbody>
           <tr>
             <td className="name">Normal</td>
-            <td className="runnable">com.atlassian.watson</td>
-            <td className="blocked">com.atlassian.watson</td>
-            <td className="waiting">com.atlassian.watson</td>
-            <td className="timed-waiting">com.atlassian.watson</td>
+            {renderStatusCells()}
           </tr>
           <tr>
             <td className="name">Matching filter</td>
-            <td className="runnable-matching">com.atlassian.watson</td>
-            <td className="blocked-matching">com.atlassian.watson</td>
-            <td className="waiting-matching">com.atlassian.watson</td>
-            <td className="timed-waiting-matching">com.atlassian.watson</td>
+            {renderStatusCells(true)}
           </tr>
         </tbody>
       </table>

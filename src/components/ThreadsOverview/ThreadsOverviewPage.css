@@ -113,6 +113,11 @@
   overflow: visible;
 }
 
+.threads-overview-grid-cell {
+  display: flex;
+  align-items: center;
+}
+
 .threads-overview-grid-cell:not(.unknown) {
   cursor: pointer;
 }
@@ -123,6 +128,55 @@
     var(--ds-background-inverse-subtle-hovered) 30%,
     transparent
   );
+}
+
+.threads-overview-status-success,
+.threads-overview-status-danger,
+.threads-overview-status-discovery,
+.threads-overview-status-warning,
+.threads-overview-status-neutral {
+  color: var(--threads-overview-status-text);
+  background: var(--threads-overview-status-background);
+}
+
+.threads-overview-status-success {
+  --threads-overview-status-text: var(--ds-text-success);
+  --threads-overview-status-background: var(--ds-background-success);
+  --threads-overview-status-matching-text: var(--ds-text-inverse);
+  --threads-overview-status-matching-background: var(--ds-background-success-bold);
+}
+
+.threads-overview-status-danger {
+  --threads-overview-status-text: var(--ds-text-danger);
+  --threads-overview-status-background: var(--ds-background-danger);
+  --threads-overview-status-matching-text: var(--ds-text-inverse);
+  --threads-overview-status-matching-background: var(--ds-background-danger-bold);
+}
+
+.threads-overview-status-discovery {
+  --threads-overview-status-text: var(--ds-text-discovery);
+  --threads-overview-status-background: var(--ds-background-discovery);
+  --threads-overview-status-matching-text: var(--ds-text-inverse);
+  --threads-overview-status-matching-background: var(--ds-background-discovery-bold);
+}
+
+.threads-overview-status-warning {
+  --threads-overview-status-text: var(--ds-text-warning);
+  --threads-overview-status-background: var(--ds-background-warning);
+  --threads-overview-status-matching-text: var(--ds-text-warning-inverse);
+  --threads-overview-status-matching-background: var(--ds-background-warning-bold);
+}
+
+.threads-overview-status-neutral {
+  --threads-overview-status-text: var(--ds-text-subtle);
+  --threads-overview-status-background: var(--ds-background-neutral);
+  --threads-overview-status-matching-text: var(--ds-text-inverse);
+  --threads-overview-status-matching-background: var(--ds-background-neutral-bold);
+}
+
+.threads-overview-status-matching {
+  color: var(--threads-overview-status-matching-text);
+  background: var(--threads-overview-status-matching-background);
 }
 
 .threads-overview-grid-body-content {

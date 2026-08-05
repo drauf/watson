@@ -41,34 +41,39 @@ const TablePreview = ({ testId, children }: TablePreviewProps): JSX.Element => {
   );
 };
 
-export const Basic = (): JSX.Element => (
-  <main className="full-width-page">
-    <TablePreview testId="three-dump-table">
-      {(getScrollElement) => (
-        <ThreadsOverviewTable
-          dates={createDates(3)}
-          rows={createThreadOverviewRows(createTableRows(3))}
-          matchingStackFilter={new Set()}
-          dumpColumnWidth={160}
-          stackPreviewLines={10}
-          getScrollElement={getScrollElement}
-        />
-      )}
-    </TablePreview>
-    <TablePreview testId="many-dump-table">
-      {(getScrollElement) => (
-        <ThreadsOverviewTable
-          dates={createDates(12)}
-          rows={createThreadOverviewRows(createTableRows(12))}
-          matchingStackFilter={new Set()}
-          dumpColumnWidth={160}
-          stackPreviewLines={10}
-          getScrollElement={getScrollElement}
-        />
-      )}
-    </TablePreview>
-  </main>
-);
+export const Basic = (): JSX.Element => {
+  const threeDumpRows = createTableRows(3);
+  const matchingStackFilter = new Set([threeDumpRows[0].get(0)!.uniqueId]);
+
+  return (
+    <main className="full-width-page">
+      <TablePreview testId="three-dump-table">
+        {(getScrollElement) => (
+          <ThreadsOverviewTable
+            dates={createDates(3)}
+            rows={createThreadOverviewRows(threeDumpRows)}
+            matchingStackFilter={matchingStackFilter}
+            dumpColumnWidth={160}
+            stackPreviewLines={10}
+            getScrollElement={getScrollElement}
+          />
+        )}
+      </TablePreview>
+      <TablePreview testId="many-dump-table">
+        {(getScrollElement) => (
+          <ThreadsOverviewTable
+            dates={createDates(12)}
+            rows={createThreadOverviewRows(createTableRows(12))}
+            matchingStackFilter={new Set()}
+            dumpColumnWidth={160}
+            stackPreviewLines={10}
+            getScrollElement={getScrollElement}
+          />
+        )}
+      </TablePreview>
+    </main>
+  );
+};
 
 const createLargeTableRows = (): Map<number, Thread>[] => Array.from(
   { length: 1000 },

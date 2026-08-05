@@ -17,7 +17,7 @@ export interface ThreadsOverviewFilters {
 const jvmRegex = /^Attach Listener|^C[12] CompilerThread|^G1 Concurrent |^G1 Main|^Gang worker#|^GC Daemon|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
 const httpRegex = /^https?-.*exec/;
 const indexSearchRegex = /org\.apache\.lucene|org\.opensearch/;
-const crowdRegex = /com\.atlassian\.(crowd|jira\.crowd)\./;
+const crowdRegex = /com\.atlassian\.(?:crowd\.(?!filter\.)|jira\.crowd\.)/;
 const databaseRegex = /database|sql|query|jdbc|jooq|postgres|mysql|oracle|c3p0/i;
 
 const matchesName = (row: ThreadOverviewDataRow, regex: RegExp): boolean => Array.from(
