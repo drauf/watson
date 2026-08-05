@@ -1,5 +1,5 @@
 import {
-  expect, Page, test as base,
+  expect, Locator, Page, test as base,
 } from '@playwright/test';
 import fs from 'fs';
 
@@ -13,13 +13,22 @@ const loadData = async (page: Page, dataLocation: string) => {
   await expect(page.getByText('Clear data')).toBeVisible();
 };
 
-export const expandRepresentativeGroup = async (page: Page): Promise<void> => {
-  const toggles = page.locator('.collapsable-group-toggle');
-  const count = await toggles.count();
+const expandGroup = async (group: Locator) => {
+  const toggle = group.locator('.collapsable-group-toggle');
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(group.locator('.collapsable-group-content')).toBeVisible();
+};
 
-  if (count > 1) {
-    await toggles.nth(Math.min(2, count - 1)).click();
+export const expandRepresentativeGroup = async (page: Page) => {
+  await expect(page.locator('.paginated-collection-actions')).toBeVisible();
+  const groups = page.locator('.paginated-collection-actions ~ section.collapsable-group');
+  const count = await groups.count();
+  if (count === 0) {
+    throw new Error('No result groups were found');
   }
+
+  await expandGroup(groups.nth(Math.min(2, count - 1)));
 };
 
 const clearData = async (page: Page) => {

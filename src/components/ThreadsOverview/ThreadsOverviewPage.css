@@ -12,6 +12,11 @@
   overflow: auto;
 }
 
+#heading {
+  width: 80%;
+  margin-inline: auto;
+}
+
 .threads-overview-workspace #heading {
   position: sticky;
   top: auto;
@@ -219,11 +224,6 @@
 .thread-stack-popup-more {
   margin: var(--ds-space-050, 4px) 0 0;
   color: var(--ds-text-subtle);
-}
-
-#heading {
-  width: 80%;
-  margin-inline: auto;
 }
 
 #matching-summary {

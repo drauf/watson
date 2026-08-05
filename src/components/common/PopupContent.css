@@ -4,6 +4,7 @@
   margin: 0;
   padding: var(--ds-space-200) var(--ds-space-400);
   color: var(--ds-text);
+  text-align: left;
   overflow-wrap: anywhere;
   background-color: var(--ds-surface-overlay);
   border-radius: var(--ds-radius-large, 8px);

@@ -1,5 +1,5 @@
 import { ComponentType } from 'react';
-import { LoaderFunction } from 'react-router-dom';
+import type { LoaderFunctionArgs } from 'react-router-dom';
 import { useTimeWindowData } from '../context/TimeWindowContext';
 import ThreadDump from '../types/ThreadDump';
 import { getThreadDumpsAsync } from './threadDumpsStorageService';
@@ -8,7 +8,7 @@ export interface WithThreadDumpsProps {
   threadDumps: ThreadDump[];
 }
 
-export const threadDumpsLoader: LoaderFunction = async function threadDumpsLoader({ params }): Promise<WithThreadDumpsProps> {
+export const threadDumpsLoader = async function threadDumpsLoader({ params }: LoaderFunctionArgs): Promise<WithThreadDumpsProps> {
   const { threadDumpsHash } = params;
   if (threadDumpsHash === undefined) {
     throw new Error('threadDumpsHash is undefined');

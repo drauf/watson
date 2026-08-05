@@ -1,7 +1,10 @@
 import '@testing-library/jest-dom';
+import { setBooleanFeatureFlagResolver } from '@atlaskit/platform-feature-flags';
 import { vi } from 'vitest';
 
 type AtlaskitTokens = typeof import('@atlaskit/tokens');
+
+setBooleanFeatureFlagResolver(() => false);
 
 vi.mock('@atlaskit/tokens', async (importOriginal) => {
   const actual = await importOriginal<AtlaskitTokens>();

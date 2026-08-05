@@ -81,13 +81,13 @@ test('reapplies Expand all after an individual group is collapsed', () => {
               Group
               {item}
             </span>
-)}
+          )}
           content={(
             <span>
               Details
               {item}
             </span>
-)}
+          )}
         />
       )}
     />,
