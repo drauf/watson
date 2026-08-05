@@ -239,6 +239,16 @@ describe('FullPageDropzone', () => {
   });
 
   describe('error handling', () => {
+    let consoleError: ReturnType<typeof vi.spyOn>;
+
+    beforeEach(() => {
+      consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+      consoleError.mockRestore();
+    });
+
     it('shows error when parsing fails', async () => {
       parserMock.parseFiles.mockRejectedValue(new Error('Parsing failed'));
 
@@ -259,6 +269,7 @@ describe('FullPageDropzone', () => {
         expect(screen.getByText('Error processing files')).toBeInTheDocument();
         expect(screen.getByText('Parsing failed')).toBeInTheDocument();
       });
+      expect(consoleError).toHaveBeenCalledWith('Error parsing files:', expect.any(Error));
     });
 
     it('handles non-Error exceptions', async () => {
@@ -279,6 +290,7 @@ describe('FullPageDropzone', () => {
       await waitFor(() => {
         expect(screen.getByText('An error occurred while parsing files')).toBeInTheDocument();
       });
+      expect(consoleError).toHaveBeenCalledWith('Error parsing files:', 'String error');
     });
   });
 

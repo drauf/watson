@@ -9,7 +9,7 @@ import Navigation from './Navigation/Navigation';
 
 const Container = () => {
   const { pathname } = useLocation();
-  const { threadDumps } = useLoaderData() as WithThreadDumpsProps;
+  const { threadDumps } = useLoaderData<WithThreadDumpsProps>();
   const { threadDumpsHash } = useParams();
 
   useEffect(() => {
