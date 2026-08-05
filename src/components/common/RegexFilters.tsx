@@ -77,7 +77,7 @@ const stackTraceTooltip = (
     <Text as="p">
       •
       {' '}
-      <code>(lucene|elasticsearch)</code>
+      <code>(lucene|opensearch)</code>
       {' '}
       → Search operations
     </Text>
