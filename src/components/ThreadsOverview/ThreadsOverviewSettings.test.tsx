@@ -1,9 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { vi } from 'vitest';
 import ThreadsOverviewSettings from './ThreadsOverviewSettings';
 
 vi.mock('../TimeWindow/TimeWindowFilter', () => ({
   default: () => <div data-testid="time-window-filter" />,
+}));
+
+vi.mock('../common/HoverPopup', () => ({
+  default: ({ children, content }: { children: ReactNode; content?: ReactNode }) => (
+    <>
+      {children}
+      {content && <div>{content}</div>}
+    </>
+  ),
 }));
 
 const renderSettings = () => {
@@ -16,10 +26,11 @@ const renderSettings = () => {
     <ThreadsOverviewSettings
       active
       nonJvm
-      tomcat={false}
-      nonTomcat={false}
+      http={false}
+      nonHttp={false}
       database={false}
-      lucene={false}
+      indexSearch={false}
+      crowd={false}
       usingCpu={false}
       nameFilter=""
       stackFilter=""
@@ -50,6 +61,26 @@ describe('ThreadsOverviewSettings', () => {
 
     expect(onFilterChange).toHaveBeenCalledTimes(1);
     expect(onRegExpChange).toHaveBeenCalledTimes(2);
+  });
+
+  it('renders semantic workload filters with explanatory tooltips', () => {
+    const { onFilterChange } = renderSettings();
+
+    expect(screen.getByRole('button', { name: 'HTTP' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Non-HTTP' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Index search' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'User directory' })).toBeInTheDocument();
+    expect(screen.getByText('Show HTTP request-processing threads, including browser and REST API actions')).toBeInTheDocument();
+    expect(screen.getByText('Hide HTTP request-processing threads to focus on background activity')).toBeInTheDocument();
+    expect(screen.getByText('Show threads performing database queries and operations.')).toBeInTheDocument();
+    expect(screen.getByText('Show threads performing Lucene or OpenSearch indexing and queries.')).toBeInTheDocument();
+    expect(screen.getByText('Show threads calling Atlassian Embedded Crowd for user and group directory lookups.')).toBeInTheDocument();
+    expect(screen.getAllByText('Combines with other stack filters to narrow results.')).toHaveLength(3);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Index search' }));
+    fireEvent.click(screen.getByRole('button', { name: 'User directory' }));
+
+    expect(onFilterChange).toHaveBeenCalledTimes(2);
   });
 
   it('forwards table display setting changes', () => {

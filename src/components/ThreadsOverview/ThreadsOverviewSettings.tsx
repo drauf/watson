@@ -8,13 +8,21 @@ import HoverPopup from '../common/HoverPopup';
 import RegexFilters from '../common/RegexFilters';
 import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
 
+const stackFilterTooltip = (description: string): JSX.Element => (
+  <>
+    <p>{description}</p>
+    <p>Combines with other stack filters to narrow results.</p>
+  </>
+);
+
 interface Props {
   active: boolean;
   nonJvm: boolean;
-  tomcat: boolean;
-  nonTomcat: boolean;
+  http: boolean;
+  nonHttp: boolean;
   database: boolean;
-  lucene: boolean;
+  indexSearch: boolean;
+  crowd: boolean;
   usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
@@ -31,10 +39,11 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
     const {
       active,
       nonJvm,
-      tomcat,
-      nonTomcat,
+      http,
+      nonHttp,
       database,
-      lucene,
+      indexSearch,
+      crowd,
       usingCpu,
       nameFilter,
       stackFilter,
@@ -71,19 +80,19 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
             />
 
             <Filter
-              name="tomcat"
-              displayName="Tomcat"
-              checked={tomcat}
+              name="http"
+              displayName="HTTP"
+              checked={http}
               onChange={onFilterChange}
-              tooltip="Show only HTTP request processing threads"
+              tooltip="Show HTTP request-processing threads, including browser and REST API actions"
             />
 
             <Filter
-              name="nonTomcat"
-              displayName="Non-Tomcat"
-              checked={nonTomcat}
+              name="nonHttp"
+              displayName="Non-HTTP"
+              checked={nonHttp}
               onChange={onFilterChange}
-              tooltip="Hide HTTP request processing threads"
+              tooltip="Hide HTTP request-processing threads to focus on background activity"
             />
 
             <Filter
@@ -91,15 +100,23 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
               displayName="Database"
               checked={database}
               onChange={onFilterChange}
-              tooltip="Show only threads performing database queries and operations"
+              tooltip={stackFilterTooltip('Show threads performing database queries and operations.')}
             />
 
             <Filter
-              name="lucene"
-              displayName="Lucene"
-              checked={lucene}
+              name="indexSearch"
+              displayName="Index search"
+              checked={indexSearch}
               onChange={onFilterChange}
-              tooltip="Show only threads performing search indexing and queries"
+              tooltip={stackFilterTooltip('Show threads performing Lucene or OpenSearch indexing and queries.')}
+            />
+
+            <Filter
+              name="crowd"
+              displayName="User directory"
+              checked={crowd}
+              onChange={onFilterChange}
+              tooltip={stackFilterTooltip('Show threads calling Atlassian Embedded Crowd for user and group directory lookups.')}
             />
 
             <Filter

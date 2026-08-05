@@ -7,7 +7,7 @@ interface Props {
   displayName: string;
   checked: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  tooltip: string;
+  tooltip: React.ReactNode;
 }
 
 const Filter: React.FC<Props> = ({
