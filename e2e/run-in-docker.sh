@@ -3,7 +3,7 @@ set -euo pipefail
 
 readonly workspace_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 readonly worktree="$(mktemp -d "${TMPDIR:-/tmp}/watson-playwright.XXXXXX")"
-readonly image="mcr.microsoft.com/playwright:v1.61.1-noble"
+readonly image="mcr.microsoft.com/playwright:v1.62.1-noble"
 
 cleanup() {
   rm -rf "$worktree"
@@ -29,7 +29,7 @@ docker run --rm \
   -v "$worktree:/work" \
   -w /work \
   "$image" \
-  bash -lc 'yarn install --immutable && yarn playwright install chromium firefox && yarn playwright test "$@"' \
+  bash -lc 'yarn install --immutable && yarn playwright test "$@"' \
   -- "$@"
 
 if "$copy_snapshots"; then
