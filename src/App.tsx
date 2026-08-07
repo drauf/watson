@@ -11,6 +11,7 @@ import SimilarStacksPage from './components/SimilarStacks/SimilarStacksPage';
 import StuckThreadsPage from './components/StuckThreads/StuckThreadsPage';
 import MonitorsPage from './components/Monitors/MonitorsPage';
 import FlameGraphPage from './components/FlameGraph/FlameGraphPage';
+// eslint-disable-next-line import-x/no-named-as-default -- Named export lets component tests avoid the shared time-window wrapper
 import ThreadsOverviewPage from './components/ThreadsOverview/ThreadsOverviewPage';
 import Index from './components/Index/Index';
 import HelpPage from './components/Help/HelpPage';

@@ -2,7 +2,7 @@ import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import {
   filterThreads,
-  getThreadsMatchingStackFilter,
+  getStackFilterMatches,
   isFilteredByStack,
   ThreadsOverviewFilters,
 } from './threadsOverviewFilters';
@@ -29,10 +29,10 @@ const createThread = (id: number, name: string, stackTrace: string[] = [], cpuUs
   return thread;
 };
 
-const createRow = (thread: Thread): ThreadOverviewDataRow => ({
+const createRow = (thread: Thread, threadsByDump = new Map([[0, thread]])): ThreadOverviewDataRow => ({
   id: thread.id,
   name: thread.name,
-  threadsByDump: new Map([[0, thread]]),
+  threadsByDump,
 });
 
 describe('threadsOverviewFilters', () => {
@@ -84,18 +84,39 @@ describe('threadsOverviewFilters', () => {
     ];
     const filters = { ...defaultFilters(), indexSearch: true, database: true };
 
-    expect(getThreadsMatchingStackFilter(rows, filters)).toEqual(new Set([luceneDatabaseThread.uniqueId]));
+    expect(getStackFilterMatches(rows, filters).matchingThreadIds).toEqual(new Set([luceneDatabaseThread.uniqueId]));
     expect(isFilteredByStack(filters)).toBe(true);
-    expect(getThreadsMatchingStackFilter(rows, { ...defaultFilters(), indexSearch: true })).toEqual(
+    expect(getStackFilterMatches(rows, { ...defaultFilters(), indexSearch: true }).matchingThreadIds).toEqual(
       new Set([luceneDatabaseThread.uniqueId, openSearchOnlyThread.uniqueId]),
     );
-    expect(getThreadsMatchingStackFilter(rows, { ...defaultFilters(), crowd: true })).toEqual(
+    expect(getStackFilterMatches(rows, { ...defaultFilters(), crowd: true }).matchingThreadIds).toEqual(
       new Set([crowdOnlyThread.uniqueId, jiraCrowdOnlyThread.uniqueId]),
     );
   });
 
+  it('collects matching rows and snapshots while retaining other snapshots in matching rows', () => {
+    const matchingSnapshot = createThread(1, 'worker-1', ['app.Database.query']);
+    const nonMatchingSnapshot = createThread(2, 'worker-1', ['app.Work.run']);
+    const nonMatchingThread = createThread(3, 'worker-2', ['app.Work.run']);
+    const matchingRow = createRow(matchingSnapshot, new Map([
+      [0, matchingSnapshot],
+      [1, nonMatchingSnapshot],
+    ]));
+    const nonMatchingRow = createRow(nonMatchingThread);
+    const rows = [matchingRow, nonMatchingRow];
+
+    expect(getStackFilterMatches(rows, { ...defaultFilters(), stackFilter: 'database' })).toEqual({
+      matchingRowIds: new Set([matchingRow.id]),
+      matchingThreadIds: new Set([matchingSnapshot.uniqueId]),
+    });
+    expect(matchingRow.threadsByDump.get(1)).toBe(nonMatchingSnapshot);
+  });
+
   it('does not report stack filtering when no stack filter is active', () => {
-    expect(getThreadsMatchingStackFilter([], defaultFilters())).toEqual(new Set());
+    expect(getStackFilterMatches([], defaultFilters())).toEqual({
+      matchingRowIds: new Set(),
+      matchingThreadIds: new Set(),
+    });
     expect(isFilteredByStack(defaultFilters())).toBe(false);
   });
 });
