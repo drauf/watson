@@ -6,9 +6,11 @@ import { Field } from '@atlaskit/form';
 import HoverPopup from '../common/HoverPopup';
 import Filter from '../Filter/Filter';
 import RegexFilters from '../common/RegexFilters';
+import ThreadLabelFilterButtons from '../common/ThreadLabelFilterButtons';
 import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
+import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 
-interface Props {
+interface Props extends ThreadLabelFilterState {
   maxDifferingLines: number;
   minClusterSize: number;
   withoutIdle: boolean;
@@ -22,7 +24,9 @@ interface Props {
 export default class StuckThreadsSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const {
-      maxDifferingLines, minClusterSize, withoutIdle, nameFilter, stackFilter, onFilterChange, onIntegerChange, onRegExpChange,
+      maxDifferingLines, minClusterSize, withoutIdle, nameFilter, stackFilter,
+      http, background, indexSearch, database, userDirectory, cpuActive,
+      onFilterChange, onIntegerChange, onRegExpChange,
     } = this.props;
 
     return (
@@ -39,6 +43,17 @@ export default class StuckThreadsSettings extends React.PureComponent<Props> {
               checked={withoutIdle}
               onChange={onFilterChange}
               tooltip="Hide threads waiting for I/O or in thread pools"
+            />
+
+            <ThreadLabelFilterButtons
+              http={http}
+              background={background}
+              indexSearch={indexSearch}
+              database={database}
+              userDirectory={userDirectory}
+              cpuActive={cpuActive}
+              includeCpuActive
+              onFilterChange={onFilterChange}
             />
           </ButtonGroup>
         </section>

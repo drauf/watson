@@ -1,6 +1,7 @@
 import type { JSX } from 'react';
 import EmptyState from '../Errors/EmptyState';
 import { groupSimilarStacks, SimilarStacksFilters } from './similarStacksGrouping';
+import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 import Thread from '../../types/Thread';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import PageWithSettings from '../PageWithSettings';
@@ -9,7 +10,7 @@ import SimilarStacksGroup from './SimilarStacksGroup';
 import SimilarStacksSettings from './SimilarStacksSettings';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 
-interface State {
+interface State extends ThreadLabelFilterState {
   linesToConsider: number;
   minimumGroupSize: number;
   withoutIdle: boolean;
@@ -24,6 +25,12 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
     withoutIdle: true,
     nameFilter: '',
     stackFilter: '',
+    http: false,
+    background: false,
+    indexSearch: false,
+    database: false,
+    userDirectory: false,
+    cpuActive: false,
   };
 
   public override render(): JSX.Element {
@@ -43,6 +50,12 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
           withoutIdle={this.state.withoutIdle}
           nameFilter={this.state.nameFilter}
           stackFilter={this.state.stackFilter}
+          http={this.state.http}
+          background={this.state.background}
+          indexSearch={this.state.indexSearch}
+          database={this.state.database}
+          userDirectory={this.state.userDirectory}
+          cpuActive={this.state.cpuActive}
           onFilterChange={this.handleFilterChange}
           onIntegerChange={this.handleIntegerChange}
           onRegExpChange={this.handleTextChange}
@@ -62,7 +75,7 @@ class SimilarStacksPage extends PageWithSettings<WithThreadDumpsProps, State> {
     return (
       <PaginatedCollection
         items={threadGroups}
-        resetKey={`${this.state.linesToConsider}:${this.state.minimumGroupSize}:${this.state.withoutIdle}:${this.state.nameFilter}:${this.state.stackFilter}:${this.props.threadDumps.length}`}
+        resetKey={`${this.state.linesToConsider}:${this.state.minimumGroupSize}:${this.state.withoutIdle}:${this.state.nameFilter}:${this.state.stackFilter}:${this.state.http}:${this.state.background}:${this.state.indexSearch}:${this.state.database}:${this.state.userDirectory}:${this.state.cpuActive}:${this.props.threadDumps.length}`}
         getKey={(group) => group[0].uniqueId}
         renderItem={(group) => (
           <SimilarStacksGroup

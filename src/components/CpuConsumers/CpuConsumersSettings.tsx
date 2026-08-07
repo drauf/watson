@@ -4,12 +4,15 @@ import Text from '@atlaskit/primitives/text';
 import React, { type JSX } from 'react';
 import CpuConsumersMode from './CpuConsumersMode';
 import RegexFilters from '../common/RegexFilters';
+import ThreadLabelFilterButtons from '../common/ThreadLabelFilterButtons';
+import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 
-interface Props {
+interface Props extends ThreadLabelFilterState {
   mode: CpuConsumersMode;
   nameFilter: string;
   stackFilter: string;
   onModeChange: (mode: CpuConsumersMode) => void;
+  onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
   onRegExpChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -22,7 +25,9 @@ const sortModes = [
 export default class CpuConsumersSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const {
-      mode, nameFilter, stackFilter, onModeChange, onRegExpChange,
+      mode, nameFilter, stackFilter,
+      http, background, indexSearch, database, userDirectory, cpuActive,
+      onModeChange, onFilterChange, onRegExpChange,
     } = this.props;
 
     return (
@@ -45,6 +50,23 @@ export default class CpuConsumersSettings extends React.PureComponent<Props> {
           </ButtonGroup>
 
           <Text weight="bold">CPU usage</Text>
+        </section>
+
+        <section className="filters">
+          <Text weight="bold">Filters:</Text>
+
+          <ButtonGroup>
+            <ThreadLabelFilterButtons
+              http={http}
+              background={background}
+              indexSearch={indexSearch}
+              database={database}
+              userDirectory={userDirectory}
+              cpuActive={cpuActive}
+              includeCpuActive={false}
+              onFilterChange={onFilterChange}
+            />
+          </ButtonGroup>
         </section>
 
         <section>

@@ -13,11 +13,11 @@ const defaultFilters = (): ThreadsOverviewFilters => ({
   active: false,
   nonJvm: false,
   http: false,
-  nonHttp: false,
+  background: false,
   database: false,
   indexSearch: false,
-  crowd: false,
-  usingCpu: false,
+  userDirectory: false,
+  cpuActive: false,
   nameFilter: '',
   stackFilter: '',
 });
@@ -49,8 +49,8 @@ describe('threadsOverviewFilters', () => {
       createRow(workerThread),
     ];
 
-    const cpuHttpRows = filterThreads(rows, { ...defaultFilters(), http: true, usingCpu: true });
-    const nonHttpRows = filterThreads(rows, { ...defaultFilters(), nonHttp: true });
+    const cpuHttpRows = filterThreads(rows, { ...defaultFilters(), http: true, cpuActive: true });
+    const nonHttpRows = filterThreads(rows, { ...defaultFilters(), background: true });
     const nonJvmRows = filterThreads(rows, { ...defaultFilters(), nonJvm: true });
     const workerRows = filterThreads(rows, { ...defaultFilters(), nameFilter: '^worker' });
 
@@ -92,7 +92,7 @@ describe('threadsOverviewFilters', () => {
     expect(getStackFilterMatches(rows, { ...defaultFilters(), indexSearch: true }).matchingThreadIds).toEqual(
       new Set([luceneDatabaseThread.uniqueId, openSearchOnlyThread.uniqueId]),
     );
-    expect(getStackFilterMatches(rows, { ...defaultFilters(), crowd: true }).matchingThreadIds).toEqual(
+    expect(getStackFilterMatches(rows, { ...defaultFilters(), userDirectory: true }).matchingThreadIds).toEqual(
       new Set([crowdOnlyThread.uniqueId, jiraCrowdOnlyThread.uniqueId]),
     );
   });

@@ -1,3 +1,4 @@
+import { setStaticThreadLabels } from '../../common/threadLabels';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import { groupSimilarStacks, SimilarStacksFilters } from './similarStacksGrouping';
@@ -12,6 +13,7 @@ const defaultFilters = (): SimilarStacksFilters => ({
 const createThread = (id: number, name: string, stackTrace: string[]): Thread => {
   const thread = new Thread(id, name);
   thread.stackTrace.push(...stackTrace);
+  setStaticThreadLabels(thread);
   return thread;
 };
 
@@ -32,6 +34,18 @@ describe('groupSimilarStacks', () => {
     ], defaultFilters());
 
     expect(groups.map((group) => group.length)).toEqual([2, 1]);
+  });
+
+  it('filters snapshots by stored labels before grouping', () => {
+    const groups = groupSimilarStacks([
+      createDump([
+        createThread(1, 'http-nio-1', ['org.apache.lucene.search.IndexSearcher.search']),
+        createThread(2, 'worker-2', ['app.Database.query']),
+      ]),
+    ], { ...defaultFilters(), indexSearch: true });
+
+    expect(groups).toHaveLength(1);
+    expect(groups[0].map((thread) => thread.name)).toEqual(['http-nio-1']);
   });
 
   it('uses the entire stack when comparison depth is zero', () => {

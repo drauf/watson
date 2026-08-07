@@ -14,9 +14,14 @@ describe('FlameGraphSettings', () => {
     render(
       <FlameGraphSettings
         withoutIdle
-        usingCpu={false}
         nameFilter=""
         stackFilter=""
+        http={false}
+        background={false}
+        indexSearch={false}
+        database={false}
+        userDirectory={false}
+        cpuActive={false}
         onFilterChange={onFilterChange}
         onRegExpChange={onRegExpChange}
       />,

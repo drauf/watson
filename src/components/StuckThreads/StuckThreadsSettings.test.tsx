@@ -17,6 +17,12 @@ describe('StuckThreadsSettings', () => {
         withoutIdle
         nameFilter=""
         stackFilter=""
+        http={false}
+        background={false}
+        indexSearch={false}
+        database={false}
+        userDirectory={false}
+        cpuActive={false}
         onFilterChange={onFilterChange}
         onIntegerChange={onIntegerChange}
         onRegExpChange={onRegExpChange}

@@ -2,6 +2,7 @@ import { StackFrame } from 'd3-flame-graph';
 import type { JSX } from 'react';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import { filterFlameGraphThreads, FlameGraphFilters } from './flameGraphFiltering';
+import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 import EmptyState from '../Errors/EmptyState';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import FlameGraph from './FlameGraph';
@@ -20,9 +21,8 @@ export interface ParsedStackFrame {
   line: string;
 }
 
-interface State {
+interface State extends ThreadLabelFilterState {
   withoutIdle: boolean;
-  usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
 }
@@ -63,11 +63,16 @@ export const parseStackFrame = (frame: string): ParsedStackFrame => {
 export const shortNameFrom = (parsedFrame: ParsedStackFrame): string => `${parsedFrame.cleanClassName}.${parsedFrame.cleanMethodName} @ ${parsedFrame.line}`;
 
 class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
-  public override state = {
+  public override state: State = {
     withoutIdle: true,
-    usingCpu: false,
     nameFilter: '',
     stackFilter: '',
+    http: false,
+    background: false,
+    indexSearch: false,
+    database: false,
+    userDirectory: false,
+    cpuActive: false,
   };
 
   private static processLine = (previousFrame: StackFrame, line: string): StackFrame => {
@@ -137,9 +142,14 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
       <main className="full-width-page">
         <FlameGraphSettings
           withoutIdle={this.state.withoutIdle}
-          usingCpu={this.state.usingCpu}
           nameFilter={this.state.nameFilter}
           stackFilter={this.state.stackFilter}
+          http={this.state.http}
+          background={this.state.background}
+          indexSearch={this.state.indexSearch}
+          database={this.state.database}
+          userDirectory={this.state.userDirectory}
+          cpuActive={this.state.cpuActive}
           onFilterChange={this.handleFilterChange}
           onRegExpChange={this.handleTextChange}
         />

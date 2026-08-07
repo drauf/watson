@@ -1,22 +1,26 @@
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import { matchesRegexFilters } from '../../common/regexFiltering';
+import { isAnyThreadLabelFilterActive, matchesThreadLabelFilters, ThreadLabelFilters } from '../../common/threadLabelFiltering';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumersMode from './CpuConsumersMode';
 import { getCpuUsageSummary } from './cpuUsageSummary';
 
-export interface CpuConsumerFilters {
+export interface CpuConsumerFilters extends ThreadLabelFilters {
   nameFilter: string;
   stackFilter: string;
 }
 
 const filterThreads = (threads: Map<number, Thread>, filters: CpuConsumerFilters): Map<number, Thread> => {
-  if (!filters.nameFilter && !filters.stackFilter) {
+  if (!filters.nameFilter && !filters.stackFilter && !isAnyThreadLabelFilterActive(filters)) {
     return threads;
   }
 
-  return new Map([...threads].filter(([, thread]) => matchesRegexFilters(thread, filters.nameFilter, filters.stackFilter)));
+  return new Map([...threads].filter(([, thread]) => (
+    matchesRegexFilters(thread, filters.nameFilter, filters.stackFilter)
+      && matchesThreadLabelFilters(thread, filters)
+  )));
 };
 
 const calculateUsageFor = (threads: Map<number, Thread>, mode: CpuConsumersMode, dumpCount: number): CpuConsumer => {

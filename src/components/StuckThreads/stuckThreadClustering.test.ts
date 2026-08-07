@@ -1,3 +1,4 @@
+import { setStaticThreadLabels } from '../../common/threadLabels';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import { getStuckThreadClusters, StuckThreadsFilters } from './stuckThreadClustering';
@@ -14,6 +15,7 @@ const createDump = (timestamp: number, stackTrace: string[]): ThreadDump => {
   const dump = new ThreadDump(timestamp);
   const thread = new Thread(1, 'http-nio-8080-exec-1', timestamp);
   thread.stackTrace.push(...stackTrace);
+  setStaticThreadLabels(thread);
   dump.threads.push(thread);
   return dump;
 };
@@ -35,6 +37,17 @@ describe('getStuckThreadClusters', () => {
       createDump(1, ['org.apache.lucene.search.IndexSearcher.search']),
       createDump(2, ['org.apache.lucene.search.IndexSearcher.search']),
     ], { ...defaultFilters(), nameFilter: 'http', stackFilter: 'lucene' });
+
+    expect(clusters).toHaveLength(1);
+    expect(clusters[0]).toHaveLength(2);
+  });
+
+  it('filters snapshots by stored labels before clustering', () => {
+    const clusters = getStuckThreadClusters([
+      createDump(1, ['org.apache.lucene.search.IndexSearcher.search']),
+      createDump(2, ['org.apache.lucene.search.IndexSearcher.search']),
+      createDump(3, ['org.postgresql.jdbc.PgStatement.execute']),
+    ], { ...defaultFilters(), indexSearch: true });
 
     expect(clusters).toHaveLength(1);
     expect(clusters[0]).toHaveLength(2);

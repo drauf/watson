@@ -27,11 +27,11 @@ const renderSettings = () => {
       active
       nonJvm
       http={false}
-      nonHttp={false}
+      background={false}
       database={false}
       indexSearch={false}
-      crowd={false}
-      usingCpu={false}
+      userDirectory={false}
+      cpuActive={false}
       nameFilter=""
       stackFilter=""
       dumpColumnWidth={160}
@@ -67,16 +67,15 @@ describe('ThreadsOverviewSettings', () => {
     const { onFilterChange } = renderSettings();
 
     expect(screen.getByRole('button', { name: 'HTTP' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Non-HTTP' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Background' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Index search' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'User directory' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'CPU active' })).toBeInTheDocument();
     expect(screen.getByText('Show HTTP request-processing threads, including browser and REST API actions')).toBeInTheDocument();
-    expect(screen.getByText('Hide HTTP request-processing threads to focus on background activity')).toBeInTheDocument();
-    expect(screen.getByText('Show threads performing database queries and operations.')).toBeInTheDocument();
-    expect(screen.getByText('Show threads performing Lucene or OpenSearch indexing and queries.')).toBeInTheDocument();
-    expect(screen.getByText('Show threads calling Atlassian Embedded Crowd for user and group directory lookups.')).toBeInTheDocument();
-    expect(screen.getAllByText('Combines with other stack filters to narrow results.')).toHaveLength(3);
-
+    expect(screen.getByText('Show non-HTTP background threads, such as schedulers and internal workers')).toBeInTheDocument();
+    expect(screen.getByText('Show threads performing database queries and operations')).toBeInTheDocument();
+    expect(screen.getByText('Show threads performing Lucene or OpenSearch indexing and queries')).toBeInTheDocument();
+    expect(screen.getByText('Show threads calling Atlassian Embedded Crowd for user and group directory lookups')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Index search' }));
     fireEvent.click(screen.getByRole('button', { name: 'User directory' }));
 

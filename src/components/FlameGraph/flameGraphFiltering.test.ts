@@ -21,7 +21,7 @@ const createDump = (threads: Thread[]): ThreadDump => {
 
 const filters = {
   withoutIdle: false,
-  usingCpu: false,
+  cpuActive: false,
   nameFilter: '',
   stackFilter: '',
 };
@@ -35,12 +35,21 @@ describe('filterFlameGraphThreads', () => {
 
     const threads = filterFlameGraphThreads(threadDumps, {
       ...filters,
-      usingCpu: true,
+      cpuActive: true,
       nameFilter: 'http.*exec',
       stackFilter: 'Request',
     });
 
     expect(threads.map((thread) => thread.name)).toEqual(['http-nio-8080-exec-1']);
+  });
+
+  it('filters thread snapshots by stored labels before creating the graph', () => {
+    const threads = filterFlameGraphThreads([createDump([
+      createThread(1, 'index-worker', '20.00', ['org.apache.lucene.search.IndexSearcher.search']),
+      createThread(2, 'database-worker', '20.00', ['org.postgresql.jdbc.PgStatement.execute']),
+    ])], { ...filters, indexSearch: true });
+
+    expect(threads.map((thread) => thread.name)).toEqual(['index-worker']);
   });
 
   it('returns no threads when a regular expression matches nothing', () => {
