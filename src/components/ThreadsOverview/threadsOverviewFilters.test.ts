@@ -1,6 +1,7 @@
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import {
+  filterRowsMatchingStackFilter,
   filterThreads,
   getThreadsMatchingStackFilter,
   isFilteredByStack,
@@ -29,10 +30,10 @@ const createThread = (id: number, name: string, stackTrace: string[] = [], cpuUs
   return thread;
 };
 
-const createRow = (thread: Thread): ThreadOverviewDataRow => ({
+const createRow = (thread: Thread, threadsByDump = new Map([[0, thread]])): ThreadOverviewDataRow => ({
   id: thread.id,
   name: thread.name,
-  threadsByDump: new Map([[0, thread]]),
+  threadsByDump,
 });
 
 describe('threadsOverviewFilters', () => {
@@ -92,6 +93,25 @@ describe('threadsOverviewFilters', () => {
     expect(getThreadsMatchingStackFilter(rows, { ...defaultFilters(), crowd: true })).toEqual(
       new Set([crowdOnlyThread.uniqueId, jiraCrowdOnlyThread.uniqueId]),
     );
+  });
+
+  it('hides rows without matching snapshots while retaining other snapshots from matching rows', () => {
+    const matchingSnapshot = createThread(1, 'worker-1', ['app.Database.query']);
+    const nonMatchingSnapshot = createThread(2, 'worker-1', ['app.Work.run']);
+    const nonMatchingThread = createThread(3, 'worker-2', ['app.Work.run']);
+    const matchingRow = createRow(matchingSnapshot, new Map([
+      [0, matchingSnapshot],
+      [1, nonMatchingSnapshot],
+    ]));
+    const nonMatchingRow = createRow(nonMatchingThread);
+    const rows = [matchingRow, nonMatchingRow];
+    const matchingStackFilter = getThreadsMatchingStackFilter(rows, {
+      ...defaultFilters(),
+      stackFilter: 'database',
+    });
+
+    expect(filterRowsMatchingStackFilter(rows, matchingStackFilter)).toEqual([matchingRow]);
+    expect(matchingRow.threadsByDump.get(1)).toBe(nonMatchingSnapshot);
   });
 
   it('does not report stack filtering when no stack filter is active', () => {

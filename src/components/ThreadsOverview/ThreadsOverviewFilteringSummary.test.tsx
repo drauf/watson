@@ -26,7 +26,7 @@ describe('ThreadsOverviewFilteringSummary', () => {
     expect(screen.queryByText(/Highlighting/)).not.toBeInTheDocument();
   });
 
-  it('shows only the snapshot metric when only stack trace filters are active', () => {
+  it('shows the snapshot metric when every displayed row matches a stack trace filter', () => {
     render(
       <ThreadsOverviewFilteringSummary
         isFilteredByStack
@@ -36,7 +36,7 @@ describe('ThreadsOverviewFilteringSummary', () => {
       />,
     );
 
-    expect(screen.getByText('Highlighting 2 of 3 thread snapshots (66.7%)')).toBeInTheDocument();
+    expect(screen.getByText('Highlighting 2 matching thread snapshots')).toBeInTheDocument();
     expect(screen.queryByText(/Showing/)).not.toBeInTheDocument();
   });
 
@@ -51,7 +51,7 @@ describe('ThreadsOverviewFilteringSummary', () => {
     );
 
     expect(screen.getByText('Showing 2 of 4 threads (50.0%)')).toBeInTheDocument();
-    expect(screen.getByText('Highlighting 2 of 3 thread snapshots (66.7%)')).toBeInTheDocument();
+    expect(screen.getByText('Highlighting 2 matching thread snapshots')).toBeInTheDocument();
   });
 
   it('shows zero percent when stack filtering has no matching rows', () => {
@@ -64,7 +64,8 @@ describe('ThreadsOverviewFilteringSummary', () => {
       />,
     );
 
-    expect(screen.getByText('Highlighting 0 of 0 thread snapshots (0.0%)')).toBeInTheDocument();
+    expect(screen.getByText('Showing 0 of 2 threads (0.0%)')).toBeInTheDocument();
+    expect(screen.getByText('Highlighting 0 matching thread snapshots')).toBeInTheDocument();
   });
 
   it('does not render a summary without active filters', () => {

@@ -92,6 +92,12 @@ export const getThreadsMatchingStackFilter = (
   );
 };
 
+export const filterRowsMatchingStackFilter = (
+  rows: ThreadOverviewDataRow[],
+  matchingStackFilter: ReadonlySet<number>,
+): ThreadOverviewDataRow[] => rows.filter((row) => Array.from(row.threadsByDump.values())
+  .some((thread) => matchingStackFilter.has(thread.uniqueId)));
+
 export const isFilteredByStack = (filters: ThreadsOverviewFilters): boolean => Boolean(
   filters.stackFilter || filters.indexSearch || filters.crowd || filters.database,
 );

@@ -1,6 +1,7 @@
 import { createRef, type JSX } from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import {
+  filterRowsMatchingStackFilter,
   filterThreads,
   getThreadsMatchingStackFilter,
   isFilteredByStack,
@@ -33,7 +34,7 @@ interface State {
   stackPreviewLines: number;
 }
 
-class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
+export class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> {
   private readonly workspaceRef = createRef<HTMLElement>();
 
   private cachedThreadDumps: ThreadDump[] | undefined;
@@ -62,9 +63,12 @@ class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, State> 
   public override render(): JSX.Element {
     const { nonEmptyThreadDumps, rows, dates } = this.getData();
     const filters: ThreadsOverviewFilters = this.state;
-    const filteredRows = filterThreads(rows, filters);
-    const matchingStackFilter = getThreadsMatchingStackFilter(filteredRows, filters);
+    const rowsMatchingThreadFilters = filterThreads(rows, filters);
+    const matchingStackFilter = getThreadsMatchingStackFilter(rowsMatchingThreadFilters, filters);
     const filteredByStack = isFilteredByStack(filters);
+    const filteredRows = filteredByStack
+      ? filterRowsMatchingStackFilter(rowsMatchingThreadFilters, matchingStackFilter)
+      : rowsMatchingThreadFilters;
 
     if (nonEmptyThreadDumps.length === 0) {
       return <NoThreadDumpsError />;

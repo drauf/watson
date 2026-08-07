@@ -9,9 +9,6 @@ interface Props {
   rows: ThreadOverviewDataRow[];
   matchingStackFilter: Set<number>;
 }
-
-const nonEmptyCounter = (sum: number, row: ThreadOverviewDataRow): number => sum + row.threadsByDump.size;
-
 export default class ThreadsOverviewFilteringSummary extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const {
@@ -19,19 +16,15 @@ export default class ThreadsOverviewFilteringSummary extends React.PureComponent
     } = this.props;
     const matchingThreads = rows.length;
     const matchingSnapshots = matchingStackFilter.size;
-    const totalSnapshots = rows.reduce(nonEmptyCounter, 0);
-    const matchingSnapshotPercentage = totalSnapshots === 0
-      ? '0.0'
-      : ((matchingSnapshots / totalSnapshots) * 100).toFixed(1);
-    const isFilteredByName = threadsNumber !== matchingThreads;
+    const isFilteredByRows = threadsNumber !== matchingThreads;
 
-    if (!isFilteredByName && !isFilteredByStack) {
+    if (!isFilteredByRows && !isFilteredByStack) {
       return <Text id="matching-summary">{null}</Text>;
     }
 
     return (
       <Inline id="matching-summary" alignBlock="center" space="space.100" shouldWrap>
-        {isFilteredByName && (
+        {isFilteredByRows && (
           <Text as="span">
             Showing
             {' '}
@@ -46,20 +39,14 @@ export default class ThreadsOverviewFilteringSummary extends React.PureComponent
             %)
           </Text>
         )}
-        {isFilteredByName && isFilteredByStack && <Text as="span" color="color.text.subtle">·</Text>}
+        {isFilteredByRows && isFilteredByStack && <Text as="span" color="color.text.subtle">·</Text>}
         {isFilteredByStack && (
           <Text as="span">
             Highlighting
             {' '}
             {matchingSnapshots}
             {' '}
-            of
-            {' '}
-            {totalSnapshots}
-            {' '}
-            thread snapshots (
-            {matchingSnapshotPercentage}
-            %)
+            matching thread snapshots
           </Text>
         )}
       </Inline>
