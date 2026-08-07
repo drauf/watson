@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { setStaticThreadLabels } from '../../common/threadLabels';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import CpuConsumersMode from './CpuConsumersMode';
@@ -8,6 +9,7 @@ const createThread = (id: number, name: string, cpuUsage: string, stackTrace: st
   const thread = new Thread(id, name);
   thread.cpuUsage = cpuUsage;
   thread.stackTrace.push(...stackTrace);
+  setStaticThreadLabels(thread);
   return thread;
 };
 
@@ -47,6 +49,18 @@ describe('calculateCpuConsumers', () => {
 
     expect(consumers).toHaveLength(1);
     expect([...consumers[0].threadOccurrences.values()].map((thread) => thread.name)).toEqual(['http-nio-8080-exec-1']);
+  });
+
+  it('filters occurrences by stored labels before calculating consumers', () => {
+    const consumers = calculateCpuConsumers([
+      createDump([
+        createThread(1, 'index-worker', '20.00', ['org.apache.lucene.search.IndexSearcher.search']),
+        createThread(2, 'database-worker', '30.00', ['org.postgresql.jdbc.PgStatement.execute']),
+      ]),
+    ], CpuConsumersMode.Mean, { nameFilter: '', stackFilter: '', indexSearch: true });
+
+    expect(consumers).toHaveLength(1);
+    expect([...consumers[0].threadOccurrences.values()].map((thread) => thread.name)).toEqual(['index-worker']);
   });
 
   it('returns no consumers when filters match no threads', () => {

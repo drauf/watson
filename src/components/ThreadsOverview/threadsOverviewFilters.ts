@@ -3,18 +3,13 @@ import {
   isJvmHousekeepingThread,
   ThreadLabel,
 } from '../../common/threadLabels';
+import { ThreadLabelFilters } from '../../common/threadLabelFiltering';
 import { isActiveOverTime } from '../../common/threadFilters';
 import { ThreadOverviewDataRow } from './threadsOverviewRows';
 
-export interface ThreadsOverviewFilters {
+export interface ThreadsOverviewFilters extends ThreadLabelFilters {
   active: boolean;
   nonJvm: boolean;
-  http: boolean;
-  nonHttp: boolean;
-  database: boolean;
-  indexSearch: boolean;
-  crowd: boolean;
-  usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
 }
@@ -47,10 +42,10 @@ export const filterThreads = (
 
   return rows
     .filter((row) => !filters.active || isActiveOverTime(row.threadsByDump))
-    .filter((row) => !filters.usingCpu || matchesLabel(row, ThreadLabel.CPU_ACTIVE))
+    .filter((row) => !filters.cpuActive || matchesLabel(row, ThreadLabel.CPU_ACTIVE))
     .filter((row) => !filters.nonJvm || !Array.from(row.threadsByDump.values()).some(isJvmHousekeepingThread))
     .filter((row) => !filters.http || matchesLabel(row, ThreadLabel.HTTP))
-    .filter((row) => !filters.nonHttp || matchesLabel(row, ThreadLabel.BACKGROUND))
+    .filter((row) => !filters.background || matchesLabel(row, ThreadLabel.BACKGROUND))
     .filter((row) => !nameRegex || matchesName(row, nameRegex));
 };
 
@@ -77,7 +72,7 @@ export const getStackFilterMatches = (
   const matchingRowIds = new Set<number>();
   const matchingThreadIds = new Set<number>();
 
-  if (stackTraceFilters.length === 0 && !filters.indexSearch && !filters.crowd && !filters.database) {
+  if (stackTraceFilters.length === 0 && !filters.indexSearch && !filters.userDirectory && !filters.database) {
     return { matchingRowIds, matchingThreadIds };
   }
 
@@ -87,7 +82,7 @@ export const getStackFilterMatches = (
         (filter) => thread.stackTrace.some((line) => filter.test(line)),
       );
       const matchesLabels = (!filters.indexSearch || hasThreadLabel(thread, ThreadLabel.INDEX_SEARCH))
-        && (!filters.crowd || hasThreadLabel(thread, ThreadLabel.USER_DIRECTORY))
+        && (!filters.userDirectory || hasThreadLabel(thread, ThreadLabel.USER_DIRECTORY))
         && (!filters.database || hasThreadLabel(thread, ThreadLabel.DATABASE));
 
       if (matchesStackFilters && matchesLabels) {
@@ -101,5 +96,5 @@ export const getStackFilterMatches = (
 };
 
 export const isFilteredByStack = (filters: ThreadsOverviewFilters): boolean => Boolean(
-  filters.stackFilter || filters.indexSearch || filters.crowd || filters.database,
+  filters.stackFilter || filters.indexSearch || filters.userDirectory || filters.database,
 );

@@ -15,7 +15,14 @@ describe('CpuConsumersSettings', () => {
         mode={CpuConsumersMode.Mean}
         nameFilter=""
         stackFilter=""
+        http={false}
+        background={false}
+        indexSearch={false}
+        database={false}
+        userDirectory={false}
+        cpuActive={false}
         onModeChange={onModeChange}
+        onFilterChange={vi.fn()}
         onRegExpChange={onRegExpChange}
       />,
     );

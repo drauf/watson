@@ -3,11 +3,12 @@ import Text from '@atlaskit/primitives/text';
 import React, { type JSX } from 'react';
 import Filter from '../Filter/Filter';
 import RegexFilters from '../common/RegexFilters';
+import ThreadLabelFilterButtons from '../common/ThreadLabelFilterButtons';
 import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
+import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 
-interface Props {
+interface Props extends ThreadLabelFilterState {
   withoutIdle: boolean;
-  usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
   onFilterChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -18,9 +19,14 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const {
       withoutIdle,
-      usingCpu,
       nameFilter,
       stackFilter,
+      http,
+      background,
+      indexSearch,
+      database,
+      userDirectory,
+      cpuActive,
       onFilterChange,
       onRegExpChange,
     } = this.props;
@@ -42,12 +48,15 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
                 tooltip="Hide threads waiting for I/O or in thread pools"
               />
 
-              <Filter
-                name="usingCpu"
-                displayName="CPU active"
-                checked={usingCpu}
-                onChange={onFilterChange}
-                tooltip="Show only threads using at least 10% CPU"
+              <ThreadLabelFilterButtons
+                http={http}
+                background={background}
+                indexSearch={indexSearch}
+                database={database}
+                userDirectory={userDirectory}
+                cpuActive={cpuActive}
+                includeCpuActive
+                onFilterChange={onFilterChange}
               />
             </ButtonGroup>
           </section>

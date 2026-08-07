@@ -1,10 +1,11 @@
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import { matchesRegexFilters } from '../../common/regexFiltering';
 import { isIdleInSnapshot } from '../../common/threadFilters';
+import { matchesThreadLabelFilters, ThreadLabelFilters } from '../../common/threadLabelFiltering';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 
-export interface StuckThreadsFilters {
+export interface StuckThreadsFilters extends ThreadLabelFilters {
   maxDifferingLines: number;
   minClusterSize: number;
   withoutIdle: boolean;
@@ -60,6 +61,7 @@ export const getStuckThreadClusters = (
   .map((threads) => Array.from(threads.values()).filter((thread) => (
     (!filters.withoutIdle || !isIdleInSnapshot(thread))
       && matchesRegexFilters(thread, filters.nameFilter, filters.stackFilter)
+      && matchesThreadLabelFilters(thread, filters)
   )))
   .filter((threads) => threads.length > 0)
   .flatMap((threads) => clusterThreadSnapshots(threads, filters.maxDifferingLines))

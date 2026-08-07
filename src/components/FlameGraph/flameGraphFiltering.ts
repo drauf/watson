@@ -1,12 +1,11 @@
-import { hasThreadLabel, ThreadLabel } from '../../common/threadLabels';
+import { matchesThreadLabelFilters, ThreadLabelFilters } from '../../common/threadLabelFiltering';
 import { matchesNameFilter, matchesStackFilter } from '../../common/regexFiltering';
 import { isIdleInSnapshot } from '../../common/threadFilters';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 
-export interface FlameGraphFilters {
+export interface FlameGraphFilters extends ThreadLabelFilters {
   withoutIdle: boolean;
-  usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
 }
@@ -16,4 +15,4 @@ export const filterFlameGraphThreads = (threadDumps: ThreadDump[], filters: Flam
   .filter((thread) => !filters.withoutIdle || !isIdleInSnapshot(thread))
   .filter((thread) => matchesNameFilter(thread, filters.nameFilter))
   .filter((thread) => matchesStackFilter(thread, filters.stackFilter))
-  .filter((thread) => !filters.usingCpu || hasThreadLabel(thread, ThreadLabel.CPU_ACTIVE));
+  .filter((thread) => matchesThreadLabelFilters(thread, filters));

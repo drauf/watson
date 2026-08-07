@@ -6,24 +6,13 @@ import React, { type JSX } from 'react';
 import Filter from '../Filter/Filter';
 import HoverPopup from '../common/HoverPopup';
 import RegexFilters from '../common/RegexFilters';
+import ThreadLabelFilterButtons from '../common/ThreadLabelFilterButtons';
+import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 import TimeWindowFilter from '../TimeWindow/TimeWindowFilter';
 
-const stackFilterTooltip = (description: string): JSX.Element => (
-  <>
-    <p>{description}</p>
-    <p>Combines with other stack filters to narrow results.</p>
-  </>
-);
-
-interface Props {
+interface Props extends ThreadLabelFilterState {
   active: boolean;
   nonJvm: boolean;
-  http: boolean;
-  nonHttp: boolean;
-  database: boolean;
-  indexSearch: boolean;
-  crowd: boolean;
-  usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
   dumpColumnWidth: number;
@@ -40,11 +29,11 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
       active,
       nonJvm,
       http,
-      nonHttp,
+      background,
       database,
       indexSearch,
-      crowd,
-      usingCpu,
+      userDirectory,
+      cpuActive,
       nameFilter,
       stackFilter,
       dumpColumnWidth,
@@ -79,52 +68,15 @@ export default class ThreadsOverviewSettings extends React.PureComponent<Props> 
               tooltip="Hide JVM housekeeping threads (GC, compiler, etc.)"
             />
 
-            <Filter
-              name="http"
-              displayName="HTTP"
-              checked={http}
-              onChange={onFilterChange}
-              tooltip="Show HTTP request-processing threads, including browser and REST API actions"
-            />
-
-            <Filter
-              name="nonHttp"
-              displayName="Non-HTTP"
-              checked={nonHttp}
-              onChange={onFilterChange}
-              tooltip="Hide HTTP request-processing threads to focus on background activity"
-            />
-
-            <Filter
-              name="database"
-              displayName="Database"
-              checked={database}
-              onChange={onFilterChange}
-              tooltip={stackFilterTooltip('Show threads performing database queries and operations.')}
-            />
-
-            <Filter
-              name="indexSearch"
-              displayName="Index search"
-              checked={indexSearch}
-              onChange={onFilterChange}
-              tooltip={stackFilterTooltip('Show threads performing Lucene or OpenSearch indexing and queries.')}
-            />
-
-            <Filter
-              name="crowd"
-              displayName="User directory"
-              checked={crowd}
-              onChange={onFilterChange}
-              tooltip={stackFilterTooltip('Show threads calling Atlassian Embedded Crowd for user and group directory lookups.')}
-            />
-
-            <Filter
-              name="usingCpu"
-              displayName="CPU active"
-              checked={usingCpu}
-              onChange={onFilterChange}
-              tooltip="Show only threads using at least 10% CPU"
+            <ThreadLabelFilterButtons
+              http={http}
+              background={background}
+              indexSearch={indexSearch}
+              database={database}
+              userDirectory={userDirectory}
+              cpuActive={cpuActive}
+              includeCpuActive
+              onFilterChange={onFilterChange}
             />
           </ButtonGroup>
         </section>

@@ -25,6 +25,8 @@ describe('MonitorsSettings', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Unowned locks' }));
     fireEvent.change(screen.getByLabelText('Thread name pattern'), { target: { value: 'http' } });
 
+    expect(screen.queryByRole('button', { name: 'Database' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'CPU active' })).not.toBeInTheDocument();
     expect(onFilterChange).toHaveBeenCalledTimes(2);
     expect(onRegExpChange).toHaveBeenCalledTimes(1);
   });

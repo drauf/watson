@@ -15,9 +15,9 @@ export type ThreadLabel = typeof ThreadLabel[keyof typeof ThreadLabel];
 
 const HTTP_THREAD_PATTERN = /^https?-.*exec/;
 const JVM_HOUSEKEEPING_THREAD_PATTERN = /^Attach Listener|^C[12] CompilerThread|^G1 Conc#\d+$|^G1 Concurrent |^G1 Main|^G1 Refine#\d+$|^Gang worker#|^GC Daemon|^GC Thread#\d+$|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
-const INDEX_SEARCH_PATTERN = /org\.(?:apache\.lucene|opensearch)\./;
-const USER_DIRECTORY_PATTERN = /com\.atlassian\.(?:crowd\.(?!filter\.)|jira\.crowd\.)/;
-const DATABASE_PATTERN = /database|sql|query|jdbc|jooq|postgres|mysql|oracle|c3p0/i;
+const INDEX_SEARCH_PATTERN = /^org\.(?:apache\.lucene|opensearch)\./;
+const USER_DIRECTORY_PATTERN = /^com\.atlassian\.(?:crowd\.(?!filter\.)|jira\.crowd\.)/;
+const DATABASE_PATTERN = /^com\.(microsoft\.sqlserver|mysql|querydsl)|^oracle\.jdbc|^org\.(hibernate|jooq|ofbiz|oracle|postgresql)|c3p0/i;
 
 const labelDisplayNames: Record<ThreadLabel, string> = {
   [ThreadLabel.BACKGROUND]: 'Background',

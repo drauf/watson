@@ -1,5 +1,6 @@
 import { createRef, type JSX } from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
+import { defaultThreadLabelFilterState, ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 import {
   filterThreads,
   getStackFilterMatches,
@@ -18,15 +19,9 @@ import ThreadsOverviewTable from './ThreadsOverviewTable';
 import { createThreadOverviewRows, ThreadOverviewDataRow } from './threadsOverviewRows';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 
-interface State {
+interface State extends ThreadLabelFilterState {
   active: boolean;
   nonJvm: boolean;
-  http: boolean;
-  nonHttp: boolean;
-  database: boolean;
-  indexSearch: boolean;
-  crowd: boolean;
-  usingCpu: boolean;
   nameFilter: string;
   stackFilter: string;
   dumpColumnWidth: number;
@@ -47,12 +42,7 @@ export class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, 
   public override state = {
     active: true,
     nonJvm: true,
-    http: false,
-    nonHttp: false,
-    database: false,
-    indexSearch: false,
-    crowd: false,
-    usingCpu: false,
+    ...defaultThreadLabelFilterState,
     nameFilter: '',
     stackFilter: '',
     dumpColumnWidth: 160,
@@ -83,11 +73,11 @@ export class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, 
             active={this.state.active}
             nonJvm={this.state.nonJvm}
             http={this.state.http}
-            nonHttp={this.state.nonHttp}
+            background={this.state.background}
             database={this.state.database}
             indexSearch={this.state.indexSearch}
-            crowd={this.state.crowd}
-            usingCpu={this.state.usingCpu}
+            userDirectory={this.state.userDirectory}
+            cpuActive={this.state.cpuActive}
             nameFilter={this.state.nameFilter}
             stackFilter={this.state.stackFilter}
             dumpColumnWidth={this.state.dumpColumnWidth}

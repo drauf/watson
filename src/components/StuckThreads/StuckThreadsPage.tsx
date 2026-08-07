@@ -1,6 +1,7 @@
 import React, { type JSX } from 'react';
 import EmptyState from '../Errors/EmptyState';
 import { getStuckThreadClusters, StuckThreadsFilters } from './stuckThreadClustering';
+import { defaultThreadLabelFilterState, ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
@@ -10,7 +11,7 @@ import StuckThreadsGroup from './StuckThreadsGroup';
 import StuckThreadsSettings from './StuckThreadsSettings';
 import './StuckThreadsPage.css';
 
-interface State {
+interface State extends ThreadLabelFilterState {
   maxDifferingLines: number;
   minClusterSize: number;
   withoutIdle: boolean;
@@ -30,6 +31,7 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
       withoutIdle: true,
       nameFilter: '',
       stackFilter: '',
+      ...defaultThreadLabelFilterState,
     };
   }
 
@@ -62,6 +64,12 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
           withoutIdle={this.state.withoutIdle}
           nameFilter={this.state.nameFilter}
           stackFilter={this.state.stackFilter}
+          http={this.state.http}
+          background={this.state.background}
+          indexSearch={this.state.indexSearch}
+          database={this.state.database}
+          userDirectory={this.state.userDirectory}
+          cpuActive={this.state.cpuActive}
           onFilterChange={this.handleFilterChange}
           onIntegerChange={this.handleIntegerChange}
           onRegExpChange={this.handleTextChange}
@@ -82,7 +90,7 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
     return (
       <PaginatedCollection
         items={clusters}
-        resetKey={`${this.state.maxDifferingLines}:${this.state.minClusterSize}:${this.state.withoutIdle}:${this.state.nameFilter}:${this.state.stackFilter}:${this.props.threadDumps.length}`}
+        resetKey={`${this.state.maxDifferingLines}:${this.state.minClusterSize}:${this.state.withoutIdle}:${this.state.nameFilter}:${this.state.stackFilter}:${this.state.http}:${this.state.background}:${this.state.indexSearch}:${this.state.database}:${this.state.userDirectory}:${this.state.cpuActive}:${this.props.threadDumps.length}`}
         getKey={(group) => group[0].uniqueId}
         renderItem={(group) => (
           <StuckThreadsGroup

@@ -1,9 +1,10 @@
 import { matchesRegexFilters } from '../../common/regexFiltering';
 import { isIdleInSnapshot } from '../../common/threadFilters';
+import { matchesThreadLabelFilters, ThreadLabelFilters } from '../../common/threadLabelFiltering';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 
-export interface SimilarStacksFilters {
+export interface SimilarStacksFilters extends ThreadLabelFilters {
   linesToConsider: number;
   withoutIdle: boolean;
   nameFilter: string;
@@ -15,6 +16,9 @@ const getStackTrace = (thread: Thread, filters: SimilarStacksFilters): string | 
     return undefined;
   }
   if (!matchesRegexFilters(thread, filters.nameFilter, filters.stackFilter)) {
+    return undefined;
+  }
+  if (!matchesThreadLabelFilters(thread, filters)) {
     return undefined;
   }
 
