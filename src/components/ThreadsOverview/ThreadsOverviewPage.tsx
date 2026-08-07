@@ -1,9 +1,8 @@
 import { createRef, type JSX } from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
 import {
-  filterRowsMatchingStackFilter,
   filterThreads,
-  getThreadsMatchingStackFilter,
+  getStackFilterMatches,
   isFilteredByStack,
   ThreadsOverviewFilters,
 } from './threadsOverviewFilters';
@@ -64,10 +63,13 @@ export class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, 
     const { nonEmptyThreadDumps, rows, dates } = this.getData();
     const filters: ThreadsOverviewFilters = this.state;
     const rowsMatchingThreadFilters = filterThreads(rows, filters);
-    const matchingStackFilter = getThreadsMatchingStackFilter(rowsMatchingThreadFilters, filters);
+    const { matchingRowIds, matchingThreadIds: matchingStackFilter } = getStackFilterMatches(
+      rowsMatchingThreadFilters,
+      filters,
+    );
     const filteredByStack = isFilteredByStack(filters);
     const filteredRows = filteredByStack
-      ? filterRowsMatchingStackFilter(rowsMatchingThreadFilters, matchingStackFilter)
+      ? rowsMatchingThreadFilters.filter((row) => matchingRowIds.has(row.id))
       : rowsMatchingThreadFilters;
 
     if (nonEmptyThreadDumps.length === 0) {

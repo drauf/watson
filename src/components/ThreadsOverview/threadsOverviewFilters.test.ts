@@ -1,9 +1,8 @@
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import {
-  filterRowsMatchingStackFilter,
   filterThreads,
-  getThreadsMatchingStackFilter,
+  getStackFilterMatches,
   isFilteredByStack,
   ThreadsOverviewFilters,
 } from './threadsOverviewFilters';
@@ -85,17 +84,17 @@ describe('threadsOverviewFilters', () => {
     ];
     const filters = { ...defaultFilters(), indexSearch: true, database: true };
 
-    expect(getThreadsMatchingStackFilter(rows, filters)).toEqual(new Set([luceneDatabaseThread.uniqueId]));
+    expect(getStackFilterMatches(rows, filters).matchingThreadIds).toEqual(new Set([luceneDatabaseThread.uniqueId]));
     expect(isFilteredByStack(filters)).toBe(true);
-    expect(getThreadsMatchingStackFilter(rows, { ...defaultFilters(), indexSearch: true })).toEqual(
+    expect(getStackFilterMatches(rows, { ...defaultFilters(), indexSearch: true }).matchingThreadIds).toEqual(
       new Set([luceneDatabaseThread.uniqueId, openSearchOnlyThread.uniqueId]),
     );
-    expect(getThreadsMatchingStackFilter(rows, { ...defaultFilters(), crowd: true })).toEqual(
+    expect(getStackFilterMatches(rows, { ...defaultFilters(), crowd: true }).matchingThreadIds).toEqual(
       new Set([crowdOnlyThread.uniqueId, jiraCrowdOnlyThread.uniqueId]),
     );
   });
 
-  it('hides rows without matching snapshots while retaining other snapshots from matching rows', () => {
+  it('collects matching rows and snapshots while retaining other snapshots in matching rows', () => {
     const matchingSnapshot = createThread(1, 'worker-1', ['app.Database.query']);
     const nonMatchingSnapshot = createThread(2, 'worker-1', ['app.Work.run']);
     const nonMatchingThread = createThread(3, 'worker-2', ['app.Work.run']);
@@ -105,17 +104,19 @@ describe('threadsOverviewFilters', () => {
     ]));
     const nonMatchingRow = createRow(nonMatchingThread);
     const rows = [matchingRow, nonMatchingRow];
-    const matchingStackFilter = getThreadsMatchingStackFilter(rows, {
-      ...defaultFilters(),
-      stackFilter: 'database',
-    });
 
-    expect(filterRowsMatchingStackFilter(rows, matchingStackFilter)).toEqual([matchingRow]);
+    expect(getStackFilterMatches(rows, { ...defaultFilters(), stackFilter: 'database' })).toEqual({
+      matchingRowIds: new Set([matchingRow.id]),
+      matchingThreadIds: new Set([matchingSnapshot.uniqueId]),
+    });
     expect(matchingRow.threadsByDump.get(1)).toBe(nonMatchingSnapshot);
   });
 
   it('does not report stack filtering when no stack filter is active', () => {
-    expect(getThreadsMatchingStackFilter([], defaultFilters())).toEqual(new Set());
+    expect(getStackFilterMatches([], defaultFilters())).toEqual({
+      matchingRowIds: new Set(),
+      matchingThreadIds: new Set(),
+    });
     expect(isFilteredByStack(defaultFilters())).toBe(false);
   });
 });

@@ -75,28 +75,34 @@ const getStackTraceFilters = (filters: ThreadsOverviewFilters): RegExp[] => {
   return stackTraceFilters;
 };
 
-export const getThreadsMatchingStackFilter = (
+export interface StackFilterMatches {
+  matchingRowIds: Set<number>;
+  matchingThreadIds: Set<number>;
+}
+
+export const getStackFilterMatches = (
   rows: ThreadOverviewDataRow[],
   filters: ThreadsOverviewFilters,
-): Set<number> => {
+): StackFilterMatches => {
   const stackTraceFilters = getStackTraceFilters(filters);
+  const matchingRowIds = new Set<number>();
+  const matchingThreadIds = new Set<number>();
+
   if (stackTraceFilters.length === 0) {
-    return new Set();
+    return { matchingRowIds, matchingThreadIds };
   }
 
-  return new Set(
-    rows
-      .flatMap((row) => Array.from(row.threadsByDump.values()))
-      .filter((thread) => stackTraceFilters.every((filter) => thread.stackTrace.some((line) => filter.test(line))))
-      .map((thread) => thread.uniqueId),
-  );
-};
+  rows.forEach((row) => {
+    row.threadsByDump.forEach((thread) => {
+      if (stackTraceFilters.every((filter) => thread.stackTrace.some((line) => filter.test(line)))) {
+        matchingRowIds.add(row.id);
+        matchingThreadIds.add(thread.uniqueId);
+      }
+    });
+  });
 
-export const filterRowsMatchingStackFilter = (
-  rows: ThreadOverviewDataRow[],
-  matchingStackFilter: ReadonlySet<number>,
-): ThreadOverviewDataRow[] => rows.filter((row) => Array.from(row.threadsByDump.values())
-  .some((thread) => matchingStackFilter.has(thread.uniqueId)));
+  return { matchingRowIds, matchingThreadIds };
+};
 
 export const isFilteredByStack = (filters: ThreadsOverviewFilters): boolean => Boolean(
   filters.stackFilter || filters.indexSearch || filters.crowd || filters.database,
