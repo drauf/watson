@@ -12,6 +12,15 @@ export interface ThreadLabelFilters {
 
 export type ThreadLabelFilterState = Required<ThreadLabelFilters>;
 
+export const defaultThreadLabelFilterState: ThreadLabelFilterState = {
+  http: false,
+  background: false,
+  indexSearch: false,
+  database: false,
+  userDirectory: false,
+  cpuActive: false,
+};
+
 export const matchesThreadLabelFilters = (thread: Thread, filters: ThreadLabelFilters): boolean => (
   (!filters.http || hasThreadLabel(thread, ThreadLabel.HTTP))
   && (!filters.background || hasThreadLabel(thread, ThreadLabel.BACKGROUND))

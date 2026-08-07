@@ -71,6 +71,24 @@ describe('threadLabels', () => {
       expect(getStaticThreadLabels(createThread(name, stackTrace))).toEqual(expectedLabels);
     });
 
+    it.each([
+      'com.microsoft.sqlserver.jdbc.SQLServerStatement.execute',
+      'com.mysql.cj.jdbc.ClientPreparedStatement.execute',
+      'com.querydsl.sql.SQLQuery.fetch',
+      'oracle.jdbc.driver.OracleStatement.execute',
+      'org.hibernate.engine.jdbc.internal.StatementPreparerImpl.prepareStatement',
+      'org.jooq.impl.AbstractQuery.execute',
+      'org.ofbiz.entity.jdbc.SQLProcessor.run',
+      'org.oracle.database.jdbc.OracleConnection.open',
+      'org.postgresql.jdbc.PgStatement.execute',
+      'com.mchange.v2.c3p0.ComboPooledDataSource.getConnection',
+    ])('classifies known database package %s', (stackFrame) => {
+      expect(getStaticThreadLabels(createThread('worker-1', [stackFrame]))).toEqual([
+        ThreadLabel.BACKGROUND,
+        ThreadLabel.DATABASE,
+      ]);
+    });
+
     it('combines all applicable static labels in display order', () => {
       expect(getStaticThreadLabels(createThread('http-nio-8080-exec-1', [
         'com.atlassian.jira.crowd.embedded.CrowdDirectoryService.findUser',

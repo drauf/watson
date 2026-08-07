@@ -1,7 +1,7 @@
 import React, { type JSX } from 'react';
 import EmptyState from '../Errors/EmptyState';
 import { getStuckThreadClusters, StuckThreadsFilters } from './stuckThreadClustering';
-import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
+import { defaultThreadLabelFilterState, ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import Thread from '../../types/Thread';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
@@ -31,12 +31,7 @@ class StuckThreadsPage extends PageWithSettings<WithThreadDumpsProps, State> {
       withoutIdle: true,
       nameFilter: '',
       stackFilter: '',
-      http: false,
-      background: false,
-      indexSearch: false,
-      database: false,
-      userDirectory: false,
-      cpuActive: false,
+      ...defaultThreadLabelFilterState,
     };
   }
 

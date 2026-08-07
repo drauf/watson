@@ -2,7 +2,7 @@ import { StackFrame } from 'd3-flame-graph';
 import type { JSX } from 'react';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import { filterFlameGraphThreads, FlameGraphFilters } from './flameGraphFiltering';
-import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
+import { defaultThreadLabelFilterState, ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 import EmptyState from '../Errors/EmptyState';
 import NoThreadDumpsError from '../Errors/NoThreadDumpsError';
 import FlameGraph from './FlameGraph';
@@ -67,12 +67,7 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     withoutIdle: true,
     nameFilter: '',
     stackFilter: '',
-    http: false,
-    background: false,
-    indexSearch: false,
-    database: false,
-    userDirectory: false,
-    cpuActive: false,
+    ...defaultThreadLabelFilterState,
   };
 
   private static processLine = (previousFrame: StackFrame, line: string): StackFrame => {

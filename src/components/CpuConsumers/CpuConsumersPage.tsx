@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { calculateCpuConsumers, CpuConsumerFilters } from './cpuConsumerCalculation';
-import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
+import { defaultThreadLabelFilterState, ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 import { WithThreadDumpsProps, withAllThreadDumps } from '../../common/withThreadDumps';
 import ThreadDump from '../../types/ThreadDump';
 import EmptyState from '../Errors/EmptyState';
@@ -30,12 +30,7 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
       threadDumps: nonEmptyThreadDumps,
       nameFilter: '',
       stackFilter: '',
-      http: false,
-      background: false,
-      indexSearch: false,
-      database: false,
-      userDirectory: false,
-      cpuActive: false,
+      ...defaultThreadLabelFilterState,
     };
   }
 
@@ -80,7 +75,7 @@ class CpuConsumersPage extends PageWithSettings<WithThreadDumpsProps, State> {
       <CpuConsumersList
         dumpsNumber={this.state.threadDumps.length}
         consumers={consumers}
-        resetKey={`${this.state.mode}:${this.state.nameFilter}:${this.state.stackFilter}:${this.state.http}:${this.state.background}:${this.state.indexSearch}:${this.state.database}:${this.state.userDirectory}:${this.state.threadDumps.length}`}
+        resetKey={`${this.state.mode}:${this.state.nameFilter}:${this.state.stackFilter}:${this.state.http}:${this.state.background}:${this.state.indexSearch}:${this.state.database}:${this.state.userDirectory}:${this.state.cpuActive}:${this.state.threadDumps.length}`}
       />
     );
   };

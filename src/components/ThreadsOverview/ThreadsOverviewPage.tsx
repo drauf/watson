@@ -1,6 +1,6 @@
 import { createRef, type JSX } from 'react';
 import getThreadsOverTime from '../../common/getThreadsOverTime';
-import { ThreadLabelFilterState } from '../../common/threadLabelFiltering';
+import { defaultThreadLabelFilterState, ThreadLabelFilterState } from '../../common/threadLabelFiltering';
 import {
   filterThreads,
   getStackFilterMatches,
@@ -42,12 +42,7 @@ export class ThreadsOverviewPage extends PageWithSettings<WithThreadDumpsProps, 
   public override state = {
     active: true,
     nonJvm: true,
-    http: false,
-    background: false,
-    database: false,
-    indexSearch: false,
-    userDirectory: false,
-    cpuActive: false,
+    ...defaultThreadLabelFilterState,
     nameFilter: '',
     stackFilter: '',
     dumpColumnWidth: 160,

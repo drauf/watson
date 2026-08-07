@@ -1,5 +1,10 @@
 import Thread from '../types/Thread';
-import { isAnyThreadLabelFilterActive, matchesThreadLabelFilters, ThreadLabelFilters } from './threadLabelFiltering';
+import {
+  defaultThreadLabelFilterState,
+  isAnyThreadLabelFilterActive,
+  matchesThreadLabelFilters,
+  ThreadLabelFilters,
+} from './threadLabelFiltering';
 import { ThreadLabel } from './threadLabels';
 
 const labeledThread = (labels: ThreadLabel[]): Thread => {
@@ -9,6 +14,17 @@ const labeledThread = (labels: ThreadLabel[]): Thread => {
 };
 
 describe('threadLabelFiltering', () => {
+  it('initializes every shared label filter as inactive', () => {
+    expect(defaultThreadLabelFilterState).toEqual({
+      http: false,
+      background: false,
+      indexSearch: false,
+      database: false,
+      userDirectory: false,
+      cpuActive: false,
+    });
+  });
+
   describe('matchesThreadLabelFilters', () => {
     it('matches any thread when no label filters are active', () => {
       expect(matchesThreadLabelFilters(labeledThread([]), {})).toBe(true);
