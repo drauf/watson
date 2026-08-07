@@ -1,13 +1,15 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
-import viteTsconfigPaths from 'vite-tsconfig-paths';
+import react from '@vitejs/plugin-react';
 import { configDefaults } from 'vitest/config';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 
 // https://vitejs.dev/config/
 export default defineConfig({
     base: '/watson/',
+    resolve: {
+        tsconfigPaths: true,
+    },
     server: {
         port: 3000,
     },
@@ -25,7 +27,6 @@ export default defineConfig({
     },
     plugins: [
         react(),
-        viteTsconfigPaths(),
         viteSingleFile()
     ],
 });
