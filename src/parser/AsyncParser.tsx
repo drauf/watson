@@ -1,3 +1,4 @@
+import { updateCpuActiveLabel } from '../common/threadLabels';
 import CpuUsage from './cpuusage/CpuUsage';
 import { tryGetEpochFromFileName } from './TimestampParser';
 import Thread from '../types/Thread';
@@ -274,6 +275,7 @@ export default class AsyncParser {
       if (thread) {
         thread.cpuUsage = cpu.getCpuUsage();
         thread.runningFor = cpu.runningFor;
+        updateCpuActiveLabel(thread);
       }
     });
   }

@@ -1,4 +1,5 @@
 import Thread from '../../types/Thread';
+import { setStaticThreadLabels, updateCpuActiveLabel } from '../../common/threadLabels';
 import ThreadStatus from '../../types/ThreadStatus';
 import {
   filterThreads,
@@ -26,6 +27,8 @@ const createThread = (id: number, name: string, stackTrace: string[] = [], cpuUs
   thread.stackTrace.push(...stackTrace);
   thread.cpuUsage = cpuUsage;
   thread.status = ThreadStatus.RUNNABLE;
+  setStaticThreadLabels(thread);
+  updateCpuActiveLabel(thread);
   return thread;
 };
 

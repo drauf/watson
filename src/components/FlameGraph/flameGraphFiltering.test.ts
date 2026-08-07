@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { setStaticThreadLabels, updateCpuActiveLabel } from '../../common/threadLabels';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import { filterFlameGraphThreads } from './flameGraphFiltering';
@@ -7,6 +8,8 @@ const createThread = (id: number, name: string, cpuUsage: string, stackTrace: st
   const thread = new Thread(id, name);
   thread.cpuUsage = cpuUsage;
   thread.stackTrace.push(...stackTrace);
+  setStaticThreadLabels(thread);
+  updateCpuActiveLabel(thread);
   return thread;
 };
 

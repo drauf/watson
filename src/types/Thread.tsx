@@ -1,3 +1,4 @@
+import type { ThreadLabel } from '../common/threadLabels';
 import type Lock from './Lock';
 import ThreadStatus from './ThreadStatus';
 import TypeWithUniqueId from './TypeWithUniqueId';
@@ -16,6 +17,8 @@ export default class Thread extends TypeWithUniqueId {
   public readonly classicalLocksHeld: Lock[] = [];
 
   public readonly stackTrace: string[] = [];
+
+  public labels: ThreadLabel[] = [];
 
   public status = ThreadStatus.UNKNOWN as ThreadStatus;
 
