@@ -22,7 +22,7 @@ describe('FlameGraphSettings', () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole('button', { name: /^High CPU usage$/ }));
+    fireEvent.click(screen.getByRole('button', { name: /^CPU active$/ }));
     fireEvent.change(screen.getByLabelText('Stack trace pattern'), { target: { value: 'Request' } });
 
     expect(onFilterChange).toHaveBeenCalledTimes(1);

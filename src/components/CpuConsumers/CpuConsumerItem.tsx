@@ -1,5 +1,11 @@
 import Lozenge from '@atlaskit/lozenge/new';
 import React, { type JSX } from 'react';
+import {
+  getThreadGroupLabels,
+  getThreadLabelAppearance,
+  getThreadLabelDisplayName,
+  ThreadLabel,
+} from '../../common/threadLabels';
 import Thread from '../../types/Thread';
 import CollapsableGroup from '../CollapsableGroup';
 import GroupHeader from '../common/GroupHeader';
@@ -43,6 +49,8 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
     const { consumer, dumpsNumber } = this.props;
     const { max, mean, median } = consumer.summary;
     const threadName = CpuConsumerItem.getThreadName(consumer.threadOccurrences.values());
+    const labels = getThreadGroupLabels(Array.from(consumer.threadOccurrences.values()))
+      .filter((label) => label !== ThreadLabel.CPU_ACTIVE);
     const threadsPadded: (Thread | undefined)[] = [];
 
     for (let i = 0; i < dumpsNumber; i++) {
@@ -65,7 +73,9 @@ export default class CpuConsumerItem extends React.PureComponent<Props> {
           </>
         )}
         title={threadName}
-        metadata={null}
+        metadata={labels.map((label) => (
+          <Lozenge key={label} appearance={getThreadLabelAppearance(label)}>{getThreadLabelDisplayName(label)}</Lozenge>
+        ))}
       />
     );
     const content = (

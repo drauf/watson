@@ -3,6 +3,7 @@
 import {
   vi, describe, it, expect, beforeEach, afterEach,
 } from 'vitest';
+import { ThreadLabel } from '../common/threadLabels';
 import AsyncParser, { ProgressCallback, CompletionCallback } from './AsyncParser';
 import ThreadDump from '../types/ThreadDump';
 import CpuUsage from './cpuusage/CpuUsage';
@@ -194,6 +195,7 @@ describe('AsyncParser', () => {
             id: 123,
             name: 'Thread-1',
             cpuUsage: '0.00',
+            labels: [ThreadLabel.BACKGROUND],
             runningFor: '0:00.00',
           } as any);
           callback(threadDump);
@@ -204,7 +206,7 @@ describe('AsyncParser', () => {
       const CpuUsageJfrParser = await import('./cpuusage/jfr/CpuUsageJfrParser');
       (CpuUsageJfrParser.default.parseCpuUsage as any).mockImplementation(
         (fileName: string, _lines: string[], callback: any) => {
-          callback(CpuUsage.fromJfr(fileName, 1, [new ThreadCpuUsage(123, '0:01.00', 5)]));
+          callback(CpuUsage.fromJfr(fileName, 1, [new ThreadCpuUsage(123, '0:01.00', 15)]));
         },
       );
 
@@ -213,7 +215,8 @@ describe('AsyncParser', () => {
       const parsedThreadDumps = (mockOnFilesParsed as any).mock.calls[0][0] as ThreadDump[];
       expect(parsedThreadDumps).toHaveLength(1);
       expect(parsedThreadDumps[0].threads[0]).toMatchObject({
-        cpuUsage: '5.00',
+        cpuUsage: '15.00',
+        labels: [ThreadLabel.BACKGROUND, ThreadLabel.CPU_ACTIVE],
         runningFor: '0:01.00',
       });
     });

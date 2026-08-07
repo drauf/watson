@@ -1,3 +1,4 @@
+import { setStaticThreadLabels } from '../common/threadLabels';
 import Lock from '../types/Lock';
 import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
@@ -50,6 +51,7 @@ export default class AsyncThreadDumpParser {
     }
 
     AsyncThreadDumpParser.identifyAnonymousSynchronizers(threadDump.threads);
+    threadDump.threads.forEach(setStaticThreadLabels);
     callback(threadDump);
   }
 

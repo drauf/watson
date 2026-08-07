@@ -1,6 +1,11 @@
 import Lozenge from '@atlaskit/lozenge/new';
 import React, { type JSX } from 'react';
-import { getRepresentativeStackLine, getStackCategories } from '../../common/stackCategories';
+import getRepresentativeStackLine from '../../common/getRepresentativeStackLine';
+import {
+  getThreadGroupLabels,
+  getThreadLabelAppearance,
+  getThreadLabelDisplayName,
+} from '../../common/threadLabels';
 import Thread from '../../types/Thread';
 import CollapsableGroup from '../CollapsableGroup';
 import GroupHeader from '../common/GroupHeader';
@@ -10,20 +15,17 @@ interface Props {
   threadGroup: Thread[];
   linesToConsider: number;
 }
-
-const getCategoryAppearance = () => 'accent-yellow' as const;
-
 export default class SimilarStacksGroup extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const { linesToConsider, threadGroup } = this.props;
-    const categories = getStackCategories(threadGroup);
+    const labels = getThreadGroupLabels(threadGroup);
 
     const header = (
       <GroupHeader
         leading={<Lozenge appearance="neutral" trailingMetric={threadGroup.length.toString()}>Threads</Lozenge>}
         title={getRepresentativeStackLine(threadGroup)}
-        metadata={categories.map((category) => (
-          <Lozenge key={category} appearance={getCategoryAppearance()}>{category}</Lozenge>
+        metadata={labels.map((label) => (
+          <Lozenge key={label} appearance={getThreadLabelAppearance(label)}>{getThreadLabelDisplayName(label)}</Lozenge>
         ))}
       />
     );

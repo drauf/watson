@@ -44,10 +44,10 @@ export default class FlameGraphSettings extends React.PureComponent<Props> {
 
               <Filter
                 name="usingCpu"
-                displayName="High CPU usage"
+                displayName="CPU active"
                 checked={usingCpu}
                 onChange={onFilterChange}
-                tooltip="Show only threads using more than 10% CPU - focuses on actual performance hotspots"
+                tooltip="Show only threads using at least 10% CPU"
               />
             </ButtonGroup>
           </section>

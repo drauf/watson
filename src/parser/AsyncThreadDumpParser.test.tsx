@@ -3,6 +3,7 @@ import {
 } from 'vitest';
 import AsyncThreadDumpParser, { THREAD_DUMP_DATE_PATTERN } from './AsyncThreadDumpParser';
 import ThreadDump from '../types/ThreadDump';
+import { ThreadLabel } from '../common/threadLabels';
 import ThreadStatus from '../types/ThreadStatus';
 
 describe('AsyncThreadDumpParser', () => {
@@ -65,6 +66,33 @@ describe('AsyncThreadDumpParser', () => {
       expect(thread.id).toBe(0x1234);
       expect(thread.status).toBe(ThreadStatus.RUNNABLE);
       expect(thread.stackTrace).toContain('java.lang.Thread.run(Thread.java:748)');
+      expect(thread.labels).toEqual([ThreadLabel.BACKGROUND]);
+    });
+
+    it('assigns static labels after parsing the complete stack trace', async () => {
+      const lines = [
+        '2023-01-01 12:00:00',
+        '"http-nio-8080-exec-1" #1 prio=5 os_prio=0 tid=0x00007f8e2c008800 nid=0x1234 runnable [0x00007f8e35b3e000]',
+        '   java.lang.Thread.State: RUNNABLE',
+        '        at org.apache.lucene.search.IndexSearcher.search(IndexSearcher.java:1)',
+        '        at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:1)',
+      ];
+
+      const parsePromise = AsyncThreadDumpParser.parseThreadDump(
+        lines,
+        mockCallback,
+        mockProgressCallback,
+      );
+
+      await vi.runAllTimersAsync();
+      await parsePromise;
+
+      const threadDump = mockCallback.mock.calls[0][0] as ThreadDump;
+      expect(threadDump.threads[0].labels).toEqual([
+        ThreadLabel.HTTP,
+        ThreadLabel.INDEX_SEARCH,
+        ThreadLabel.DATABASE,
+      ]);
     });
 
     it('should parse multiple threads in single dump', async () => {

@@ -1,3 +1,8 @@
+import {
+  hasThreadLabel,
+  isJvmHousekeepingThread,
+  ThreadLabel,
+} from '../../common/threadLabels';
 import { isActiveOverTime } from '../../common/threadFilters';
 import { ThreadOverviewDataRow } from './threadsOverviewRows';
 
@@ -14,19 +19,13 @@ export interface ThreadsOverviewFilters {
   stackFilter: string;
 }
 
-const jvmRegex = /^Attach Listener|^C[12] CompilerThread|^G1 Concurrent |^G1 Main|^Gang worker#|^GC Daemon|^Service Thread|^Signal Dispatcher|^String Deduplication Thread|^Surrogate Locker Thread|^VM Periodic|^VM Thread/;
-const httpRegex = /^https?-.*exec/;
-const indexSearchRegex = /org\.apache\.lucene|org\.opensearch/;
-const crowdRegex = /com\.atlassian\.(?:crowd\.(?!filter\.)|jira\.crowd\.)/;
-const databaseRegex = /database|sql|query|jdbc|jooq|postgres|mysql|oracle|c3p0/i;
-
 const matchesName = (row: ThreadOverviewDataRow, regex: RegExp): boolean => Array.from(
   row.threadsByDump.values(),
 ).some((thread) => regex.test(thread.name));
 
-const isUsingCpu = (row: ThreadOverviewDataRow): boolean => Array.from(
+const matchesLabel = (row: ThreadOverviewDataRow, label: ThreadLabel): boolean => Array.from(
   row.threadsByDump.values(),
-).some((thread) => parseFloat(thread.cpuUsage) >= 10);
+).some((thread) => hasThreadLabel(thread, label));
 
 const toOptionalRegex = (value: string): RegExp | undefined => {
   if (!value) {
@@ -48,10 +47,10 @@ export const filterThreads = (
 
   return rows
     .filter((row) => !filters.active || isActiveOverTime(row.threadsByDump))
-    .filter((row) => !filters.usingCpu || isUsingCpu(row))
-    .filter((row) => !filters.nonJvm || !matchesName(row, jvmRegex))
-    .filter((row) => !filters.http || matchesName(row, httpRegex))
-    .filter((row) => !filters.nonHttp || !matchesName(row, httpRegex))
+    .filter((row) => !filters.usingCpu || matchesLabel(row, ThreadLabel.CPU_ACTIVE))
+    .filter((row) => !filters.nonJvm || !Array.from(row.threadsByDump.values()).some(isJvmHousekeepingThread))
+    .filter((row) => !filters.http || matchesLabel(row, ThreadLabel.HTTP))
+    .filter((row) => !filters.nonHttp || matchesLabel(row, ThreadLabel.BACKGROUND))
     .filter((row) => !nameRegex || matchesName(row, nameRegex));
 };
 
@@ -62,16 +61,6 @@ const getStackTraceFilters = (filters: ThreadsOverviewFilters): RegExp[] => {
   if (stackRegex) {
     stackTraceFilters.push(stackRegex);
   }
-  if (filters.indexSearch) {
-    stackTraceFilters.push(indexSearchRegex);
-  }
-  if (filters.crowd) {
-    stackTraceFilters.push(crowdRegex);
-  }
-  if (filters.database) {
-    stackTraceFilters.push(databaseRegex);
-  }
-
   return stackTraceFilters;
 };
 
@@ -88,13 +77,20 @@ export const getStackFilterMatches = (
   const matchingRowIds = new Set<number>();
   const matchingThreadIds = new Set<number>();
 
-  if (stackTraceFilters.length === 0) {
+  if (stackTraceFilters.length === 0 && !filters.indexSearch && !filters.crowd && !filters.database) {
     return { matchingRowIds, matchingThreadIds };
   }
 
   rows.forEach((row) => {
     row.threadsByDump.forEach((thread) => {
-      if (stackTraceFilters.every((filter) => thread.stackTrace.some((line) => filter.test(line)))) {
+      const matchesStackFilters = stackTraceFilters.every(
+        (filter) => thread.stackTrace.some((line) => filter.test(line)),
+      );
+      const matchesLabels = (!filters.indexSearch || hasThreadLabel(thread, ThreadLabel.INDEX_SEARCH))
+        && (!filters.crowd || hasThreadLabel(thread, ThreadLabel.USER_DIRECTORY))
+        && (!filters.database || hasThreadLabel(thread, ThreadLabel.DATABASE));
+
+      if (matchesStackFilters && matchesLabels) {
         matchingRowIds.add(row.id);
         matchingThreadIds.add(thread.uniqueId);
       }
