@@ -23,6 +23,15 @@
 <noscript>
   You need to enable JavaScript to run Watson.
 </noscript>
+<div id="initial-loading" aria-live="polite">
+  <h2>Loading thread dumps from local storage...</h2>
+</div>
+<style>
+  #initial-loading { display: flex; align-items: center; justify-content: center; min-height: 100dvh; color: #292a2e; }
+</style>
+<script>
+  if (!window.location.hash) document.getElementById('initial-loading').remove();
+</script>
 <div id="root"></div>
 
 <script type="module" src="/src/index.tsx"></script>
