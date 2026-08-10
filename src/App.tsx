@@ -1,4 +1,5 @@
 import AppProvider from '@atlaskit/app-provider';
+import { useEffect, useSyncExternalStore } from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import './App.css';
 import FullPageDropzone from './components/FullPageDropzone/FullPageDropzone';
@@ -24,6 +25,7 @@ const routes = [
   {
     path: ':threadDumpsHash/*',
     element: <Container />,
+    HydrateFallback: () => null,
     loader: threadDumpsLoader,
     errorElement: <FullPageDropzone />, // todo: proper error page
     children: [
@@ -68,9 +70,24 @@ const routes = [
 ];
 const router = createHashRouter(routes);
 
+const AppRouter = () => {
+  const isInitializing = useSyncExternalStore(
+    (onStoreChange) => router.subscribe(() => onStoreChange()),
+    () => !router.state.initialized,
+  );
+
+  useEffect(() => {
+    if (!isInitializing) {
+      document.getElementById('initial-loading')?.remove();
+    }
+  }, [isInitializing]);
+
+  return <RouterProvider router={router} />;
+};
+
 const App = () => (
   <AppProvider defaultColorMode="auto">
-    <RouterProvider router={router} />
+    <AppRouter />
   </AppProvider>
 );
 
