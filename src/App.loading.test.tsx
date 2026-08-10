@@ -24,7 +24,7 @@ describe('App', () => {
   it('keeps the static loading message visible until stored thread dumps are loaded', async () => {
     document.body.insertAdjacentHTML('afterbegin', `
       <div id="initial-loading">
-        <h2>Loading thread dumps from local storage...</h2>
+        <h2>Loading cached data...</h2>
       </div>
     `);
     window.location.hash = '#/stored-dumps/summary';
@@ -32,12 +32,12 @@ describe('App', () => {
 
     render(<App />);
 
-    expect(screen.getByRole('heading', { name: 'Loading thread dumps from local storage...' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Loading cached data...' })).toBeInTheDocument();
 
     resolveThreadDumps([]);
 
     await waitFor(() => {
-      expect(screen.queryByRole('heading', { name: 'Loading thread dumps from local storage...' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('heading', { name: 'Loading cached data...' })).not.toBeInTheDocument();
     });
   });
 });

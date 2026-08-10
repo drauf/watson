@@ -24,10 +24,12 @@
   You need to enable JavaScript to run Watson.
 </noscript>
 <div id="initial-loading" aria-live="polite">
-  <h2>Loading thread dumps from local storage...</h2>
+  <h2>Loading cached data...</h2>
 </div>
 <style>
-  #initial-loading { display: flex; align-items: center; justify-content: center; min-height: 100dvh; color: #292a2e; }
+  html, body { margin: 0; }
+  #initial-loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #292a2e; font-family: system-ui, sans-serif; }
+  #initial-loading h2 { margin: 0; font-size: 20px; line-height: 1.2; }
 </style>
 <script>
   if (!window.location.hash) document.getElementById('initial-loading').remove();

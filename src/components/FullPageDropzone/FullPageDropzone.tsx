@@ -112,7 +112,7 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
 
     try {
       FullPageDropzone.markPerformance('storage:start');
-      const key = setParsedData(threadDumps);
+      const key = await setParsedData(threadDumps);
       FullPageDropzone.markPerformance('storage:complete');
       this.setState({
         parsedDataKey: key,
