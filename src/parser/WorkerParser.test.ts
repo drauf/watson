@@ -96,6 +96,36 @@ describe('WorkerParser', () => {
     expect(onFilesParsed).toHaveBeenCalledWith([]);
   });
 
+  it('coalesces queued progress updates before completion', async () => {
+    const progressResolvers: (() => void)[] = [];
+    const onProgress = vi.fn(() => new Promise<void>((resolve) => {
+      progressResolvers.push(resolve);
+    }));
+    const onFilesParsed = vi.fn();
+    const parser = new WorkerParser(onFilesParsed, onProgress);
+    const readingProgress = { ...progress, phase: 'reading' as const, percentage: 1 };
+    const groupingProgress = { ...progress, phase: 'grouping' as const, percentage: 95 };
+
+    const parsing = parser.parseFiles([new File(['contents'], 'input.txt')]);
+    const worker = workerState.workerInstances[0];
+    worker.onmessage?.({ data: { type: 'progress', progress: readingProgress } } as MessageEvent);
+    await Promise.resolve();
+    worker.onmessage?.({ data: { type: 'progress', progress } } as MessageEvent);
+    worker.onmessage?.({ data: { type: 'progress', progress: groupingProgress } } as MessageEvent);
+    worker.onmessage?.({ data: { type: 'complete', threadDumps: [] } } as MessageEvent);
+
+    expect(onProgress).toHaveBeenCalledWith(readingProgress);
+    progressResolvers.shift()?.();
+    await Promise.resolve();
+
+    expect(onProgress).toHaveBeenCalledTimes(2);
+    expect(onProgress).toHaveBeenLastCalledWith(groupingProgress);
+    progressResolvers.shift()?.();
+    await parsing;
+
+    expect(onFilesParsed).toHaveBeenCalledWith([]);
+  });
+
   it('propagates worker errors with their stack', async () => {
     const parser = new WorkerParser(vi.fn());
 

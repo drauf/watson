@@ -31,9 +31,32 @@ export default class WorkerParser {
     await new Promise<void>((resolve, reject) => {
       const worker = new ParserWorker();
       let lastProgressPhase: ParseProgress['phase'] | undefined;
-      let progressUpdate = Promise.resolve();
-      const finishAfterProgress = (action: () => void | Promise<void>) => {
-        progressUpdate.then(action).then(resolve, reject);
+      let latestProgress: ParseProgress | undefined;
+      let progressDelivery: Promise<void> | undefined;
+      let terminalAction: (() => void | Promise<void>) | undefined;
+
+      const finish = () => {
+        if (terminalAction === undefined) return;
+        const action = terminalAction;
+        terminalAction = undefined;
+        Promise.resolve(action()).then(resolve, reject);
+      };
+
+      const deliverLatestProgress = () => {
+        if (progressDelivery !== undefined || latestProgress === undefined) {
+          if (progressDelivery === undefined && latestProgress === undefined) {
+            finish();
+          }
+          return;
+        }
+
+        const progress = latestProgress;
+        latestProgress = undefined;
+        progressDelivery = Promise.resolve(this.onProgress?.(progress));
+        progressDelivery.then(() => {
+          progressDelivery = undefined;
+          deliverLatestProgress();
+        }, reject);
       };
 
       worker.onmessage = (event: MessageEvent<WorkerResponse>) => {
@@ -43,26 +66,28 @@ export default class WorkerParser {
             WorkerParser.markPerformance(message.progress.phase);
             lastProgressPhase = message.progress.phase;
           }
-          progressUpdate = progressUpdate.then(() => this.onProgress?.(message.progress));
+          latestProgress = message.progress;
+          deliverLatestProgress();
           return;
         }
 
         WorkerParser.markPerformance('complete');
         worker.terminate();
         if (message.type === 'complete') {
-          finishAfterProgress(() => this.onFilesParsed(message.threadDumps));
-          return;
+          terminalAction = () => this.onFilesParsed(message.threadDumps);
+        } else {
+          const error = new Error(message.message);
+          if (message.stack !== undefined) {
+            error.stack = message.stack;
+          }
+          terminalAction = () => Promise.reject(error);
         }
-
-        const error = new Error(message.message);
-        if (message.stack !== undefined) {
-          error.stack = message.stack;
-        }
-        finishAfterProgress(() => Promise.reject(error));
+        deliverLatestProgress();
       };
       worker.onerror = (event) => {
         worker.terminate();
-        finishAfterProgress(() => Promise.reject(new Error(event.message)));
+        terminalAction = () => Promise.reject(new Error(event.message));
+        deliverLatestProgress();
       };
       worker.postMessage({ type: 'parse', files, config: getPerformanceConfig() });
     });
