@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import ProgressIndicator, { type UploadProgress } from './ProgressIndicator';
-import { ParseProgress } from '../../parser/AsyncParser';
+import type { ParseProgress } from '../../parser/ParseProgress';
 
 describe('ProgressIndicator', () => {
   const createMockProgress = (overrides: Partial<ParseProgress> = {}): ParseProgress => ({

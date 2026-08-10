@@ -4,7 +4,7 @@ import {
   vi, describe, it, expect, beforeEach, afterEach,
 } from 'vitest';
 import { ThreadLabel } from '../common/threadLabels';
-import AsyncParser, { ProgressCallback, CompletionCallback } from './AsyncParser';
+import MainThreadParser, { ProgressCallback, CompletionCallback } from './MainThreadParser';
 import ThreadDump from '../types/ThreadDump';
 import CpuUsage from './cpuusage/CpuUsage';
 import ThreadCpuUsage from './cpuusage/ThreadCpuUsage';
@@ -32,10 +32,10 @@ vi.mock('./cpuusage/jfr/CpuUsageJfrParser', () => ({
   CPU_USAGE_JFR_FIRST_LINE_PATTERN: /^(JVM_THREAD_ID\s*OS_THREAD_ID\s*%CPU_USER_MODE\s*%CPU_SYSTEM_MODE\s*SYSTEM_TIME\s*THREAD_NAME)/,
 }));
 
-describe('AsyncParser', () => {
+describe('MainThreadParser', () => {
   let mockOnFilesParsed: CompletionCallback;
   let mockOnProgress: ProgressCallback;
-  let parser: AsyncParser;
+  let parser: MainThreadParser;
 
   const createMockFile = (name: string, content: string): File => {
     const blob = new Blob([content], { type: 'text/plain' });
@@ -45,7 +45,7 @@ describe('AsyncParser', () => {
   beforeEach(() => {
     mockOnFilesParsed = vi.fn();
     mockOnProgress = vi.fn();
-    parser = new AsyncParser(mockOnFilesParsed, mockOnProgress);
+    parser = new MainThreadParser(mockOnFilesParsed, mockOnProgress);
   });
 
   afterEach(() => {
@@ -55,14 +55,14 @@ describe('AsyncParser', () => {
   describe('constructor', () => {
     it('should create parser with required callback', () => {
       const onFilesParsed = vi.fn();
-      const testParser = new AsyncParser(onFilesParsed);
+      const testParser = new MainThreadParser(onFilesParsed);
       expect(testParser).toBeDefined();
     });
 
     it('should create parser with optional progress callback', () => {
       const onFilesParsed = vi.fn();
       const onProgress = vi.fn();
-      const testParser = new AsyncParser(onFilesParsed, onProgress);
+      const testParser = new MainThreadParser(onFilesParsed, onProgress);
       expect(testParser).toBeDefined();
     });
   });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ParseProgress } from '../../parser/AsyncParser';
+import type { ParseProgress } from '../../parser/ParseProgress';
 import ProgressIndicator from './ProgressIndicator';
 
 const createProgress = (overrides: Partial<ParseProgress> = {}): ParseProgress => ({

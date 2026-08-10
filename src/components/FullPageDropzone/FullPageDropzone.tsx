@@ -3,7 +3,8 @@ import React, { type JSX } from 'react';
 import Dropzone from 'react-dropzone';
 import { Navigate } from 'react-router-dom';
 import { setParsedData } from '../../common/threadDumpsStorageService';
-import AsyncParser, { ParseProgress } from '../../parser/AsyncParser';
+import type { ParseProgress } from '../../parser/ParseProgress';
+import WorkerParser from '../../parser/WorkerParser';
 import ThreadDump from '../../types/ThreadDump';
 import DropzoneGuide from './DropzoneGuide';
 import ProgressIndicator, { type StorageProgress, type UploadProgress } from '../ProgressIndicator/ProgressIndicator';
@@ -64,7 +65,7 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
     });
 
     try {
-      const parser = new AsyncParser(this.onParsed, this.onProgress);
+      const parser = new WorkerParser(this.onParsed, this.onProgress);
       await parser.parseFiles(files);
     } catch (error) {
       console.error('Error parsing files:', error);
