@@ -24,17 +24,16 @@ export default class CpuUsageJfrParser {
 
     const offsets: CpuUsageJfrTopColumnOffsets = this.getColumnOffsets(lines[0]);
 
-    lines
-      .slice(1)
-      .map((line) => matchMultipleGroups(DATA_COLUMN_MATCHER, line))
-      .filter((columns) => columns.length >= offsets.getMaxIndex())
-      .forEach((columns) => {
+    for (let lineIndex = 1; lineIndex < lines.length; lineIndex++) {
+      const columns = matchMultipleGroups(DATA_COLUMN_MATCHER, lines[lineIndex]);
+      if (columns.length >= offsets.getMaxIndex()) {
         const osThreadId = parseInt(columns[offsets.getOsThreadIdOffset()], 10);
         const cpuUserMode = parseFloat(columns[offsets.getCpuUserModeOffset()]);
         const cpuSystemMode = parseFloat(columns[offsets.getCpuSystemModeOffset()]);
         const systemTime = columns[offsets.getSystemTimeOffset()];
         threadCpuUsages.push(new ThreadCpuUsage(osThreadId, systemTime, cpuUserMode, cpuSystemMode));
-      });
+      }
+    }
 
     return threadCpuUsages;
   }

@@ -27,6 +27,7 @@
     "@atlaskit/pagination": "17.1.6",
     "@atlaskit/popup": "6.0.0",
     "@atlaskit/primitives": "22.2.1",
+    "@atlaskit/progress-bar": "5.1.1",
     "@atlaskit/section-message": "10.0.0",
     "@atlaskit/select": "22.6.3",
     "@atlaskit/textfield": "10.0.0",

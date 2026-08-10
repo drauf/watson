@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ProgressIndicator from './ProgressIndicator';
+import ProgressIndicator, { type UploadProgress } from './ProgressIndicator';
 import { ParseProgress } from '../../parser/AsyncParser';
 
 describe('ProgressIndicator', () => {
@@ -36,12 +36,11 @@ describe('ProgressIndicator', () => {
       expect(screen.getByText('76%')).toBeInTheDocument();
     });
 
-    it('sets progress bar width correctly', () => {
+    it('sets Atlaskit progress value correctly', () => {
       const progress = createMockProgress({ percentage: 60 });
       render(<ProgressIndicator progress={progress} />);
 
-      const progressBar = document.querySelector('.progress-fill');
-      expect(progressBar).toHaveStyle('width: 60%');
+      expect(screen.getByTestId('parser-progress')).toHaveAttribute('aria-valuenow', '0.6');
     });
   });
 
@@ -72,6 +71,18 @@ describe('ProgressIndicator', () => {
       render(<ProgressIndicator progress={progress} />);
 
       expect(screen.getByText('Analysis complete')).toBeInTheDocument();
+    });
+
+    it('displays an indeterminate storage phase without a percentage', () => {
+      const progress: UploadProgress = {
+        ...createMockProgress(),
+        phase: 'storing',
+      };
+      render(<ProgressIndicator progress={progress} />);
+
+      expect(screen.getByText('Saving analysis')).toBeInTheDocument();
+      expect(screen.queryByText('50%')).not.toBeInTheDocument();
+      expect(screen.getByTestId('parser-progress')).toHaveAttribute('aria-label', 'Finalizing analysis');
     });
   });
 
@@ -223,8 +234,7 @@ describe('ProgressIndicator', () => {
       expect(container.querySelector('.progress-indicator')).toBeInTheDocument();
       expect(container.querySelector('.progress-header')).toBeInTheDocument();
       expect(container.querySelector('.progress-percentage')).toBeInTheDocument();
-      expect(container.querySelector('.progress-bar')).toBeInTheDocument();
-      expect(container.querySelector('.progress-fill')).toBeInTheDocument();
+      expect(screen.getByTestId('parser-progress')).toBeInTheDocument();
       expect(container.querySelector('.progress-details')).toBeInTheDocument();
       expect(container.querySelector('.progress-file')).toBeInTheDocument();
     });
@@ -257,8 +267,7 @@ describe('ProgressIndicator', () => {
 
       expect(screen.getByText('0%')).toBeInTheDocument();
 
-      const progressBar = document.querySelector('.progress-fill');
-      expect(progressBar).toHaveStyle('width: 0%');
+      expect(screen.getByTestId('parser-progress')).toHaveAttribute('aria-valuenow', '0');
     });
 
     it('handles 100 percentage', () => {
@@ -267,8 +276,7 @@ describe('ProgressIndicator', () => {
 
       expect(screen.getByText('100%')).toBeInTheDocument();
 
-      const progressBar = document.querySelector('.progress-fill');
-      expect(progressBar).toHaveStyle('width: 100%');
+      expect(screen.getByTestId('parser-progress')).toHaveAttribute('aria-valuenow', '1');
     });
 
     it('handles empty file name', () => {

@@ -11,6 +11,22 @@ cleanup() {
 trap cleanup EXIT
 
 copy_snapshots=false
+docker_arguments=(
+  --rm
+  -v "$worktree:/work"
+  -w /work
+)
+if [[ -n "${WATSON_BENCHMARK_DIR:-}" ]]; then
+  if [[ ! -d "$WATSON_BENCHMARK_DIR" ]]; then
+    echo "WATSON_BENCHMARK_DIR is not a directory: $WATSON_BENCHMARK_DIR" >&2
+    exit 1
+  fi
+  docker_arguments+=(
+    -v "$WATSON_BENCHMARK_DIR:/benchmark-fixture:ro"
+    -e WATSON_BENCHMARK_DIR=/benchmark-fixture
+  )
+fi
+
 for argument in "$@"; do
   if [[ "$argument" == --update-snapshots* ]]; then
     copy_snapshots=true
@@ -25,9 +41,7 @@ rsync -a \
   --exclude 'test-results' \
   "$workspace_root/" "$worktree/"
 
-docker run --rm \
-  -v "$worktree:/work" \
-  -w /work \
+docker run "${docker_arguments[@]}" \
   "$image" \
   bash -lc 'yarn install --immutable && yarn playwright test "$@"' \
   -- "$@"
