@@ -1,38 +1,29 @@
-import { updateCpuActiveLabel } from '../common/threadLabels';
-import CpuUsage from './cpuusage/CpuUsage';
-import { tryGetEpochFromFileName } from './TimestampParser';
-import Thread from '../types/Thread';
 import ThreadDump from '../types/ThreadDump';
-import TopCpuUsageParser, { CPU_USAGE_TIMESTAMP_PATTERN } from './cpuusage/os/TopCpuUsageParser';
-import { matchOne } from './RegExpUtils';
+import type { ParseProgress } from './ParseProgress';
 import AsyncThreadDumpParser, { THREAD_DUMP_DATE_PATTERN } from './AsyncThreadDumpParser';
-import CpuUsageJfrParser, { CPU_USAGE_JFR_FIRST_LINE_PATTERN } from './cpuusage/jfr/CpuUsageJfrParser';
-import { getPerformanceConfig, PerformanceConfig } from './PerformanceConfig';
+import CpuUsage from './cpuusage/CpuUsage';
+import CpuUsageJfrParser from './cpuusage/jfr/CpuUsageJfrParser';
+import TopCpuUsageParser from './cpuusage/os/TopCpuUsageParser';
+import { getPerformanceConfig, type PerformanceConfig } from './PerformanceConfig';
+import { calculateParsingPercentage } from './ProgressCalculator';
+import { findCorrespondingThreadDump, groupCpuUsageWithThreadDump, sortThreadDumps } from './ParsedDataProcessor';
+import { matchOne } from './RegExpUtils';
+import { getTextFileKind } from './TextFileKind';
+import { tryGetEpochFromFileName } from './TimestampParser';
 
-// Maximum time difference (in ms) to consider CPU usage and thread dump as corresponding
-// This allows matching files even if the timestamps are not exactly the same, as usually they
-// are taken by alternating top and jstack commands
-const MAX_DIFFERENCE_BETWEEN_CORRESPONDING_FILES_IN_MS = 10000;
-const AN_HOUR = 60 * 60 * 1000;
 // Limits React progress state updates while parsing to avoid rendering overhead
 const PROGRESS_UPDATE_INTERVAL_MS = 200;
 // Gives the browser a paint opportunity roughly once per 60 Hz frame
 const UI_YIELD_INTERVAL_MS = 16;
 
-export interface ParseProgress {
-  phase: 'reading' | 'parsing' | 'grouping' | 'complete';
-  fileName: string;
-  filesProcessed: number;
-  totalFiles: number;
-  linesProcessed: number;
-  totalLines: number;
-  percentage: number;
-}
-
 export type ProgressCallback = (progress: ParseProgress) => void | Promise<void>;
 export type CompletionCallback = (threadDumps: ThreadDump[]) => void | Promise<void>;
 
-export default class AsyncParser {
+/**
+ * Main-thread fallback for environments where module workers are unavailable.
+ * Browser imports should use WorkerParser so parsing does not block rendering.
+ */
+export default class MainThreadParser {
   private cpuUsages: CpuUsage[] = [];
 
   private threadDumps: ThreadDump[] = [];
@@ -72,7 +63,7 @@ export default class AsyncParser {
   }
 
   public async parseFiles(uploaded: File[]): Promise<void> {
-    AsyncParser.markPerformance('start');
+    MainThreadParser.markPerformance('start');
     if (this.isProcessing) {
       throw new Error('Parser is already processing files');
     }
@@ -115,12 +106,12 @@ export default class AsyncParser {
     await this.reportProgressAndRefreshUi('grouping', 0, 0);
     const groupingStartedAt = performance.now();
     await this.groupCpuUsagesWithThreadDumpsAsync();
-    AsyncParser.measurePerformance('grouping', groupingStartedAt);
+    MainThreadParser.measurePerformance('grouping', groupingStartedAt);
 
     const sortingStartedAt = performance.now();
     this.sortThreadDumps();
-    AsyncParser.measurePerformance('sorting', sortingStartedAt);
-    AsyncParser.measurePerformance('parser-total', parserStartedAt);
+    MainThreadParser.measurePerformance('sorting', sortingStartedAt);
+    MainThreadParser.measurePerformance('parser-total', parserStartedAt);
 
     await this.reportProgressAndRefreshUi('complete', 0, 0);
     await this.onFilesParsed(this.threadDumps);
@@ -132,7 +123,7 @@ export default class AsyncParser {
       const reader = new FileReader();
 
       reader.onload = async () => {
-        AsyncParser.measurePerformance('file-read', readStartedAt);
+        MainThreadParser.measurePerformance('file-read', readStartedAt);
         const parsingStartedAt = performance.now();
         try {
           await this.reportProgressAndRefreshUi('reading', 0, 0);
@@ -142,20 +133,21 @@ export default class AsyncParser {
           const firstLine = lines[0];
 
           if (!firstLine) {
-            AsyncParser.measurePerformance('file-parse', parsingStartedAt);
+            MainThreadParser.measurePerformance('file-parse', parsingStartedAt);
             resolve();
             return;
           }
 
-          if (matchOne(CPU_USAGE_TIMESTAMP_PATTERN, firstLine)) {
+          const fileKind = getTextFileKind(firstLine);
+          if (fileKind === 'top-cpu') {
             this.parseTopCpuUsage(lines);
-          } else if (matchOne(CPU_USAGE_JFR_FIRST_LINE_PATTERN, firstLine)) {
+          } else if (fileKind === 'jfr-cpu') {
             this.parseJfrCpuUsage(file.name, lines);
           } else {
             await this.splitThreadDumpsAsync(lines, tryGetEpochFromFileName(file.name));
           }
 
-          AsyncParser.measurePerformance('file-parse', parsingStartedAt);
+          MainThreadParser.measurePerformance('file-parse', parsingStartedAt);
           resolve();
         } catch (error) {
           reject(error);
@@ -239,12 +231,12 @@ export default class AsyncParser {
 
     for (const cpuUsage of this.cpuUsages) {
       if (cpuUsage.epoch) {
-        const threadDump: ThreadDump = this.findCorrespondingThreadDump(cpuUsage);
-        AsyncParser.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
+        const threadDump = findCorrespondingThreadDump(this.threadDumps, cpuUsage);
+        groupCpuUsageWithThreadDump(threadDump, cpuUsage);
 
         if (performance.now() - lastYieldAt >= UI_YIELD_INTERVAL_MS) {
           // eslint-disable-next-line no-await-in-loop
-          await AsyncParser.delay(this.config.threadDumpProcessingDelay);
+          await MainThreadParser.delay(this.config.threadDumpProcessingDelay);
           lastYieldAt = performance.now();
         }
       }
@@ -252,87 +244,7 @@ export default class AsyncParser {
   }
 
   private sortThreadDumps(): void {
-    this.threadDumps.sort((t1, t2) => {
-      if (t1.epoch === t2.epoch) {
-        return 0;
-      }
-      if (!t1.epoch) {
-        return -1;
-      }
-      if (!t2.epoch) {
-        return 1;
-      }
-      return t1.epoch - t2.epoch;
-    });
-  }
-
-  private findCorrespondingThreadDump(cpuUsage: CpuUsage): ThreadDump {
-    const cpuUsageEpoch = cpuUsage.epoch;
-    const exactMatch = cpuUsage.timestampKind === 'absolute'
-      ? this.findClosestThreadDump((dumpEpoch) => Math.abs(dumpEpoch - cpuUsageEpoch))
-      : undefined;
-
-    // Prefer full filename timestamps, but retain the legacy fallback for captures with different clock hours.
-    const closest = exactMatch ?? this.findClosestThreadDump(
-      (dumpEpoch) => Math.abs((dumpEpoch % AN_HOUR) - (cpuUsageEpoch % AN_HOUR)),
-    );
-
-    if (closest == null) {
-      const threadDump = new ThreadDump(cpuUsageEpoch);
-      this.threadDumps.push(threadDump);
-      return threadDump;
-    }
-
-    return closest;
-  }
-
-  private findClosestThreadDump(
-    getDifference: (dumpEpoch: number) => number,
-  ): ThreadDump | undefined {
-    let closest: ThreadDump | undefined;
-    let smallestDiff = MAX_DIFFERENCE_BETWEEN_CORRESPONDING_FILES_IN_MS;
-
-    this.threadDumps
-      .filter((threadDump) => threadDump.epoch)
-      .forEach((threadDump) => {
-        const diff = getDifference(threadDump.epoch);
-        if (diff < smallestDiff) {
-          smallestDiff = diff;
-          closest = threadDump;
-        }
-      });
-
-    return closest;
-  }
-
-  private static groupCpuUsageWithThreadDump(threadDump: ThreadDump, cpuUsage: CpuUsage): void {
-    if (cpuUsage.loadAverages !== undefined) {
-      // eslint-disable-next-line no-param-reassign
-      threadDump.loadAverages = cpuUsage.loadAverages;
-    }
-    // eslint-disable-next-line no-param-reassign
-    threadDump.runningProcesses = cpuUsage.runningProcesses;
-    if (cpuUsage.memoryUsage !== undefined) {
-      // eslint-disable-next-line no-param-reassign
-      threadDump.memoryUsage = cpuUsage.memoryUsage;
-    }
-
-    const threadsById = new Map<number, Thread>();
-    for (const thread of threadDump.threads) {
-      if (!threadsById.has(thread.id)) {
-        threadsById.set(thread.id, thread);
-      }
-    }
-
-    cpuUsage.getThreadCpuUsages().forEach((cpu) => {
-      const thread = threadsById.get(cpu.id);
-
-      if (thread) {
-        thread.cpuUsage = cpu.getCpuUsage();
-        thread.runningFor = cpu.runningFor;
-        updateCpuActiveLabel(thread);
-      }
-    });
+    sortThreadDumps(this.threadDumps);
   }
 
   private async reportProgressAndRefreshUi(
@@ -350,21 +262,22 @@ export default class AsyncParser {
 
     if (shouldReportProgress) {
       if (phase !== this.lastProgressPhase) {
-        AsyncParser.markPerformance(phase);
+        MainThreadParser.markPerformance(phase);
       }
 
       const currentFileFraction = totalLines === 0 ? 0 : linesProcessed / totalLines;
-      const processedFraction = this.totalBytes === 0
-        ? this.filesProcessed / this.filesToParse
-        : (this.processedBytes + (this.currentFileSize * currentFileFraction)) / this.totalBytes;
-
-      let percentage: number;
+      let percentage = calculateParsingPercentage({
+        totalBytes: this.totalBytes,
+        processedBytes: this.processedBytes,
+        currentFileSize: this.currentFileSize,
+        currentFileFraction,
+        filesProcessed: this.filesProcessed,
+        totalFiles: this.filesToParse,
+      });
       if (phase === 'complete') {
         percentage = 100;
       } else if (phase === 'grouping') {
         percentage = 95; // Almost done
-      } else {
-        percentage = processedFraction * 95;
       }
 
       const progressUpdate = this.onProgress({
@@ -385,7 +298,7 @@ export default class AsyncParser {
 
     if (phase !== 'parsing' || now - this.lastUiYieldAt >= UI_YIELD_INTERVAL_MS) {
       this.lastUiYieldAt = now;
-      await AsyncParser.delay(this.config.threadDumpProcessingDelay);
+      await MainThreadParser.delay(this.config.threadDumpProcessingDelay);
     }
   }
 

@@ -3,7 +3,8 @@ import React, { type JSX } from 'react';
 import Dropzone from 'react-dropzone';
 import { Navigate } from 'react-router-dom';
 import { setParsedData } from '../../common/threadDumpsStorageService';
-import AsyncParser, { ParseProgress } from '../../parser/AsyncParser';
+import type { ParseProgress } from '../../parser/ParseProgress';
+import WorkerParser from '../../parser/WorkerParser';
 import ThreadDump from '../../types/ThreadDump';
 import DropzoneGuide from './DropzoneGuide';
 import ProgressIndicator, { type StorageProgress, type UploadProgress } from '../ProgressIndicator/ProgressIndicator';
@@ -43,6 +44,8 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
     });
   }
 
+  private isStoringPrepared = false;
+
   constructor(props: Record<string, never>) {
     super(props);
     this.state = {
@@ -57,6 +60,7 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
   private onDrop = async (files: File[]): Promise<void> => {
     if (files.length === 0) return;
 
+    this.isStoringPrepared = false;
     this.setState({
       isProcessing: true,
       error: undefined,
@@ -64,7 +68,7 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
     });
 
     try {
-      const parser = new AsyncParser(this.onParsed, this.onProgress);
+      const parser = new WorkerParser(this.onParsed, this.onProgress, this.prepareStoring);
       await parser.parseFiles(files);
     } catch (error) {
       console.error('Error parsing files:', error);
@@ -82,7 +86,9 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
 
   private onProgress = (progress: ParseProgress): Promise<void> => this.setProgress(progress);
 
-  private onParsed = async (threadDumps: ThreadDump[]): Promise<void> => {
+  private prepareStoring = async (): Promise<void> => {
+    if (this.isStoringPrepared) return;
+
     const { progress: currentProgress } = this.state;
     const storingProgress: StorageProgress = {
       phase: 'storing',
@@ -95,7 +101,14 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
     };
 
     await this.setProgress(storingProgress);
+    FullPageDropzone.markPerformance('storing:state-committed');
     await FullPageDropzone.waitForPaint();
+    FullPageDropzone.markPerformance('storing:painted');
+    this.isStoringPrepared = true;
+  };
+
+  private onParsed = async (threadDumps: ThreadDump[]): Promise<void> => {
+    await this.prepareStoring();
 
     try {
       FullPageDropzone.markPerformance('storage:start');

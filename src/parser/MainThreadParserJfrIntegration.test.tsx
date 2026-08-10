@@ -1,12 +1,12 @@
 import {
   beforeEach, describe, expect, it, vi,
 } from 'vitest';
-import AsyncParser from './AsyncParser';
+import MainThreadParser from './MainThreadParser';
 import ThreadDump from '../types/ThreadDump';
 
 const createFile = (name: string, contents: string): File => new File([contents], name, { type: 'text/plain' });
 
-describe('AsyncParser JFR CPU integration', () => {
+describe('MainThreadParser JFR CPU integration', () => {
   const onFilesParsed = vi.fn();
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('AsyncParser JFR CPU integration', () => {
   });
 
   it('attaches JFR CPU usage to the matching thread dump', async () => {
-    const parser = new AsyncParser(onFilesParsed);
+    const parser = new MainThreadParser(onFilesParsed);
     const threadDump = createFile(
       '2026_07_21_11_38_03.txt',
       [

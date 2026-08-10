@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import JSZip from 'jszip';
 import { setParsedData } from '../../common/threadDumpsStorageService';
 import ThreadDump from '../../types/ThreadDump';
-import AsyncParser from '../../parser/AsyncParser';
+import WorkerParser from '../../parser/WorkerParser';
 
 interface State {
   parsedDataKey: string | undefined;
@@ -39,7 +39,7 @@ export default class EmbeddedDataIndex extends React.PureComponent<Props, State>
         return new File([blob], zipEntry.name);
       }));
 
-    const parser = new AsyncParser(this.onParsed);
+    const parser = new WorkerParser(this.onParsed);
     await parser.parseFiles(files);
   }
 

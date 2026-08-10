@@ -17,7 +17,7 @@ vi.mock('../../common/threadDumpsStorageService', () => ({
   setParsedData: vi.fn(() => 'mock-data-key'),
 }));
 
-vi.mock('../../parser/AsyncParser', () => ({
+vi.mock('../../parser/MainThreadParser', () => ({
   default: class {
     parseFiles = parserMock.parseFiles;
 
