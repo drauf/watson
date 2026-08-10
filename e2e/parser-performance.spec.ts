@@ -154,6 +154,7 @@ test('measures parser upload performance in Chromium', async ({ page, browserNam
       resultTransferMilliseconds: durationBetween('parser:transfer-result-requested', 'parser:complete'),
       resultReceiptToStorageMilliseconds: durationBetween('parser:complete', 'storage:start'),
       storageMilliseconds: durationBetween('storage:start', 'storage:complete'),
+      storageWriteMilliseconds: durationBetween('storage:write:start', 'storage:write:complete'),
       longTaskSupported: benchmarkData.longTaskSupported,
       longTasksByPhase: {
         parser: summarizeLongTasks(uploadStartedAt, phaseAt('parser:ready-to-transfer-received')),
@@ -188,4 +189,28 @@ test('measures parser upload performance in Chromium', async ({ page, browserNam
     tracePath,
     ...result,
   })}\n`);
+
+  await page.reload();
+  await expect(page.getByText('Clear data')).toBeVisible({ timeout: ROUTE_READY_TIMEOUT_MS });
+  await page.evaluate(async () => new Promise<void>((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  }));
+  const reloadResult = await page.evaluate(() => {
+    const phases = new Map(performance.getEntriesByType('mark')
+      .filter((entry) => entry.name.startsWith('watson:'))
+      .map((entry) => [entry.name.replace('watson:', ''), entry.startTime]));
+    const durationBetween = (start: string, end: string): number | null => {
+      const startAt = phases.get(start);
+      const endAt = phases.get(end);
+      return startAt === undefined || endAt === undefined ? null : Number((endAt - startAt).toFixed(1));
+    };
+
+    return {
+      scenario: 'browser-reload',
+      routeReadyMilliseconds: Number(performance.now().toFixed(1)),
+      storageReadMilliseconds: durationBetween('storage:read:start', 'storage:read:complete'),
+      storageRestoreMilliseconds: durationBetween('storage:restore:start', 'storage:restore:complete'),
+    };
+  });
+  process.stdout.write(`${JSON.stringify(reloadResult)}\n`);
 });

@@ -14,7 +14,7 @@ const parserMock = vi.hoisted(() => ({
 }));
 
 vi.mock('../../common/threadDumpsStorageService', () => ({
-  setParsedData: vi.fn(() => 'mock-data-key'),
+  setParsedData: vi.fn(async () => 'mock-data-key'),
 }));
 
 vi.mock('../../parser/MainThreadParser', () => ({

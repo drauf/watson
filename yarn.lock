@@ -3091,13 +3091,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/spark-md5@npm:3.0.5":
-  version: 3.0.5
-  resolution: "@types/spark-md5@npm:3.0.5"
-  checksum: 10c0/501b6aa80fc6d8504fb0ad961c28b2f99d7fc3d7769059f113b4060334623b6c8da7f21dac984211d7d819ac7170ee3ce47dba682453b6baff79052fe382d810
-  languageName: node
-  linkType: hard
-
 "@types/unist@npm:*":
   version: 3.0.3
   resolution: "@types/unist@npm:3.0.3"
@@ -10308,13 +10301,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"spark-md5@npm:3.0.2":
-  version: 3.0.2
-  resolution: "spark-md5@npm:3.0.2"
-  checksum: 10c0/3fd11735eac5e7d60d6006d99ac0a055f148a89e9baf5f0b51ac103022dec30556b44190b37f6737ca50f81e8e50dc13e724f9edf6290c412ff5ab2101ce7780
-  languageName: node
-  linkType: hard
-
 "spdx-correct@npm:^3.0.0":
   version: 3.2.0
   resolution: "spdx-correct@npm:3.2.0"
@@ -11807,7 +11793,6 @@ __metadata:
     "@types/node": "npm:26.1.2"
     "@types/react": "npm:19.2.18"
     "@types/react-dom": "npm:19.2.4"
-    "@types/spark-md5": "npm:3.0.5"
     "@typescript-eslint/parser": "npm:8.66.0"
     "@vitejs/plugin-react": "npm:6.0.5"
     "@vitest/coverage-v8": "npm:4.1.10"
@@ -11829,7 +11814,6 @@ __metadata:
     react-router-dom: "npm:7.18.2"
     recharts: "npm:3.10.1"
     rollup: "npm:4.62.4"
-    spark-md5: "npm:3.0.2"
     stylelint: "npm:17.14.1"
     stylelint-config-rational-order: "npm:0.1.2"
     stylelint-config-standard: "npm:40.0.0"

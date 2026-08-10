@@ -1,6 +1,5 @@
-import { parse, stringify } from 'flatted';
+import { parse } from 'flatted';
 import localforage from 'localforage';
-import SparkMD5 from 'spark-md5';
 import ThreadDump from '../types/ThreadDump';
 
 let currentThreadDumps: ThreadDump[];
@@ -8,17 +7,27 @@ const lastUsedStorage = localforage.createInstance({ name: 'lastUsed' });
 const threadDumpsStorage = localforage.createInstance({ name: 'threadDumps' });
 const cpuUsageJfrListStorage = localforage.createInstance({ name: 'cpuUsageJfrList' });
 
+type StoredThreadDumps = string | ThreadDump[];
+
 const logError = (error: unknown) => {
   console.error(error);
 };
 
+const markPerformance = (phase: string): void => {
+  performance.mark(`watson:${phase}`);
+};
+
 const getFromStorage = async (key: string): Promise<ThreadDump[]> => {
-  const fromStorage = await threadDumpsStorage.getItem<string>(key);
+  markPerformance('storage:read:start');
+  const fromStorage = await threadDumpsStorage.getItem<StoredThreadDumps>(key);
+  markPerformance('storage:read:complete');
   if (!fromStorage) {
     return [];
   }
 
-  currentThreadDumps = parse(fromStorage) as ThreadDump[];
+  markPerformance('storage:restore:start');
+  currentThreadDumps = typeof fromStorage === 'string' ? parse(fromStorage) as ThreadDump[] : fromStorage;
+  markPerformance('storage:restore:complete');
   lastUsedStorage.setItem(key, new Date().valueOf()).catch(logError);
   return currentThreadDumps;
 };
@@ -34,11 +43,14 @@ export const getThreadDumpsAsync = async (key: string): Promise<ThreadDump[]> =>
 
 // Stores thread dumps in persistent storage for subsequent page loads.
 // Returns a key that can be used to retrieve the thread dumps.
-export const setParsedData = (parsedDumps: ThreadDump[]): string => {
+export const setParsedData = async (parsedDumps: ThreadDump[]): Promise<string> => {
   currentThreadDumps = parsedDumps;
-  const stringifiedThreadDumps = stringify(currentThreadDumps);
-  const key = SparkMD5.hash(stringifiedThreadDumps);
-  threadDumpsStorage.setItem(key, stringifiedThreadDumps).catch(logError);
+  const key = crypto.randomUUID();
+
+  markPerformance('storage:write:start');
+  await threadDumpsStorage.setItem(key, parsedDumps);
+  markPerformance('storage:write:complete');
+  lastUsedStorage.setItem(key, new Date().valueOf()).catch(logError);
   return key;
 };
 

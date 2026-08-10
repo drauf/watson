@@ -43,8 +43,8 @@ export default class EmbeddedDataIndex extends React.PureComponent<Props, State>
     await parser.parseFiles(files);
   }
 
-  private onParsed = (threadDumps: ThreadDump[]): void => {
-    const key = setParsedData(threadDumps);
+  private onParsed = async (threadDumps: ThreadDump[]): Promise<void> => {
+    const key = await setParsedData(threadDumps);
     this.setState((state) => ({
       ...state,
       parsedDataKey: key,
