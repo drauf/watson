@@ -1,4 +1,5 @@
 import React, { type JSX } from 'react';
+import getColorForStackLine from '../../common/getColorForStackLine';
 
 interface Props {
   stackTrace: string[];
@@ -16,7 +17,7 @@ export default class StackTrace extends React.PureComponent<Props> {
         {stack.map((line) => {
           const occurrence = lineOccurrences.get(line) ?? 0;
           lineOccurrences.set(line, occurrence + 1);
-          return <code key={`${line}:${occurrence}`}>{line}</code>;
+          return <code key={`${line}:${occurrence}`} style={{ backgroundColor: getColorForStackLine(line) }}>{line}</code>;
         })}
       </p>
     );
