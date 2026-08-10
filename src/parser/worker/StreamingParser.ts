@@ -66,6 +66,7 @@ export default class StreamingParser {
     const cpuLines: string[] = [];
     let firstLine: string | undefined;
     let threadDumpLines: string[] | undefined;
+    let fileContainsMultipleThreadDumps = false;
     let bytesRead = 0;
 
     for await (const line of readFileLines(file, (currentBytesRead) => {
@@ -79,7 +80,8 @@ export default class StreamingParser {
         cpuLines.push(line);
       } else if (matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
         if (threadDumpLines !== undefined) {
-          await this.parseThreadDump(threadDumpLines, file.name, bytesRead);
+          fileContainsMultipleThreadDumps = true;
+          await this.parseThreadDump(threadDumpLines, undefined, bytesRead);
         }
         threadDumpLines = [line];
       } else if (threadDumpLines !== undefined) {
@@ -93,18 +95,19 @@ export default class StreamingParser {
     }
 
     if (threadDumpLines !== undefined) {
-      await this.parseThreadDump(threadDumpLines, file.name, bytesRead);
+      const epochFromFileName = fileContainsMultipleThreadDumps ? undefined : tryGetEpochFromFileName(file.name);
+      await this.parseThreadDump(threadDumpLines, epochFromFileName, bytesRead);
     }
   }
 
-  private async parseThreadDump(lines: string[], fileName: string, bytesRead: number): Promise<void> {
+  private async parseThreadDump(lines: string[], epochFromFileName: number | undefined, bytesRead: number): Promise<void> {
     this.reportProgress('parsing', bytesRead, this.currentFileSize);
     await AsyncThreadDumpParser.parseThreadDump(
       lines,
       (threadDump) => this.threadDumps.push(threadDump),
       undefined,
       this.config,
-      tryGetEpochFromFileName(fileName),
+      epochFromFileName,
     );
   }
 

@@ -1,8 +1,10 @@
-import StreamingParser from './StreamingParser';
+import { vi } from 'vitest';
+import MainThreadParser from '../MainThreadParser';
 import { DEFAULT_PERFORMANCE_CONFIG } from '../PerformanceConfig';
+import StreamingParser from './StreamingParser';
 
-const createStreamingFile = (contents: string): File => {
-  const file = new File([contents], '2026_08_10_10_25_00.txt', { type: 'text/plain' });
+const createStreamingFile = (contents: string, fileName = '2026_08_10_10_25_00.txt'): File => {
+  const file = new File([contents], fileName, { type: 'text/plain' });
   const bytes = new TextEncoder().encode(contents);
   Object.defineProperty(file, 'stream', {
     value: () => new ReadableStream<Uint8Array>({
@@ -36,5 +38,49 @@ describe('StreamingParser', () => {
     expect(threadDumps[0].threads).toHaveLength(1);
     expect(threadDumps[0].threads[0].stackTrace).toEqual(['example.Work.run(Work.java:1)']);
     expect(progressPhases).toContain('complete');
+  });
+
+  it('matches main-thread parsing for multiple dumps and JFR CPU text', async () => {
+    const threadDumpContents = [
+      '2026-07-21 11:38:03',
+      '"Thread-1" #1 prio=5 os_prio=0 cpu=1.00ms elapsed=1.00s tid=0x0000000000000001 nid=3315 runnable',
+      '   java.lang.Thread.State: RUNNABLE',
+      '        at example.Work.run(Work.java:1)',
+      '2026-07-21 11:38:06',
+      '"Thread-1" #1 prio=5 os_prio=0 cpu=1.00ms elapsed=1.00s tid=0x0000000000000001 nid=3315 runnable',
+      '   java.lang.Thread.State: RUNNABLE',
+      '        at example.Work.run(Work.java:2)',
+    ].join('\n');
+    const cpuUsageContents = [
+      'JVM_THREAD_ID OS_THREAD_ID %CPU_USER_MODE %CPU_SYSTEM_MODE SYSTEM_TIME THREAD_NAME',
+      '486 3315 24.84% 0.05% 16:39.04 Thread-1',
+    ].join('\n');
+    const threadDumpFileName = '2026_07_21_11_38_03.txt';
+    const cpuUsageFileName = '2026_07_21_11_38_06_thread_cpu_utilisation.txt';
+    const mainThreadParsed = vi.fn();
+    const mainThreadParser = new MainThreadParser(mainThreadParsed);
+
+    await mainThreadParser.parseFiles([
+      new File([threadDumpContents], threadDumpFileName),
+      new File([cpuUsageContents], cpuUsageFileName),
+    ]);
+
+    const streamingParser = new StreamingParser(
+      [
+        createStreamingFile(threadDumpContents, threadDumpFileName),
+        createStreamingFile(cpuUsageContents, cpuUsageFileName),
+      ],
+      DEFAULT_PERFORMANCE_CONFIG,
+      () => {},
+    );
+    const streamedThreadDumps = await streamingParser.parse();
+    const withoutGeneratedThreadIds = (threadDumps: typeof streamedThreadDumps) => threadDumps.map((threadDump) => ({
+      ...threadDump,
+      threads: threadDump.threads.map(({ uniqueId, ...thread }) => thread),
+    }));
+
+    expect(mainThreadParsed).toHaveBeenCalledOnce();
+    expect(withoutGeneratedThreadIds(streamedThreadDumps))
+      .toEqual(withoutGeneratedThreadIds(mainThreadParsed.mock.calls[0][0]));
   });
 });
