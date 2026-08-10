@@ -64,6 +64,7 @@ export default class AsyncParser {
   }
 
   public async parseFiles(uploaded: File[]): Promise<void> {
+    AsyncParser.markPerformance('start');
     if (this.isProcessing) {
       throw new Error('Parser is already processing files');
     }
@@ -317,6 +318,10 @@ export default class AsyncParser {
       || now - this.lastProgressUpdateAt >= PROGRESS_UPDATE_INTERVAL_MS;
 
     if (shouldReportProgress) {
+      if (phase !== this.lastProgressPhase) {
+        AsyncParser.markPerformance(phase);
+      }
+
       const fileProgress = (this.filesProcessed / this.filesToParse) * 100;
       const maxLineContribution = 100 / this.filesToParse;
       const lineProgress = totalLines === 0 ? 0 : (linesProcessed / totalLines) * maxLineContribution;
@@ -346,6 +351,12 @@ export default class AsyncParser {
     if (phase !== 'parsing' || now - this.lastUiYieldAt >= UI_YIELD_INTERVAL_MS) {
       this.lastUiYieldAt = now;
       await AsyncParser.delay(this.config.threadDumpProcessingDelay);
+    }
+  }
+
+  private static markPerformance(phase: string): void {
+    if (typeof performance.mark === 'function') {
+      performance.mark(`watson:parser:${phase}`);
     }
   }
 

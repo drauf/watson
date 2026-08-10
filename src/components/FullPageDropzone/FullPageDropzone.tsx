@@ -19,6 +19,12 @@ interface State {
 }
 
 export default class FullPageDropzone extends React.PureComponent<Record<string, never>, State> {
+  private static markPerformance(phase: string): void {
+    if (typeof performance.mark === 'function') {
+      performance.mark(`watson:${phase}`);
+    }
+  }
+
   constructor(props: Record<string, never>) {
     super(props);
     this.state = {
@@ -57,7 +63,9 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
   };
 
   private onParsed = (threadDumps: ThreadDump[]): void => {
+    FullPageDropzone.markPerformance('storage:start');
     const key = setParsedData(threadDumps);
+    FullPageDropzone.markPerformance('storage:complete');
     this.setState({
       parsedDataKey: key,
       hasCpuUsageInfo: threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage !== '0.00')),
