@@ -1,5 +1,6 @@
 import MainThreadParser, { type CompletionCallback, type ProgressCallback } from './MainThreadParser';
 import { getPerformanceConfig } from './PerformanceConfig';
+import type { ParseProgress } from './ParseProgress';
 import ParserWorker from './worker/parser.worker?worker&inline';
 import type { WorkerResponse } from './worker/protocol';
 
@@ -8,6 +9,12 @@ import type { WorkerResponse } from './worker/protocol';
  * and falls back to MainThreadParser when workers are unavailable, such as in tests.
  */
 export default class WorkerParser {
+  private static markPerformance(phase: string): void {
+    if (typeof performance.mark === 'function') {
+      performance.mark(`watson:parser:${phase}`);
+    }
+  }
+
   public constructor(
     private readonly onFilesParsed: CompletionCallback,
     private readonly onProgress?: ProgressCallback,
@@ -20,8 +27,10 @@ export default class WorkerParser {
       return;
     }
 
+    WorkerParser.markPerformance('start');
     await new Promise<void>((resolve, reject) => {
       const worker = new ParserWorker();
+      let lastProgressPhase: ParseProgress['phase'] | undefined;
       let progressUpdate = Promise.resolve();
       const finishAfterProgress = (action: () => void | Promise<void>) => {
         progressUpdate.then(action).then(resolve, reject);
@@ -30,10 +39,15 @@ export default class WorkerParser {
       worker.onmessage = (event: MessageEvent<WorkerResponse>) => {
         const message = event.data;
         if (message.type === 'progress') {
+          if (message.progress.phase !== lastProgressPhase) {
+            WorkerParser.markPerformance(message.progress.phase);
+            lastProgressPhase = message.progress.phase;
+          }
           progressUpdate = progressUpdate.then(() => this.onProgress?.(message.progress));
           return;
         }
 
+        WorkerParser.markPerformance('complete');
         worker.terminate();
         if (message.type === 'complete') {
           finishAfterProgress(() => this.onFilesParsed(message.threadDumps));
