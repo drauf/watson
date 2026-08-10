@@ -84,10 +84,18 @@ test('measures parser upload performance in Chromium', async ({ page, browserNam
       }
       return Number((endMilliseconds - startMilliseconds).toFixed(1));
     };
+    const internalMilliseconds: Record<string, number> = {};
+    for (const entry of performance.getEntriesByType('measure')) {
+      if (entry.name.startsWith('watson:')) {
+        const name = entry.name.replace('watson:', '');
+        internalMilliseconds[name] = Number(((internalMilliseconds[name] ?? 0) + entry.duration).toFixed(1));
+      }
+    }
     const longTasks = benchmarkData.longTasks.filter((task) => task.startTime >= uploadStartedAt);
 
     return {
       phaseMilliseconds,
+      internalMilliseconds,
       parserMilliseconds: durationBetween('parser:start', 'parser:complete'),
       storageMilliseconds: durationBetween('storage:start', 'storage:complete'),
       longTaskSupported: benchmarkData.longTaskSupported,

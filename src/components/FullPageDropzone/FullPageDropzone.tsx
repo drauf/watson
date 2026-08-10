@@ -6,7 +6,7 @@ import { setParsedData } from '../../common/threadDumpsStorageService';
 import AsyncParser, { ParseProgress } from '../../parser/AsyncParser';
 import ThreadDump from '../../types/ThreadDump';
 import DropzoneGuide from './DropzoneGuide';
-import ProgressIndicator from '../ProgressIndicator/ProgressIndicator';
+import ProgressIndicator, { type StorageProgress, type UploadProgress } from '../ProgressIndicator/ProgressIndicator';
 import FullPageError from '../Errors/FullPageError';
 import './FullPageDropzone.css';
 
@@ -14,7 +14,7 @@ interface State {
   parsedDataKey: string | undefined;
   hasCpuUsageInfo: boolean;
   isProcessing: boolean;
-  progress?: ParseProgress | undefined;
+  progress?: UploadProgress | undefined;
   error?: string | undefined;
 }
 
@@ -23,6 +23,24 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
     if (typeof performance.mark === 'function') {
       performance.mark(`watson:${phase}`);
     }
+  }
+
+  private static waitForPaint(): Promise<void> {
+    return new Promise((resolve) => {
+      const afterFrame = () => {
+        if (typeof requestAnimationFrame === 'function') {
+          requestAnimationFrame(() => resolve());
+        } else {
+          setTimeout(resolve, 0);
+        }
+      };
+
+      if (typeof requestAnimationFrame === 'function') {
+        requestAnimationFrame(afterFrame);
+      } else {
+        setTimeout(afterFrame, 0);
+      }
+    });
   }
 
   constructor(props: Record<string, never>) {
@@ -58,20 +76,44 @@ export default class FullPageDropzone extends React.PureComponent<Record<string,
     }
   };
 
-  private onProgress = (progress: ParseProgress): void => {
-    this.setState({ progress });
-  };
+  private setProgress = (progress: UploadProgress): Promise<void> => new Promise((resolve) => {
+    this.setState({ progress }, resolve);
+  });
 
-  private onParsed = (threadDumps: ThreadDump[]): void => {
-    FullPageDropzone.markPerformance('storage:start');
-    const key = setParsedData(threadDumps);
-    FullPageDropzone.markPerformance('storage:complete');
-    this.setState({
-      parsedDataKey: key,
-      hasCpuUsageInfo: threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage !== '0.00')),
-      isProcessing: false,
-      progress: undefined,
-    });
+  private onProgress = (progress: ParseProgress): Promise<void> => this.setProgress(progress);
+
+  private onParsed = async (threadDumps: ThreadDump[]): Promise<void> => {
+    const { progress: currentProgress } = this.state;
+    const storingProgress: StorageProgress = {
+      phase: 'storing',
+      fileName: '',
+      filesProcessed: currentProgress?.filesProcessed ?? 0,
+      totalFiles: currentProgress?.totalFiles ?? 0,
+      linesProcessed: 0,
+      totalLines: 0,
+      percentage: currentProgress?.percentage ?? 100,
+    };
+
+    await this.setProgress(storingProgress);
+    await FullPageDropzone.waitForPaint();
+
+    try {
+      FullPageDropzone.markPerformance('storage:start');
+      const key = setParsedData(threadDumps);
+      FullPageDropzone.markPerformance('storage:complete');
+      this.setState({
+        parsedDataKey: key,
+        hasCpuUsageInfo: threadDumps.some((dump) => dump.threads.some((thread) => thread.cpuUsage !== '0.00')),
+        isProcessing: false,
+        progress: undefined,
+      });
+    } catch (error) {
+      this.setState({
+        isProcessing: false,
+        error: error instanceof Error ? error.message : 'An error occurred while storing parsed data',
+        progress: undefined,
+      });
+    }
   };
 
   public override render(): JSX.Element {
