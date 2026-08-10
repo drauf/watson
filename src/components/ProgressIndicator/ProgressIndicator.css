@@ -20,6 +20,7 @@
 
 .progress-details {
   height: 80px;
+  margin-top: var(--ds-space-250, 20px);
   min-height: 80px;
   color: var(--ds-text-subtlest);
   font-size: 14px;

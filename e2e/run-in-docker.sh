@@ -11,13 +11,17 @@ cleanup() {
 trap cleanup EXIT
 
 copy_snapshots=false
-benchmark_mount=()
+docker_arguments=(
+  --rm
+  -v "$worktree:/work"
+  -w /work
+)
 if [[ -n "${WATSON_BENCHMARK_DIR:-}" ]]; then
   if [[ ! -d "$WATSON_BENCHMARK_DIR" ]]; then
     echo "WATSON_BENCHMARK_DIR is not a directory: $WATSON_BENCHMARK_DIR" >&2
     exit 1
   fi
-  benchmark_mount=(
+  docker_arguments+=(
     -v "$WATSON_BENCHMARK_DIR:/benchmark-fixture:ro"
     -e WATSON_BENCHMARK_DIR=/benchmark-fixture
   )
@@ -37,10 +41,7 @@ rsync -a \
   --exclude 'test-results' \
   "$workspace_root/" "$worktree/"
 
-docker run --rm \
-  -v "$worktree:/work" \
-  "${benchmark_mount[@]}" \
-  -w /work \
+docker run "${docker_arguments[@]}" \
   "$image" \
   bash -lc 'yarn install --immutable && yarn playwright test "$@"' \
   -- "$@"
