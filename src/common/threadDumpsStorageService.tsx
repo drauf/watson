@@ -1,13 +1,11 @@
-import { parse } from 'flatted';
 import localforage from 'localforage';
 import ThreadDump from '../types/ThreadDump';
 
 let currentThreadDumps: ThreadDump[];
-const lastUsedStorage = localforage.createInstance({ name: 'lastUsed' });
-const threadDumpsStorage = localforage.createInstance({ name: 'threadDumps' });
-const cpuUsageJfrListStorage = localforage.createInstance({ name: 'cpuUsageJfrList' });
-
-type StoredThreadDumps = string | ThreadDump[];
+const indexedDbStorage = { driver: localforage.INDEXEDDB };
+const lastUsedStorage = localforage.createInstance({ name: 'lastUsed', ...indexedDbStorage });
+const threadDumpsStorage = localforage.createInstance({ name: 'threadDumps', ...indexedDbStorage });
+const cpuUsageJfrListStorage = localforage.createInstance({ name: 'cpuUsageJfrList', ...indexedDbStorage });
 
 const logError = (error: unknown) => {
   console.error(error);
@@ -19,14 +17,14 @@ const markPerformance = (phase: string): void => {
 
 const getFromStorage = async (key: string): Promise<ThreadDump[]> => {
   markPerformance('storage:read:start');
-  const fromStorage = await threadDumpsStorage.getItem<StoredThreadDumps>(key);
+  const fromStorage = await threadDumpsStorage.getItem<ThreadDump[]>(key);
   markPerformance('storage:read:complete');
   if (!fromStorage) {
     return [];
   }
 
   markPerformance('storage:restore:start');
-  currentThreadDumps = typeof fromStorage === 'string' ? parse(fromStorage) as ThreadDump[] : fromStorage;
+  currentThreadDumps = fromStorage;
   markPerformance('storage:restore:complete');
   lastUsedStorage.setItem(key, new Date().valueOf()).catch(logError);
   return currentThreadDumps;

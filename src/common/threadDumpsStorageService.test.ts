@@ -7,6 +7,7 @@ const stores = new Map<string, Map<string, unknown>>();
 
 vi.mock('localforage', () => ({
   default: {
+    INDEXEDDB: 'INDEXEDDB',
     createInstance: ({ name }: { name: string }) => {
       let store = stores.get(name);
       if (store === undefined) {
