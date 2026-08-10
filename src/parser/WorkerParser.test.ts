@@ -74,6 +74,28 @@ describe('WorkerParser', () => {
     expect(worker.terminate).toHaveBeenCalledOnce();
   });
 
+  it('waits for an asynchronous progress update before completion', async () => {
+    let finishProgressUpdate: (() => void) | undefined;
+    const onProgress = vi.fn(() => new Promise<void>((resolve) => {
+      finishProgressUpdate = resolve;
+    }));
+    const onFilesParsed = vi.fn();
+    const parser = new WorkerParser(onFilesParsed, onProgress);
+
+    const parsing = parser.parseFiles([new File(['contents'], 'input.txt')]);
+    const worker = workerState.workerInstances[0];
+    worker.onmessage?.({ data: { type: 'progress', progress } } as MessageEvent);
+    worker.onmessage?.({ data: { type: 'complete', threadDumps: [] } } as MessageEvent);
+
+    await Promise.resolve();
+    expect(onFilesParsed).not.toHaveBeenCalled();
+
+    finishProgressUpdate?.();
+    await parsing;
+
+    expect(onFilesParsed).toHaveBeenCalledWith([]);
+  });
+
   it('propagates worker errors with their stack', async () => {
     const parser = new WorkerParser(vi.fn());
 

@@ -22,26 +22,33 @@ export default class WorkerParser {
 
     await new Promise<void>((resolve, reject) => {
       const worker = new ParserWorker();
+      let progressUpdate = Promise.resolve();
+      const finishAfterProgress = (action: () => void | Promise<void>) => {
+        progressUpdate.then(action).then(resolve, reject);
+      };
+
       worker.onmessage = (event: MessageEvent<WorkerResponse>) => {
         const message = event.data;
         if (message.type === 'progress') {
-          this.onProgress?.(message.progress);
+          progressUpdate = progressUpdate.then(() => this.onProgress?.(message.progress));
           return;
         }
+
         worker.terminate();
         if (message.type === 'complete') {
-          Promise.resolve(this.onFilesParsed(message.threadDumps)).then(resolve, reject);
+          finishAfterProgress(() => this.onFilesParsed(message.threadDumps));
           return;
         }
+
         const error = new Error(message.message);
         if (message.stack !== undefined) {
           error.stack = message.stack;
         }
-        reject(error);
+        finishAfterProgress(() => Promise.reject(error));
       };
       worker.onerror = (event) => {
         worker.terminate();
-        reject(new Error(event.message));
+        finishAfterProgress(() => Promise.reject(new Error(event.message)));
       };
       worker.postMessage({ type: 'parse', files, config: getPerformanceConfig() });
     });
