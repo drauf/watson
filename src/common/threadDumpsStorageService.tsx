@@ -1,11 +1,14 @@
-import localforage from 'localforage';
 import ThreadDump from '../types/ThreadDump';
+import {
+  getIndexedDbEntries,
+  getIndexedDbValue,
+  indexedDbStores,
+  removeIndexedDbValue,
+  setIndexedDbValue,
+} from './indexedDb';
 
 let currentThreadDumps: ThreadDump[];
-const indexedDbStorage = { driver: localforage.INDEXEDDB };
-const lastUsedStorage = localforage.createInstance({ name: 'lastUsed', ...indexedDbStorage });
-const threadDumpsStorage = localforage.createInstance({ name: 'threadDumps', ...indexedDbStorage });
-const cpuUsageJfrListStorage = localforage.createInstance({ name: 'cpuUsageJfrList', ...indexedDbStorage });
+let currentThreadDumpsKey: string | undefined;
 
 const logError = (error: unknown) => {
   console.error(error);
@@ -17,22 +20,23 @@ const markPerformance = (phase: string): void => {
 
 const getFromStorage = async (key: string): Promise<ThreadDump[]> => {
   markPerformance('storage:read:start');
-  const fromStorage = await threadDumpsStorage.getItem<ThreadDump[]>(key);
+  const fromStorage = await getIndexedDbValue<ThreadDump[]>(indexedDbStores.threadDumps, key);
   markPerformance('storage:read:complete');
-  if (!fromStorage) {
+  if (fromStorage === undefined) {
     return [];
   }
 
   markPerformance('storage:restore:start');
   currentThreadDumps = fromStorage;
+  currentThreadDumpsKey = key;
   markPerformance('storage:restore:complete');
-  lastUsedStorage.setItem(key, new Date().valueOf()).catch(logError);
+  setIndexedDbValue(indexedDbStores.lastUsed, key, new Date().valueOf()).catch(logError);
   return currentThreadDumps;
 };
 
 // Given a key, returns a promise that resolves to the stored thread dumps.
 export const getThreadDumpsAsync = async (key: string): Promise<ThreadDump[]> => {
-  if (currentThreadDumps === undefined) {
+  if (currentThreadDumps === undefined || currentThreadDumpsKey !== key) {
     return getFromStorage(key);
   }
 
@@ -44,11 +48,12 @@ export const getThreadDumpsAsync = async (key: string): Promise<ThreadDump[]> =>
 export const setParsedData = async (parsedDumps: ThreadDump[]): Promise<string> => {
   currentThreadDumps = parsedDumps;
   const key = crypto.randomUUID();
+  currentThreadDumpsKey = key;
 
   markPerformance('storage:write:start');
-  await threadDumpsStorage.setItem(key, parsedDumps);
+  await setIndexedDbValue(indexedDbStores.threadDumps, key, parsedDumps);
   markPerformance('storage:write:complete');
-  lastUsedStorage.setItem(key, new Date().valueOf()).catch(logError);
+  setIndexedDbValue(indexedDbStores.lastUsed, key, new Date().valueOf()).catch(logError);
   return key;
 };
 
@@ -56,17 +61,20 @@ export const setParsedData = async (parsedDumps: ThreadDump[]): Promise<string> 
 // Does not modify data storage.
 export const clearCurrentData = (): void => {
   currentThreadDumps = [];
+  currentThreadDumpsKey = undefined;
 };
 
 // Clears all persisted thread dumps & JFR cpu usage not used in the last 7 days.
 export const clearOldData = (): void => {
   const sevenDaysAgo = new Date().setDate(new Date().getDate() - 7);
 
-  lastUsedStorage.iterate((date: number, key) => {
-    if (date < sevenDaysAgo) {
-      threadDumpsStorage.removeItem(key).catch(logError);
-      cpuUsageJfrListStorage.removeItem(key).catch(logError);
-      lastUsedStorage.removeItem(key).catch(logError);
-    }
-  }).catch(logError);
+  getIndexedDbEntries<number>(indexedDbStores.lastUsed)
+    .then((entries) => Promise.all(entries
+      .filter(([, date]) => date < sevenDaysAgo)
+      .flatMap(([key]) => [
+        removeIndexedDbValue(indexedDbStores.threadDumps, key),
+        removeIndexedDbValue(indexedDbStores.cpuUsageJfrList, key),
+        removeIndexedDbValue(indexedDbStores.lastUsed, key),
+      ])))
+    .catch(logError);
 };

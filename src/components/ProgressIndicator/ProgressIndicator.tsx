@@ -49,7 +49,7 @@ const ProgressIndicator: React.FC<Props> = ({ progress }) => {
     }
 
     if (progress.phase === 'storing') {
-      return 'Saving parsed analysis to local storage';
+      return 'Saving parsed analysis to cached storage';
     }
 
     if (progress.totalFiles > 1) {

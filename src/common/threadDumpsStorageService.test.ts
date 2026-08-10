@@ -5,31 +5,25 @@ import ThreadDump from '../types/ThreadDump';
 
 const stores = new Map<string, Map<string, unknown>>();
 
-vi.mock('localforage', () => ({
-  default: {
-    INDEXEDDB: 'INDEXEDDB',
-    createInstance: ({ name }: { name: string }) => {
-      let store = stores.get(name);
-      if (store === undefined) {
-        store = new Map();
-        stores.set(name, store);
-      }
-
-      return {
-        getItem: vi.fn(async (key: string) => store?.get(key) ?? null),
-        setItem: vi.fn(async (key: string, value: unknown) => {
-          store?.set(key, value);
-          return value;
-        }),
-        removeItem: vi.fn(async (key: string) => {
-          store?.delete(key);
-        }),
-        iterate: vi.fn(async (callback: (value: number, key: string) => void) => {
-          store?.forEach((value, key) => callback(value as number, key));
-        }),
-      };
-    },
+vi.mock('./indexedDb', () => ({
+  indexedDbStores: {
+    threadDumps: 'threadDumps',
+    lastUsed: 'lastUsed',
+    cpuUsageJfrList: 'cpuUsageJfrList',
   },
+  getIndexedDbEntries: vi.fn(async (store: string) => Array.from(stores.get(store)?.entries() ?? [])),
+  getIndexedDbValue: vi.fn(async (store: string, key: string) => stores.get(store)?.get(key)),
+  removeIndexedDbValue: vi.fn(async (store: string, key: string) => {
+    stores.get(store)?.delete(key);
+  }),
+  setIndexedDbValue: vi.fn(async (store: string, key: string, value: unknown) => {
+    let entries = stores.get(store);
+    if (entries === undefined) {
+      entries = new Map();
+      stores.set(store, entries);
+    }
+    entries.set(key, value);
+  }),
 }));
 
 describe('threadDumpsStorageService', () => {
@@ -53,5 +47,17 @@ describe('threadDumpsStorageService', () => {
     const restored = await reloadedStorageService.getThreadDumpsAsync(key);
 
     expect(restored).toEqual([threadDump]);
+  });
+
+  it('loads the requested import instead of a different cached import', async () => {
+    let keyNumber = 0;
+    vi.stubGlobal('crypto', { randomUUID: () => `thread-dump-import-${++keyNumber}` });
+    const { getThreadDumpsAsync, setParsedData } = await import('./threadDumpsStorageService');
+    const firstThreadDump = new ThreadDump(123);
+    const secondThreadDump = new ThreadDump(456);
+    const firstKey = await setParsedData([firstThreadDump]);
+    await setParsedData([secondThreadDump]);
+
+    expect(await getThreadDumpsAsync(firstKey)).toEqual([firstThreadDump]);
   });
 });
