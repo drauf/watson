@@ -176,6 +176,25 @@ describe('AsyncThreadDumpParser', () => {
       expect(threadDump.locks).toHaveLength(2);
     });
 
+    it('does not retain a lock released while waiting', async () => {
+      const lines = [
+        '2023-01-01 12:00:00',
+        '"Thread-1" #1 prio=5 os_prio=0 tid=0x00007f8e2c008800 nid=0x1234 waiting [0x00007f8e35b3e000]',
+        '   java.lang.Thread.State: BLOCKED (on object monitor)',
+        '        - waiting to lock <0x000000076ab62208> (a java.lang.Object)',
+        '        - locked <0x000000076ab62208> (a java.lang.Object)',
+      ];
+
+      const parsePromise = AsyncThreadDumpParser.parseThreadDump(lines, mockCallback, mockProgressCallback);
+
+      await vi.runAllTimersAsync();
+      await parsePromise;
+
+      const threadDump = mockCallback.mock.calls[0][0] as ThreadDump;
+      expect(threadDump.threads[0].locksHeld).toHaveLength(0);
+      expect(threadDump.locks).toHaveLength(1);
+    });
+
     it('should handle custom performance config', async () => {
       const customConfig = {
         threadDumpChunkSize: 1, // Process one line at a time

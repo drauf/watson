@@ -14,6 +14,8 @@ import { getPerformanceConfig, PerformanceConfig } from './PerformanceConfig';
 // are taken by alternating top and jstack commands
 const MAX_DIFFERENCE_BETWEEN_CORRESPONDING_FILES_IN_MS = 10000;
 const AN_HOUR = 60 * 60 * 1000;
+const PROGRESS_UPDATE_INTERVAL_MS = 100;
+const UI_YIELD_INTERVAL_MS = 16;
 
 export interface ParseProgress {
   phase: 'reading' | 'parsing' | 'grouping' | 'complete';
@@ -41,6 +43,12 @@ export default class AsyncParser {
 
   private isProcessing = false;
 
+  private lastProgressUpdateAt = 0;
+
+  private lastProgressPhase: ParseProgress['phase'] | undefined;
+
+  private lastUiYieldAt = 0;
+
   private readonly onFilesParsed: CompletionCallback;
 
   private readonly onProgress?: ProgressCallback;
@@ -65,6 +73,9 @@ export default class AsyncParser {
     this.threadDumps = [];
     this.filesToParse = uploaded.length;
     this.filesProcessed = 0;
+    this.lastProgressUpdateAt = 0;
+    this.lastProgressPhase = undefined;
+    this.lastUiYieldAt = 0;
 
     try {
       await this.parseFilesAsync(uploaded);
@@ -87,7 +98,7 @@ export default class AsyncParser {
     }
 
     await this.reportProgressAndRefreshUi('grouping', 0, 0);
-    this.groupCpuUsagesWithThreadDumpsAsync();
+    await this.groupCpuUsagesWithThreadDumpsAsync();
     this.sortThreadDumps();
 
     await this.reportProgressAndRefreshUi('complete', 0, 0);
@@ -131,32 +142,29 @@ export default class AsyncParser {
   }
 
   private async splitThreadDumpsAsync(lines: string[], epochFromFileName?: number): Promise<void> {
-    const threadDumpCount = lines.filter((line) => matchOne(THREAD_DUMP_DATE_PATTERN, line)).length;
-    // One filename timestamp cannot identify multiple dumps in the same file
-    const epochFromFileNameForSingleDump = threadDumpCount === 1 ? epochFromFileName : undefined;
-    let currentDump: string[] = [];
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-
-      // Check if a new thread dump starts
+    let threadDumpCount = 0;
+    for (const line of lines) {
       if (matchOne(THREAD_DUMP_DATE_PATTERN, line)) {
-        // Special case for the first thread dump in the file
-        if (currentDump.length === 0) {
-          currentDump.push(line);
-        } else {
-          // eslint-disable-next-line no-await-in-loop
-          await this.parseThreadDumpAsync(currentDump, epochFromFileNameForSingleDump);
-          currentDump = [line];
-        }
-      } else if (currentDump.length > 0) {
-        // Do not add lines if there is no thread dump (e.g. when parsing catalina.out)
-        currentDump.push(line);
+        threadDumpCount++;
       }
     }
 
-    if (currentDump.length > 0) {
-      await this.parseThreadDumpAsync(currentDump, epochFromFileNameForSingleDump);
+    // One filename timestamp cannot identify multiple dumps in the same file
+    const epochFromFileNameForSingleDump = threadDumpCount === 1 ? epochFromFileName : undefined;
+    let currentDumpStartIndex: number | undefined;
+
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+      if (matchOne(THREAD_DUMP_DATE_PATTERN, lines[lineIndex])) {
+        if (currentDumpStartIndex !== undefined) {
+          // eslint-disable-next-line no-await-in-loop
+          await this.parseThreadDumpAsync(lines, currentDumpStartIndex, lineIndex, epochFromFileNameForSingleDump);
+        }
+        currentDumpStartIndex = lineIndex;
+      }
+    }
+
+    if (currentDumpStartIndex !== undefined) {
+      await this.parseThreadDumpAsync(lines, currentDumpStartIndex, lines.length, epochFromFileNameForSingleDump);
     }
   }
 
@@ -174,9 +182,14 @@ export default class AsyncParser {
     this.cpuUsages.push(cpuUsage);
   };
 
-  private async parseThreadDumpAsync(lines: string[], epochFromFileName?: number): Promise<void> {
+  private async parseThreadDumpAsync(
+    lines: readonly string[],
+    startIndex: number,
+    endIndex: number,
+    epochFromFileName?: number,
+  ): Promise<void> {
     await AsyncThreadDumpParser.parseThreadDump(
-      lines.slice(),
+      lines,
       this.onParsedThreadDump,
       async (processed, total) => {
         // Update progress for line processing within this thread dump
@@ -184,6 +197,8 @@ export default class AsyncParser {
       },
       this.config,
       epochFromFileName,
+      startIndex,
+      endIndex,
     );
   }
 
@@ -193,13 +208,20 @@ export default class AsyncParser {
     }
   };
 
-  private groupCpuUsagesWithThreadDumpsAsync(): void {
-    const cpuUsagesWithEpoch = this.cpuUsages.filter((cpuUsage) => cpuUsage.epoch);
+  private async groupCpuUsagesWithThreadDumpsAsync(): Promise<void> {
+    let lastYieldAt = performance.now();
 
-    for (let i = 0; i < cpuUsagesWithEpoch.length; i++) {
-      const cpuUsage = cpuUsagesWithEpoch[i];
-      const threadDump: ThreadDump = this.findCorrespondingThreadDump(cpuUsage);
-      AsyncParser.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
+    for (const cpuUsage of this.cpuUsages) {
+      if (cpuUsage.epoch) {
+        const threadDump: ThreadDump = this.findCorrespondingThreadDump(cpuUsage);
+        AsyncParser.groupCpuUsageWithThreadDump(threadDump, cpuUsage);
+
+        if (performance.now() - lastYieldAt >= UI_YIELD_INTERVAL_MS) {
+          // eslint-disable-next-line no-await-in-loop
+          await AsyncParser.delay(this.config.threadDumpProcessingDelay);
+          lastYieldAt = performance.now();
+        }
+      }
     }
   }
 
@@ -269,8 +291,15 @@ export default class AsyncParser {
       threadDump.memoryUsage = cpuUsage.memoryUsage;
     }
 
+    const threadsById = new Map<number, Thread>();
+    for (const thread of threadDump.threads) {
+      if (!threadsById.has(thread.id)) {
+        threadsById.set(thread.id, thread);
+      }
+    }
+
     cpuUsage.getThreadCpuUsages().forEach((cpu) => {
-      const thread = AsyncParser.findThreadWithId(threadDump, cpu.id);
+      const thread = threadsById.get(cpu.id);
 
       if (thread) {
         thread.cpuUsage = cpu.getCpuUsage();
@@ -280,38 +309,44 @@ export default class AsyncParser {
     });
   }
 
-  private static findThreadWithId(threadDump: ThreadDump, id: number): Thread | undefined {
-    return threadDump.threads.find((thread) => thread.id === id);
-  }
-
   private async reportProgressAndRefreshUi(phase: ParseProgress['phase'], linesProcessed: number, totalLines: number): Promise<void> {
     if (!this.onProgress) return;
 
-    const fileProgress = (this.filesProcessed / this.filesToParse) * 100;
-    const maxLineContribution = 100 / this.filesToParse;
-    const lineProgress = totalLines === 0 ? 0 : (linesProcessed / totalLines) * maxLineContribution;
+    const now = performance.now();
+    const shouldReportProgress = phase !== this.lastProgressPhase
+      || now - this.lastProgressUpdateAt >= PROGRESS_UPDATE_INTERVAL_MS;
 
-    let percentage: number;
-    if (phase === 'complete') {
-      percentage = 100;
-    } else if (phase === 'grouping') {
-      percentage = 95; // Almost done
-    } else {
-      percentage = (fileProgress + lineProgress) * 0.95;
+    if (shouldReportProgress) {
+      const fileProgress = (this.filesProcessed / this.filesToParse) * 100;
+      const maxLineContribution = 100 / this.filesToParse;
+      const lineProgress = totalLines === 0 ? 0 : (linesProcessed / totalLines) * maxLineContribution;
+
+      let percentage: number;
+      if (phase === 'complete') {
+        percentage = 100;
+      } else if (phase === 'grouping') {
+        percentage = 95; // Almost done
+      } else {
+        percentage = (fileProgress + lineProgress) * 0.95;
+      }
+
+      this.onProgress({
+        phase,
+        fileName: this.currentFileName,
+        filesProcessed: this.filesProcessed,
+        totalFiles: this.filesToParse,
+        linesProcessed,
+        totalLines,
+        percentage: Math.min(100, Math.max(0, percentage)),
+      });
+      this.lastProgressUpdateAt = now;
+      this.lastProgressPhase = phase;
     }
 
-    this.onProgress({
-      phase,
-      fileName: this.currentFileName,
-      filesProcessed: this.filesProcessed,
-      totalFiles: this.filesToParse,
-      linesProcessed,
-      totalLines,
-      percentage: Math.min(100, Math.max(0, percentage)),
-    });
-
-    // Allow UI to update
-    await AsyncParser.delay(0);
+    if (phase !== 'parsing' || now - this.lastUiYieldAt >= UI_YIELD_INTERVAL_MS) {
+      this.lastUiYieldAt = now;
+      await AsyncParser.delay(this.config.threadDumpProcessingDelay);
+    }
   }
 
   private static delay(ms: number): Promise<void> {
