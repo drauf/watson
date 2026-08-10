@@ -11,6 +11,7 @@ cleanup() {
 trap cleanup EXIT
 
 copy_snapshots=false
+copy_benchmark_trace=false
 docker_arguments=(
   --rm
   -v "$worktree:/work"
@@ -24,6 +25,13 @@ if [[ -n "${WATSON_BENCHMARK_DIR:-}" ]]; then
   docker_arguments+=(
     -v "$WATSON_BENCHMARK_DIR:/benchmark-fixture:ro"
     -e WATSON_BENCHMARK_DIR=/benchmark-fixture
+  )
+fi
+
+if [[ "${WATSON_BENCHMARK_TRACE:-}" == "1" ]]; then
+  copy_benchmark_trace=true
+  docker_arguments+=(
+    -e WATSON_BENCHMARK_TRACE=1
   )
 fi
 
@@ -52,4 +60,12 @@ if "$copy_snapshots"; then
     --include '*-snapshots/***' \
     --exclude '*' \
     "$worktree/e2e/" "$workspace_root/e2e/"
+fi
+
+if "$copy_benchmark_trace"; then
+  rsync -a \
+    --include '*/' \
+    --include 'parser-performance-trace.json' \
+    --exclude '*' \
+    "$worktree/test-results/" "$workspace_root/test-results/"
 fi

@@ -33,7 +33,6 @@ vi.mock('./MainThreadParser', () => ({
 }));
 
 vi.mock('./worker/parser.worker?worker&inline', () => ({ default: workerState.MockWorker }));
-
 const progress: ParseProgress = {
   phase: 'parsing',
   fileName: 'input.txt',
@@ -65,12 +64,54 @@ describe('WorkerParser', () => {
     expect(worker.postMessage).toHaveBeenCalledOnce();
 
     worker.onmessage?.({ data: { type: 'progress', progress } } as MessageEvent);
+    worker.onmessage?.({ data: { type: 'ready-to-transfer' } } as MessageEvent);
+    await new Promise<void>((resolve) => {
+      setTimeout(resolve, 0);
+    });
+    expect(worker.postMessage).toHaveBeenLastCalledWith({ type: 'transfer-result' });
     worker.onmessage?.({ data: { type: 'complete', threadDumps: [] } } as MessageEvent);
 
     await parsing;
 
     expect(onProgress).toHaveBeenCalledWith(progress);
     expect(onFilesParsed).toHaveBeenCalledWith([]);
+    expect(worker.terminate).toHaveBeenCalledOnce();
+  });
+
+  it('waits for storing preparation before requesting the result', async () => {
+    let resolvePreparation: (() => void) | undefined;
+    const prepareStoring = vi.fn(() => new Promise<void>((resolve) => {
+      resolvePreparation = resolve;
+    }));
+    const parser = new WorkerParser(vi.fn(), undefined, prepareStoring);
+
+    const parsing = parser.parseFiles([new File(['contents'], 'input.txt')]);
+    const worker = workerState.workerInstances[0];
+    worker.onmessage?.({ data: { type: 'ready-to-transfer' } } as MessageEvent);
+
+    await Promise.resolve();
+    expect(prepareStoring).toHaveBeenCalledOnce();
+    expect(worker.postMessage).toHaveBeenCalledOnce();
+
+    resolvePreparation?.();
+    await new Promise<void>((resolve) => {
+      setTimeout(resolve, 0);
+    });
+    expect(worker.postMessage).toHaveBeenLastCalledWith({ type: 'transfer-result' });
+
+    worker.onmessage?.({ data: { type: 'complete', threadDumps: [] } } as MessageEvent);
+    await parsing;
+  });
+
+  it('terminates the worker when storing preparation fails', async () => {
+    const error = new Error('Unable to prepare storage');
+    const parser = new WorkerParser(vi.fn(), undefined, () => Promise.reject(error));
+
+    const parsing = parser.parseFiles([new File(['contents'], 'input.txt')]);
+    const worker = workerState.workerInstances[0];
+    worker.onmessage?.({ data: { type: 'ready-to-transfer' } } as MessageEvent);
+
+    await expect(parsing).rejects.toBe(error);
     expect(worker.terminate).toHaveBeenCalledOnce();
   });
 

@@ -13,6 +13,14 @@ export interface ProgressMessage {
   progress: ParseProgress;
 }
 
+export interface TransferResultRequest {
+  type: 'transfer-result';
+}
+
+export interface ReadyToTransferMessage {
+  type: 'ready-to-transfer';
+}
+
 export interface CompleteMessage {
   type: 'complete';
   threadDumps: ThreadDump[];
@@ -24,5 +32,5 @@ export interface ErrorMessage {
   stack?: string;
 }
 
-export type WorkerRequest = ParseRequest;
-export type WorkerResponse = ProgressMessage | CompleteMessage | ErrorMessage;
+export type WorkerRequest = ParseRequest | TransferResultRequest;
+export type WorkerResponse = ProgressMessage | ReadyToTransferMessage | CompleteMessage | ErrorMessage;

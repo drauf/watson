@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test';
-import { readdirSync, statSync } from 'node:fs';
+import { readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
 
 const benchmarkDirectory = process.env['WATSON_BENCHMARK_DIR'];
 const benchmarkDirectoryPath = benchmarkDirectory ?? '';
+const traceEnabled = process.env['WATSON_BENCHMARK_TRACE'] === '1';
 const FIRST_PROGRESS_TIMEOUT_MS = 60_000;
 const ROUTE_READY_TIMEOUT_MS = 10 * 60_000;
 const BENCHMARK_TIMEOUT_MS = 10 * 60_000;
@@ -50,6 +51,23 @@ test('measures parser upload performance in Chromium', async ({ page, browserNam
   });
 
   await page.goto('/');
+  const tracingSession = traceEnabled ? await page.context().newCDPSession(page) : undefined;
+  const tracingComplete = tracingSession === undefined ? undefined : new Promise<string>((resolve, reject) => {
+    tracingSession.on('Tracing.tracingComplete', ({ stream }) => {
+      if (stream === undefined) {
+        reject(new Error('Chromium trace completed without a stream'));
+      } else {
+        resolve(stream);
+      }
+    });
+  });
+  if (tracingSession !== undefined) {
+    await tracingSession.send('Tracing.start', {
+      categories: 'devtools.timeline,v8,disabled-by-default-v8.cpu_profiler',
+      transferMode: 'ReturnAsStream',
+    });
+  }
+
   const input = page.locator('input[type="file"]');
   await expect(input).toBeAttached();
 
@@ -64,6 +82,21 @@ test('measures parser upload performance in Chromium', async ({ page, browserNam
   await page.evaluate(async () => new Promise<void>((resolve) => {
     requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
   }));
+
+  let tracePath: string | undefined;
+  if (tracingSession !== undefined && tracingComplete !== undefined) {
+    await tracingSession.send('Tracing.end');
+    const stream = await tracingComplete;
+    let trace = '';
+    while (true) {
+      const { data, eof } = await tracingSession.send('IO.read', { handle: stream });
+      trace += data;
+      if (eof) break;
+    }
+    await tracingSession.send('IO.close', { handle: stream });
+    tracePath = testInfo.outputPath('parser-performance-trace.json');
+    writeFileSync(tracePath, trace);
+  }
 
   const result = await page.evaluate((uploadStartedAt) => {
     const benchmarkData = (window as unknown as { watsonBenchmarkData: BrowserBenchmarkData }).watsonBenchmarkData;
@@ -84,21 +117,53 @@ test('measures parser upload performance in Chromium', async ({ page, browserNam
       }
       return Number((endMilliseconds - startMilliseconds).toFixed(1));
     };
-    const internalMilliseconds: Record<string, number> = {};
-    for (const entry of performance.getEntriesByType('measure')) {
-      if (entry.name.startsWith('watson:')) {
-        const name = entry.name.replace('watson:', '');
-        internalMilliseconds[name] = Number(((internalMilliseconds[name] ?? 0) + entry.duration).toFixed(1));
-      }
-    }
+    const measuredAt = performance.now();
     const longTasks = benchmarkData.longTasks.filter((task) => task.startTime >= uploadStartedAt);
+    // A long task crossing a phase boundary contributes only its overlap to that phase.
+    const summarizeLongTasks = (start: number | undefined, end: number | undefined) => {
+      if (start === undefined || end === undefined) return undefined;
+
+      let count = 0;
+      let totalMilliseconds = 0;
+      let longestMilliseconds = 0;
+      for (const task of longTasks) {
+        const overlap = Math.max(0, Math.min(task.startTime + task.duration, end) - Math.max(task.startTime, start));
+        if (overlap > 0) {
+          count++;
+          totalMilliseconds += overlap;
+          longestMilliseconds = Math.max(longestMilliseconds, overlap);
+        }
+      }
+      return {
+        count,
+        totalMilliseconds: Number(totalMilliseconds.toFixed(1)),
+        longestMilliseconds: Number(longestMilliseconds.toFixed(1)),
+      };
+    };
+    const phaseAt = (name: string): number | undefined => {
+      const phaseOffset = phaseMilliseconds[name];
+      return phaseOffset === undefined ? undefined : uploadStartedAt + phaseOffset;
+    };
 
     return {
       phaseMilliseconds,
-      internalMilliseconds,
       parserMilliseconds: durationBetween('parser:start', 'parser:complete'),
+      readyToStoringStateMilliseconds: durationBetween('parser:ready-to-transfer-received', 'storing:state-committed'),
+      storingPaintMilliseconds: durationBetween('storing:state-committed', 'storing:painted'),
+      paintedToTransferRequestMilliseconds: durationBetween('storing:painted', 'parser:transfer-result-requested'),
+      resultTransferMilliseconds: durationBetween('parser:transfer-result-requested', 'parser:complete'),
+      resultReceiptToStorageMilliseconds: durationBetween('parser:complete', 'storage:start'),
       storageMilliseconds: durationBetween('storage:start', 'storage:complete'),
       longTaskSupported: benchmarkData.longTaskSupported,
+      longTasksByPhase: {
+        parser: summarizeLongTasks(uploadStartedAt, phaseAt('parser:ready-to-transfer-received')),
+        readyToStoringState: summarizeLongTasks(phaseAt('parser:ready-to-transfer-received'), phaseAt('storing:state-committed')),
+        storingStateToPaint: summarizeLongTasks(phaseAt('storing:state-committed'), phaseAt('storing:painted')),
+        paintToTransferRequest: summarizeLongTasks(phaseAt('storing:painted'), phaseAt('parser:transfer-result-requested')),
+        resultTransfer: summarizeLongTasks(phaseAt('parser:transfer-result-requested'), phaseAt('parser:complete')),
+        storage: summarizeLongTasks(phaseAt('storage:start'), phaseAt('storage:complete')),
+        routeRender: summarizeLongTasks(phaseAt('storage:complete'), measuredAt),
+      },
       longTaskCount: longTasks.length,
       longestLongTaskMilliseconds: Number(Math.max(0, ...longTasks.map((task) => task.duration)).toFixed(1)),
       totalLongTaskMilliseconds: Number(longTasks.reduce((total, task) => total + task.duration, 0).toFixed(1)),
@@ -120,6 +185,7 @@ test('measures parser upload performance in Chromium', async ({ page, browserNam
     firstProgressMilliseconds: Number((firstProgressAt - startedAt).toFixed(1)),
     routeReadyMilliseconds,
     postStorageRenderMilliseconds,
+    tracePath,
     ...result,
   })}\n`);
 });

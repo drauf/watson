@@ -4,6 +4,8 @@ import type { ParseProgress } from './ParseProgress';
 import ParserWorker from './worker/parser.worker?worker&inline';
 import type { WorkerResponse } from './worker/protocol';
 
+export type ReadyToTransferCallback = () => void | Promise<void>;
+
 /**
  * Default browser parser. It runs streaming text parsing in an inline module worker
  * and falls back to MainThreadParser when workers are unavailable, such as in tests.
@@ -18,6 +20,7 @@ export default class WorkerParser {
   public constructor(
     private readonly onFilesParsed: CompletionCallback,
     private readonly onProgress?: ProgressCallback,
+    private readonly onReadyToTransfer?: ReadyToTransferCallback,
   ) {}
 
   public async parseFiles(files: File[]): Promise<void> {
@@ -30,7 +33,6 @@ export default class WorkerParser {
     WorkerParser.markPerformance('start');
     await new Promise<void>((resolve, reject) => {
       const worker = new ParserWorker();
-      let lastProgressPhase: ParseProgress['phase'] | undefined;
       let latestProgress: ParseProgress | undefined;
       let progressDelivery: Promise<void> | undefined;
       let terminalAction: (() => void | Promise<void>) | undefined;
@@ -59,15 +61,28 @@ export default class WorkerParser {
         }, reject);
       };
 
+      const prepareResultTransfer = async () => {
+        latestProgress = undefined;
+        await progressDelivery;
+        await this.onReadyToTransfer?.();
+        WorkerParser.markPerformance('transfer-result-requested');
+        worker.postMessage({ type: 'transfer-result' });
+      };
+
       worker.onmessage = (event: MessageEvent<WorkerResponse>) => {
         const message = event.data;
         if (message.type === 'progress') {
-          if (message.progress.phase !== lastProgressPhase) {
-            WorkerParser.markPerformance(message.progress.phase);
-            lastProgressPhase = message.progress.phase;
-          }
           latestProgress = message.progress;
           deliverLatestProgress();
+          return;
+        }
+
+        if (message.type === 'ready-to-transfer') {
+          WorkerParser.markPerformance('ready-to-transfer-received');
+          prepareResultTransfer().catch((error: unknown) => {
+            worker.terminate();
+            reject(error);
+          });
           return;
         }
 
