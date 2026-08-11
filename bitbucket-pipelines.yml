@@ -35,9 +35,11 @@ definitions:
 pipelines:
   branches:
     main:
-      - step: *lint_and_unit_tests
-      - step: *end_to_end_tests
+      - parallel:
+          - step: *lint_and_unit_tests
+          - step: *end_to_end_tests
   pull-requests:
     '**':
-      - step: *lint_and_unit_tests
-      - step: *end_to_end_tests
+      - parallel:
+          - step: *lint_and_unit_tests
+          - step: *end_to_end_tests
