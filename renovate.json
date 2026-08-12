@@ -4,7 +4,7 @@
     "config:best-practices",
     ":pinAllExceptPeerDependencies"
   ],
-  "prConcurrentLimit": 5,
+  "prCreation": "not-pending",
   "packageRules": [
     {
       "groupName": "Playwright",
