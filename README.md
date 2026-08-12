@@ -1,57 +1,66 @@
 # Watson
 
-* [About the project](#about-the-project)
-* [Gathering thread dumps](#gathering-thread-dumps)
-* [Screenshots](#screenshots)
-* [Development](#development)
+Watson is a browser-based, offline JVM thread dump and CPU usage analyzer.
 
-## About the project
+![Watson threads overview](e2e/threads-overview.spec.tsx-snapshots/Threads-overview-loads-1-chrome-light-linux.png)
 
-Watson is a JVM thread dump and CPU usage analyzer.
+It helps investigate JVM performance problems by grouping similar threads, identifying stuck or CPU-heavy threads, showing monitor contention, visualising stack traces and flame graphs. Its filtering tools help focus the analysis on relevant data.
 
-It combines the best features of other popular Java TDAs and optionally hides a lot of noise, like idle Tomcat threads waiting for work.
+See [screenshots.md](screenshots.md) for examples of Watson's analysis views.
 
-### Screenshots
+## Getting data
 
-[Open markdown file with screenshots](screenshots.md)
+For the most useful analysis, capture both:
 
-## Gathering thread dumps
+- Java thread dumps
+- CPU usage output from `top`
 
-To fully leverage Watson, you should capture Java thread dump **and** top outputs.
+For Atlassian products, the easiest option is to generate a [support zip](https://confluence.atlassian.com/support/create-a-support-zip-790796819.html) and load the files from:
 
-The easiest way to do this is to [generate a support zip](https://confluence.atlassian.com/support/create-a-support-zip-790796819.html) and
-load files from the `jfr-bundle/atst_in_product_diagnostic_<timestamp>/threaddumps` directory.
+```text
+jfr-bundle/atst_in_product_diagnostic_<timestamp>/threaddumps
+```
 
-You can also manually collect the data (also for non-Atlassian applications) by using [Atlassian Support scripts](https://bitbucket.org/atlassianlabs/atlassian-support/src/master/).
+You can also collect data manually, including for non-Atlassian applications, with the [Atlassian Support scripts](https://bitbucket.org/atlassianlabs/atlassian-support/src/master/).
 
 ## Development
 
-You only need [yarn](https://classic.yarnpkg.com/en/docs/install/) installed on your machine.
+### Prerequisites
 
-### Available scripts
+- Node.js 24 or later
+- Docker, for end-to-end tests
+- Corepack, included with supported Node.js releases
 
-In the root project directory, you can run:
+```bash
+corepack enable
+yarn install
+```
 
-#### `yarn install`
+### Run locally
 
-Installs the required packages. Must be done prior to `yarn start`
+```bash
+yarn start
+```
 
-#### `yarn start`
+Open http://localhost:3000/ in a browser.
 
-Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Useful commands
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+| Command                                     | Description                                                   |
+|---------------------------------------------|---------------------------------------------------------------|
+| `yarn start`                                | Start the development server                                  |
+| `yarn build`                                | Type-check and create a production build                      |
+| `yarn lint`                                 | Run type checks and auto-fix lint and style issues            |
+| `yarn test`                                 | Run unit tests in watch mode                                  |
+| `yarn test:coverage`                        | Run unit tests once with coverage                             |
+| `./e2e/run-in-docker.sh`                    | Run end-to-end tests in the pinned Linux Playwright container |
+| `./e2e/run-in-docker.sh --update-snapshots` | Update visual-test snapshots in the same container used by CI |
+| `yarn serve`                                | Preview an existing production build locally                  |
 
-#### `yarn lint`
+Before running or updating visual tests, fetch the committed screenshot baselines:
 
-Runs the linter to check if coding rules are followed.
+```bash
+git lfs pull
+```
 
-#### `yarn test`
-
-Launches the test runner in the interactive watch mode.
-
-#### `yarn deploy`
-
-Deploys the app to GitHub pages. Requires commit rights to the `gh-pages` branch.
+See [e2e/README.md](e2e/README.md) for focused visual-test and benchmark commands.
