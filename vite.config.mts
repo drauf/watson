@@ -22,7 +22,13 @@ export default defineConfig({
         coverage: {
             reporter: ['text', 'json', 'html'],
             include: ['src/**/*'],
-            exclude: [],
+            exclude: [
+                'src/**/*.css',
+                'src/**/*.d.ts',
+                'src/**/*.story.tsx',
+                'src/test-fixtures/**',
+                'src/test-setup.ts',
+            ],
         }
     },
     plugins: [
