@@ -16,16 +16,25 @@ const renderFilter = (threadDumps: ThreadDump[]) => render(
   </TimeWindowProvider>,
 );
 
-const dragStartHandle = (position: number): void => {
+const startHandleSelector = '.time-window-handle-start';
+const endHandleSelector = '.time-window-handle-end';
+// Dragging the selection moves both handles together
+const selectionSelector = '.time-window-selection';
+
+const drag = (selector: string, startClientX: number, endClientX: number): void => {
   const timeline = screen.getByLabelText('Time window timeline');
   Object.defineProperty(timeline, 'getBoundingClientRect', {
     configurable: true,
     value: () => ({ left: 0, width: 100 }),
   });
 
-  fireEvent.pointerDown(timeline.querySelector('.time-window-handle-start')!, { clientX: 0 });
-  fireEvent.pointerMove(window, { clientX: position });
+  fireEvent.pointerDown(timeline.querySelector(selector)!, { clientX: startClientX });
+  fireEvent.pointerMove(window, { clientX: endClientX });
   fireEvent.pointerUp(window);
+};
+
+const dragStartHandle = (position: number): void => {
+  drag(startHandleSelector, 0, position);
 };
 
 describe('TimeWindowFilter', () => {
@@ -53,6 +62,31 @@ describe('TimeWindowFilter', () => {
     ]);
 
     expect(screen.getByText(/2026-07-23 23:59:00 - 2026-07-24 00:01:00/)).toBeInTheDocument();
+  });
+
+  it('clamps an end-handle drag before the start timestamp', () => {
+    renderFilter(createThreadDumps(3));
+
+    fireEvent.click(screen.getByRole('button', { name: /time window/i }));
+    dragStartHandle(50);
+    drag(endHandleSelector, 100, 0);
+
+    expect(screen.getByText(/Selected: 09:00:01 - 09:00:01 · 1 of 3 thread dumps/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Apply' })).toBeEnabled();
+  });
+
+  it('moves a selected window within timeline bounds while preserving its span', () => {
+    renderFilter(createThreadDumps(3));
+
+    fireEvent.click(screen.getByRole('button', { name: /time window/i }));
+    dragStartHandle(50);
+    drag(selectionSelector, 75, 0);
+
+    expect(screen.getByText(/Selected: 09:00:00 - 09:00:01 · 2 of 3 thread dumps/)).toBeInTheDocument();
+
+    drag(selectionSelector, 25, 100);
+
+    expect(screen.getByText(/Selected: 09:00:01 - 09:00:02 · 2 of 3 thread dumps/)).toBeInTheDocument();
   });
 
   it('keeps the applied range unchanged until a dragged preview is applied', () => {
