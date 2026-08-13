@@ -30,6 +30,7 @@ describe('threadDumpsStorageService', () => {
   beforeEach(() => {
     stores.clear();
     vi.resetModules();
+    vi.clearAllMocks();
     vi.stubGlobal('crypto', { randomUUID: () => 'thread-dump-import' });
   });
 
@@ -59,5 +60,42 @@ describe('threadDumpsStorageService', () => {
     await setParsedData([secondThreadDump]);
 
     expect(await getThreadDumpsAsync(firstKey)).toEqual([firstThreadDump]);
+  });
+
+  it('returns an empty list when an import is not stored', async () => {
+    const { getThreadDumpsAsync } = await import('./threadDumpsStorageService');
+
+    expect(await getThreadDumpsAsync('missing-import')).toEqual([]);
+  });
+
+  it('returns a matching import from memory without reading storage again', async () => {
+    const key = 'cached-import';
+    const threadDumps = [new ThreadDump(123)];
+    stores.set('threadDumps', new Map([[key, threadDumps]]));
+    const { getThreadDumpsAsync } = await import('./threadDumpsStorageService');
+    const { getIndexedDbValue } = await import('./indexedDb');
+
+    expect(await getThreadDumpsAsync(key)).toEqual(threadDumps);
+    expect(await getThreadDumpsAsync(key)).toEqual(threadDumps);
+    expect(getIndexedDbValue).toHaveBeenCalledTimes(1);
+  });
+
+  it('removes all stale persisted records while retaining recent imports', async () => {
+    const staleKey = 'stale-import';
+    const recentKey = 'recent-import';
+    const staleDate = new Date().valueOf() - 8 * 24 * 60 * 60 * 1000;
+    const recentDate = new Date().valueOf();
+    stores.set('threadDumps', new Map([[staleKey, [new ThreadDump(1)]], [recentKey, [new ThreadDump(2)]]]));
+    stores.set('cpuUsageJfrList', new Map([[staleKey, []], [recentKey, []]]));
+    stores.set('lastUsed', new Map([[staleKey, staleDate], [recentKey, recentDate]]));
+    const { clearOldData } = await import('./threadDumpsStorageService');
+
+    clearOldData();
+
+    await vi.waitFor(() => {
+      expect(stores.get('threadDumps')).toEqual(new Map([[recentKey, [new ThreadDump(2)]]]));
+      expect(stores.get('cpuUsageJfrList')).toEqual(new Map([[recentKey, []]]));
+      expect(stores.get('lastUsed')).toEqual(new Map([[recentKey, recentDate]]));
+    });
   });
 });
