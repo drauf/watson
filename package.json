@@ -38,7 +38,6 @@
     "d3-flame-graph": "5.0.0",
     "jszip": "3.10.1",
     "react": "19.2.8",
-    "react-app-polyfill": "3.0.0",
     "react-dom": "19.2.8",
     "react-dropzone": "20.0.0",
     "react-is": "19.2.8",
