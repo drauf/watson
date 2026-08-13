@@ -34,6 +34,27 @@ describe('filterMonitors', () => {
     expect(filterMonitors([owned, unowned], { ...defaultFilters(), withoutOwner: true })).toEqual([unowned]);
   });
 
+  it('excludes monitors without waiting threads and conflicting ownership filters', () => {
+    const owner = createThread(1, 'owner');
+    const empty = createMonitor('empty', owner, []);
+    const owned = createMonitor('owned', owner, [createThread(2, 'waiter')]);
+
+    expect(filterMonitors([empty, owned], defaultFilters())).toEqual([owned]);
+    expect(filterMonitors([owned], { ...defaultFilters(), withOwner: true, withoutOwner: true })).toEqual([]);
+  });
+
+  it('excludes idle monitors but retains unowned monitors with a long waiting stack', () => {
+    const referenceHandler = createMonitor('reference', createThread(1, 'Reference Handler'), [createThread(2, 'waiter')]);
+    const cacheCleaner = createMonitor('cache-cleaner', createThread(3, 'Structure-ValueCacheCleaner-1'), [createThread(4, 'waiter')]);
+    const shortWaiter = createMonitor('short', undefined, [createThread(5, 'waiter', ['frame'])]);
+    const longWaiter = createMonitor('long', undefined, [createThread(6, 'waiter', Array.from({ length: 17 }, (_, index) => `frame-${index}`))]);
+
+    expect(filterMonitors(
+      [referenceHandler, cacheCleaner, shortWaiter, longWaiter],
+      { ...defaultFilters(), withoutIdle: true },
+    )).toEqual([longWaiter]);
+  });
+
   it('filters monitor participants by name and stack patterns', () => {
     const monitor = createMonitor('database', undefined, [
       createThread(1, 'http-nio-1', ['org.postgresql.jdbc.PgStatement.execute']),
