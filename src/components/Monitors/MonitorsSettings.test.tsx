@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
+import applyRegexFilter from '../../test-fixtures/applyRegexFilter';
 import MonitorsSettings from './MonitorsSettings';
 
 vi.mock('../TimeWindow/TimeWindowFilter', () => ({ default: () => <div /> }));
@@ -23,7 +24,7 @@ describe('MonitorsSettings', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Owned locks' }));
     fireEvent.click(screen.getByRole('button', { name: 'Unowned locks' }));
-    fireEvent.change(screen.getByLabelText('Thread name pattern'), { target: { value: 'http' } });
+    applyRegexFilter('Thread name pattern', 'http');
 
     expect(screen.queryByRole('button', { name: 'Database' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'CPU active' })).not.toBeInTheDocument();

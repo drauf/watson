@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import {
   describe, expect, it, vi,
 } from 'vitest';
+import applyRegexFilter from '../../test-fixtures/applyRegexFilter';
 import FlameGraphSettings from './FlameGraphSettings';
 
 vi.mock('../TimeWindow/TimeWindowFilter', () => ({ default: () => <div data-testid="time-window" /> }));
@@ -28,7 +29,7 @@ describe('FlameGraphSettings', () => {
     );
 
     fireEvent.click(screen.getByRole('button', { name: /^CPU active$/ }));
-    fireEvent.change(screen.getByLabelText('Stack trace pattern'), { target: { value: 'Request' } });
+    applyRegexFilter('Stack trace pattern', 'Request');
 
     expect(onFilterChange).toHaveBeenCalledWith(expect.objectContaining({
       target: expect.objectContaining({ name: 'cpuActive', checked: true }),

@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
+import applyRegexFilter from '../../test-fixtures/applyRegexFilter';
 import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
 import ThreadStatus from '../../types/ThreadStatus';
@@ -64,7 +65,7 @@ describe('ThreadsOverviewPage', () => {
     expect(screen.getByText('matching-worker: 2 snapshots')).toBeInTheDocument();
     expect(screen.getByText('non-matching-worker: 2 snapshots')).toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText('Stack trace pattern'), { target: { value: 'database' } });
+    applyRegexFilter('Stack trace pattern', 'database');
 
     expect(screen.getByText('Showing 1 of 2 threads (50.0%)')).toBeInTheDocument();
     expect(screen.getByText('Highlighting 1 matching thread snapshots')).toBeInTheDocument();

@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { vi } from 'vitest';
+import applyRegexFilter from '../../test-fixtures/applyRegexFilter';
 import ThreadsOverviewSettings from './ThreadsOverviewSettings';
 
 vi.mock('../TimeWindow/TimeWindowFilter', () => ({
@@ -56,8 +57,8 @@ describe('ThreadsOverviewSettings', () => {
     const { onFilterChange, onRegExpChange } = renderSettings();
 
     fireEvent.click(screen.getByRole('button', { name: 'Active' }));
-    fireEvent.change(screen.getByLabelText('Thread name pattern'), { target: { value: '^http' } });
-    fireEvent.change(screen.getByLabelText('Stack trace pattern'), { target: { value: 'lucene' } });
+    applyRegexFilter('Thread name pattern', '^http');
+    applyRegexFilter('Stack trace pattern', 'lucene');
 
     expect(onFilterChange).toHaveBeenCalledTimes(1);
     expect(onRegExpChange).toHaveBeenCalledTimes(2);

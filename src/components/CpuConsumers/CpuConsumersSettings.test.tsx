@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import {
   describe, expect, it, vi,
 } from 'vitest';
+import applyRegexFilter from '../../test-fixtures/applyRegexFilter';
 import CpuConsumersMode from './CpuConsumersMode';
 import CpuConsumersSettings from './CpuConsumersSettings';
 
@@ -28,7 +29,7 @@ describe('CpuConsumersSettings', () => {
     );
 
     fireEvent.click(screen.getByRole('button', { name: /^Median$/ }));
-    fireEvent.change(screen.getByLabelText('Thread name pattern'), { target: { value: 'http.*exec' } });
+    applyRegexFilter('Thread name pattern', 'http.*exec');
 
     expect(onModeChange).toHaveBeenCalledWith(CpuConsumersMode.Median);
     expect(onRegExpChange).toHaveBeenCalledTimes(1);

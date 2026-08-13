@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
+import applyRegexFilter from '../../test-fixtures/applyRegexFilter';
 import StuckThreadsSettings from './StuckThreadsSettings';
 
 vi.mock('../TimeWindow/TimeWindowFilter', () => ({ default: () => <div /> }));
@@ -32,7 +33,7 @@ describe('StuckThreadsSettings', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Active' }));
     fireEvent.change(screen.getByLabelText('Detection threshold'), { target: { value: '5' } });
     fireEvent.change(screen.getByLabelText('Similarity tolerance'), { target: { value: '10' } });
-    fireEvent.change(screen.getByLabelText('Stack trace pattern'), { target: { value: 'latch' } });
+    applyRegexFilter('Stack trace pattern', 'latch');
 
     expect(onFilterChange).toHaveBeenCalledTimes(1);
     expect(onIntegerChange).toHaveBeenCalledTimes(2);

@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
+import applyRegexFilter from '../../test-fixtures/applyRegexFilter';
 import SimilarStacksSettings from './SimilarStacksSettings';
 
 vi.mock('../TimeWindow/TimeWindowFilter', () => ({ default: () => <div /> }));
@@ -32,7 +33,7 @@ describe('SimilarStacksSettings', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Active' }));
     fireEvent.change(screen.getByLabelText('Comparison depth'), { target: { value: '10' } });
     fireEvent.change(screen.getByLabelText('Minimum group size'), { target: { value: '3' } });
-    fireEvent.change(screen.getByLabelText('Thread name pattern'), { target: { value: 'http' } });
+    applyRegexFilter('Thread name pattern', 'http');
 
     expect(onFilterChange).toHaveBeenCalledTimes(1);
     expect(onIntegerChange).toHaveBeenCalledTimes(2);
