@@ -217,6 +217,32 @@ describe('threadFilters', () => {
       });
     });
 
+    it.each([
+      ['RMI connection', 'RMI TCP Connection(1)-127.0.0.1', createMediumStack([])],
+      ['JRuby sleep', 'jruby-worker', (() => {
+        const stack = createMediumStack([]);
+        stack[9] = 'org.jruby.RubyThread.sleep';
+        return stack;
+      })()],
+      ['OkHttp polling', 'OkHttp ConnectionPool', createMediumStack(['sun.nio.ch.Net.poll'])],
+      ['Rufus queue', 'rufus-scheduler-worker', (() => {
+        const stack = createMediumStack([]);
+        stack[7] = 'org.jruby.ext.thread.Queue$INVOKER$i$pop.call';
+        return stack;
+      })()],
+      ['Rubinius actor', 'rubinius-actor-1', (() => {
+        const stack = createMediumStack([]);
+        stack[5] = 'org.jruby.ext.rubinius.RubiniusChannel$INVOKER$i$0$0$receive.call';
+        return stack;
+      })()],
+      ['CompletableFuture', 'future-worker', createMediumStack(['java.util.concurrent.CompletableFuture.get()'])],
+      ['CountDownLatch', 'latch-worker', createMediumStack(['java.util.concurrent.CountDownLatch.await()'])],
+      ['Phaser', 'phaser-worker', createMediumStack(['java.util.concurrent.Phaser.awaitAdvance()'])],
+      ['CyclicBarrier', 'barrier-worker', createMediumStack(['java.util.concurrent.CyclicBarrier.await()'])],
+    ])('detects %s waiting patterns as idle', (_pattern, name, stackTrace) => {
+      expect(isIdleInSnapshot(createMockThread(name, ThreadStatus.WAITING, stackTrace))).toBe(true);
+    });
+
     describe('isActiveOverTime', () => {
       describe('status changes indicate activity', () => {
         it('detects thread that changes from RUNNABLE to BLOCKED as active', () => {
