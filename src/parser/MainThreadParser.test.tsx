@@ -22,7 +22,7 @@ vi.mock('./cpuusage/os/TopCpuUsageParser', () => ({
   default: {
     parseCpuUsage: vi.fn(),
   },
-  CPU_USAGE_TIMESTAMP_PATTERN: /^top - /,
+  CPU_USAGE_TIMESTAMP_PATTERN: /^top - ([0-9]{2}:[0-9]{2}:[0-9]{2})/,
 }));
 
 vi.mock('./cpuusage/jfr/CpuUsageJfrParser', () => ({
@@ -219,6 +219,67 @@ describe('MainThreadParser', () => {
         labels: [ThreadLabel.BACKGROUND, ThreadLabel.CPU_ACTIVE],
         runningFor: '0:01.00',
       });
+    });
+
+    it('routes top CPU files to the top parser', async () => {
+      const file = createMockFile('cpu.txt', 'top - 10:00:00 up 1 day');
+      const TopCpuUsageParser = await import('./cpuusage/os/TopCpuUsageParser');
+
+      await parser.parseFiles([file]);
+
+      expect(TopCpuUsageParser.default.parseCpuUsage).toHaveBeenCalledWith(
+        ['top - 10:00:00 up 1 day'],
+        expect.any(Function),
+      );
+    });
+
+    it('does not retain parsed thread dumps without threads', async () => {
+      const file = createMockFile('empty-dump.txt', '2023-01-01 12:00:00');
+      const AsyncThreadDumpParser = await import('./AsyncThreadDumpParser');
+      (AsyncThreadDumpParser.default.parseThreadDump as any).mockImplementation(
+        (_lines: string[], callback: any) => {
+          callback(new ThreadDump(Date.parse('2023-01-01 12:00:00')));
+          return Promise.resolve();
+        },
+      );
+
+      await parser.parseFiles([file]);
+
+      expect(mockOnFilesParsed).toHaveBeenCalledWith([]);
+    });
+
+    it('does not group CPU usage without an absolute timestamp', async () => {
+      const threadDumpFile = createMockFile('dump.txt', '2023-01-01 12:00:00');
+      const cpuUsageFile = createMockFile('cpu.txt', 'top - 00:00:00 up 1 day');
+      const AsyncThreadDumpParser = await import('./AsyncThreadDumpParser');
+      (AsyncThreadDumpParser.default.parseThreadDump as any).mockImplementation(
+        (_lines: string[], callback: any) => {
+          const threadDump = new ThreadDump(Date.parse('2023-01-01 12:00:00'));
+          threadDump.threads.push({ id: 1, name: 'worker' } as any);
+          callback(threadDump);
+          return Promise.resolve();
+        },
+      );
+      const TopCpuUsageParser = await import('./cpuusage/os/TopCpuUsageParser');
+      (TopCpuUsageParser.default.parseCpuUsage as any).mockImplementation(
+        (_lines: string[], callback: any) => {
+          callback(CpuUsage.fromTop('00:00:00', 10, [], {} as any, {} as any));
+        },
+      );
+
+      await parser.parseFiles([threadDumpFile, cpuUsageFile]);
+
+      expect((mockOnFilesParsed as any).mock.calls[0][0][0].runningProcesses).toBeUndefined();
+    });
+
+    it('ignores input without a thread-dump timestamp', async () => {
+      const file = createMockFile('unknown.txt', 'not a recognized dump');
+      const AsyncThreadDumpParser = await import('./AsyncThreadDumpParser');
+
+      await parser.parseFiles([file]);
+
+      expect(AsyncThreadDumpParser.default.parseThreadDump).not.toHaveBeenCalled();
+      expect(mockOnFilesParsed).toHaveBeenCalledWith([]);
     });
 
     it('should handle multiple files', async () => {
