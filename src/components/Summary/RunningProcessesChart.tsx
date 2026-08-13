@@ -5,59 +5,60 @@ import { token } from '@atlaskit/tokens';
 import Heading from '@atlaskit/heading';
 import Text from '@atlaskit/primitives/text';
 import type { JSX } from 'react';
-import Thread from '../../types/Thread';
 import ThreadDump from '../../types/ThreadDump';
-import ThreadStatus from '../../types/ThreadStatus';
 import PopupContent from '../common/PopupContent';
+import { getRunningProcessesTooltipData } from './runningProcessesTooltip';
 
 interface Props {
   threadDumps: ThreadDump[];
 }
 
-const getSortedThreadNames = (payload: unknown): string[] => {
-  const threads: Thread[] = payload as Thread[];
-
-  return threads
-    .filter((thread) => thread.status === ThreadStatus.RUNNABLE)
-    .filter((thread) => thread.cpuUsage !== '0.00')
-    .sort((a, b) => parseFloat(b.cpuUsage) - parseFloat(a.cpuUsage))
-    .slice(0, 10)
-    .map((thread) => `${thread.cpuUsage}% CPU - ${thread.name}`);
-};
+interface RunningProcessesChartDatum {
+  readonly name: string;
+  readonly runningProcesses: number;
+  readonly threads: ThreadDump['threads'];
+}
 
 const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Element | null => {
   if (active && payload) {
     const time = label as string;
-    const threadNames: string[] = getSortedThreadNames(payload[1].value);
-    const threadsCount: number = payload[0].value ? Number(payload[0].value) : 0;
+    const chartDatum = payload[0]?.payload as Partial<RunningProcessesChartDatum> | undefined;
+    const { runningProcesses, threadNames } = getRunningProcessesTooltipData(
+      chartDatum?.runningProcesses,
+      chartDatum?.threads,
+    );
 
     return (
       <PopupContent>
         <Text as="p">
-          {`${time} - ${threadsCount}`}
+          {`${time} - ${runningProcesses}`}
           {' '}
           running
           {' '}
-          {threadsCount === 1 ? 'process' : 'processes'}
+          {runningProcesses === 1 ? 'process' : 'processes'}
           {' '}
           (from
           {' '}
           <i>top</i>
           )
         </Text>
-        <hr />
-        <Text as="p">
-          Top 10
-          {' '}
-          <i>jstack</i>
-          {' '}
-          threads:
-        </Text>
-        <ol>
-          {threadNames.length > 0
-            ? threadNames.map((name) => <li key={name}>{name}</li>)
-            : <li>none</li>}
-        </ol>
+        {threadNames.length > 0 && (
+          <>
+            <hr />
+            <Text as="p">
+              Top
+              {' '}
+              {threadNames.length}
+              {' '}
+              <i>jstack</i>
+              {' '}
+              threads:
+            </Text>
+            <ol>
+              {threadNames.map((name) => <li key={name}>{name}</li>)}
+            </ol>
+          </>
+        )}
       </PopupContent>
     );
   }
@@ -66,7 +67,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipContentProps): JSX.Ele
 };
 
 const RunningProcessesChart = ({ threadDumps }: Props): JSX.Element => {
-  const data: object[] = [];
+  const data: RunningProcessesChartDatum[] = [];
 
   threadDumps.forEach((threadDump) => {
     if (threadDump.threads.some((thread) => thread.cpuUsage !== '0.00')) {
