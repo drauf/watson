@@ -145,7 +145,7 @@ export default class AsyncThreadDumpParser {
           return;
 
         default:
-          console.warn(`Unknown synchronziation status: ${line}`);
+          console.warn(`Unknown synchronization status: ${line}`);
           return;
       }
     }

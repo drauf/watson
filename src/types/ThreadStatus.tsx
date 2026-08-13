@@ -3,6 +3,8 @@ enum ThreadStatus {
   BLOCKED = 'blocked',
   WAITING = 'waiting',
   TIMED_WAITING = 'timed-waiting',
+  NEW = 'new',
+  TERMINATED = 'terminated',
   UNKNOWN = 'unknown',
 }
 
