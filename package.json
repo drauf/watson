@@ -67,7 +67,7 @@
     "node-gyp": "13.0.1",
     "rollup": "4.62.4",
     "stylelint": "17.14.1",
-    "stylelint-config-rational-order": "0.1.2",
+    "stylelint-config-idiomatic-order": "10.0.0",
     "stylelint-config-standard": "40.0.0",
     "stylelint-order": "8.1.1",
     "typescript": "6.0.3",

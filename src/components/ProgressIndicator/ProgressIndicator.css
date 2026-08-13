@@ -5,16 +5,16 @@
 
 .progress-header {
   display: flex;
+  height: 40px;
   align-items: center;
   justify-content: space-between;
-  height: 40px;
 }
 
 .progress-percentage {
   min-width: 42px;
   color: var(--ds-background-accent-blue-bolder);
-  font-weight: var(--ds-font-weight-bold);
   font-size: 16px;
+  font-weight: var(--ds-font-weight-bold);
   text-align: right;
 }
 
@@ -33,13 +33,13 @@
 }
 
 .progress-file-name {
+  overflow: hidden;
   max-width: 100%;
   margin-bottom: var(--ds-space-100, 8px);
-  overflow: hidden;
   color: var(--ds-text-subtlest);
   font-weight: var(--ds-font-weight-semibold);
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .progress-lines {

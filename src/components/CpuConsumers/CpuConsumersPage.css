@@ -13,16 +13,16 @@
 
 #consumers-list .cpu-consumer-usage.no-click {
   display: inline-flex;
+  box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
   padding: var(--ds-space-050) var(--ds-space-100);
 }
 
 #consumers-list .cpu-consumer-medium-button button {
-  color: var(--ds-text-inverse, #fff) !important;
-  background: var(--ds-background-accent-orange-bolder, #c25100) !important;
   border-color: var(--ds-background-accent-orange-bolder, #c25100) !important;
+  background: var(--ds-background-accent-orange-bolder, #c25100) !important;
+  color: var(--ds-text-inverse, #fff) !important;
   -webkit-text-fill-color: var(--ds-text-inverse, #fff);
 }
 
@@ -32,6 +32,6 @@
 
 .no-click {
   color: var(--ds-text);
-  -webkit-text-fill-color: var(--ds-text);
   pointer-events: none;
+  -webkit-text-fill-color: var(--ds-text);
 }

@@ -1,9 +1,9 @@
 .group-header {
   display: flex;
-  flex: 1;
-  gap: var(--ds-space-100);
-  align-items: center;
   min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: var(--ds-space-100);
 }
 
 .group-header-leading {
@@ -14,8 +14,8 @@
 
 .group-header-title {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .group-header-metadata {

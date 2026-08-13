@@ -1,6 +1,6 @@
 {
   "extends": [
-    "stylelint-config-rational-order",
+    "stylelint-config-idiomatic-order",
     "stylelint-config-standard",
     "@atlaskit/stylelint-design-system"
   ]

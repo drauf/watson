@@ -27,8 +27,8 @@ svg div {
 
 .d3-flame-graph-label {
   color: var(--ds-text) !important;
-  font-size: var(--ds-font-size-075);
-  font-family: var(--ds-font-family-monospace);
-  fill: currentcolor;
   dominant-baseline: middle;
+  fill: currentcolor;
+  font-family: var(--ds-font-family-monospace);
+  font-size: var(--ds-font-size-075);
 }

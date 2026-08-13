@@ -1,9 +1,9 @@
 .thread-details {
   display: flex;
-  flex-direction: column;
   width: 100%;
-  margin: 0;
+  flex-direction: column;
   padding: 0;
+  margin: 0;
 }
 
 .details-header {
@@ -18,14 +18,14 @@
 .thread-details-metadata {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--ds-space-100);
   padding-left: var(--ds-space-200);
+  gap: var(--ds-space-100);
 }
 
 .details-body {
   display: flex;
-  flex-direction: column;
   width: 100%;
+  flex-direction: column;
 }
 
 .details-body div {

@@ -4,11 +4,11 @@
 }
 
 .monitors-container div {
+  overflow: hidden;
   max-width: 100%;
   padding-left: var(--ds-space-075, 6px);
-  overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .monitors-container .left {
@@ -23,9 +23,9 @@
 .waiting-list-items {
   display: flex;
   flex-direction: column;
-  gap: var(--ds-space-050, 4px);
   align-items: flex-start;
-  margin: var(--ds-space-075, 6px) 0;
   padding: 0;
+  margin: var(--ds-space-075, 6px) 0;
+  gap: var(--ds-space-050, 4px);
   list-style: none;
 }

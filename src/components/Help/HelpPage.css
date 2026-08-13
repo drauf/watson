@@ -1,7 +1,7 @@
 .help-page {
   max-width: 720px;
-  margin: 0 auto;
   padding: var(--ds-space-400) var(--ds-space-300);
+  margin: 0 auto;
   color: var(--ds-text);
   line-height: 1.6;
 }
@@ -11,8 +11,8 @@
 }
 
 .help-page ul {
-  margin: 0;
   padding-left: var(--ds-space-300);
+  margin: 0;
 }
 
 .help-page li {
