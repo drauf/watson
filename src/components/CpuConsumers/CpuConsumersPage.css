@@ -12,17 +12,17 @@
 }
 
 #consumers-list .cpu-consumer-usage.no-click {
-  display: inline-flex;
   box-sizing: border-box;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: var(--ds-space-050) var(--ds-space-100);
 }
 
 #consumers-list .cpu-consumer-medium-button button {
-  border-color: var(--ds-background-accent-orange-bolder, #c25100) !important;
-  background: var(--ds-background-accent-orange-bolder, #c25100) !important;
   color: var(--ds-text-inverse, #fff) !important;
+  background: var(--ds-background-accent-orange-bolder, #c25100) !important;
+  border-color: var(--ds-background-accent-orange-bolder, #c25100) !important;
   -webkit-text-fill-color: var(--ds-text-inverse, #fff);
 }
 

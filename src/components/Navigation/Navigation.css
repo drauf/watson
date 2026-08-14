@@ -1,26 +1,26 @@
 header {
   position: sticky;
-  z-index: 5;
   top: 0;
+  z-index: 5;
+  box-sizing: border-box;
 
   /* important needed due to atlassian css reset overwriting display to block */
   display: flex !important;
-  width: 100%;
-  height: var(--watson-navigation-height);
-  box-sizing: border-box;
   flex-wrap: nowrap;
   align-items: stretch;
   justify-content: space-between;
-  border-bottom: 1px solid var(--ds-border);
-  background: var(--ds-surface-raised);
+  width: 100%;
+  height: var(--watson-navigation-height);
   font-weight: var(--ds-font-weight-bold);
+  background: var(--ds-surface-raised);
+  border-bottom: 1px solid var(--ds-border);
 }
 
 .header-section {
   display: flex;
+  gap: var(--ds-space-150, 12px);
   align-items: center;
   padding: 0 var(--ds-space-200, 16px);
-  gap: var(--ds-space-150, 12px);
 }
 
 header h1 {
@@ -33,24 +33,24 @@ header [data-testid='watson-logo'] {
 
 header nav {
   display: inline-flex;
-  min-height: var(--watson-navigation-height);
   align-items: center;
+  min-height: var(--watson-navigation-height);
 }
 
 header ul {
   display: inline-flex;
-  overflow: hidden;
-  min-height: var(--watson-navigation-height);
   align-items: center;
+  min-height: var(--watson-navigation-height);
   padding: 0;
   margin: 0;
+  overflow: hidden;
   list-style: none;
 }
 
 header li {
   display: flex;
-  min-height: var(--watson-navigation-height);
   align-items: center;
+  min-height: var(--watson-navigation-height);
 }
 
 header li + li {
@@ -58,38 +58,38 @@ header li + li {
 }
 
 header a {
-  display: inline-flex;
-  overflow: hidden;
-  min-height: var(--watson-navigation-height);
   box-sizing: border-box;
+  display: inline-flex;
   align-items: center;
+  min-height: var(--watson-navigation-height);
   padding: 0 var(--ds-space-150, 12px);
-  border-radius: 0;
-  color: var(--ds-text-subtle);
-  line-height: 24px;
-  -webkit-text-fill-color: var(--ds-text-subtle);
+  overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 24px;
+  color: var(--ds-text-subtle);
   white-space: nowrap;
+  border-radius: 0;
+  -webkit-text-fill-color: var(--ds-text-subtle);
 }
 
 header a.active {
   box-sizing: border-box;
-  border-bottom: 3px solid var(--ds-link);
-  background: var(--ds-background-accent-blue-subtlest);
   color: var(--ds-link);
+  background: var(--ds-background-accent-blue-subtlest);
+  border-bottom: 3px solid var(--ds-link);
   -webkit-text-fill-color: var(--ds-link);
 }
 
 header a:hover {
-  background: var(--ds-background-neutral-subtle-hovered, #0515240f);
   color: var(--ds-text);
   text-decoration: none;
+  background: var(--ds-background-neutral-subtle-hovered, #0515240f);
   -webkit-text-fill-color: var(--ds-text);
 }
 
 header a.active:hover {
-  background: var(--ds-background-accent-blue-subtlest);
   color: var(--ds-link);
+  background: var(--ds-background-accent-blue-subtlest);
   -webkit-text-fill-color: var(--ds-link);
 }
 

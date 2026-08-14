@@ -1,7 +1,7 @@
 .thread-details {
   display: flex;
-  width: 100%;
   flex-direction: column;
+  width: 100%;
   padding: 0;
   margin: 0;
 }
@@ -18,14 +18,14 @@
 .thread-details-metadata {
   display: flex;
   flex-wrap: wrap;
-  padding-left: var(--ds-space-200);
   gap: var(--ds-space-100);
+  padding-left: var(--ds-space-200);
 }
 
 .details-body {
   display: flex;
-  width: 100%;
   flex-direction: column;
+  width: 100%;
 }
 
 .details-body div {

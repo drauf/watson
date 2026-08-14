@@ -2,8 +2,8 @@
   max-width: 720px;
   padding: var(--ds-space-400) var(--ds-space-300);
   margin: 0 auto;
-  color: var(--ds-text);
   line-height: 1.6;
+  color: var(--ds-text);
 }
 
 .help-page h2 {

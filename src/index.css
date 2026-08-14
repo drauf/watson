@@ -25,22 +25,22 @@ html {
 
 .stacktrace-container {
   display: flex;
-  width: 100%;
   flex-direction: column;
+  width: 100%;
   padding: 0;
 }
 
 .stacktrace-container code {
+  box-sizing: border-box;
   display: block;
-  overflow: hidden;
   width: 100%;
   min-width: 0;
-  box-sizing: border-box;
   padding: 0 var(--ds-space-200);
-  color: var(--ds-text-code-default);
+  overflow: hidden;
+  text-overflow: ellipsis;
   font: var(--ds-font-code);
   line-height: 1.2lh;
-  text-overflow: ellipsis;
+  color: var(--ds-text-code-default);
   white-space: nowrap;
 }
 

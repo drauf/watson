@@ -6,8 +6,8 @@
   position: relative;
   height: 56px;
   margin: 2px;
-  cursor: default;
   touch-action: none;
+  cursor: default;
 }
 
 .time-window-timeline::before {
@@ -16,9 +16,9 @@
   right: 0;
   left: 0;
   height: 4px;
-  border-radius: var(--ds-radius-full, 9999px);
-  background: var(--track-bg);
   content: '';
+  background: var(--track-bg);
+  border-radius: var(--ds-radius-full, 9999px);
 }
 
 .time-window-selection {
@@ -26,9 +26,9 @@
   top: 18px;
   min-width: 4px;
   height: 4px;
-  border-radius: var(--ds-radius-full, 9999px);
-  background: var(--track-fg);
   cursor: grab;
+  background: var(--track-fg);
+  border-radius: var(--ds-radius-full, 9999px);
 }
 
 .time-window-selection:active {
@@ -40,11 +40,11 @@
   top: 50%;
   width: 16px;
   height: 16px;
+  cursor: ew-resize;
+  background: var(--thumb-bg);
   border: 2px solid var(--ds-surface-overlay);
   border-radius: var(--ds-radius-full, 9999px);
-  background: var(--thumb-bg);
   box-shadow: var(--ds-shadow-raised);
-  cursor: ew-resize;
   transform: translateY(-50%);
 }
 
@@ -60,9 +60,9 @@
   position: absolute;
   top: 34px;
   display: flex;
-  width: 100%;
   justify-content: space-between;
-  color: var(--ds-text-subtle);
+  width: 100%;
   font-size: 0.75rem;
+  color: var(--ds-text-subtle);
   -webkit-text-fill-color: var(--ds-text-subtle);
 }

@@ -1,10 +1,10 @@
 .collapsable-group {
   display: block;
   padding: var(--ds-space-050) var(--ds-space-100);
-  border: 1px solid var(--ds-border-disabled, #091e4224);
-  border-radius: var(--ds-radius-medium, 6px);
   margin: var(--ds-space-100) 0;
   background: transparent;
+  border: 1px solid var(--ds-border-disabled, #091e4224);
+  border-radius: var(--ds-radius-medium, 6px);
   transition: border-color 0.1s ease-out;
 }
 
@@ -22,16 +22,16 @@
 }
 
 .collapsable-group-chevron {
-  display: inline-flex;
-  width: 24px;
-  height: 24px;
   box-sizing: border-box;
+  display: inline-flex;
   flex: 0 0 24px;
   align-items: center;
   justify-content: center;
-  border-radius: var(--ds-radius-small, 4px);
+  width: 24px;
+  height: 24px;
   margin-right: var(--ds-space-075, 6px);
   color: var(--ds-icon, #292a2e);
+  border-radius: var(--ds-radius-small, 4px);
   transition: background-color 0.1s ease-out;
 }
 
@@ -50,18 +50,18 @@
 
 .collapsable-group-toggle {
   display: flex;
+  align-items: center;
   width: 100%;
   min-height: 24px;
-  align-items: center;
   padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--ds-text, #172b4d);
-  cursor: pointer;
   font: inherit;
   font-weight: var(--ds-font-weight-semibold, 600);
   line-height: 24px;
+  color: var(--ds-text, #172b4d);
   text-align: left;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
 }
 
 .collapsable-group-toggle:hover {

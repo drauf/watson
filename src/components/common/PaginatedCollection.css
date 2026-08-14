@@ -1,7 +1,7 @@
 .paginated-collection-actions {
   display: flex;
-  justify-content: flex-end;
   gap: var(--ds-space-050);
+  justify-content: flex-end;
 }
 
 .paginated-collection {

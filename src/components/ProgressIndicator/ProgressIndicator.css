@@ -5,16 +5,16 @@
 
 .progress-header {
   display: flex;
-  height: 40px;
   align-items: center;
   justify-content: space-between;
+  height: 40px;
 }
 
 .progress-percentage {
   min-width: 42px;
-  color: var(--ds-background-accent-blue-bolder);
   font-size: 16px;
   font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-background-accent-blue-bolder);
   text-align: right;
 }
 
@@ -22,23 +22,23 @@
   height: 80px;
   min-height: 80px;
   margin-top: var(--ds-space-250, 20px);
-  color: var(--ds-text-subtlest);
   font-size: 14px;
+  color: var(--ds-text-subtlest);
 }
 
 .progress-file {
   margin-bottom: var(--ds-space-100, 8px);
-  color: var(--ds-text-subtle);
   font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-text-subtle);
 }
 
 .progress-file-name {
-  overflow: hidden;
   max-width: 100%;
   margin-bottom: var(--ds-space-100, 8px);
-  color: var(--ds-text-subtlest);
-  font-weight: var(--ds-font-weight-semibold);
+  overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-text-subtlest);
   white-space: nowrap;
 }
 
