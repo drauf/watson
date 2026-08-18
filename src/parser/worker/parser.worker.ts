@@ -5,6 +5,7 @@ import StreamingParser from './StreamingParser';
 import type { WorkerRequest, WorkerResponse } from './protocol';
 
 const workerScope = globalThis as unknown as DedicatedWorkerGlobalScope;
+let parser: StreamingParser | undefined;
 let parsedResult: ThreadDump[] | undefined;
 
 const postError = (error: unknown) => {
@@ -18,27 +19,48 @@ const postError = (error: unknown) => {
 };
 
 workerScope.onmessage = async (event: MessageEvent<WorkerRequest>) => {
-  if (event.data.type === 'transfer-result') {
-    if (parsedResult === undefined) {
-      postError(new Error('No parsed result is ready to transfer'));
+  try {
+    if (event.data.type === 'start') {
+      parser = new StreamingParser(
+        event.data.totalFiles,
+        event.data.totalBytes,
+        event.data.config,
+        (progress) => workerScope.postMessage({ type: 'progress', progress } satisfies WorkerResponse),
+      );
+      workerScope.postMessage({ type: 'ready-for-file' } satisfies WorkerResponse);
       return;
     }
 
-    const result = parsedResult;
-    parsedResult = undefined;
-    workerScope.postMessage({ type: 'complete', threadDumps: result } satisfies WorkerResponse);
-    return;
-  }
+    if (event.data.type === 'parse-file') {
+      if (parser === undefined) {
+        throw new Error('Parser session has not started');
+      }
+      await parser.parseFile(event.data.file);
+      workerScope.postMessage({ type: 'ready-for-file' } satisfies WorkerResponse);
+      return;
+    }
 
-  try {
-    const parser = new StreamingParser(
-      event.data.files,
-      event.data.config,
-      (progress) => workerScope.postMessage({ type: 'progress', progress } satisfies WorkerResponse),
-    );
-    parsedResult = await parser.parse();
-    workerScope.postMessage({ type: 'ready-to-transfer' } satisfies WorkerResponse);
+    if (event.data.type === 'finish') {
+      if (parser === undefined) {
+        throw new Error('Parser session has not started');
+      }
+      parsedResult = parser.finish();
+      parser = undefined;
+      workerScope.postMessage({ type: 'ready-to-transfer' } satisfies WorkerResponse);
+      return;
+    }
+
+    if (event.data.type === 'transfer-result') {
+      if (parsedResult === undefined) {
+        throw new Error('No parsed result is ready to transfer');
+      }
+
+      const result = parsedResult;
+      parsedResult = undefined;
+      workerScope.postMessage({ type: 'complete', threadDumps: result } satisfies WorkerResponse);
+    }
   } catch (error) {
+    parser = undefined;
     postError(error);
   }
 };

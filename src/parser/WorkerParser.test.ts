@@ -78,6 +78,46 @@ describe('WorkerParser', () => {
     expect(worker.terminate).toHaveBeenCalledOnce();
   });
 
+  it('pulls files one at a time before finishing the worker session', async () => {
+    const parser = new WorkerParser(vi.fn());
+    const files = [
+      new File(['first'], 'first.txt'),
+      new File(['second'], 'second.txt'),
+    ];
+
+    const parsing = parser.parseFiles(files);
+    const worker = workerState.workerInstances[0];
+    expect(worker.postMessage).toHaveBeenCalledWith({
+      type: 'start',
+      totalFiles: 2,
+      totalBytes: files[0].size + files[1].size,
+      config: expect.any(Object),
+    });
+
+    worker.onmessage?.({ data: { type: 'ready-for-file' } } as MessageEvent);
+    await vi.waitFor(() => {
+      expect(worker.postMessage).toHaveBeenLastCalledWith({ type: 'parse-file', file: files[0] });
+    });
+
+    worker.onmessage?.({ data: { type: 'ready-for-file' } } as MessageEvent);
+    await vi.waitFor(() => {
+      expect(worker.postMessage).toHaveBeenLastCalledWith({ type: 'parse-file', file: files[1] });
+    });
+    await new Promise<void>((resolve) => {
+      setTimeout(resolve, 0);
+    });
+
+    worker.onmessage?.({ data: { type: 'ready-for-file' } } as MessageEvent);
+    await vi.waitFor(() => {
+      expect(worker.postMessage).toHaveBeenLastCalledWith({ type: 'finish' });
+    });
+
+    worker.onmessage?.({ data: { type: 'ready-to-transfer' } } as MessageEvent);
+    await Promise.resolve();
+    worker.onmessage?.({ data: { type: 'complete', threadDumps: [] } } as MessageEvent);
+    await parsing;
+  });
+
   it('waits for storing preparation before requesting the result', async () => {
     let resolvePreparation: (() => void) | undefined;
     const prepareStoring = vi.fn(() => new Promise<void>((resolve) => {

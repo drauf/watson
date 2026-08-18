@@ -36,7 +36,7 @@
     "@tanstack/react-virtual": "3.14.9",
     "d3": "7.9.0",
     "d3-flame-graph": "5.0.0",
-    "jszip": "3.10.1",
+    "fflate": "0.8.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-dropzone": "20.0.0",

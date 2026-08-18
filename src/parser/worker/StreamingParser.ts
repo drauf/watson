@@ -22,6 +22,8 @@ export default class StreamingParser {
 
   private readonly cpuUsages: CpuUsage[] = [];
 
+  private readonly totalFiles: number | undefined;
+
   private readonly totalBytes: number;
 
   private processedBytes = 0;
@@ -37,24 +39,25 @@ export default class StreamingParser {
   private lastPhase: ParseProgress['phase'] | undefined;
 
   public constructor(
-    private readonly files: File[],
+    totalFiles: number | undefined,
+    totalBytes: number,
     private readonly config: PerformanceConfig,
     private readonly onProgress: ProgressCallback,
   ) {
-    this.totalBytes = files.reduce((total, file) => total + file.size, 0);
+    this.totalFiles = totalFiles;
+    this.totalBytes = totalBytes;
   }
 
-  public async parse(): Promise<ThreadDump[]> {
-    for (const file of this.files) {
-      this.currentFileName = file.name;
-      this.currentFileSize = file.size;
-      // eslint-disable-next-line no-await-in-loop
-      await this.parseFile(file);
-      this.filesProcessed++;
-      this.processedBytes += file.size;
-      this.reportProgress('parsing', 0, 0, true);
-    }
+  public async parseFile(file: File): Promise<void> {
+    this.currentFileName = file.name;
+    this.currentFileSize = file.size;
+    await this.parseFileContents(file);
+    this.filesProcessed++;
+    this.processedBytes += file.size;
+    this.reportProgress('parsing', 0, 0, true);
+  }
 
+  public finish(): ThreadDump[] {
     this.reportProgress('grouping', 0, 0, true);
     this.groupCpuUsagesWithThreadDumps();
     this.sortThreadDumps();
@@ -62,7 +65,7 @@ export default class StreamingParser {
     return this.threadDumps;
   }
 
-  private async parseFile(file: File): Promise<void> {
+  private async parseFileContents(file: File): Promise<void> {
     const cpuLines: string[] = [];
     let firstLine: string | undefined;
     let threadDumpLines: string[] | undefined;
@@ -137,7 +140,7 @@ export default class StreamingParser {
       currentFileSize: this.currentFileSize,
       currentFileFraction,
       filesProcessed: this.filesProcessed,
-      totalFiles: this.files.length,
+      totalFiles: this.totalFiles,
     });
     if (phase === 'complete') {
       percentage = 100;
@@ -149,7 +152,7 @@ export default class StreamingParser {
       phase,
       fileName: this.currentFileName,
       filesProcessed: this.filesProcessed,
-      totalFiles: this.files.length,
+      totalFiles: this.totalFiles,
       linesProcessed: 0,
       totalLines: 0,
       percentage: Math.min(100, Math.max(0, percentage)),

@@ -1,13 +1,11 @@
 {
-    "extends": "./tsconfig",
-    "exclude": [
-      "./src/__tests__/**",
-      "./src/__mocks__/**",
-      "./src/test-utils",
-      "./src/**/*.test.tsx",
-      "./src/**/*.story.tsx",
-      "./playwright/**",
-      ".e2e/**"
-    ]
-  }
-  
+  "extends": "./tsconfig",
+  "exclude": [
+    "./src/test-fixtures",
+    "./src/**/*.test.ts",
+    "./src/**/*.test.tsx",
+    "./src/**/*.story.tsx",
+    "./playwright/**",
+    "./e2e/**"
+  ]
+}

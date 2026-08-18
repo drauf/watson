@@ -21,18 +21,21 @@ const createStreamingFile = (contents: string, fileName = '2026_08_10_10_25_00.t
 describe('StreamingParser', () => {
   it('parses a thread dump split across stream chunks', async () => {
     const progressPhases: string[] = [];
+    const file = createStreamingFile([
+      '2026-08-10 10:25:00',
+      '"worker" #1 prio=5 tid=0x1 nid=0x1 runnable',
+      '   java.lang.Thread.State: RUNNABLE',
+      '        at example.Work.run(Work.java:1)',
+    ].join('\n'));
     const parser = new StreamingParser(
-      [createStreamingFile([
-        '2026-08-10 10:25:00',
-        '"worker" #1 prio=5 tid=0x1 nid=0x1 runnable',
-        '   java.lang.Thread.State: RUNNABLE',
-        '        at example.Work.run(Work.java:1)',
-      ].join('\n'))],
+      1,
+      file.size,
       DEFAULT_PERFORMANCE_CONFIG,
       (progress) => progressPhases.push(progress.phase),
     );
 
-    const threadDumps = await parser.parse();
+    await parser.parseFile(file);
+    const threadDumps = parser.finish();
 
     expect(threadDumps).toHaveLength(1);
     expect(threadDumps[0].threads).toHaveLength(1);
@@ -65,15 +68,22 @@ describe('StreamingParser', () => {
       new File([cpuUsageContents], cpuUsageFileName),
     ]);
 
+    const streamingFiles = [
+      createStreamingFile(threadDumpContents, threadDumpFileName),
+      createStreamingFile(cpuUsageContents, cpuUsageFileName),
+    ];
     const streamingParser = new StreamingParser(
-      [
-        createStreamingFile(threadDumpContents, threadDumpFileName),
-        createStreamingFile(cpuUsageContents, cpuUsageFileName),
-      ],
+      streamingFiles.length,
+      streamingFiles.reduce((total, file) => total + file.size, 0),
       DEFAULT_PERFORMANCE_CONFIG,
       () => {},
     );
-    const streamedThreadDumps = await streamingParser.parse();
+    for (const file of streamingFiles) {
+      // The parser pairs CPU usage with thread dumps after each preceding file is read
+      // eslint-disable-next-line no-await-in-loop
+      await streamingParser.parseFile(file);
+    }
+    const streamedThreadDumps = streamingParser.finish();
     const withoutGeneratedThreadIds = (threadDumps: typeof streamedThreadDumps) => threadDumps.map((threadDump) => ({
       ...threadDump,
       threads: threadDump.threads.map(({ uniqueId, ...thread }) => thread),

@@ -47,6 +47,7 @@ rsync -a \
   --exclude 'dist' \
   --exclude 'playwright-report' \
   --exclude 'test-results' \
+  --exclude 'benchmarks/local' \
   "$workspace_root/" "$worktree/"
 
 docker run "${docker_arguments[@]}" \

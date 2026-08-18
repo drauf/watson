@@ -98,6 +98,12 @@ describe('ProgressIndicator', () => {
       expect(screen.getByText('File 2 of 3')).toBeInTheDocument();
     });
 
+    it('shows the current file when the total is unknown', () => {
+      render(<ProgressIndicator progress={createMockProgress({ totalFiles: undefined, filesProcessed: 1 })} />);
+
+      expect(screen.getByText('File 2')).toBeInTheDocument();
+    });
+
     it('shows "Processing file" for single file', () => {
       const progress = createMockProgress({
         filesProcessed: 0,
@@ -117,6 +123,15 @@ describe('ProgressIndicator', () => {
       render(<ProgressIndicator progress={progress} />);
 
       expect(screen.getByText('Successfully processed 3 files')).toBeInTheDocument();
+    });
+
+    it('uses the processed count when the total is unknown', () => {
+      render(<ProgressIndicator progress={createMockProgress({
+        phase: 'complete', totalFiles: undefined, filesProcessed: 2,
+      })}
+      />);
+
+      expect(screen.getByText('Successfully processed 2 files')).toBeInTheDocument();
     });
 
     it('shows singular file message when one file is complete', () => {

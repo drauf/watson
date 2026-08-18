@@ -9,7 +9,7 @@ export interface StorageProgress {
   phase: 'storing';
   fileName: string;
   filesProcessed: number;
-  totalFiles: number;
+  totalFiles: number | undefined;
   linesProcessed: number;
   totalLines: number;
   percentage: number;
@@ -41,7 +41,8 @@ const ProgressIndicator: React.FC<Props> = ({ progress }) => {
 
   const getDetailText = (): string => {
     if (progress.phase === 'complete') {
-      return `Successfully processed ${progress.totalFiles} file${progress.totalFiles === 1 ? '' : 's'}`;
+      const totalFiles = progress.totalFiles ?? progress.filesProcessed;
+      return `Successfully processed ${totalFiles} file${totalFiles === 1 ? '' : 's'}`;
     }
 
     if (progress.phase === 'grouping') {
@@ -52,11 +53,14 @@ const ProgressIndicator: React.FC<Props> = ({ progress }) => {
       return 'Saving parsed analysis to cached storage';
     }
 
-    if (progress.totalFiles > 1) {
-      return `File ${progress.filesProcessed + 1} of ${progress.totalFiles}`;
+    if (progress.totalFiles !== undefined) {
+      if (progress.totalFiles > 1) {
+        return `File ${progress.filesProcessed + 1} of ${progress.totalFiles}`;
+      }
+      return 'Processing file';
     }
 
-    return 'Processing file';
+    return `File ${progress.filesProcessed + 1}`;
   };
 
   const getCurrentFileName = (): string => {

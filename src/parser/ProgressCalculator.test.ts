@@ -23,6 +23,17 @@ describe('calculateParsingPercentage', () => {
     })).toBe(47.5);
   });
 
+  it('does not infer progress from an unknown file count', () => {
+    expect(calculateParsingPercentage({
+      totalBytes: 0,
+      processedBytes: 0,
+      currentFileSize: 0,
+      currentFileFraction: 0,
+      filesProcessed: 1,
+      totalFiles: undefined,
+    })).toBe(0);
+  });
+
   it('handles an empty import', () => {
     expect(calculateParsingPercentage({
       totalBytes: 0,

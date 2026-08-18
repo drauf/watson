@@ -4,7 +4,7 @@ export interface ProgressInput {
   currentFileSize: number;
   currentFileFraction: number;
   filesProcessed: number;
-  totalFiles: number;
+  totalFiles: number | undefined;
 }
 
 export function calculateParsingPercentage({
@@ -18,7 +18,7 @@ export function calculateParsingPercentage({
   let processedFraction = (processedBytes + (currentFileSize * currentFileFraction)) / totalBytes;
   if (totalBytes === 0) {
     processedFraction = 0;
-    if (totalFiles > 0) {
+    if (totalFiles !== undefined && totalFiles > 0) {
       processedFraction = filesProcessed / totalFiles;
     }
   }

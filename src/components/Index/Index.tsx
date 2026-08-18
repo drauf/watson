@@ -4,29 +4,21 @@ import EmbeddedDataIndex from '../EmbeddedDataIndex/EmbeddedDataIndex';
 import FullPageDropzone from '../FullPageDropzone/FullPageDropzone';
 
 interface State {
-  b64zip: string | undefined;
+  hasEmbeddedData: boolean;
 }
 
 export default class Index extends React.PureComponent<Record<string, never>, State> {
   constructor(props: Record<string, never>) {
     super(props);
     this.state = {
-      b64zip: undefined,
+      hasEmbeddedData: Boolean(document.getElementById('embedded-file-input')?.getAttribute('value')),
     };
   }
 
-  override componentDidMount() {
-    const embeddedFileInput = document.getElementById('embedded-file-input');
-    if (embeddedFileInput) {
-      const b64zip = embeddedFileInput.getAttribute('value');
-      if (b64zip) this.setState((state) => ({ ...state, b64zip }));
-    }
-  }
-
   public override render(): JSX.Element {
-    const { b64zip } = this.state;
-    if (b64zip) {
-      return <EmbeddedDataIndex b64zip={b64zip} />;
+    const { hasEmbeddedData } = this.state;
+    if (hasEmbeddedData) {
+      return <EmbeddedDataIndex />;
     }
 
     return <FullPageDropzone />;

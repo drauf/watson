@@ -1,7 +1,8 @@
 import Heading from '@atlaskit/heading';
 import React, { type JSX } from 'react';
 import { Navigate } from 'react-router-dom';
-import JSZip from 'jszip';
+import { decodeBase64Zip, extractTextFilesFromZipStream } from '../../common/embeddedZip';
+import FullPageError from '../Errors/FullPageError';
 import { setParsedData } from '../../common/threadDumpsStorageService';
 import ThreadDump from '../../types/ThreadDump';
 import WorkerParser from '../../parser/WorkerParser';
@@ -10,37 +11,52 @@ interface State {
   parsedDataKey: string | undefined;
   hasCpuUsageInfo: boolean;
   loadingEmbeddedData: boolean;
-  b64zip: string;
+  errorMessage: string | undefined;
 }
 
-interface Props {
-  b64zip: string;
-}
+export const consumeEmbeddedZip = (): Uint8Array => {
+  const embeddedFileInput = document.getElementById('embedded-file-input');
+  if (!embeddedFileInput) {
+    throw new Error('Embedded ZIP data is unavailable');
+  }
 
-export default class EmbeddedDataIndex extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
+  try {
+    const base64Zip = embeddedFileInput.getAttribute('value');
+    if (!base64Zip) {
+      throw new Error('Embedded ZIP data is empty');
+    }
+    return decodeBase64Zip(base64Zip);
+  } finally {
+    embeddedFileInput.remove();
+  }
+};
+
+export default class EmbeddedDataIndex extends React.PureComponent<Record<string, never>, State> {
+  constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       parsedDataKey: undefined,
       hasCpuUsageInfo: false,
       loadingEmbeddedData: true,
-      b64zip: props.b64zip,
+      errorMessage: undefined,
     };
   }
 
   override async componentDidMount(): Promise<void> {
-    const { b64zip } = this.state;
-    const zipBytes = atob(b64zip);
-    const zipFile = new File([new Uint8Array(zipBytes.split('').map((c) => c.charCodeAt(0)))], 'embedded.zip');
-    const zip = await new JSZip().loadAsync(zipFile);
-    const files = await Promise.all(zip.file(/.*\.txt/)
-      .map(async (zipEntry) => {
-        const blob = await zipEntry.async('blob');
-        return new File([blob], zipEntry.name);
-      }));
-
-    const parser = new WorkerParser(this.onParsed);
-    await parser.parseFiles(files);
+    try {
+      const zipBytes = consumeEmbeddedZip();
+      const parser = new WorkerParser(this.onParsed);
+      await parser.parseFileSource({
+        totalFiles: undefined,
+        totalBytes: zipBytes.byteLength,
+        files: extractTextFilesFromZipStream(zipBytes),
+      });
+    } catch (error) {
+      this.setState({
+        loadingEmbeddedData: false,
+        errorMessage: error instanceof Error ? error.message : 'Unable to load embedded data',
+      });
+    }
   }
 
   private onParsed = async (threadDumps: ThreadDump[]): Promise<void> => {
@@ -54,7 +70,13 @@ export default class EmbeddedDataIndex extends React.PureComponent<Props, State>
   };
 
   public override render(): JSX.Element {
-    const { parsedDataKey, hasCpuUsageInfo, loadingEmbeddedData } = this.state;
+    const {
+      errorMessage, parsedDataKey, hasCpuUsageInfo, loadingEmbeddedData,
+    } = this.state;
+    if (errorMessage) {
+      return <FullPageError title="Unable to load embedded data" message={errorMessage} />;
+    }
+
     if (loadingEmbeddedData) {
       return <Heading as="h1" size="xlarge">Loading...</Heading>;
     }

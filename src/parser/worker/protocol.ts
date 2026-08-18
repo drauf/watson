@@ -2,10 +2,24 @@ import type { ParseProgress } from '../ParseProgress';
 import ThreadDump from '../../types/ThreadDump';
 import type { PerformanceConfig } from '../PerformanceConfig';
 
-export interface ParseRequest {
-  type: 'parse';
-  files: File[];
+export interface StartParseRequest {
+  type: 'start';
+  totalFiles: number | undefined;
+  totalBytes: number;
   config: PerformanceConfig;
+}
+
+export interface ParseFileRequest {
+  type: 'parse-file';
+  file: File;
+}
+
+export interface FinishParseRequest {
+  type: 'finish';
+}
+
+export interface ReadyForFileMessage {
+  type: 'ready-for-file';
 }
 
 export interface ProgressMessage {
@@ -32,5 +46,5 @@ export interface ErrorMessage {
   stack?: string;
 }
 
-export type WorkerRequest = ParseRequest | TransferResultRequest;
-export type WorkerResponse = ProgressMessage | ReadyToTransferMessage | CompleteMessage | ErrorMessage;
+export type WorkerRequest = StartParseRequest | ParseFileRequest | FinishParseRequest | TransferResultRequest;
+export type WorkerResponse = ReadyForFileMessage | ProgressMessage | ReadyToTransferMessage | CompleteMessage | ErrorMessage;

@@ -26,7 +26,9 @@ Run a focused component visual spec with:
 ./e2e/run-in-docker.sh e2e/visual/components/time-window.visual.spec.tsx --update-snapshots
 ```
 
-## Running the parser browser benchmark
+## Benchmarks
+
+### Parser browser benchmark
 
 Set `WATSON_BENCHMARK_DIR` to a real capture directory, then run the Chromium benchmark in the same pinned container. The fixture is mounted read-only and is not copied into the worktree.
 
@@ -44,7 +46,6 @@ WATSON_BENCHMARK_DIR=/path/to/threaddumps \
 WATSON_BENCHMARK_TRACE=1 \
   ./e2e/run-in-docker.sh e2e/parser-performance.spec.ts --project=chrome-light --workers=1
 ```
-
 The runner copies the workspace into an isolated container worktree before installing dependencies. This prevents Linux native Yarn builds from overwriting host-native `.yarn/unplugged` artifacts. When updating snapshots, it copies only `*-snapshots` files back to the workspace.
 
 The container image is pinned to the same version as `@playwright/test` so it supplies the required Linux browser dependencies and browser revisions.
