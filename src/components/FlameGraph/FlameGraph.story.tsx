@@ -1,9 +1,9 @@
-import { StackFrame } from 'd3-flame-graph';
 import type { JSX } from 'react';
+import { FlameGraphNode } from './flameGraphModel';
 import FlameGraph from './FlameGraph';
 import './FlameGraphPage.css';
 
-const chartData: StackFrame = {
+const chartData: FlameGraphNode = {
   name: 'root',
   value: 12,
   fade: false,

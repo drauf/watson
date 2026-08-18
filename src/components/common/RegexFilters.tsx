@@ -207,7 +207,7 @@ const RegexFilters: React.FC<Props> = ({
             <Textfield
               {...fieldProps}
               {...createFieldProps('stackFilter', draftStackFilter)}
-              placeholder="e.g. java\\.io"
+              placeholder="e.g. java\.io"
             />
           )}
         </Field>

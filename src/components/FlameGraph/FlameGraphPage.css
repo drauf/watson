@@ -1,7 +1,3 @@
-svg div {
-  cursor: pointer;
-}
-
 #flame-graph {
   margin-top: var(--ds-space-200, 16px);
 }
@@ -11,24 +7,22 @@ svg div {
   margin: auto;
 }
 
-.d3-flame-graph .fade {
-  opacity: 1 !important;
+#flame-graph [data-flame-frame],
+#flame-graph [data-flame-ancestor] {
+  cursor: pointer;
 }
 
-.d3-flame-graph rect {
+#flame-graph rect {
   fill-opacity: 1;
   stroke: none;
 }
 
-.d3-flame-graph rect:hover {
+#flame-graph [data-flame-frame]:hover rect,
+#flame-graph [data-flame-ancestor]:hover rect {
   fill-opacity: 0.65;
-  stroke: none;
 }
 
-.d3-flame-graph-label {
-  font-family: var(--ds-font-family-monospace);
-  font-size: var(--ds-font-size-075);
-  dominant-baseline: middle;
-  color: var(--ds-text) !important;
-  fill: currentcolor;
+#flame-graph text {
+  font: var(--ds-font-code);
+  fill: var(--ds-text-code-default);
 }

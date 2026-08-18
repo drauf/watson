@@ -1,5 +1,5 @@
-import { StackFrame } from 'd3-flame-graph';
 import type { JSX } from 'react';
+import { FlameGraphNode } from './flameGraphModel';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 import { filterFlameGraphThreads, FlameGraphFilters } from './flameGraphFiltering';
 import { defaultThreadLabelFilterState, ThreadLabelFilterState } from '../../common/threadLabelFiltering';
@@ -70,7 +70,7 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     ...defaultThreadLabelFilterState,
   };
 
-  private static processLine = (previousFrame: StackFrame, line: string): StackFrame => {
+  private static processLine = (previousFrame: FlameGraphNode, line: string): FlameGraphNode => {
     const existingFrame = previousFrame.children.find((frame) => frame.parsedStackFrame.rawFrame === line);
     if (existingFrame) {
       existingFrame.value += 1;
@@ -78,7 +78,7 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     }
 
     const parsedStackFrame = parseStackFrame(line);
-    const newFrame: StackFrame = {
+    const newFrame: FlameGraphNode = {
       name: shortNameFrom(parsedStackFrame),
       value: 1,
       children: [],
@@ -90,17 +90,16 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     return newFrame;
   };
 
-  private static processStackTrace = (root: StackFrame, stackTrace: string[]): void => {
-    let previousFrame: StackFrame = root;
+  private static processStackTrace = (root: FlameGraphNode, stackTrace: string[]): void => {
+    let previousFrame: FlameGraphNode = root;
 
-    for (const line of stackTrace.reverse()) {
-      const currentFrame = FlameGraphPage.processLine(previousFrame, line);
-      previousFrame = currentFrame;
+    for (let index = stackTrace.length - 1; index >= 0; index -= 1) {
+      previousFrame = FlameGraphPage.processLine(previousFrame, stackTrace[index]);
     }
   };
 
-  private static calculateChartData = (threads: Thread[]): StackFrame => {
-    const root: StackFrame = {
+  private static calculateChartData = (threads: Thread[]): FlameGraphNode => {
+    const root: FlameGraphNode = {
       name: 'root',
       value: 0,
       children: [],
@@ -117,7 +116,7 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
     };
 
     threads.forEach((thread) => (
-      FlameGraphPage.processStackTrace(root, [...thread.stackTrace])
+      FlameGraphPage.processStackTrace(root, thread.stackTrace)
     ));
 
     return root;
@@ -131,7 +130,7 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
 
     const filters: FlameGraphFilters = this.state;
     const filteredThreads = filterFlameGraphThreads(threadDumps, filters);
-    const chartData: StackFrame = FlameGraphPage.calculateChartData(filteredThreads);
+    const chartData: FlameGraphNode = FlameGraphPage.calculateChartData(filteredThreads);
 
     return (
       <main className="full-width-page">
