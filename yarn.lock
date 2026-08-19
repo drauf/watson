@@ -287,14 +287,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/dropdown-menu@npm:17.2.3":
-  version: 17.2.3
-  resolution: "@atlaskit/dropdown-menu@npm:17.2.3"
+"@atlaskit/dropdown-menu@npm:17.2.4":
+  version: 17.2.4
+  resolution: "@atlaskit/dropdown-menu@npm:17.2.4"
   dependencies:
     "@atlaskit/button": "npm:^25.0.0"
     "@atlaskit/css": "npm:^1.0.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/icon": "npm:^37.2.0"
+    "@atlaskit/icon": "npm:^37.3.0"
     "@atlaskit/layering": "npm:^5.0.0"
     "@atlaskit/menu": "npm:^9.2.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
@@ -302,9 +302,9 @@ __metadata:
     "@atlaskit/primitives": "npm:^22.2.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
     "@atlaskit/spinner": "npm:^20.1.0"
-    "@atlaskit/theme": "npm:^26.1.0"
+    "@atlaskit/theme": "npm:^27.0.0"
     "@atlaskit/tokens": "npm:^16.3.0"
-    "@atlaskit/top-layer": "npm:^3.0.0"
+    "@atlaskit/top-layer": "npm:^3.1.0"
     "@atlaskit/visually-hidden": "npm:^4.2.0"
     "@babel/runtime": "npm:^7.0.0"
     "@compiled/react": "npm:^1.0.0"
@@ -312,7 +312,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/d38c2d3a973219001c33b6188fa07f701846a6f01fa2fc7843459bdf65ce3619ab2bb23561af5ac12753eb58b03e1766afd4c465131185a970abd098de99add2
+  checksum: 10c0/6569cebe620ece441e4db486ed38e25a2e70593d5022314b66bb2666b232d26a60a7867cd1e235ed1231719a8d95b6281a8bc1301a5879ed07aad5b0440446b8
   languageName: node
   linkType: hard
 
@@ -428,7 +428,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/icon@npm:37.3.0":
+"@atlaskit/icon@npm:37.3.0, @atlaskit/icon@npm:^37.3.0":
   version: 37.3.0
   resolution: "@atlaskit/icon@npm:37.3.0"
   dependencies:
@@ -1032,6 +1032,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/theme@npm:^27.0.0":
+  version: 27.0.0
+  resolution: "@atlaskit/theme@npm:27.0.0"
+  dependencies:
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/tokens": "npm:^16.3.0"
+    "@babel/runtime": "npm:^7.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  checksum: 10c0/8956149443d14f7bb1491197e1f82092bcec46f05ef40dd60ba1b55d38050542c27046944923f6ffd79cba002cf0118f47825a34dcef91f79ff8767a2e1bdbad
+  languageName: node
+  linkType: hard
+
 "@atlaskit/tile@npm:^2.3.0":
   version: 2.3.1
   resolution: "@atlaskit/tile@npm:2.3.1"
@@ -1081,6 +1095,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/tokens@npm:^16.4.0":
+  version: 16.6.0
+  resolution: "@atlaskit/tokens@npm:16.6.0"
+  dependencies:
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.1.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@babel/traverse": "npm:^7.23.2"
+    "@babel/types": "npm:^7.20.0"
+    bind-event-listener: "npm:^3.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  checksum: 10c0/bb5fe680328668732fbf2ba24f5cc5e1cad8da5ce0d65ce910f697486f6f2f38a284062ab7bc47141fe0985671442e3031f01628991ccc9cd5c566ddf1673de7
+  languageName: node
+  linkType: hard
+
 "@atlaskit/tooltip@npm:^24.0.0":
   version: 24.0.2
   resolution: "@atlaskit/tooltip@npm:24.0.2"
@@ -1124,6 +1155,27 @@ __metadata:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
   checksum: 10c0/ea2743704b3b48ee11fb2afdbdd7938dfa5ea71caacecb1cfdb98178771bedf5ed7bf16714a4bf966d3c0efe8461d163a7fd93e0290224d1b0d57fc18b48bf5a
+  languageName: node
+  linkType: hard
+
+"@atlaskit/top-layer@npm:^3.1.0":
+  version: 3.2.0
+  resolution: "@atlaskit/top-layer@npm:3.2.0"
+  dependencies:
+    "@atlaskit/browser-apis": "npm:^1.2.0"
+    "@atlaskit/css": "npm:^1.0.0"
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/layering": "npm:^5.0.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/tokens": "npm:^16.4.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@compiled/react": "npm:^1.0.0"
+    bind-event-listener: "npm:^3.0.0"
+    raf-schd: "npm:^4.0.3"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  checksum: 10c0/c94a21519b077376139a08986aaed0807d4ffdb2c30de3acd4438e49ba50b5cb031c73ae292319d90ec9816b0e1ca539ce03bcac3ba48e6774e104529d6e6ef2
   languageName: node
   linkType: hard
 
@@ -8704,7 +8756,7 @@ __metadata:
     "@atlaskit/button": "npm:25.0.1"
     "@atlaskit/checkbox": "npm:19.0.0"
     "@atlaskit/css-reset": "npm:8.1.1"
-    "@atlaskit/dropdown-menu": "npm:17.2.3"
+    "@atlaskit/dropdown-menu": "npm:17.2.4"
     "@atlaskit/empty-state": "npm:12.0.0"
     "@atlaskit/form": "npm:16.1.5"
     "@atlaskit/heading": "npm:7.0.1"
