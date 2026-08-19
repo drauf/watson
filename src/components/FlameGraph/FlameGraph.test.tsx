@@ -1,3 +1,4 @@
+import { token } from '@atlaskit/tokens';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import FlameGraph from './FlameGraph';
@@ -7,7 +8,6 @@ const node = (name: string, value: number, children: FlameGraphNode[] = []): Fla
   name,
   value,
   children,
-  fade: false,
   parsedStackFrame: {
     rawFrame: name,
     rawClassName: name,
@@ -81,6 +81,14 @@ describe('FlameGraph', () => {
       throw new Error('Target flame frame was not rendered');
     }
     fireEvent.click(targetFrame);
+
+    const zoomRoot = document.querySelector<SVGGElement>('[data-flame-frame="root"]');
+    expect(zoomRoot?.style.getPropertyValue('--flame-frame-background')).toBe(
+      token('color.background.accent.green.subtlest.pressed'),
+    );
+    expect(zoomRoot?.style.getPropertyValue('--flame-frame-hover-background')).toBe(
+      token('color.background.accent.green.subtlest.hovered'),
+    );
 
     const ancestor = document.querySelector('[data-flame-ancestor="0"]');
     expect(ancestor).toBeVisible();

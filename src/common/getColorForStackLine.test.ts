@@ -53,11 +53,11 @@ describe('getColorForStackLine', () => {
   });
 
   it.each([
-    ['com.atlassian.jira.issue.IssueManager.getIssue', false, token('color.background.accent.blue.subtler')],
-    ['com.atlassian.crowd.directory.DirectoryManager.findUser', true, token('color.background.accent.yellow.subtler.pressed')],
-    ['java.lang.Thread.run', false, token('color.background.accent.gray.subtler')],
-    ['com.example.plugin.CustomAction.execute', true, token('color.background.accent.green.subtler.hovered')],
-  ])('maps %s to its expected semantic color token', (line, fade, expectedColor) => {
-    expect(getColorForStackLine(line, fade)).toBe(expectedColor);
+    ['com.atlassian.jira.issue.IssueManager.getIssue', false, { backgroundColor: token('color.background.accent.blue.subtlest'), hoverBackgroundColor: token('color.background.accent.blue.subtlest.hovered'), color: token('color.text.accent.blue') }],
+    ['com.atlassian.crowd.directory.DirectoryManager.findUser', true, { backgroundColor: token('color.background.accent.orange.subtlest.pressed'), hoverBackgroundColor: token('color.background.accent.orange.subtlest.hovered'), color: token('color.text.accent.orange.bolder') }],
+    ['java.lang.Thread.run', false, { backgroundColor: token('color.background.accent.gray.subtlest'), hoverBackgroundColor: token('color.background.accent.gray.subtlest.hovered'), color: token('color.text.accent.gray') }],
+    ['com.example.plugin.CustomAction.execute', true, { backgroundColor: token('color.background.accent.green.subtlest.pressed'), hoverBackgroundColor: token('color.background.accent.green.subtlest.hovered'), color: token('color.text.accent.green.bolder') }],
+  ])('maps %s to its expected semantic colour pair', (line, fade, expectedAppearance) => {
+    expect(getColorForStackLine(line, fade)).toEqual(expectedAppearance);
   });
 });

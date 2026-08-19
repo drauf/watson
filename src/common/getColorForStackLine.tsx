@@ -2,9 +2,15 @@ import { token } from '@atlaskit/tokens';
 
 export type ColorGroup = 'product' | 'dataAndSearch' | 'platform' | 'extension';
 
+export type StackLineAppearance = Readonly<{
+  backgroundColor: string;
+  hoverBackgroundColor: string;
+  color: string;
+}>;
+
 type ColorPair = Readonly<{
-  normal: string;
-  faded: string;
+  normal: StackLineAppearance;
+  faded: StackLineAppearance;
 }>;
 
 export type PackageColorRule = Readonly<{
@@ -20,23 +26,23 @@ export interface PackageColorTrie {
 const colors: Readonly<Record<ColorGroup, ColorPair>> = {
   // Jira and other Atlassian product code worth distinguishing from supporting libraries
   product: {
-    normal: token('color.background.accent.blue.subtler'),
-    faded: token('color.background.accent.blue.subtler.hovered'),
+    normal: { backgroundColor: token('color.background.accent.blue.subtlest'), hoverBackgroundColor: token('color.background.accent.blue.subtlest.hovered'), color: token('color.text.accent.blue') },
+    faded: { backgroundColor: token('color.background.accent.blue.subtlest.pressed'), hoverBackgroundColor: token('color.background.accent.blue.subtlest.hovered'), color: token('color.text.accent.blue.bolder') },
   },
   // Databases, caches, directory lookups, and indexing/search engines
   dataAndSearch: {
-    normal: token('color.background.accent.yellow.subtler'),
-    faded: token('color.background.accent.yellow.subtler.pressed'),
+    normal: { backgroundColor: token('color.background.accent.orange.subtlest'), hoverBackgroundColor: token('color.background.accent.orange.subtlest.hovered'), color: token('color.text.accent.orange') },
+    faded: { backgroundColor: token('color.background.accent.orange.subtlest.pressed'), hoverBackgroundColor: token('color.background.accent.orange.subtlest.hovered'), color: token('color.text.accent.orange.bolder') },
   },
   // JDK, framework, and library plumbing that normally should not draw attention
   platform: {
-    normal: token('color.background.accent.gray.subtler'),
-    faded: token('color.background.accent.gray.subtler.pressed'),
+    normal: { backgroundColor: token('color.background.accent.gray.subtlest'), hoverBackgroundColor: token('color.background.accent.gray.subtlest.hovered'), color: token('color.text.accent.gray') },
+    faded: { backgroundColor: token('color.background.accent.gray.subtlest.pressed'), hoverBackgroundColor: token('color.background.accent.gray.subtlest.hovered'), color: token('color.text.accent.gray.bolder') },
   },
   // App and plugin code outside the known product and platform namespaces
   extension: {
-    normal: token('color.background.accent.green.subtler'),
-    faded: token('color.background.accent.green.subtler.hovered'),
+    normal: { backgroundColor: token('color.background.accent.green.subtlest'), hoverBackgroundColor: token('color.background.accent.green.subtlest.hovered'), color: token('color.text.accent.green') },
+    faded: { backgroundColor: token('color.background.accent.green.subtlest.pressed'), hoverBackgroundColor: token('color.background.accent.green.subtlest.hovered'), color: token('color.text.accent.green.bolder') },
   },
 };
 
@@ -115,7 +121,7 @@ export const findColorGroup = (line: string, root: PackageColorTrie): ColorGroup
 
 const packageColorTrie = buildPackageColorTrie(packageColorRules);
 
-export default function getColorForStackLine(line: string, fade = false): string {
+export default function getColorForStackLine(line: string, fade = false): StackLineAppearance {
   const color = colors[findColorGroup(line, packageColorTrie)];
   return fade ? color.faded : color.normal;
 }

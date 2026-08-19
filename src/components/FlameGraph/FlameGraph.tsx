@@ -19,7 +19,11 @@ const FlameGraph = ({ chartData }: Props): JSX.Element => {
   const containerWidth = Math.max(window.innerWidth - 36, 1);
   const frames = useMemo(() => (
     layoutFlameGraph(activeZoom.root, containerWidth, MINIMUM_FRAME_PIXELS)
-  ), [activeZoom.root, containerWidth]);
+      .map((frame) => ({
+        ...frame,
+        isZoomPath: activeZoom.ancestors.length > 0 && frame.node === activeZoom.root,
+      }))
+  ), [activeZoom.ancestors.length, activeZoom.root, containerWidth]);
   const height = (activeZoom.ancestors.length + maxFrameDepth(frames) + 1) * FLAME_GRAPH_ROW_HEIGHT;
   const totalSamples = useMemo(() => flameNodeValue(activeZoom.root), [activeZoom.root]);
 

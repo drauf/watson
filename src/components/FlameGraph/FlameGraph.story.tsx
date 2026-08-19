@@ -6,12 +6,10 @@ import './FlameGraphPage.css';
 const chartData: FlameGraphNode = {
   name: 'root',
   value: 12,
-  fade: false,
   children: [
     {
       name: 'IndexSearcher.search @ line 42',
       value: 8,
-      fade: false,
       children: [],
       parsedStackFrame: {
         rawFrame: 'com.atlassian.jira.issue.search.searchers.transformer.ExtremelyLongQueryExecutionCoordinatorWithNestedOptimizations$ConcurrentRequestExecutionPipeline$ResultAggregationAndPermissionValidationDelegate.search(ExtremelyLongQueryExecutionCoordinatorWithNestedOptimizations.java:42)',

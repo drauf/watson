@@ -6,7 +6,6 @@ export interface FlameGraphNode {
   name: string;
   value: number;
   children: FlameGraphNode[];
-  fade: boolean;
   parsedStackFrame: ParsedStackFrame;
 }
 
@@ -16,6 +15,7 @@ export interface FlameGraphFrame {
   depth: number;
   x: number;
   width: number;
+  isZoomPath: boolean;
 }
 
 export const flameNodeValue = (node: FlameGraphNode): number => (
@@ -44,7 +44,7 @@ const appendFrames = (
   }
 
   frames.push({
-    id, node, depth, x, width,
+    id, node, depth, x, width, isZoomPath: false,
   });
   const children = [...node.children].sort((left, right) => (values.get(right) ?? 0) - (values.get(left) ?? 0));
   const total = values.get(node) ?? 0;

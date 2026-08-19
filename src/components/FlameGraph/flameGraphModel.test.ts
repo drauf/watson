@@ -5,7 +5,6 @@ const node = (name: string, value: number, children: FlameGraphNode[] = []): Fla
   name,
   value,
   children,
-  fade: false,
   parsedStackFrame: {
     rawFrame: name,
     rawClassName: name,

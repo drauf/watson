@@ -27,7 +27,8 @@ export default class SingleThreadDetails extends React.PureComponent<Props> {
             {stack.map((line) => {
               const occurrence = lineOccurrences.get(line) ?? 0;
               lineOccurrences.set(line, occurrence + 1);
-              return <code key={`${line}:${occurrence}`} style={{ backgroundColor: getColorForStackLine(line) }}>{line}</code>;
+              const { backgroundColor, color } = getColorForStackLine(line);
+              return <code key={`${line}:${occurrence}`} style={{ backgroundColor, color }}>{line}</code>;
             })}
           </p>
         )}

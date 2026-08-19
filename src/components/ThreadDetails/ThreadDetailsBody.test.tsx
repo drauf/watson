@@ -1,3 +1,4 @@
+import { token } from '@atlaskit/tokens';
 import { render, screen } from '@testing-library/react';
 import Lock from '../../types/Lock';
 import Thread from '../../types/Thread';
@@ -25,12 +26,22 @@ describe('ThreadDetailsBody', () => {
     const thread = new Thread(1, 'worker');
     thread.lockWaitingFor = new Lock('0x01', 'java.lang.Object', owner);
     thread.locksHeld.push(new Lock('0x02', 'java.util.concurrent.locks.ReentrantLock'));
-    thread.stackTrace.push('example.Frame.run', 'example.Frame.run');
+    thread.stackTrace.push(
+      'com.atlassian.jira.issue.IssueManager.getIssue',
+      'com.atlassian.jira.issue.IssueManager.getIssue',
+    );
 
     render(<ThreadDetailsBody thread={thread} />);
 
     expect(screen.getByText((_, element) => element?.textContent === 'This thread is waiting for notification on lock [0x1] owned by owner')).toBeInTheDocument();
     expect(screen.getByText('This thread holds [0x2]')).toBeInTheDocument();
-    expect(screen.getAllByText('example.Frame.run')).toHaveLength(2);
+    const stackFrames = screen.getAllByText('com.atlassian.jira.issue.IssueManager.getIssue');
+    expect(stackFrames).toHaveLength(2);
+    for (const stackFrame of stackFrames) {
+      expect(stackFrame).toHaveStyle({
+        backgroundColor: token('color.background.accent.blue.subtlest'),
+        color: token('color.text.accent.blue'),
+      });
+    }
   });
 });

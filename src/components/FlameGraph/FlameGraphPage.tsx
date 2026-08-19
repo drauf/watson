@@ -83,7 +83,6 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
       value: 1,
       children: [],
       parsedStackFrame,
-      fade: false,
     };
 
     previousFrame.children.push(newFrame);
@@ -112,7 +111,6 @@ class FlameGraphPage extends PageWithSettings<WithThreadDumpsProps, State> {
         packageName: '',
         line: '',
       },
-      fade: false,
     };
 
     threads.forEach((thread) => (

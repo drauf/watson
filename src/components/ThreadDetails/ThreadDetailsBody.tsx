@@ -55,7 +55,10 @@ export default class ThreadDetailsBody extends React.PureComponent<Props> {
     </div>
   );
 
-  private static getLineStyles = (line: string): CSSProperties => ({ backgroundColor: getColorForStackLine(line) });
+  private static getLineStyles = (line: string): CSSProperties => {
+    const { backgroundColor, color } = getColorForStackLine(line);
+    return { backgroundColor, color };
+  };
 
   private static renderStackTrace = (thread: Thread) => {
     const occurrences = new Map<string, number>();

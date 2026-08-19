@@ -7,7 +7,6 @@ const node: FlameGraphNode = {
   name: 'native frame',
   value: 3,
   children: [],
-  fade: false,
   parsedStackFrame: {
     rawFrame: 'native frame',
     rawClassName: '',

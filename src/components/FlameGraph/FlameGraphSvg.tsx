@@ -48,25 +48,43 @@ const FlameGraphSvg = ({
   return (
     <svg aria-label="Flame graph" height={height} onClick={onClick} onPointerLeave={() => onHover(undefined, undefined, 0, 0)} onPointerMove={onPointerMove} role="img" width="100%">
       {ancestors.map((ancestor, index) => {
+        const appearance = getColorForStackLine(ancestor.parsedStackFrame.rawFrame, true);
         const y = index * FLAME_GRAPH_ROW_HEIGHT;
         const key = ancestors.slice(0, index + 1).map((node) => node.parsedStackFrame.rawFrame).join('>');
         return (
-          <g data-flame-ancestor={index} key={key}>
-            <rect fill={getColorForStackLine(ancestor.parsedStackFrame.rawFrame, true)} height={FLAME_GRAPH_ROW_HEIGHT} width="100%" x="0" y={y} />
-            <text pointerEvents="none" x="4" y={y + TEXT_SHIFT_PIXELS}>{ancestor.name}</text>
+          <g
+            data-flame-ancestor={index}
+            key={key}
+            style={{
+              '--flame-frame-background': appearance.backgroundColor,
+              '--flame-frame-hover-background': appearance.hoverBackgroundColor,
+            } as React.CSSProperties}
+          >
+            <rect height={FLAME_GRAPH_ROW_HEIGHT} width="100%" x="0" y={y} />
+            <text pointerEvents="none" style={{ fill: appearance.color }} x="4" y={y + TEXT_SHIFT_PIXELS}>{ancestor.name}</text>
           </g>
         );
       })}
       {frames.map((frame) => {
-        const background = getColorForStackLine(frame.node.parsedStackFrame.rawFrame, frame.node.fade);
+        const appearance = getColorForStackLine(
+          frame.node.parsedStackFrame.rawFrame,
+          frame.isZoomPath,
+        );
         const y = (breadcrumbDepth + frame.depth) * FLAME_GRAPH_ROW_HEIGHT;
         const showLabel = frame.width * containerWidth >= LABEL_MINIMUM_PIXELS;
         const clipId = `flame-clip-${frame.id}`;
         return (
-          <g data-flame-frame={frame.id} key={frame.id}>
+          <g
+            data-flame-frame={frame.id}
+            key={frame.id}
+            style={{
+              '--flame-frame-background': appearance.backgroundColor,
+              '--flame-frame-hover-background': appearance.hoverBackgroundColor,
+            } as React.CSSProperties}
+          >
             {showLabel && <clipPath id={clipId}><rect height={FLAME_GRAPH_ROW_HEIGHT} width={frameWidth(frame.width)} x={`${frame.x * 100}%`} y={y} /></clipPath>}
-            <rect fill={background} height={FLAME_GRAPH_ROW_HEIGHT} width={frameWidth(frame.width)} x={`${frame.x * 100}%`} y={y} />
-            {showLabel && <text clipPath={`url(#${clipId})`} dx={4} pointerEvents="none" x={`${frame.x * 100}%`} y={y + TEXT_SHIFT_PIXELS}>{frame.node.name}</text>}
+            <rect height={FLAME_GRAPH_ROW_HEIGHT} width={frameWidth(frame.width)} x={`${frame.x * 100}%`} y={y} />
+            {showLabel && <text clipPath={`url(#${clipId})`} dx={4} pointerEvents="none" style={{ fill: appearance.color }} x={`${frame.x * 100}%`} y={y + TEXT_SHIFT_PIXELS}>{frame.node.name}</text>}
           </g>
         );
       })}

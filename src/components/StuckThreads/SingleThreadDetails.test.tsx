@@ -20,10 +20,12 @@ describe('SingleThreadDetails', () => {
     );
 
     expect(screen.getByText('com.atlassian.jira.issue.IssueManager.getIssue')).toHaveStyle({
-      backgroundColor: token('color.background.accent.blue.subtler'),
+      backgroundColor: token('color.background.accent.blue.subtlest'),
+      color: token('color.text.accent.blue'),
     });
     expect(screen.getByText('java.lang.Thread.run')).toHaveStyle({
-      backgroundColor: token('color.background.accent.gray.subtler'),
+      backgroundColor: token('color.background.accent.gray.subtlest'),
+      color: token('color.text.accent.gray'),
     });
   });
 });

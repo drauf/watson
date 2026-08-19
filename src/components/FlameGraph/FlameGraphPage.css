@@ -13,13 +13,17 @@
 }
 
 #flame-graph rect {
-  fill-opacity: 1;
   stroke: none;
 }
 
-#flame-graph [data-flame-frame]:hover rect,
-#flame-graph [data-flame-ancestor]:hover rect {
-  fill-opacity: 0.65;
+#flame-graph [data-flame-frame] > rect,
+#flame-graph [data-flame-ancestor] > rect {
+  fill: var(--flame-frame-background);
+}
+
+#flame-graph [data-flame-frame]:hover > rect,
+#flame-graph [data-flame-ancestor]:hover > rect {
+  fill: var(--flame-frame-hover-background);
 }
 
 #flame-graph text {
