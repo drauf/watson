@@ -1,9 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:best-practices",
-    ":pinAllExceptPeerDependencies"
+    "config:best-practices"
   ],
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
   "prCreation": "not-pending",
   "packageRules": [
     {
