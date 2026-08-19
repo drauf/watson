@@ -33,13 +33,7 @@ definitions:
                 - playwright-report/**
 
 pipelines:
-  branches:
-    main:
-      - parallel:
-          - step: *lint_and_unit_tests
-          - step: *end_to_end_tests
-  pull-requests:
-    '**':
-      - parallel:
-          - step: *lint_and_unit_tests
-          - step: *end_to_end_tests
+  default:
+    - parallel:
+      - step: *end_to_end_tests
+      - step: *lint_and_unit_tests
