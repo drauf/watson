@@ -28,6 +28,13 @@ describe('calculatePopupPosition', () => {
     });
   });
 
+  it('rounds fractional trigger coordinates to whole CSS pixels', () => {
+    expect(calculatePopupPosition(rectangle(95.859375, 100.4, 0, 0), tooltip, viewport)).toEqual({
+      left: 112,
+      top: 116,
+    });
+  });
+
   it('opens fully to the left near the right viewport edge', () => {
     expect(calculatePopupPosition(rectangle(950, 100, 0, 0), tooltip, viewport)).toEqual({
       left: 734,

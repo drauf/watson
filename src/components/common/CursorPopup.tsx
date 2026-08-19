@@ -35,8 +35,8 @@ export const calculatePopupPosition = (
     : trigger.left - tooltip.width - TOOLTIP_SPACING;
 
   return {
-    top: Math.min(Math.max(VIEWPORT_MARGIN, preferredTop), maximumTop),
-    left: Math.min(Math.max(VIEWPORT_MARGIN, preferredLeft), maximumLeft),
+    top: Math.min(Math.round(Math.max(VIEWPORT_MARGIN, preferredTop)), Math.floor(maximumTop)),
+    left: Math.min(Math.round(Math.max(VIEWPORT_MARGIN, preferredLeft)), Math.floor(maximumLeft)),
   };
 };
 
