@@ -1,7 +1,7 @@
 import Button from '@atlaskit/button/new';
 import React, { type JSX } from 'react';
 import Thread from '../../types/Thread';
-import StackTrace from './StackTrace';
+import StackTrace from '../common/StackTrace';
 import ThreadSummary from './ThreadSummary';
 
 interface Props {

@@ -3,7 +3,6 @@ import NoCpuInfosError from '../Errors/NoCpuInfosError';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
 import RunningProcessesChart from './RunningProcessesChart';
-import './SummaryPage.css';
 import SwapUsageChart from './SwapUsageChart';
 import { useAllThreadDumps } from '../../common/withThreadDumps';
 
@@ -17,7 +16,7 @@ const SummaryPage: React.FC = () => {
   return (
     <main className="summary-page">
       <RunningProcessesChart threadDumps={threadDumps} />
-      <div id="memory-usages">
+      <div className="summary-memory-charts">
         <MemoryUsageChart threadDumps={threadDumps} />
         <SwapUsageChart threadDumps={threadDumps} />
       </div>

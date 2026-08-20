@@ -7,6 +7,7 @@ import Heading from '@atlaskit/heading';
 import Text from '@atlaskit/primitives/text';
 import ThreadDump from '../../types/ThreadDump';
 import PopupContent from '../common/PopupContent';
+import './SummaryCharts.css';
 
 interface Props {
   threadDumps: ThreadDump[];

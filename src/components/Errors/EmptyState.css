@@ -1,0 +1,11 @@
+#centered {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - var(--watson-navigation-height, 0px));
+  min-height: calc(100vh - var(--watson-navigation-height, 0px));
+  padding: var(--ds-space-400, 32px) 0 calc(var(--ds-space-400, 32px) + var(--watson-navigation-height, 0px));
+  text-align: center;
+}

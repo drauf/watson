@@ -1,8 +1,8 @@
 import Heading from '@atlaskit/heading';
 import Text from '@atlaskit/primitives/text';
-import React, { CSSProperties, type JSX } from 'react';
-import getColorForStackLine from '../../common/getColorForStackLine';
+import React, { type JSX } from 'react';
 import Thread from '../../types/Thread';
+import StackTrace from '../common/StackTrace';
 
 interface Props {
   thread: Thread;
@@ -55,40 +55,19 @@ export default class ThreadDetailsBody extends React.PureComponent<Props> {
     </div>
   );
 
-  private static getLineStyles = (line: string): CSSProperties => {
-    const { backgroundColor, color } = getColorForStackLine(line);
-    return { backgroundColor, color };
-  };
-
-  private static renderStackTrace = (thread: Thread) => {
-    const occurrences = new Map<string, number>();
-
-    return (
-      <div className="stacktrace-container">
-        <Heading as="h5" size="xsmall">Stack trace</Heading>
-
-        {thread.stackTrace.map((line) => {
-          const occurrence = (occurrences.get(line) ?? 0) + 1;
-          occurrences.set(line, occurrence);
-
-          return <code key={`${line}:${occurrence}`} style={ThreadDetailsBody.getLineStyles(line)}>{line}</code>;
-        })}
-      </div>
-    );
-  };
+  private static renderStackTrace = (thread: Thread) => (
+    <StackTrace stackTrace={thread.stackTrace} linesToConsider={0} />
+  );
 
   public override render(): JSX.Element {
     const { thread } = this.props;
 
     return (
-      <>
-        <div className="details-body">
-          {ThreadDetailsBody.renderWaitingFor(thread)}
-          {ThreadDetailsBody.renderLocksHeld(thread)}
-        </div>
-
+      <div className="details-body">
+        {ThreadDetailsBody.renderWaitingFor(thread)}
+        {ThreadDetailsBody.renderLocksHeld(thread)}
         {ThreadDetailsBody.renderStackTrace(thread)}
-      </>
+      </div>
     );
   }
 }

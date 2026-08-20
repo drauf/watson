@@ -1,5 +1,4 @@
 import { ReactNode, type JSX } from 'react';
-import '../Container.css';
 import { TimeWindowProvider } from '../../context/TimeWindowContext';
 import {
   crossMidnightThreadDumps,

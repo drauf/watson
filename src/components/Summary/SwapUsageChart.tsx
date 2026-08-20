@@ -9,6 +9,7 @@ import MemoryUsage from '../../types/MemoryUsage';
 import ThreadDump from '../../types/ThreadDump';
 import labelFormatter from './LabelFormatter';
 import PieChartTooltip, { ChartData } from './PieChartTooltip';
+import './SummaryCharts.css';
 
 const COLORS = [token('color.chart.categorical.4'), token('color.chart.categorical.3')];
 

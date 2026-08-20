@@ -2,7 +2,6 @@ import Heading from '@atlaskit/heading';
 import ProgressBar from '@atlaskit/progress-bar';
 import React from 'react';
 import type { ParseProgress } from '../../parser/ParseProgress';
-import '../Container.css';
 import './ProgressIndicator.css';
 
 export interface StorageProgress {

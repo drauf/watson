@@ -15,7 +15,7 @@ export default class CpuConsumerSingleUsage extends React.PureComponent<Props> {
     if (!thread) {
       return (
         <>
-          <span className="cpu-consumer-usage no-click">n/a</span>
+          <span className="cpu-consumer-usage cpu-consumer-usage-disabled">n/a</span>
           {' '}
         </>
       );

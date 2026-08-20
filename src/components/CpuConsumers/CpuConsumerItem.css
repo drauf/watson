@@ -1,0 +1,23 @@
+.cpu-consumer-usages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-050);
+}
+
+.cpu-consumer-usage {
+  display: inline-flex;
+  width: 80px;
+  min-width: 80px;
+  font-weight: var(--ds-font-weight-bold);
+}
+
+.cpu-consumer-usage-disabled {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-space-050) var(--ds-space-100);
+  color: var(--ds-text);
+  pointer-events: none;
+  -webkit-text-fill-color: var(--ds-text);
+}

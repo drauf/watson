@@ -26,19 +26,19 @@ const FlameGraphPopupContent = ({ node, totalSamples }: Props): JSX.Element => {
         {parsedStackFrame.packageName && (
         <>
           <dt>Package</dt>
-          <dd>{parsedStackFrame.packageName}</dd>
+          <dd><code>{parsedStackFrame.packageName}</code></dd>
         </>
         )}
         {parsedStackFrame.rawClassName && (
         <>
           <dt>Class</dt>
-          <dd>{parsedStackFrame.rawClassName}</dd>
+          <dd><code>{parsedStackFrame.rawClassName}</code></dd>
         </>
         )}
         {parsedStackFrame.rawMethodName && (
         <>
           <dt>Method</dt>
-          <dd>{parsedStackFrame.rawMethodName}</dd>
+          <dd><code>{parsedStackFrame.rawMethodName}</code></dd>
         </>
         )}
         <dt>Frame</dt>

@@ -1,6 +1,7 @@
 import React, { type JSX } from 'react';
 import ThreadStatus from '../../types/ThreadStatus';
 import { getThreadStatusAppearance } from '../../common/threadStatusAppearance';
+import './ThreadsOverviewStatus.css';
 
 const legendStatuses = [
   { status: ThreadStatus.RUNNABLE, label: 'Runnable' },

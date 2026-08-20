@@ -3,6 +3,7 @@ import React, { type JSX } from 'react';
 import Monitor from './Monitor';
 import MonitorOwner from './MonitorOwner';
 import WaitingList from './WaitingList';
+import './MonitorItem.css';
 
 interface Props {
   monitor: Monitor;

@@ -1,9 +1,11 @@
 import React from 'react';
-import AppProvider from '@atlaskit/app-provider';
+import { AppProvider } from '@atlaskit/app-provider/app-provider';
 import { flushSync } from 'react-dom';
 import { createRoot, Root } from 'react-dom/client';
-import '../../src/index.css';
 import '@atlaskit/css-reset';
+import '../../src/index.css';
+import '../../src/App.css';
+import '../../src/components/Container.css';
 
 type Story = React.ComponentType<Record<string, unknown>>;
 type StoryModule = Record<string, Story | undefined>;

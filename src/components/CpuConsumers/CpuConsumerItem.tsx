@@ -11,6 +11,7 @@ import CollapsableGroup from '../CollapsableGroup';
 import GroupHeader from '../common/GroupHeader';
 import CpuConsumer from './CpuConsumer';
 import CpuConsumerSingleUsage from './CpuConsumerSingleUsage';
+import './CpuConsumerItem.css';
 
 interface Props {
   dumpsNumber: number;

@@ -1,4 +1,4 @@
-import AppProvider from '@atlaskit/app-provider';
+import { AppProvider } from '@atlaskit/app-provider/app-provider';
 import { useEffect, useSyncExternalStore } from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import './App.css';

@@ -3,6 +3,8 @@ import HoverPopup from '../common/HoverPopup';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import { getThreadStatusAppearance } from '../../common/threadStatusAppearance';
+import ThreadStackPopupContent from './ThreadStackPopupContent';
+import './ThreadsOverviewStatus.css';
 
 interface Props {
   thread: Thread | undefined;
@@ -17,43 +19,6 @@ interface Props {
 const getClassName = (isMatchingStackFilter: boolean, status: ThreadStatus) => {
   const appearance = getThreadStatusAppearance(status);
   return `threads-overview-status-${appearance}${isMatchingStackFilter ? ' threads-overview-status-matching' : ''}`;
-};
-
-const renderStackPopupContent = (thread: Thread, stackPreviewLines: number) => {
-  const stackPreview = thread.stackTrace.slice(0, stackPreviewLines);
-  const remainingLines = thread.stackTrace.length - stackPreview.length;
-  const stackFrameOccurrences = new Map<string, number>();
-
-  return (
-    <>
-      <dl className="thread-stack-popup-details">
-        <dt>Time</dt>
-        <dd>{Thread.getFormattedTime(thread)}</dd>
-        <dt>Thread</dt>
-        <dd>{thread.name}</dd>
-      </dl>
-      <div className="thread-stack-popup-stack">
-        {stackPreview.map((stackFrame) => {
-          const occurrence = stackFrameOccurrences.get(stackFrame) || 0;
-          stackFrameOccurrences.set(stackFrame, occurrence + 1);
-
-          return (
-            <code key={`${stackFrame}-${occurrence}`} title={stackFrame}>
-              {stackFrame}
-            </code>
-          );
-        })}
-      </div>
-      {remainingLines > 0 && (
-        <p className="thread-stack-popup-more">
-          +
-          {remainingLines}
-          {' '}
-          more stack lines
-        </p>
-      )}
-    </>
-  );
 };
 
 const openThreadDetailsOnKeyDown = (
@@ -102,7 +67,7 @@ const ThreadsOverviewItem: React.FC<Props> = ({
       onKeyDown={(event) => openThreadDetailsOnKeyDown(event, thread, onOpenThreadDetails)}
       style={style}
     >
-      <HoverPopup renderContent={() => renderStackPopupContent(thread, stackPreviewLines)}>
+      <HoverPopup renderContent={() => <ThreadStackPopupContent stackPreviewLines={stackPreviewLines} thread={thread} />}>
         {thread.stackTrace[0]}
       </HoverPopup>
     </div>

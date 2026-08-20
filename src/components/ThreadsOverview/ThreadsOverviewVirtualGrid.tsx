@@ -10,6 +10,7 @@ import {
   threadsOverviewGridMetrics,
 } from './threadsOverviewGridMetrics';
 import type { ThreadOverviewDataRow } from './threadsOverviewRows';
+import './ThreadsOverviewVirtualGrid.css';
 
 interface Props {
   dates: (string | null)[];

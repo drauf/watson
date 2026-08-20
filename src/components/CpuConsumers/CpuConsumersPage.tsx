@@ -10,7 +10,6 @@ import CpuConsumer from './CpuConsumer';
 import CpuConsumersList from './CpuConsumersList';
 import CpuConsumersSettings from './CpuConsumersSettings';
 import CpuConsumersMode from './CpuConsumersMode';
-import './CpuConsumersPage.css';
 
 interface State extends ThreadLabelFilterState {
   mode: CpuConsumersMode;

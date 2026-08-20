@@ -2,6 +2,7 @@ import React from 'react';
 import ThreadDetailsPopup from '../ThreadDetails/ThreadDetailsPopup';
 import ThreadDetailsWindow from '../ThreadDetails/ThreadDetailsWindow';
 import ThreadsOverviewVirtualGrid from './ThreadsOverviewVirtualGrid';
+import './ThreadsOverviewTable.css';
 import type { ThreadOverviewDataRow } from './threadsOverviewRows';
 import useThreadDetailsWindows from './useThreadDetailsWindows';
 

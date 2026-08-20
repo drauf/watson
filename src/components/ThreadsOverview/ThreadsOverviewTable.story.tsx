@@ -2,8 +2,11 @@ import { useCallback, useState, type JSX } from 'react';
 import Thread from '../../types/Thread';
 import ThreadStatus from '../../types/ThreadStatus';
 import ThreadsOverviewTable from './ThreadsOverviewTable';
+import { threadsOverviewGridMetrics } from './threadsOverviewGridMetrics';
 import { createThreadOverviewRows } from './threadsOverviewRows';
-import './ThreadsOverviewPage.css';
+
+const compactPreviewHeight = threadsOverviewGridMetrics.headerHeight + 2 * threadsOverviewGridMetrics.rowHeight;
+const standardPreviewHeight = 320;
 
 const createThread = (id: number, name: string, dumpIndex: number): Thread => {
   const thread = new Thread(id, name, Date.UTC(2026, 6, 22, 10, 0, dumpIndex * 5));
@@ -27,44 +30,32 @@ const createDates = (dumpCount: number): string[] => Array.from(
 
 interface TablePreviewProps {
   testId: string;
+  height: number;
   children: (getScrollElement: () => HTMLElement | null) => JSX.Element;
 }
 
-const TablePreview = ({ testId, children }: TablePreviewProps): JSX.Element => {
+const TablePreview = ({ testId, height, children }: TablePreviewProps): JSX.Element => {
   const [scrollElement, setScrollElement] = useState<HTMLElement | null>(null);
   const setScrollElementRef = useCallback((element: HTMLElement | null) => setScrollElement(element), []);
 
   return (
-    <section ref={setScrollElementRef} data-testid={testId} style={{ height: 320, overflow: 'auto' }}>
+    <section ref={setScrollElementRef} data-testid={testId} style={{ width: '100%', height, overflow: 'auto' }}>
       {scrollElement && children(() => scrollElement)}
     </section>
   );
 };
 
-export const Basic = (): JSX.Element => {
-  const threeDumpRows = createTableRows(3);
-  const matchingStackFilter = new Set([threeDumpRows[0].get(0)!.uniqueId]);
+export const ThreeDumps = (): JSX.Element => {
+  const rows = createTableRows(3);
 
   return (
     <main className="full-width-page">
-      <TablePreview testId="three-dump-table">
+      <TablePreview testId="three-dump-table" height={compactPreviewHeight}>
         {(getScrollElement) => (
           <ThreadsOverviewTable
             dates={createDates(3)}
-            rows={createThreadOverviewRows(threeDumpRows)}
-            matchingStackFilter={matchingStackFilter}
-            dumpColumnWidth={160}
-            stackPreviewLines={10}
-            getScrollElement={getScrollElement}
-          />
-        )}
-      </TablePreview>
-      <TablePreview testId="many-dump-table">
-        {(getScrollElement) => (
-          <ThreadsOverviewTable
-            dates={createDates(12)}
-            rows={createThreadOverviewRows(createTableRows(12))}
-            matchingStackFilter={new Set()}
+            rows={createThreadOverviewRows(rows)}
+            matchingStackFilter={new Set([rows[0].get(0)!.uniqueId])}
             dumpColumnWidth={160}
             stackPreviewLines={10}
             getScrollElement={getScrollElement}
@@ -74,6 +65,23 @@ export const Basic = (): JSX.Element => {
     </main>
   );
 };
+
+export const ManyDumps = (): JSX.Element => (
+  <main className="full-width-page">
+    <TablePreview testId="many-dump-table" height={compactPreviewHeight}>
+      {(getScrollElement) => (
+        <ThreadsOverviewTable
+          dates={createDates(12)}
+          rows={createThreadOverviewRows(createTableRows(12))}
+          matchingStackFilter={new Set()}
+          dumpColumnWidth={160}
+          stackPreviewLines={10}
+          getScrollElement={getScrollElement}
+        />
+      )}
+    </TablePreview>
+  </main>
+);
 
 const createLargeTableRows = (): Map<number, Thread>[] => Array.from(
   { length: 1000 },
@@ -88,7 +96,7 @@ const createLargeTableRows = (): Map<number, Thread>[] => Array.from(
 
 export const Large = (): JSX.Element => (
   <main className="full-width-page">
-    <TablePreview testId="large-table">
+    <TablePreview testId="large-table" height={standardPreviewHeight}>
       {(getScrollElement) => (
         <ThreadsOverviewTable
           dates={createDates(100)}
@@ -103,4 +111,4 @@ export const Large = (): JSX.Element => (
   </main>
 );
 
-export default Basic;
+export default ThreeDumps;

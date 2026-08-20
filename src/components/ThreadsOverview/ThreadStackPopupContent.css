@@ -1,0 +1,8 @@
+.thread-stack-popup .stacktrace-container code {
+  border-radius: 0;
+}
+
+.thread-stack-popup-more {
+  margin: var(--ds-space-050, 4px) 0 0;
+  color: var(--ds-text-subtle);
+}

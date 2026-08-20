@@ -8,6 +8,7 @@ import type { JSX } from 'react';
 import ThreadDump from '../../types/ThreadDump';
 import PopupContent from '../common/PopupContent';
 import { getRunningProcessesTooltipData } from './runningProcessesTooltip';
+import './SummaryCharts.css';
 
 interface Props {
   threadDumps: ThreadDump[];

@@ -3,7 +3,6 @@ import Heading from '@atlaskit/heading';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { clearCurrentData } from '../../common/threadDumpsStorageService';
-import '../Container.css';
 import './FullPageError.css';
 
 interface Props {

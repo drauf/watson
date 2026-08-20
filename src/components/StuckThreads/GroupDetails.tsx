@@ -1,6 +1,7 @@
 import React, { type JSX } from 'react';
 import Thread from '../../types/Thread';
 import SingleThreadDetails from './SingleThreadDetails';
+import './GroupDetails.css';
 
 interface Props {
   maxDifferingLines: number;
@@ -30,7 +31,7 @@ export default class GroupDetails extends React.PureComponent<Props> {
     const { maxDifferingLines, threadGroup } = this.props;
 
     return (
-      <div className="group-details">
+      <div className="stuck-thread-group-details">
         {threadGroup.map((thread, index, array) => (
           <SingleThreadDetails
             key={thread.uniqueId}

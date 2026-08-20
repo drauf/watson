@@ -8,7 +8,6 @@ import PaginatedCollection from '../common/PaginatedCollection';
 import Monitor from './Monitor';
 import MonitorOverTime from './MonitorOverTime';
 import MonitorOverTimeGroup from './MonitorOverTimeItem';
-import './MonitorsPage.css';
 import MonitorsSettings from './MonitorsSettings';
 import { WithThreadDumpsProps, withThreadDumps } from '../../common/withThreadDumps';
 

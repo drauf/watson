@@ -35,6 +35,13 @@ describe('calculatePopupPosition', () => {
     });
   });
 
+  it('prefers the left when the right-side clearance is tight', () => {
+    expect(calculatePopupPosition(rectangle(730, 100, 0, 0), tooltip, viewport)).toEqual({
+      left: 514,
+      top: 116,
+    });
+  });
+
   it('opens fully to the left near the right viewport edge', () => {
     expect(calculatePopupPosition(rectangle(950, 100, 0, 0), tooltip, viewport)).toEqual({
       left: 734,

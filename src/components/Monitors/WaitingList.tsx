@@ -3,6 +3,7 @@ import Text from '@atlaskit/primitives/text';
 import React, { type JSX } from 'react';
 import Thread from '../../types/Thread';
 import WaitingListItem from './WaitingListItem';
+import './WaitingList.css';
 
 interface Props {
   waiting: Thread[];
@@ -49,16 +50,17 @@ export default class WaitingList extends React.PureComponent<Props, State> {
 
         <ul className="waiting-list-items">
           {threads.map((thread) => <WaitingListItem key={thread.uniqueId} thread={thread} />)}
+          {collapsable > 0
+            && (
+              <li>
+                <Button appearance="subtle" spacing="compact" onClick={this.toggleExpand}>
+                  {expanded
+                    ? `Collapse thread list (hide ${collapsable} ${WaitingList.getThreadLabel(collapsable)})`
+                    : `Expand thread list (${collapsable} more ${WaitingList.getThreadLabel(collapsable)} to show)`}
+                </Button>
+              </li>
+            )}
         </ul>
-
-        {collapsable > 0
-          && (
-            <Button appearance="default" onClick={this.toggleExpand}>
-              {expanded
-                ? `Collapse thread list (hide ${collapsable} ${WaitingList.getThreadLabel(collapsable)})`
-                : `Expand thread list (${collapsable} more ${WaitingList.getThreadLabel(collapsable)} to show)`}
-            </Button>
-          )}
       </section>
     );
   }

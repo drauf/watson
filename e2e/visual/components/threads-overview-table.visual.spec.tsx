@@ -2,13 +2,13 @@ import { expect, test } from '@playwright/test';
 
 test.describe('Threads overview table', () => {
   test('renders a three-dump table with flexible dump columns', async ({ mount }) => {
-    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/Basic');
+    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/ThreeDumps');
 
     await expect(component.getByTestId('three-dump-table')).toHaveScreenshot('threads-overview-three-dump-table.png');
   });
 
   test('renders bold timestamp headers', async ({ mount }) => {
-    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/Basic');
+    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/ThreeDumps');
     const timestampHeader = component
       .getByTestId('three-dump-table')
       .getByRole('columnheader', { name: '10:00:00' });
@@ -25,7 +25,7 @@ test.describe('Threads overview table', () => {
   });
 
   test('distinguishes subtle and bold status cell treatments', async ({ mount }) => {
-    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/Basic');
+    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/ThreeDumps');
     const normal = component.locator('.threads-overview-status-success:not(.threads-overview-status-matching)').first();
     const matching = component.locator('.threads-overview-status-success.threads-overview-status-matching').first();
 
@@ -46,7 +46,7 @@ test.describe('Threads overview table', () => {
   });
 
   test('stretches a small table beyond its configured minimum width', async ({ mount }) => {
-    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/Basic');
+    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/ThreeDumps');
     const preview = component.getByTestId('three-dump-table');
 
     const dimensions = await preview.evaluate((element) => ({
@@ -58,7 +58,7 @@ test.describe('Threads overview table', () => {
   });
 
   test('renders a many-dump table with horizontal overflow', async ({ mount }) => {
-    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/Basic');
+    const component = await mount('components/ThreadsOverview/ThreadsOverviewTable/ManyDumps');
 
     await expect(component.getByTestId('many-dump-table')).toHaveScreenshot('threads-overview-many-dump-table.png');
   });
@@ -86,6 +86,7 @@ test.describe('Threads overview table', () => {
     await expect.poll(() => component.locator('.threads-overview-grid-names').evaluate(
       (element) => element.getBoundingClientRect().left,
     )).toBeGreaterThanOrEqual(previewLeft);
+    await expect(preview).toHaveScreenshot('threads-overview-large-scrolled.png');
     expect(await component.locator('[role="gridcell"]').count()).toBeLessThan(1000);
   });
 });

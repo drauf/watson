@@ -1,7 +1,8 @@
 import React, { type JSX } from 'react';
-import getColorForStackLine from '../../common/getColorForStackLine';
 import Thread from '../../types/Thread';
 import OpenThreadDetailsButton from '../ThreadDetails/OpenThreadDetailsButton';
+import StackTrace from '../common/StackTrace';
+import './SingleThreadDetails.css';
 
 interface Props {
   maxDifferingLines: number;
@@ -12,8 +13,6 @@ interface Props {
 export default class SingleThreadDetails extends React.PureComponent<Props> {
   public override render(): JSX.Element {
     const { thread, maxDifferingLines, showStackTrace } = this.props;
-    const stack = thread.stackTrace.slice(0, Math.max(maxDifferingLines, 10));
-    const lineOccurrences = new Map<string, number>();
 
     return (
       <>
@@ -22,16 +21,8 @@ export default class SingleThreadDetails extends React.PureComponent<Props> {
           thread={thread}
         />
 
-        {showStackTrace && (
-          <p className="stacktrace-container">
-            {stack.map((line) => {
-              const occurrence = lineOccurrences.get(line) ?? 0;
-              lineOccurrences.set(line, occurrence + 1);
-              const { backgroundColor, color } = getColorForStackLine(line);
-              return <code key={`${line}:${occurrence}`} style={{ backgroundColor, color }}>{line}</code>;
-            })}
-          </p>
-        )}
+        {showStackTrace
+          && <StackTrace stackTrace={thread.stackTrace} linesToConsider={Math.max(maxDifferingLines, 10)} />}
       </>
     );
   }

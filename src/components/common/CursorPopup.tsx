@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 
 const TOOLTIP_SPACING = 16;
 const VIEWPORT_MARGIN = 8;
+const RIGHT_EDGE_CLEARANCE = 48;
 
 interface Props {
   children: React.ReactNode;
@@ -30,7 +31,8 @@ export const calculatePopupPosition = (
     : trigger.bottom + TOOLTIP_SPACING;
   const maximumTop = Math.max(VIEWPORT_MARGIN, viewport.height - tooltip.height - VIEWPORT_MARGIN);
   const maximumLeft = Math.max(VIEWPORT_MARGIN, viewport.width - tooltip.width - VIEWPORT_MARGIN);
-  const preferredLeft = trigger.right + TOOLTIP_SPACING + tooltip.width <= viewport.width - VIEWPORT_MARGIN
+  // Leave room at the right edge so content that reflows after measurement does not wrap unexpectedly.
+  const preferredLeft = trigger.right + TOOLTIP_SPACING + tooltip.width + RIGHT_EDGE_CLEARANCE <= viewport.width - VIEWPORT_MARGIN
     ? trigger.right + TOOLTIP_SPACING
     : trigger.left - tooltip.width - TOOLTIP_SPACING;
 

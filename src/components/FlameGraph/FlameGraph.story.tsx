@@ -1,7 +1,6 @@
 import type { JSX } from 'react';
 import { FlameGraphNode } from './flameGraphModel';
 import FlameGraph from './FlameGraph';
-import './FlameGraphPage.css';
 
 const chartData: FlameGraphNode = {
   name: 'root',

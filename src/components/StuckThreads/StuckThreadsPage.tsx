@@ -9,7 +9,6 @@ import PageWithSettings from '../PageWithSettings';
 import PaginatedCollection from '../common/PaginatedCollection';
 import StuckThreadsGroup from './StuckThreadsGroup';
 import StuckThreadsSettings from './StuckThreadsSettings';
-import './StuckThreadsPage.css';
 
 interface State extends ThreadLabelFilterState {
   maxDifferingLines: number;

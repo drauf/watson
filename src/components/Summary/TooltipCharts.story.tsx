@@ -8,7 +8,6 @@ import ThreadStatus from '../../types/ThreadStatus';
 import LoadAveragesChart from './LoadAveragesChart';
 import MemoryUsageChart from './MemoryUsageChart';
 import RunningProcessesChart from './RunningProcessesChart';
-import './SummaryPage.css';
 
 const createDump = (epoch: number, runningProcesses: number, cpuUsages: string[]): ThreadDump => {
   const dump = new ThreadDump(epoch);
@@ -33,7 +32,7 @@ const threadDumps = [
 const TooltipCharts = (): JSX.Element => (
   <main className="summary-page">
     <RunningProcessesChart threadDumps={threadDumps} />
-    <div id="memory-usages">
+    <div className="summary-memory-charts">
       <MemoryUsageChart threadDumps={threadDumps} />
     </div>
     <LoadAveragesChart threadDumps={threadDumps} />
