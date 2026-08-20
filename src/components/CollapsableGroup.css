@@ -1,8 +1,6 @@
 .collapsable-group {
-  display: block;
   padding: var(--ds-space-050) var(--ds-space-100);
-  margin: var(--ds-space-100) 0;
-  background: transparent;
+  margin: var(--ds-space-025) 0;
   border: 1px solid var(--ds-border-disabled, #091e4224);
   border-radius: var(--ds-radius-medium, 6px);
   transition: border-color 0.1s ease-out;

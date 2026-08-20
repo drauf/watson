@@ -10,7 +10,7 @@ interface Props {
 
 export default class ThreadDetailsBody extends React.PureComponent<Props> {
   private static renderWaitingFor = (thread: Thread) => (
-    <div>
+    <div className="thread-details-section">
       <Heading as="h5" size="xsmall">Waiting for</Heading>
 
       {!thread.lockWaitingFor
@@ -38,7 +38,7 @@ export default class ThreadDetailsBody extends React.PureComponent<Props> {
   );
 
   private static renderLocksHeld = (thread: Thread) => (
-    <div>
+    <div className="thread-details-section">
       <Heading as="h5" size="xsmall">Locks held</Heading>
 
       {thread.locksHeld.length === 0

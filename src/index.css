@@ -17,8 +17,3 @@ html {
   -webkit-text-fill-color: var(--ds-text);
 }
 
-.ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}

@@ -18,11 +18,11 @@ export default class MonitorItem extends React.PureComponent<Props> {
 
     return (
       <div className="monitors-container">
-        <div className="left">
+        <div className="monitor-summary">
           <Heading as="h5" size="xsmall">{monitor.time}</Heading>
           {javaClass}
         </div>
-        <div>
+        <div className="monitor-details">
           <MonitorOwner monitor={monitor} />
           <WaitingList waiting={monitor.waiting} />
         </div>

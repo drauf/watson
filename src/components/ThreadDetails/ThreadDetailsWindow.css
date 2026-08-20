@@ -1,7 +1,7 @@
 .thread-details {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  align-items: stretch;
   padding: 0;
   margin: 0;
 }
@@ -25,14 +25,9 @@
 .details-body {
   display: flex;
   flex-direction: column;
-  width: 100%;
 }
 
-.details-body div {
-  padding: var(--ds-space-100) var(--ds-space-200);
-}
-
-.stacktrace-container h5 {
+.thread-details-section {
   padding: var(--ds-space-100) var(--ds-space-200);
 }
 

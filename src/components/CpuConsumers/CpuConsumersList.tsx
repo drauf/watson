@@ -14,14 +14,12 @@ export default class CpuConsumersList extends React.PureComponent<Props> {
     const { dumpsNumber, consumers, resetKey } = this.props;
 
     return (
-      <div id="consumers-list">
-        <PaginatedCollection
-          items={consumers}
-          resetKey={resetKey}
-          getKey={(consumer) => consumer.uniqueId}
-          renderItem={(consumer) => <CpuConsumerItem dumpsNumber={dumpsNumber} consumer={consumer} />}
-        />
-      </div>
+      <PaginatedCollection
+        items={consumers}
+        resetKey={resetKey}
+        getKey={(consumer) => consumer.uniqueId}
+        renderItem={(consumer) => <CpuConsumerItem dumpsNumber={dumpsNumber} consumer={consumer} />}
+      />
     );
   }
 }

@@ -5,7 +5,6 @@
 }
 
 .threads-overview-workspace {
-  align-items: stretch;
   height: calc(100dvh - var(--watson-navigation-height, 0px));
   padding-top: 0;
   overflow: auto;

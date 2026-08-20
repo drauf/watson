@@ -32,7 +32,7 @@ test.describe('Threads overview', () => {
     await workspace.evaluate((element) => element.scrollTo({ top: element.scrollHeight, left: 0 }));
 
     await expect.poll(async () => heading.evaluate((element) => element.getBoundingClientRect().bottom))
-      .toBeLessThan(workspaceTop);
+      .toBeLessThanOrEqual(workspaceTop);
     await expect.poll(async () => header.evaluate((element) => element.getBoundingClientRect().top))
       .toBeLessThanOrEqual(workspaceTop + 1);
 

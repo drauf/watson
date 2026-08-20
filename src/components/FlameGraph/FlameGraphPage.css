@@ -1,4 +1,5 @@
 #flame-graph {
+  width: 100%;
   margin-top: var(--ds-space-200, 16px);
 }
 

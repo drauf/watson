@@ -2,6 +2,7 @@
   display: flex;
   gap: var(--ds-space-050);
   justify-content: flex-end;
+  margin-bottom: var(--ds-space-050);
 }
 
 .paginated-collection {

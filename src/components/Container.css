@@ -2,7 +2,7 @@ main {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   width: 80%;
   padding-top: var(--ds-space-150, 12px);
   margin: 0 auto;
@@ -15,7 +15,6 @@ main {
 }
 
 .full-width-page {
-  align-items: center;
   width: 100%;
 }
 
@@ -23,7 +22,6 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--ds-space-200, 16px);
-  width: 100%;
 }
 
 #settings > section {

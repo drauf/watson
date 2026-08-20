@@ -16,7 +16,7 @@ const FlameGraph = ({ chartData }: Props): JSX.Element => {
   const [zoom, setZoom] = useState<Zoom>({ chartData, root: chartData, ancestors: [] });
   const [hoveredFrame, setHoveredFrame] = useState<HoveredFrame>();
   const activeZoom = zoom.chartData === chartData ? zoom : { chartData, root: chartData, ancestors: [] };
-  const containerWidth = Math.max(window.innerWidth - 36, 1);
+  const containerWidth = Math.max(window.innerWidth, 1);
   const frames = useMemo(() => (
     layoutFlameGraph(activeZoom.root, containerWidth, MINIMUM_FRAME_PIXELS)
       .map((frame) => ({

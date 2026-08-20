@@ -1,5 +1,4 @@
 import React, { type JSX } from 'react';
-import '@atlaskit/css-reset';
 
 import EmbeddedDataIndex from '../EmbeddedDataIndex/EmbeddedDataIndex';
 import FullPageDropzone from '../FullPageDropzone/FullPageDropzone';

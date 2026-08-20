@@ -24,9 +24,7 @@ const consumer = new CpuConsumer(
 );
 
 export const MissingDumpAndThresholds = (): JSX.Element => (
-  <div id="consumers-list">
-    <CpuConsumerItem consumer={consumer} dumpsNumber={4} />
-  </div>
+  <CpuConsumerItem consumer={consumer} dumpsNumber={4} />
 );
 
 export default MissingDumpAndThresholds;
