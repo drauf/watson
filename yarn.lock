@@ -65,7 +65,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/app-provider@npm:5.2.0, @atlaskit/app-provider@npm:^5.2.0":
+"@atlaskit/app-provider@npm:5.2.0":
   version: 5.2.0
   resolution: "@atlaskit/app-provider@npm:5.2.0"
   dependencies:
@@ -96,6 +96,23 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/16ce1658f1d2392263ac4b4ac23dc27db0b0a8ea3838d75b937589a6d49ba8db8de54745fb0bec233fc0162faaf857b6248b6d7f5971c725436446c8ef9e1d9c
+  languageName: node
+  linkType: hard
+
+"@atlaskit/app-provider@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@atlaskit/app-provider@npm:5.3.0"
+  dependencies:
+    "@atlaskit/browser-apis": "npm:^1.2.0"
+    "@atlaskit/css": "npm:^1.0.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.1.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/tokens": "npm:^16.4.0"
+    "@babel/runtime": "npm:^7.0.0"
+    bind-event-listener: "npm:^3.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/05a8287d8604f8595d53d81cb71638d478265c2e3ee18977599189f705c2c7fab4098b7fc7bb8ec73cc2b14edec5864da1248819cb45f82ae1a7884217631931
   languageName: node
   linkType: hard
 
@@ -762,17 +779,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/primitives@npm:22.2.1":
-  version: 22.2.1
-  resolution: "@atlaskit/primitives@npm:22.2.1"
+"@atlaskit/primitives@npm:22.2.2":
+  version: 22.2.2
+  resolution: "@atlaskit/primitives@npm:22.2.2"
   dependencies:
     "@atlaskit/analytics-next": "npm:^12.3.0"
-    "@atlaskit/app-provider": "npm:^5.2.0"
+    "@atlaskit/app-provider": "npm:^5.3.0"
     "@atlaskit/css": "npm:^1.0.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
     "@atlaskit/interaction-context": "npm:^4.0.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
+    "@atlaskit/tokens": "npm:^16.6.0"
     "@atlaskit/visually-hidden": "npm:^4.2.0"
     "@babel/runtime": "npm:^7.0.0"
     "@compiled/react": "npm:^1.0.0"
@@ -782,7 +799,7 @@ __metadata:
     tiny-invariant: "npm:^1.2.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
-  checksum: 10c0/e9c773e01ba93ec2cdcdadd05c8c60c6f82c3af5e3ac434e164f5f1061f10f60f8da67c3907da2ffcc7d29b5803d07dd8206a70d3982c691468a851ae0cbd724
+  checksum: 10c0/6dfe379266ab6f34cdebc777a1334ab16c90c721f846be73a87f7bdf976a435edd9a88cce35ef45159a0b58cd180098906923d82f451a1dffbb29e5e7a251098
   languageName: node
   linkType: hard
 
@@ -8797,7 +8814,7 @@ __metadata:
     "@atlaskit/pagination": "npm:17.1.6"
     "@atlaskit/platform-feature-flags": "npm:2.1.1"
     "@atlaskit/popup": "npm:6.0.0"
-    "@atlaskit/primitives": "npm:22.2.1"
+    "@atlaskit/primitives": "npm:22.2.2"
     "@atlaskit/progress-bar": "npm:5.1.1"
     "@atlaskit/section-message": "npm:10.0.0"
     "@atlaskit/select": "npm:22.6.3"
