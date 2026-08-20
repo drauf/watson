@@ -95,5 +95,5 @@
     "last 2 firefox versions",
     "last 2 safari versions"
   ],
-  "packageManager": "yarn@4.17.0"
+  "packageManager": "yarn@4.18.0"
 }
