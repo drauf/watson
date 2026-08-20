@@ -534,26 +534,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/lozenge@npm:15.0.1":
-  version: 15.0.1
-  resolution: "@atlaskit/lozenge@npm:15.0.1"
+"@atlaskit/lozenge@npm:15.1.0":
+  version: 15.1.0
+  resolution: "@atlaskit/lozenge@npm:15.1.0"
   dependencies:
     "@atlaskit/analytics-next": "npm:^12.3.0"
     "@atlaskit/badge": "npm:^21.0.0"
     "@atlaskit/css": "npm:^1.0.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/icon": "npm:^37.2.0"
+    "@atlaskit/icon": "npm:^37.3.0"
     "@atlaskit/motion": "npm:^8.0.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
     "@atlaskit/primitives": "npm:^22.2.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
     "@atlaskit/spinner": "npm:^20.1.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
+    "@atlaskit/tokens": "npm:^16.7.0"
     "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
+    "@compiled/react": "npm:^1.0.2"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/31c880c7a44b7cd26f3d1b18a11729f24f5c36f17af97584c3f3cb16e15bfcdde1596dc68b746aaaa661f636129bcd62959467118413dab58da1b7171fbcfb81
+  checksum: 10c0/0b2b5a9747ffb76ddf0446364a9c815489ca819eb8536c92a61ee5c277f748575e02557c457a32ff38f844661166f630aef2fb25e5b3330fd74cda4a4ba49800
   languageName: node
   linkType: hard
 
@@ -8863,7 +8863,7 @@ __metadata:
     "@atlaskit/form": "npm:16.1.5"
     "@atlaskit/heading": "npm:7.0.1"
     "@atlaskit/icon": "npm:37.3.0"
-    "@atlaskit/lozenge": "npm:15.0.1"
+    "@atlaskit/lozenge": "npm:15.1.0"
     "@atlaskit/modal-dialog": "npm:16.2.5"
     "@atlaskit/pagination": "npm:17.1.6"
     "@atlaskit/platform-feature-flags": "npm:2.1.1"
