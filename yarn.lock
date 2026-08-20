@@ -65,7 +65,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/app-provider@npm:5.3.0, @atlaskit/app-provider@npm:^5.3.0":
+"@atlaskit/app-provider@npm:5.3.0, @atlaskit/app-provider@npm:^5.2.0, @atlaskit/app-provider@npm:^5.3.0":
   version: 5.3.0
   resolution: "@atlaskit/app-provider@npm:5.3.0"
   dependencies:
@@ -610,35 +610,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/modal-dialog@npm:16.2.5":
-  version: 16.2.5
-  resolution: "@atlaskit/modal-dialog@npm:16.2.5"
+"@atlaskit/modal-dialog@npm:16.3.4":
+  version: 16.3.4
+  resolution: "@atlaskit/modal-dialog@npm:16.3.4"
   dependencies:
     "@atlaskit/analytics-next": "npm:^12.3.0"
     "@atlaskit/blanket": "npm:^16.2.0"
     "@atlaskit/button": "npm:^25.0.0"
     "@atlaskit/css": "npm:^1.0.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/icon": "npm:^37.2.0"
+    "@atlaskit/icon": "npm:^37.3.0"
     "@atlaskit/layering": "npm:^5.0.0"
-    "@atlaskit/motion": "npm:^8.0.0"
+    "@atlaskit/motion": "npm:^8.1.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
-    "@atlaskit/portal": "npm:^6.1.0"
-    "@atlaskit/pragmatic-drag-and-drop": "npm:^2.0.0"
+    "@atlaskit/portal": "npm:^6.2.0"
+    "@atlaskit/pragmatic-drag-and-drop": "npm:^3.0.0"
     "@atlaskit/primitives": "npm:^22.2.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/theme": "npm:^26.1.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
-    "@atlaskit/top-layer": "npm:^3.0.0"
+    "@atlaskit/theme": "npm:^28.0.0"
+    "@atlaskit/tokens": "npm:^16.7.0"
+    "@atlaskit/top-layer": "npm:^4.2.0"
     "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
+    "@compiled/react": "npm:^1.0.2"
     bind-event-listener: "npm:^3.0.0"
     raf-schd: "npm:^4.0.3"
     react-focus-lock: "npm:^2.9.5"
     react-scrolllock: "npm:^5.0.1"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/fe6efd85d6ed3cec5165bdf7aca528a838bfb115b1ad579a4587f20f100f0659ce2b766d7a1b1cd44573a84bddbe7cc6b4e610fad13918703d834922dbe44e09
+  checksum: 10c0/5051ddc5408ea7b36edf95aa2ca3cc781bb83230f8824fb4ce72108bbc1f45d03f44f39f76926cdec62e1602a6d29fb84d70719d14dbf3ee37fbb4de50b47f26
   languageName: node
   linkType: hard
 
@@ -658,6 +658,25 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/60ba86bbe853d2a8e6d73f535586c3c9c62a2e0cd0ab2b55e7c3072661da0e0e3db375b69ce3ee5f8ff84901f6768ba7df830942966c721ffd8a5ff8393169d6
+  languageName: node
+  linkType: hard
+
+"@atlaskit/motion@npm:^8.1.0":
+  version: 8.2.0
+  resolution: "@atlaskit/motion@npm:8.2.0"
+  dependencies:
+    "@atlaskit/browser-apis": "npm:^1.2.0"
+    "@atlaskit/css": "npm:^1.0.0"
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.1.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/tokens": "npm:^16.7.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@compiled/react": "npm:^1.0.2"
+    bind-event-listener: "npm:^3.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/dacfc35133eac0085eeb43fe304447f404b1511afa22dfe9472bebaff0ab18677508ab233a65634c7709efe99e804eefd6be388edc5151075d913bccba47cc32
   languageName: node
   linkType: hard
 
@@ -800,14 +819,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/pragmatic-drag-and-drop@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "@atlaskit/pragmatic-drag-and-drop@npm:2.0.1"
+"@atlaskit/portal@npm:^6.2.0":
+  version: 6.2.2
+  resolution: "@atlaskit/portal@npm:6.2.2"
+  dependencies:
+    "@atlaskit/app-provider": "npm:^5.3.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.1.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/theme": "npm:^28.0.0"
+    "@babel/runtime": "npm:^7.0.0"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/590eceb6d69892a8a6c5cd8e2e4e72969fa4669e2fc7a9f2bb2dc9824f79a5cadaf1ffac7a6ecf9215f44232fc2a6d1f2bae0cc485cda12e52def9e88c2ae9c3
+  languageName: node
+  linkType: hard
+
+"@atlaskit/pragmatic-drag-and-drop@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@atlaskit/pragmatic-drag-and-drop@npm:3.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.0.0"
     bind-event-listener: "npm:^3.0.0"
     raf-schd: "npm:^4.0.3"
-  checksum: 10c0/3e1890c34ab0457befbc21fd4119d68eef3b7a73ac5369442072e20e375e1fcfa2cc3a32d5e68f63595902f446aa27eb3111b85c5886e1ebd6308ccada886db6
+  checksum: 10c0/7d760cfdf642522f5d85b3bb808e6c6e795b283933625f84ab6ec656c86d0845df5e8749d61528fb51a6aa0770b8b34230dc11edcf0abbb603240f233bfa23e2
   languageName: node
   linkType: hard
 
@@ -1224,28 +1259,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/top-layer@npm:^4.2.0":
-  version: 4.2.5
-  resolution: "@atlaskit/top-layer@npm:4.2.5"
-  dependencies:
-    "@atlaskit/browser-apis": "npm:^1.2.0"
-    "@atlaskit/css": "npm:^1.0.0"
-    "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/layering": "npm:^5.0.0"
-    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.7.0"
-    "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.2"
-    bind-event-listener: "npm:^3.0.0"
-    raf-schd: "npm:^4.0.3"
-  peerDependencies:
-    react: ^18.2.0 || ^19.0.0
-    react-dom: ^18.2.0 || ^19.0.0
-  checksum: 10c0/dfbbfa9a9deff8c35c0751926f70a51471d23aaa2202585fa23ebded65eb2d41152a9b308865ecb048fca317a075c775cdd5258c87a4cd6ed97dc8c252741c70
-  languageName: node
-  linkType: hard
-
-"@atlaskit/top-layer@npm:^4.0.0":
+"@atlaskit/top-layer@npm:^4.0.0, @atlaskit/top-layer@npm:^4.2.0":
   version: 4.2.5
   resolution: "@atlaskit/top-layer@npm:4.2.5"
   dependencies:
@@ -8864,7 +8878,7 @@ __metadata:
     "@atlaskit/heading": "npm:7.0.1"
     "@atlaskit/icon": "npm:37.3.0"
     "@atlaskit/lozenge": "npm:15.1.0"
-    "@atlaskit/modal-dialog": "npm:16.2.5"
+    "@atlaskit/modal-dialog": "npm:16.3.4"
     "@atlaskit/pagination": "npm:17.1.6"
     "@atlaskit/platform-feature-flags": "npm:2.1.1"
     "@atlaskit/popup": "npm:6.0.0"
