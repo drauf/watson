@@ -724,6 +724,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlaskit/popper@npm:^9.1.0":
+  version: 9.1.1
+  resolution: "@atlaskit/popper@npm:9.1.1"
+  dependencies:
+    "@atlaskit/browser-apis": "npm:^1.2.0"
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.1.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/tokens": "npm:^16.7.0"
+    "@atlaskit/top-layer": "npm:^4.0.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@compiled/react": "npm:^1.0.2"
+    "@popperjs/core": "npm:^2.11.8"
+    bind-event-listener: "npm:^3.0.0"
+    react-popper: "npm:^2.3.0"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/8300b6b15d9aad65e6c6529fcefd2010449fa6336c2d4259d12a1907b332c4217f56f2867c123d218b26735c6f87b8c0549a2ad5a45716b8b79781e4ba847896
+  languageName: node
+  linkType: hard
+
 "@atlaskit/popup@npm:6.0.0, @atlaskit/popup@npm:^6.0.0":
   version: 6.0.0
   resolution: "@atlaskit/popup@npm:6.0.0"
@@ -900,25 +922,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/select@npm:22.6.3":
-  version: 22.6.3
-  resolution: "@atlaskit/select@npm:22.6.3"
+"@atlaskit/select@npm:22.6.6":
+  version: 22.6.6
+  resolution: "@atlaskit/select@npm:22.6.6"
   dependencies:
     "@atlaskit/analytics-next": "npm:^12.3.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/icon": "npm:^37.2.0"
+    "@atlaskit/icon": "npm:^37.3.0"
     "@atlaskit/layering": "npm:^5.0.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
-    "@atlaskit/popper": "npm:^9.0.0"
+    "@atlaskit/popper": "npm:^9.1.0"
     "@atlaskit/primitives": "npm:^22.2.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
     "@atlaskit/react-select": "npm:^4.7.0"
-    "@atlaskit/theme": "npm:^26.1.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
-    "@atlaskit/top-layer": "npm:^3.0.0"
+    "@atlaskit/theme": "npm:^28.0.0"
+    "@atlaskit/tokens": "npm:^16.7.0"
+    "@atlaskit/top-layer": "npm:^4.0.0"
     "@atlaskit/visually-hidden": "npm:^4.2.0"
     "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
+    "@compiled/react": "npm:^1.0.2"
     "@popperjs/core": "npm:^2.11.8"
     bind-event-listener: "npm:^3.0.0"
     react-focus-lock: "npm:^2.9.5"
@@ -927,7 +949,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
-  checksum: 10c0/6d7a77c077f76c32d4d49ef9888aa3925b7e3988f51d8c69f9c7036e0403a276de9f35770cc539e3a7bd2a75550d82ee26ff83c9d8b18e16d12aa66deae79318
+  checksum: 10c0/23b09a02377a0ebdbdfd47c1ba1b3c1aa139dc20e23bf2e4b88b74b448d8bcf768220dfd3c37f7561f5b7d2639c72d31fb93c86d980cb0d55855052562062478
   languageName: node
   linkType: hard
 
@@ -1143,7 +1165,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:^16.6.0":
+"@atlaskit/tokens@npm:^16.6.0, @atlaskit/tokens@npm:^16.7.0":
   version: 16.7.0
   resolution: "@atlaskit/tokens@npm:16.7.0"
   dependencies:
@@ -1224,6 +1246,27 @@ __metadata:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
   checksum: 10c0/c94a21519b077376139a08986aaed0807d4ffdb2c30de3acd4438e49ba50b5cb031c73ae292319d90ec9816b0e1ca539ce03bcac3ba48e6774e104529d6e6ef2
+  languageName: node
+  linkType: hard
+
+"@atlaskit/top-layer@npm:^4.0.0":
+  version: 4.2.5
+  resolution: "@atlaskit/top-layer@npm:4.2.5"
+  dependencies:
+    "@atlaskit/browser-apis": "npm:^1.2.0"
+    "@atlaskit/css": "npm:^1.0.0"
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/layering": "npm:^5.0.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/tokens": "npm:^16.7.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@compiled/react": "npm:^1.0.2"
+    bind-event-listener: "npm:^3.0.0"
+    raf-schd: "npm:^4.0.3"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  checksum: 10c0/dfbbfa9a9deff8c35c0751926f70a51471d23aaa2202585fa23ebded65eb2d41152a9b308865ecb048fca317a075c775cdd5258c87a4cd6ed97dc8c252741c70
   languageName: node
   linkType: hard
 
@@ -1634,6 +1677,17 @@ __metadata:
   peerDependencies:
     react: ">=18.0.0"
   checksum: 10c0/e7fa5e21c58fe5b858bbfbaa6de899fa637ed0064f1a02327dea372c3b0dd628d81110246bdfe3d376a693bfb3227f0e5f610f44c9e879e07b783554b4ed62ca
+  languageName: node
+  linkType: hard
+
+"@compiled/react@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@compiled/react@npm:1.0.2"
+  dependencies:
+    csstype: "npm:^3.2.3"
+  peerDependencies:
+    react: ">=18.0.0"
+  checksum: 10c0/f4efdb72b3fa2d16f16731f95fe259f89266b0b5687c88c92f18a693e8fddac7ca20f5a8781cf42f59abc441202f0d3e452d335300de3513e79ea6aefcb0d92a
   languageName: node
   linkType: hard
 
@@ -8817,7 +8871,7 @@ __metadata:
     "@atlaskit/primitives": "npm:22.2.2"
     "@atlaskit/progress-bar": "npm:5.1.1"
     "@atlaskit/section-message": "npm:10.0.0"
-    "@atlaskit/select": "npm:22.6.3"
+    "@atlaskit/select": "npm:22.6.6"
     "@atlaskit/stylelint-design-system": "npm:5.0.2"
     "@atlaskit/textfield": "npm:10.0.0"
     "@atlaskit/tokens": "npm:16.3.0"
