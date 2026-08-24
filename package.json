@@ -59,7 +59,7 @@
     "browserslist": "4.28.8",
     "eslint": "9.39.5",
     "eslint-config-airbnb-extended": "3.2.0",
-    "fake-indexeddb": "^6.2.5",
+    "fake-indexeddb": "6.2.5",
     "jsdom": "30.0.1",
     "node-gyp": "13.0.1",
     "rollup": "4.62.4",
