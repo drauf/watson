@@ -62,7 +62,7 @@
     "fake-indexeddb": "6.2.5",
     "jsdom": "30.0.1",
     "node-gyp": "13.0.1",
-    "rollup": "4.62.4",
+    "rollup": "4.62.5",
     "stylelint": "17.14.1",
     "stylelint-config-recess-order": "7.8.0",
     "stylelint-config-standard": "40.0.0",
