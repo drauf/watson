@@ -37,7 +37,7 @@
     "fflate": "0.8.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-dropzone": "20.1.0",
+    "react-dropzone": "20.1.1",
     "react-is": "19.2.8",
     "react-router-dom": "7.18.2",
     "recharts": "3.10.1"
