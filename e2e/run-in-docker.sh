@@ -44,6 +44,7 @@ done
 rsync -a \
   --exclude '.git' \
   --exclude '.yarn/unplugged' \
+  --exclude 'node_modules' \
   --exclude 'dist' \
   --exclude 'playwright-report' \
   --exclude 'test-results' \
@@ -52,7 +53,7 @@ rsync -a \
 
 docker run "${docker_arguments[@]}" \
   "$image" \
-  bash -lc 'yarn install --immutable && yarn playwright test "$@"' \
+  bash -lc 'YARN_ENABLE_HARDENED_MODE=0 yarn install --immutable && yarn playwright test "$@"' \
   -- "$@"
 
 if "$copy_snapshots"; then

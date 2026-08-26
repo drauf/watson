@@ -47,7 +47,7 @@ export default [
     },
   },
   {
-    files: ['src/**/*.test.{ts,tsx}', 'src/test-setup.ts'],
+    files: ['src/**/*.test.{ts,tsx}', 'src/test-fixtures/**/*.ts', 'src/test-setup.ts'],
     rules: {
       'import-x/no-extraneous-dependencies': ['error', { devDependencies: true }],
     },
