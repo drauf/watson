@@ -486,18 +486,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/icon@npm:37.3.0, @atlaskit/icon@npm:^37.3.0":
-  version: 37.3.0
-  resolution: "@atlaskit/icon@npm:37.3.0"
+"@atlaskit/icon@npm:37.5.0":
+  version: 37.5.0
+  resolution: "@atlaskit/icon@npm:37.5.0"
   dependencies:
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tile": "npm:^4.0.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
+    "@atlaskit/tile": "npm:^4.1.0"
+    "@atlaskit/tokens": "npm:^16.8.0"
     "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
+    "@compiled/react": "npm:^1.0.2"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/bbdbdf707394d1227df14f764d646c28ae08fcf83cd04ab7fc2f2b65d96573b912887c5037d96c0a29face5041a160b5c31d29bb54d5205565eac8a65d5431e7
+  checksum: 10c0/6f0116cdb8be3f3fb862d9da17e7e3f5bf78aa709a0970bdec8ddeb1234cceae7b582b935fa40ac98253c920ba0abfd5f445d3a4739e90142872e87d905b9388
   languageName: node
   linkType: hard
 
@@ -513,6 +513,21 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/0e458af2d76aa351e3c8a9b67fe654e2685350a3b918cde80da499a95d1942668b66ecf468aece2abfe5e6db98c3164e4eb714cd97a3c576492d6a05c0b72808
+  languageName: node
+  linkType: hard
+
+"@atlaskit/icon@npm:^37.3.0":
+  version: 37.3.0
+  resolution: "@atlaskit/icon@npm:37.3.0"
+  dependencies:
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/tile": "npm:^4.0.0"
+    "@atlaskit/tokens": "npm:^16.3.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@compiled/react": "npm:^1.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/bbdbdf707394d1227df14f764d646c28ae08fcf83cd04ab7fc2f2b65d96573b912887c5037d96c0a29face5041a160b5c31d29bb54d5205565eac8a65d5431e7
   languageName: node
   linkType: hard
 
@@ -9342,7 +9357,7 @@ __metadata:
     "@atlaskit/empty-state": "npm:12.1.0"
     "@atlaskit/form": "npm:16.1.5"
     "@atlaskit/heading": "npm:7.1.0"
-    "@atlaskit/icon": "npm:37.3.0"
+    "@atlaskit/icon": "npm:37.5.0"
     "@atlaskit/lozenge": "npm:15.3.0"
     "@atlaskit/modal-dialog": "npm:16.5.1"
     "@atlaskit/pagination": "npm:17.1.6"
