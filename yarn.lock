@@ -1372,9 +1372,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:16.7.0, @atlaskit/tokens@npm:^16.6.0, @atlaskit/tokens@npm:^16.7.0":
-  version: 16.7.0
-  resolution: "@atlaskit/tokens@npm:16.7.0"
+"@atlaskit/tokens@npm:16.8.0, @atlaskit/tokens@npm:^16.8.0":
+  version: 16.8.0
+  resolution: "@atlaskit/tokens@npm:16.8.0"
   dependencies:
     "@atlaskit/ds-lib": "npm:^8.0.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
@@ -1385,7 +1385,7 @@ __metadata:
     bind-event-listener: "npm:^3.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
-  checksum: 10c0/e346933d002bfec7c71deca05d2d1b268dbcaac0419d781505750c6099bfd02987fe47531601080457f1c53d67ccc4cd3334a97d47dd5514fd3f28e8f9f869ef
+  checksum: 10c0/19893ec11c8df422f7acbf80158577175edd82556848549fd33123c20f68008b5566881c9c89da2353977b38d9d9ad0d9473717ea5dc82d4d15a9b768275faea
   languageName: node
   linkType: hard
 
@@ -1423,9 +1423,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:^16.8.0":
-  version: 16.8.0
-  resolution: "@atlaskit/tokens@npm:16.8.0"
+"@atlaskit/tokens@npm:^16.6.0, @atlaskit/tokens@npm:^16.7.0":
+  version: 16.7.0
+  resolution: "@atlaskit/tokens@npm:16.7.0"
   dependencies:
     "@atlaskit/ds-lib": "npm:^8.0.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
@@ -1436,7 +1436,7 @@ __metadata:
     bind-event-listener: "npm:^3.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
-  checksum: 10c0/19893ec11c8df422f7acbf80158577175edd82556848549fd33123c20f68008b5566881c9c89da2353977b38d9d9ad0d9473717ea5dc82d4d15a9b768275faea
+  checksum: 10c0/e346933d002bfec7c71deca05d2d1b268dbcaac0419d781505750c6099bfd02987fe47531601080457f1c53d67ccc4cd3334a97d47dd5514fd3f28e8f9f869ef
   languageName: node
   linkType: hard
 
@@ -9545,7 +9545,7 @@ __metadata:
     "@atlaskit/select": "npm:22.6.6"
     "@atlaskit/stylelint-design-system": "npm:5.0.2"
     "@atlaskit/textfield": "npm:10.0.1"
-    "@atlaskit/tokens": "npm:16.7.0"
+    "@atlaskit/tokens": "npm:16.8.0"
     "@babel/core": "npm:8.0.1"
     "@compiled/react": "npm:1.0.2"
     "@playwright/test": "npm:1.62.1"
