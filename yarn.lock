@@ -967,18 +967,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/progress-bar@npm:5.1.1":
-  version: 5.1.1
-  resolution: "@atlaskit/progress-bar@npm:5.1.1"
+"@atlaskit/progress-bar@npm:5.2.0":
+  version: 5.2.0
+  resolution: "@atlaskit/progress-bar@npm:5.2.0"
   dependencies:
-    "@atlaskit/platform-feature-flags": "npm:^2.0.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.1.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.0.0"
+    "@atlaskit/tokens": "npm:^16.8.0"
     "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^0.20.0"
+    "@compiled/react": "npm:^1.0.2"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/f47a2381f5bfe052d8b8b92ce8d529e668e447105e0566a07183ce2ab86fdc05586c4e36ab88ea8ee621f2f23bc39bd66a26448cd6e9c5fa4da0ea713ce2b9d2
+  checksum: 10c0/abc52e0dce7e01532a8328f0be7adbef8e4edce9e25532ff7b2c2d28aa0d48a29f0db183434fe88da97b342df5a847f6f93d025f1a765179d0bbb20a64bbbfe5
   languageName: node
   linkType: hard
 
@@ -9464,7 +9464,7 @@ __metadata:
     "@atlaskit/platform-feature-flags": "npm:2.1.1"
     "@atlaskit/popup": "npm:6.2.0"
     "@atlaskit/primitives": "npm:22.2.2"
-    "@atlaskit/progress-bar": "npm:5.1.1"
+    "@atlaskit/progress-bar": "npm:5.2.0"
     "@atlaskit/section-message": "npm:10.0.0"
     "@atlaskit/select": "npm:22.6.6"
     "@atlaskit/stylelint-design-system": "npm:5.0.2"
