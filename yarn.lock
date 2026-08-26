@@ -405,27 +405,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/form@npm:16.1.5":
-  version: 16.1.5
-  resolution: "@atlaskit/form@npm:16.1.5"
+"@atlaskit/form@npm:17.1.0":
+  version: 17.1.0
+  resolution: "@atlaskit/form@npm:17.1.0"
   dependencies:
     "@atlaskit/css": "npm:^1.0.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/heading": "npm:^7.0.0"
-    "@atlaskit/icon": "npm:^37.2.0"
+    "@atlaskit/heading": "npm:^7.1.0"
+    "@atlaskit/icon": "npm:^37.5.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
-    "@atlaskit/primitives": "npm:^22.2.0"
+    "@atlaskit/primitives": "npm:^22.4.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
-    "@atlaskit/visually-hidden": "npm:^4.2.0"
+    "@atlaskit/tokens": "npm:^16.8.0"
+    "@atlaskit/visually-hidden": "npm:^4.3.0"
     "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
+    "@compiled/react": "npm:^1.0.2"
     final-form: "npm:^4.20.3"
     final-form-focus: "npm:^1.1.2"
     lodash: "npm:^4.17.21"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/9ffb7f7b1f9f5cf70809370774e504f95e2159a7f25f83a9f014be381fda6894f5e8bd194aede3e4bd2d48041df840267ec2c714f8ced10e96657afb6c048209
+  checksum: 10c0/5861d168aeccd88902eedf90e95cf796bc0c8f0ffe030c138cf5c1120656f924f34aa602f5d28e07da828f0e1ac6d74e3e3b566e5e53b9abb34bc7b8aef196bc
   languageName: node
   linkType: hard
 
@@ -9455,7 +9455,7 @@ __metadata:
     "@atlaskit/css-reset": "npm:8.3.1"
     "@atlaskit/dropdown-menu": "npm:18.2.0"
     "@atlaskit/empty-state": "npm:12.1.0"
-    "@atlaskit/form": "npm:16.1.5"
+    "@atlaskit/form": "npm:17.1.0"
     "@atlaskit/heading": "npm:7.1.0"
     "@atlaskit/icon": "npm:37.5.0"
     "@atlaskit/lozenge": "npm:15.3.0"
