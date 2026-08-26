@@ -32,7 +32,7 @@ export default defineConfig({
         }
     },
     plugins: [
-        react(),
+        react({ compiler: true }),
         viteSingleFile()
     ],
 });
