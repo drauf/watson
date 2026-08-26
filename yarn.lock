@@ -876,21 +876,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/popup@npm:6.0.4":
-  version: 6.0.4
-  resolution: "@atlaskit/popup@npm:6.0.4"
+"@atlaskit/popup@npm:6.2.0":
+  version: 6.2.0
+  resolution: "@atlaskit/popup@npm:6.2.0"
   dependencies:
     "@atlaskit/css": "npm:^1.0.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/layering": "npm:^5.0.0"
-    "@atlaskit/motion": "npm:^8.1.0"
+    "@atlaskit/layering": "npm:^5.1.0"
+    "@atlaskit/motion": "npm:^8.3.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
-    "@atlaskit/popper": "npm:^9.1.0"
-    "@atlaskit/portal": "npm:^6.2.0"
-    "@atlaskit/primitives": "npm:^22.2.0"
+    "@atlaskit/popper": "npm:^9.3.0"
+    "@atlaskit/portal": "npm:^6.3.0"
+    "@atlaskit/primitives": "npm:^22.4.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.7.0"
-    "@atlaskit/top-layer": "npm:^4.2.0"
+    "@atlaskit/tokens": "npm:^16.8.0"
+    "@atlaskit/top-layer": "npm:^4.4.0"
     "@babel/runtime": "npm:^7.0.0"
     "@compiled/react": "npm:^1.0.2"
     bind-event-listener: "npm:^3.0.0"
@@ -900,7 +900,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/4c2edcc9493e9635b30d6c7d8cc8c8a2ded95220946896decd12233ff034041cc9cbb2f7bf38efa9c8215f19b5b0c93ad6c2d4b0b45b597ddc5f4b4cc5454b54
+  checksum: 10c0/46be25ef7500849ad1c11b685e473516c0cc67ac0b4082c4db4e35c1306d92ef0b2ab13e761f162531cfe3f7415796356c8ad74f2d85fbe6a95004e5c86a008b
   languageName: node
   linkType: hard
 
@@ -9347,7 +9347,7 @@ __metadata:
     "@atlaskit/modal-dialog": "npm:16.5.1"
     "@atlaskit/pagination": "npm:17.1.6"
     "@atlaskit/platform-feature-flags": "npm:2.1.1"
-    "@atlaskit/popup": "npm:6.0.4"
+    "@atlaskit/popup": "npm:6.2.0"
     "@atlaskit/primitives": "npm:22.2.2"
     "@atlaskit/progress-bar": "npm:5.1.1"
     "@atlaskit/section-message": "npm:10.0.0"
