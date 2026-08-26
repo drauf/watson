@@ -1141,17 +1141,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@compiled/react@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@compiled/react@npm:1.0.0"
-  dependencies:
-    csstype: "npm:^3.2.3"
-  peerDependencies:
-    react: ">=18.0.0"
-  checksum: 10c0/6e54e8b3fa4505104b990a5d50f2b545e81da8479d12b639cb0e8f600e42fd232e4799aefae67969040eb5e0921b783848a23df5760dfea85e7277580274a230
-  languageName: node
-  linkType: hard
-
 "@csstools/color-helpers@npm:^6.1.0":
   version: 6.1.0
   resolution: "@csstools/color-helpers@npm:6.1.0"
