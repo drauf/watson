@@ -16,7 +16,7 @@
     "@atlaskit/app-provider": "5.4.0",
     "@atlaskit/button": "25.1.0",
     "@atlaskit/checkbox": "19.0.0",
-    "@atlaskit/css-reset": "8.1.3",
+    "@atlaskit/css-reset": "8.3.1",
     "@atlaskit/dropdown-menu": "18.0.5",
     "@atlaskit/empty-state": "12.0.0",
     "@atlaskit/form": "16.1.5",
