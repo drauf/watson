@@ -26,7 +26,7 @@
     "@atlaskit/popup": "6.2.0",
     "@atlaskit/primitives": "22.2.2",
     "@atlaskit/progress-bar": "5.2.0",
-    "@atlaskit/textfield": "10.0.1",
+    "@atlaskit/textfield": "10.1.0",
     "@atlaskit/tokens": "16.8.0",
     "@compiled/react": "1.0.2",
     "@tanstack/react-virtual": "3.14.10",

@@ -646,19 +646,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/textfield@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@atlaskit/textfield@npm:10.0.1"
+"@atlaskit/textfield@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@atlaskit/textfield@npm:10.1.0"
   dependencies:
     "@atlaskit/analytics-next": "npm:^12.3.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.3.0"
+    "@atlaskit/tokens": "npm:^16.8.0"
     "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.0"
+    "@compiled/react": "npm:^1.0.2"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
-  checksum: 10c0/49adba7392a07763b4d49f81a072cac787ed8d48116bd78ab92396d91e5cb29f63479eeb0f978c8213ed2566e4c0cb78796181c6b5829bd257df781a5a6f7704
+  checksum: 10c0/342781adb562b72cc483d66acea6412857043900c8c7ba8b567fc3eb6459079d2d383f69fa67688895f4493cbdda0e27dc501a9357aad27634190f4ac0d55b8c
   languageName: node
   linkType: hard
 
@@ -709,7 +709,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:^16.0.0, @atlaskit/tokens@npm:^16.3.0":
+"@atlaskit/tokens@npm:^16.0.0":
   version: 16.3.0
   resolution: "@atlaskit/tokens@npm:16.3.0"
   dependencies:
@@ -8854,7 +8854,7 @@ __metadata:
     "@atlaskit/primitives": "npm:22.2.2"
     "@atlaskit/progress-bar": "npm:5.2.0"
     "@atlaskit/stylelint-design-system": "npm:5.0.2"
-    "@atlaskit/textfield": "npm:10.0.1"
+    "@atlaskit/textfield": "npm:10.1.0"
     "@atlaskit/tokens": "npm:16.8.0"
     "@babel/core": "npm:8.0.1"
     "@compiled/react": "npm:1.0.2"
