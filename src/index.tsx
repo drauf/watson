@@ -12,6 +12,6 @@ if (domNode === null) {
 }
 
 // StrictMode is intentionally omitted: its development-only double-render of effects
-// exposes a portal cleanup bug in the current @atlaskit/modal-dialog and
-// @atlaskit/dropdown-menu versions, leaving orphaned empty portal containers behind.
+// exposes a portal cleanup bug in the current @atlaskit/dropdown-menu version,
+// leaving orphaned empty portal container behind.
 createRoot(domNode).render(<App />);
