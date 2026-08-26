@@ -42,8 +42,8 @@ describe('ParsedDataProcessor', () => {
     groupCpuUsageWithThreadDump(threadDump, cpuUsage);
 
     expect(threadDump.runningProcesses).toBe(3);
-    expect(matchingThread).toMatchObject({ cpuUsage: '12.90', runningFor: '1:02.03' });
-    expect(unmatchedThread).toMatchObject({ cpuUsage: '0.00', runningFor: '0:00.00' });
+    expect(matchingThread).toMatchObject({ cpuUsage: '12.90', hasCpuUsage: true, runningFor: '1:02.03' });
+    expect(unmatchedThread).toMatchObject({ cpuUsage: '0.00', hasCpuUsage: false, runningFor: '0:00.00' });
   });
 
   it('sorts missing epochs before chronological dumps', () => {

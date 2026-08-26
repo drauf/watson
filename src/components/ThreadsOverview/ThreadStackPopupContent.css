@@ -1,8 +1,16 @@
-.thread-stack-popup .stacktrace-container code {
-  border-radius: 0;
+.thread-stack-popup-metadata {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--ds-space-050, 4px) var(--ds-space-100, 8px);
+  margin-top: var(--ds-space-050, 4px);
 }
 
-.thread-stack-popup-more {
+#thread-stack-popup-more {
   margin: var(--ds-space-050, 4px) 0 0;
-  color: var(--ds-text-subtle);
+}
+
+#thread-stack-popup-action {
+  padding-top: var(--ds-space-100, 8px);
+  margin: var(--ds-space-100, 8px) 0 0;
+  border-top: 1px solid var(--ds-border);
 }

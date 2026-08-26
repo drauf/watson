@@ -3,8 +3,3 @@
   flex-wrap: wrap;
   gap: var(--ds-space-075, 6px);
 }
-
-.stuck-thread-group-details .stacktrace-container {
-  flex-basis: 100%;
-  margin: 0;
-}

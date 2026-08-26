@@ -24,6 +24,8 @@ export default class Thread extends TypeWithUniqueId {
 
   public cpuUsage = '0.00';
 
+  public hasCpuUsage = false;
+
   public runningFor = '0:00.00';
 
   public lockWaitingFor?: Lock;

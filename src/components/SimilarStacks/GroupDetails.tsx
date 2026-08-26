@@ -3,6 +3,7 @@ import React, { type JSX } from 'react';
 import Thread from '../../types/Thread';
 import StackTrace from '../common/StackTrace';
 import ThreadSummary from './ThreadSummary';
+import './GroupDetails.css';
 
 interface Props {
   threadGroup: Thread[];
@@ -48,7 +49,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
       : sortedByName.slice(0, GroupDetails.THREADS_TO_SHOW_WHEN_COLLAPSED);
 
     return (
-      <>
+      <div className="similar-stacks-group-details">
         <ul>
           {threads.map((thread) => <ThreadSummary key={thread.uniqueId} thread={thread} />)}
 
@@ -64,7 +65,7 @@ export default class GroupDetails extends React.PureComponent<Props, State> {
             )}
         </ul>
         <StackTrace stackTrace={stackTrace} linesToConsider={linesToConsider} />
-      </>
+      </div>
     );
   }
 }

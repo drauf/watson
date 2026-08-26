@@ -65,6 +65,7 @@ export function groupCpuUsageWithThreadDump(threadDump: ThreadDump, cpuUsage: Cp
     const thread = threadsById.get(cpu.id);
     if (thread !== undefined) {
       thread.cpuUsage = cpu.getCpuUsage();
+      thread.hasCpuUsage = true;
       thread.runningFor = cpu.runningFor;
       updateCpuActiveLabel(thread);
     }
