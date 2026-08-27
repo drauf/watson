@@ -172,9 +172,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/dropdown-menu@npm:18.2.0":
-  version: 18.2.0
-  resolution: "@atlaskit/dropdown-menu@npm:18.2.0"
+"@atlaskit/dropdown-menu@npm:18.2.1":
+  version: 18.2.1
+  resolution: "@atlaskit/dropdown-menu@npm:18.2.1"
   dependencies:
     "@atlaskit/button": "npm:^25.2.0"
     "@atlaskit/css": "npm:^1.0.0"
@@ -197,7 +197,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/4115bf81d9ce4fe5b5ff95df670d22f6c9a8bef90502411b17f8a06053fc00edca9474e3aa747d32b757c19ba5d1961e81e9a77e286d4fcb879fc75cf1e7dec3
+  checksum: 10c0/fbd33f755cfc2e7e3a5f8d1d9bf7646dadbc096d46ada386523ad66582012ba35f9f5c3e3c141f211135906ea061a432d322a09bd596b0de81bf8584de95cd60
   languageName: node
   linkType: hard
 
@@ -8743,7 +8743,7 @@ __metadata:
     "@atlaskit/app-provider": "npm:5.4.0"
     "@atlaskit/button": "npm:25.2.0"
     "@atlaskit/css-reset": "npm:8.3.1"
-    "@atlaskit/dropdown-menu": "npm:18.2.0"
+    "@atlaskit/dropdown-menu": "npm:18.2.1"
     "@atlaskit/empty-state": "npm:12.1.0"
     "@atlaskit/form": "npm:17.1.0"
     "@atlaskit/heading": "npm:7.1.0"
