@@ -259,9 +259,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/form@npm:17.1.0":
-  version: 17.1.0
-  resolution: "@atlaskit/form@npm:17.1.0"
+"@atlaskit/form@npm:17.1.1":
+  version: 17.1.1
+  resolution: "@atlaskit/form@npm:17.1.1"
   dependencies:
     "@atlaskit/css": "npm:^1.0.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
@@ -279,7 +279,7 @@ __metadata:
     lodash: "npm:^4.17.21"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/5861d168aeccd88902eedf90e95cf796bc0c8f0ffe030c138cf5c1120656f924f34aa602f5d28e07da828f0e1ac6d74e3e3b566e5e53b9abb34bc7b8aef196bc
+  checksum: 10c0/aa1be8ebd2b5e392c6948f46b47a765bb044d00be9ae1cb116b39d9d890cc1df5858a6b491432edb670364da8f7c5212b655f3f866c1fd01d55fb7e2b0ff923a
   languageName: node
   linkType: hard
 
@@ -8745,7 +8745,7 @@ __metadata:
     "@atlaskit/css-reset": "npm:8.3.1"
     "@atlaskit/dropdown-menu": "npm:18.2.1"
     "@atlaskit/empty-state": "npm:12.1.0"
-    "@atlaskit/form": "npm:17.1.0"
+    "@atlaskit/form": "npm:17.1.1"
     "@atlaskit/heading": "npm:7.1.0"
     "@atlaskit/icon": "npm:37.5.0"
     "@atlaskit/lozenge": "npm:15.3.0"
