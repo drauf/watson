@@ -58,7 +58,7 @@
     "eslint-config-airbnb-extended": "3.2.0",
     "fake-indexeddb": "6.2.5",
     "jsdom": "30.0.1",
-    "node-gyp": "13.0.1",
+    "node-gyp": "13.0.2",
     "oxc-transform-react": "0.147.0",
     "rollup": "4.63.0",
     "stylelint": "17.14.1",
