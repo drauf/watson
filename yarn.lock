@@ -298,9 +298,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/icon@npm:37.5.0":
-  version: 37.5.0
-  resolution: "@atlaskit/icon@npm:37.5.0"
+"@atlaskit/icon@npm:37.5.3":
+  version: 37.5.3
+  resolution: "@atlaskit/icon@npm:37.5.3"
   dependencies:
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
     "@atlaskit/tile": "npm:^4.1.0"
@@ -308,8 +308,8 @@ __metadata:
     "@babel/runtime": "npm:^7.0.0"
     "@compiled/react": "npm:^1.0.2"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/6f0116cdb8be3f3fb862d9da17e7e3f5bf78aa709a0970bdec8ddeb1234cceae7b582b935fa40ac98253c920ba0abfd5f445d3a4739e90142872e87d905b9388
+    react: ^18.2.0 || ^19.0.0
+  checksum: 10c0/aab8adfec2b9d7f8991b22e6184be5ec91450b9fff19c044b19fc462efe66c14b3f78a714d01d634b5e326e8b909b105bd6f123a4f2771644830181f8d1d8092
   languageName: node
   linkType: hard
 
@@ -8811,7 +8811,7 @@ __metadata:
     "@atlaskit/empty-state": "npm:12.1.0"
     "@atlaskit/form": "npm:17.1.1"
     "@atlaskit/heading": "npm:7.1.0"
-    "@atlaskit/icon": "npm:37.5.0"
+    "@atlaskit/icon": "npm:37.5.3"
     "@atlaskit/lozenge": "npm:15.3.1"
     "@atlaskit/pagination": "npm:17.2.0"
     "@atlaskit/platform-feature-flags": "npm:2.1.1"
