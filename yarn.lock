@@ -353,16 +353,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/lozenge@npm:15.3.0":
-  version: 15.3.0
-  resolution: "@atlaskit/lozenge@npm:15.3.0"
+"@atlaskit/lozenge@npm:15.3.1":
+  version: 15.3.1
+  resolution: "@atlaskit/lozenge@npm:15.3.1"
   dependencies:
     "@atlaskit/analytics-next": "npm:^12.3.0"
     "@atlaskit/badge": "npm:^21.1.0"
     "@atlaskit/css": "npm:^1.0.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
     "@atlaskit/icon": "npm:^37.5.0"
-    "@atlaskit/motion": "npm:^8.3.0"
+    "@atlaskit/motion": "npm:^8.4.0"
     "@atlaskit/platform-feature-flags": "npm:^2.1.0"
     "@atlaskit/primitives": "npm:^22.4.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
@@ -372,7 +372,7 @@ __metadata:
     "@compiled/react": "npm:^1.0.2"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/6a9b7bb15328d0d69bb57ef606434493682cf752b84b6b12545e1f8b6335a4685d87e093a652cb7cebd1c73aa87c3323fb049c44180421396c3cded4537f56a9
+  checksum: 10c0/25625224b3939ced8d725b5474bcf0fd9a63821b8175b162f671d855687e9dac614eb89ceb8c269468e9c2645e42ae1189d1846300997ed5308c3eac07b67f7e
   languageName: node
   linkType: hard
 
@@ -412,6 +412,25 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/91f88ec1524d14617ca19a0c4df38b0b18ad4853a091dc87acfe5d764d1f16aeff1d8ef1b2506e35307a95c2ed8ecb364530999f96d19f7dcf657ea8ce2daadc
+  languageName: node
+  linkType: hard
+
+"@atlaskit/motion@npm:^8.4.0":
+  version: 8.5.0
+  resolution: "@atlaskit/motion@npm:8.5.0"
+  dependencies:
+    "@atlaskit/browser-apis": "npm:^1.2.0"
+    "@atlaskit/css": "npm:^1.0.0"
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.1.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/tokens": "npm:^16.8.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@compiled/react": "npm:^1.0.2"
+    bind-event-listener: "npm:^3.0.0"
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 10c0/de5fca2b05ec361f4b47b387405cdb35d379afb2fe334d592d10692fbc8db7697e03d8422024fa864f610b726a39ac915b7d4a970bf6a750740ac86d175dc256
   languageName: node
   linkType: hard
 
@@ -8748,7 +8767,7 @@ __metadata:
     "@atlaskit/form": "npm:17.1.1"
     "@atlaskit/heading": "npm:7.1.0"
     "@atlaskit/icon": "npm:37.5.0"
-    "@atlaskit/lozenge": "npm:15.3.0"
+    "@atlaskit/lozenge": "npm:15.3.1"
     "@atlaskit/pagination": "npm:17.2.0"
     "@atlaskit/platform-feature-flags": "npm:2.1.1"
     "@atlaskit/popup": "npm:6.2.0"
