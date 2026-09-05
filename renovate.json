@@ -12,6 +12,12 @@
         "@playwright/test",
         "mcr.microsoft.com/playwright"
       ]
+    },
+    {
+      "extends": [
+        "packages:atlaskit"
+      ],
+      "groupName": "Atlaskit dependencies"
     }
   ],
   "prConcurrentLimit": 20,
