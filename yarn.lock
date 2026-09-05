@@ -1183,14 +1183,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@compiled/react@npm:1.0.2, @compiled/react@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@compiled/react@npm:1.0.2"
+"@compiled/react@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@compiled/react@npm:2.0.0"
   dependencies:
     csstype: "npm:^3.2.3"
   peerDependencies:
     react: ">=18.0.0"
-  checksum: 10c0/f4efdb72b3fa2d16f16731f95fe259f89266b0b5687c88c92f18a693e8fddac7ca20f5a8781cf42f59abc441202f0d3e452d335300de3513e79ea6aefcb0d92a
+  checksum: 10c0/e8f96e9867d94251f182e5e31a866c1507f2fe9fda31009709e9834597746c78b8549d2bdee8a741da4b09073332423c329a031bbf9df7d3ff286f1be4eb1ba0
   languageName: node
   linkType: hard
 
@@ -1202,6 +1202,17 @@ __metadata:
   peerDependencies:
     react: ">=18.0.0"
   checksum: 10c0/e7fa5e21c58fe5b858bbfbaa6de899fa637ed0064f1a02327dea372c3b0dd628d81110246bdfe3d376a693bfb3227f0e5f610f44c9e879e07b783554b4ed62ca
+  languageName: node
+  linkType: hard
+
+"@compiled/react@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@compiled/react@npm:1.0.2"
+  dependencies:
+    csstype: "npm:^3.2.3"
+  peerDependencies:
+    react: ">=18.0.0"
+  checksum: 10c0/f4efdb72b3fa2d16f16731f95fe259f89266b0b5687c88c92f18a693e8fddac7ca20f5a8781cf42f59abc441202f0d3e452d335300de3513e79ea6aefcb0d92a
   languageName: node
   linkType: hard
 
@@ -8842,7 +8853,7 @@ __metadata:
     "@atlaskit/textfield": "npm:10.1.0"
     "@atlaskit/tokens": "npm:16.8.1"
     "@babel/core": "npm:8.0.1"
-    "@compiled/react": "npm:1.0.2"
+    "@compiled/react": "npm:2.0.0"
     "@playwright/test": "npm:1.62.1"
     "@tanstack/react-virtual": "npm:3.14.10"
     "@testing-library/dom": "npm:10.4.1"
