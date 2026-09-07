@@ -5,7 +5,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "types": ["node", "vite/client", "vitest/globals"],
+    "types": ["node", "vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "lib": [
       "dom",
       "dom.iterable",

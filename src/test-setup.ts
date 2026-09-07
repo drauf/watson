@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import { setBooleanFeatureFlagResolver } from '@atlaskit/platform-feature-flags';
 import { vi } from 'vitest';
 
