@@ -2,6 +2,10 @@
 
 The committed screenshots must be generated in the same Linux Playwright container used by CI. Do not create or update baselines on macOS.
 
+`run-in-docker.sh` reads the digest-pinned container image from `bitbucket-pipelines.yml`, so local runs cannot drift from CI. Renovate bumps that pin, and `.github/workflows/test-and-deploy.yml`, in the same pull request.
+
+The runner copies the workspace into an isolated container worktree before installing dependencies. This prevents Linux native Yarn builds from overwriting host-native `.yarn/unplugged` artifacts. When updating snapshots, it copies only `*-snapshots` files back to the workspace.
+
 Before comparing or updating snapshots, fetch the Git LFS images:
 
 ```
@@ -46,4 +50,3 @@ WATSON_BENCHMARK_DIR=/path/to/threaddumps \
 WATSON_BENCHMARK_TRACE=1 \
   ./e2e/run-in-docker.sh e2e/parser-performance.spec.ts --project=chrome-light --workers=1
 ```
-The runner copies the workspace into an isolated container worktree before installing dependencies. This prevents Linux native Yarn builds from overwriting host-native `.yarn/unplugged` artifacts. When updating snapshots, it copies only `*-snapshots` files back to the workspace.

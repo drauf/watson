@@ -3,7 +3,16 @@ set -euo pipefail
 
 readonly workspace_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 readonly worktree="$(mktemp -d "${TMPDIR:-/tmp}/watson-playwright.XXXXXX")"
-readonly image="mcr.microsoft.com/playwright:v1.62.1-noble"
+
+# Committed snapshots are only comparable when produced by the image CI uses,
+# so read the pinned reference from the pipeline instead of duplicating it here
+readonly pipelines_file="$workspace_root/bitbucket-pipelines.yml"
+image="$(grep -oE 'mcr\.microsoft\.com/playwright:[^[:space:]]+' "$pipelines_file" | head -1 || true)"
+if [[ -z "$image" ]]; then
+  echo "Cannot read the Playwright image from $pipelines_file" >&2
+  exit 1
+fi
+readonly image
 
 cleanup() {
   rm -rf "$worktree"

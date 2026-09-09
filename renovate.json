@@ -7,6 +7,13 @@
   "internalChecksFilter": "strict",
   "packageRules": [
     {
+      "description": "Container registries do not expose release timestamps, so do not treat image updates as permanently pending",
+      "matchDatasources": [
+        "docker"
+      ],
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
+    },
+    {
       "groupName": "Playwright",
       "matchPackageNames": [
         "@playwright/test",
