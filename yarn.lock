@@ -501,35 +501,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/popup@npm:6.3.1":
-  version: 6.3.1
-  resolution: "@atlaskit/popup@npm:6.3.1"
-  dependencies:
-    "@atlaskit/css": "npm:^1.1.0"
-    "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/layering": "npm:^5.2.0"
-    "@atlaskit/motion": "npm:^8.6.0"
-    "@atlaskit/platform-feature-flags": "npm:^2.2.0"
-    "@atlaskit/popper": "npm:^9.4.0"
-    "@atlaskit/portal": "npm:^6.4.0"
-    "@atlaskit/primitives": "npm:^22.5.0"
-    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.11.0"
-    "@atlaskit/top-layer": "npm:^4.4.0"
-    "@babel/runtime": "npm:^7.0.0"
-    "@compiled/react": "npm:^1.0.2"
-    bind-event-listener: "npm:^3.0.0"
-    focus-trap: "npm:^2.4.5"
-    memoize-one: "npm:^6.0.0"
-    tiny-invariant: "npm:^1.2.0"
-  peerDependencies:
-    react: ^18.2.0 || ^19.0.0
-    react-dom: ^18.2.0 || ^19.0.0
-  checksum: 10c0/25561c60cf09cb6906892bb8f94d84338943439acfb1306a977ec5d3deb840b8b263141c014836ca49166d345afe2f01be6d57e180d0b946a18ac29e8db0ba83
-  languageName: node
-  linkType: hard
-
-"@atlaskit/popup@npm:^6.3.0":
+"@atlaskit/popup@npm:6.3.2, @atlaskit/popup@npm:^6.3.0":
   version: 6.3.2
   resolution: "@atlaskit/popup@npm:6.3.2"
   dependencies:
@@ -597,18 +569,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/progress-bar@npm:5.3.0":
-  version: 5.3.0
-  resolution: "@atlaskit/progress-bar@npm:5.3.0"
+"@atlaskit/progress-bar@npm:5.3.1":
+  version: 5.3.1
+  resolution: "@atlaskit/progress-bar@npm:5.3.1"
   dependencies:
     "@atlaskit/platform-feature-flags": "npm:^2.2.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.10.0"
+    "@atlaskit/tokens": "npm:^16.11.0"
     "@babel/runtime": "npm:^7.0.0"
     "@compiled/react": "npm:^1.0.2"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
-  checksum: 10c0/9bb31a20fc9fff1fcf267010f2054b31598d15466d0062ee77813b85519c824642717fbb013efa95cf9d84d52f3e5c87830b5c8a839d9f831f9bad8f46e7872b
+  checksum: 10c0/cb5dd7763af40956728b6897aa80956eb4f5dc2fc3bb9d84d367fc97a4bc990106973c3f238954e1f9cebe3d9c25fac2ed76fc69c43950cbbd0d1db33fc3b22d
   languageName: node
   linkType: hard
 
@@ -8509,9 +8481,9 @@ __metadata:
     "@atlaskit/lozenge": "npm:15.4.1"
     "@atlaskit/pagination": "npm:17.3.0"
     "@atlaskit/platform-feature-flags": "npm:2.2.0"
-    "@atlaskit/popup": "npm:6.3.1"
+    "@atlaskit/popup": "npm:6.3.2"
     "@atlaskit/primitives": "npm:22.5.0"
-    "@atlaskit/progress-bar": "npm:5.3.0"
+    "@atlaskit/progress-bar": "npm:5.3.1"
     "@atlaskit/stylelint-design-system": "npm:5.1.0"
     "@atlaskit/textfield": "npm:10.2.1"
     "@atlaskit/tokens": "npm:16.11.2"
