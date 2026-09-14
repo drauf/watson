@@ -25,6 +25,16 @@
         "packages:atlaskit"
       ],
       "groupName": "Atlaskit dependencies"
+    },
+    {
+      "groupName": "React",
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "react-is",
+        "@types/react",
+        "@types/react-dom"
+      ]
     }
   ],
   "prConcurrentLimit": 20,
