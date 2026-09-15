@@ -545,9 +545,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/popup@npm:6.3.3":
-  version: 6.3.3
-  resolution: "@atlaskit/popup@npm:6.3.3"
+"@atlaskit/popup@npm:6.3.4":
+  version: 6.3.4
+  resolution: "@atlaskit/popup@npm:6.3.4"
   dependencies:
     "@atlaskit/css": "npm:^1.1.0"
     "@atlaskit/ds-lib": "npm:^8.0.0"
@@ -558,7 +558,7 @@ __metadata:
     "@atlaskit/portal": "npm:^6.4.0"
     "@atlaskit/primitives": "npm:^22.5.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@atlaskit/tokens": "npm:^16.11.0"
+    "@atlaskit/tokens": "npm:^16.12.0"
     "@atlaskit/top-layer": "npm:^4.4.0"
     "@babel/runtime": "npm:^7.0.0"
     "@compiled/react": "npm:^1.0.2"
@@ -569,7 +569,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
-  checksum: 10c0/1bf1b7e7b2251a4ba3e0cf8a33d946fc4aa808b956878056698f3da70fa6735673979ffb057cbb92f3ddc0d2ebc63abc7bd989876339c44d810c2534d36153c3
+  checksum: 10c0/14f778488b80d2b77663c93f6868a99200d019f48a9d197b01b3ca3207c71ce623e0b8668b9211c26fd6378c566d822f2168eb829d1e50cfc0c18614415cdc4c
   languageName: node
   linkType: hard
 
@@ -756,7 +756,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:16.12.0":
+"@atlaskit/tokens@npm:16.12.0, @atlaskit/tokens@npm:^16.12.0":
   version: 16.12.0
   resolution: "@atlaskit/tokens@npm:16.12.0"
   dependencies:
@@ -8632,7 +8632,7 @@ __metadata:
     "@atlaskit/lozenge": "npm:15.4.1"
     "@atlaskit/pagination": "npm:17.3.0"
     "@atlaskit/platform-feature-flags": "npm:2.2.0"
-    "@atlaskit/popup": "npm:6.3.3"
+    "@atlaskit/popup": "npm:6.3.4"
     "@atlaskit/primitives": "npm:22.5.0"
     "@atlaskit/progress-bar": "npm:5.3.2"
     "@atlaskit/stylelint-design-system": "npm:5.1.0"
