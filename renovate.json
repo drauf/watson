@@ -35,6 +35,36 @@
         "@types/react",
         "@types/react-dom"
       ]
+    },
+    {
+      "groupName": "Vite build tooling",
+      "matchPackageNames": [
+        "vite",
+        "@vitejs/plugin-react",
+        "rollup",
+        "vite-plugin-singlefile"
+      ]
+    },
+    {
+      "groupName": "Testing utilities",
+      "matchPackageNames": [
+        "@testing-library/dom",
+        "@testing-library/jest-dom",
+        "@testing-library/react",
+        "fake-indexeddb",
+        "jsdom"
+      ]
+    },
+    {
+      "description": "Automerge patch updates for development dependencies after required checks pass",
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "automerge": true,
+      "platformAutomerge": true
     }
   ],
   "prConcurrentLimit": 20,
