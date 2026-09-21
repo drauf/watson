@@ -29,7 +29,7 @@
     "@atlaskit/textfield": "10.2.2",
     "@atlaskit/tokens": "16.12.0",
     "@compiled/react": "2.0.0",
-    "@tanstack/react-virtual": "3.14.12",
+    "@tanstack/react-virtual": "3.14.13",
     "fflate": "0.8.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
