@@ -35,7 +35,7 @@
     "react-dom": "19.3.0",
     "react-dropzone": "20.1.2",
     "react-is": "19.3.0",
-    "react-router-dom": "7.18.3",
+    "react-router-dom": "7.18.4",
     "recharts": "3.10.1"
   },
   "devDependencies": {
