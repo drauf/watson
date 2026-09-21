@@ -13,7 +13,7 @@
     "url": "https://github.com/drauf/watson/issues"
   },
   "dependencies": {
-    "@atlaskit/app-provider": "5.6.0",
+    "@atlaskit/app-provider": "7.0.0",
     "@atlaskit/button": "25.3.5",
     "@atlaskit/css-reset": "8.4.4",
     "@atlaskit/dropdown-menu": "18.3.4",
@@ -27,7 +27,7 @@
     "@atlaskit/primitives": "22.5.2",
     "@atlaskit/progress-bar": "5.3.5",
     "@atlaskit/textfield": "10.2.4",
-    "@atlaskit/tokens": "16.12.0",
+    "@atlaskit/tokens": "18.2.0",
     "@compiled/react": "2.0.0",
     "@tanstack/react-virtual": "3.14.13",
     "fflate": "0.8.3",
