@@ -59,7 +59,7 @@
     "fake-indexeddb": "6.2.5",
     "jsdom": "30.1.0",
     "node-gyp": "13.0.2",
-    "oxc-transform-react": "0.149.0",
+    "oxc-transform-react": "0.150.0",
     "rollup": "4.63.2",
     "stylelint": "17.15.0",
     "stylelint-config-recess-order": "7.8.0",
