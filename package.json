@@ -41,7 +41,7 @@
   "devDependencies": {
     "@atlaskit/platform-feature-flags": "2.2.0",
     "@atlaskit/stylelint-design-system": "5.1.2",
-    "@babel/core": "8.0.5",
+    "@babel/core": "8.0.6",
     "@playwright/test": "1.63.0",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
