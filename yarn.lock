@@ -841,9 +841,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:20.0.0, @atlaskit/tokens@npm:^20.0.0":
-  version: 20.0.0
-  resolution: "@atlaskit/tokens@npm:20.0.0"
+"@atlaskit/tokens@npm:20.1.0":
+  version: 20.1.0
+  resolution: "@atlaskit/tokens@npm:20.1.0"
   dependencies:
     "@atlaskit/ds-lib": "npm:^8.0.0"
     "@atlaskit/platform-feature-flags": "npm:^2.2.0"
@@ -854,7 +854,7 @@ __metadata:
     bind-event-listener: "npm:^3.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
-  checksum: 10c0/1cf64eb1fc941c8c816dba28a5ef3823e6c7f314bd77acf58c3386265d009bf3b795af1bc8f4856e5167b3e78c7c28853438b2a486f848db4c88df196071cd03
+  checksum: 10c0/bba95962ee2ada3e20642ad4d30df7ed612913f6788696e0ba675368819554f39288f3135a890f7a8bc81aca25a15482a1d97a6383bc2ed4e888fd60f3162c5b
   languageName: node
   linkType: hard
 
@@ -923,6 +923,23 @@ __metadata:
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   checksum: 10c0/7a02d2126620cff90645fa794db7ce1a0b5dce2e20f1fe39696f28b40323aea9d27355e6002a4f73d88c80df0654b563890a33a9fce06500300e7b7fb77b9e28
+  languageName: node
+  linkType: hard
+
+"@atlaskit/tokens@npm:^20.0.0":
+  version: 20.0.0
+  resolution: "@atlaskit/tokens@npm:20.0.0"
+  dependencies:
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.2.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@babel/traverse": "npm:^7.23.2"
+    "@babel/types": "npm:^7.20.0"
+    bind-event-listener: "npm:^3.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  checksum: 10c0/1cf64eb1fc941c8c816dba28a5ef3823e6c7f314bd77acf58c3386265d009bf3b795af1bc8f4856e5167b3e78c7c28853438b2a486f848db4c88df196071cd03
   languageName: node
   linkType: hard
 
@@ -8803,7 +8820,7 @@ __metadata:
     "@atlaskit/progress-bar": "npm:5.3.7"
     "@atlaskit/stylelint-design-system": "npm:5.1.4"
     "@atlaskit/textfield": "npm:10.2.6"
-    "@atlaskit/tokens": "npm:20.0.0"
+    "@atlaskit/tokens": "npm:20.1.0"
     "@babel/core": "npm:8.0.6"
     "@compiled/react": "npm:2.0.0"
     "@playwright/test": "npm:1.63.0"
