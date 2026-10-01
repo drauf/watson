@@ -164,7 +164,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/button@npm:25.4.2, @atlaskit/button@npm:^25.4.0":
+"@atlaskit/button@npm:25.4.3":
+  version: 25.4.3
+  resolution: "@atlaskit/button@npm:25.4.3"
+  dependencies:
+    "@atlaskit/analytics-next": "npm:^12.5.0"
+    "@atlaskit/css": "npm:^1.1.0"
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/focus-ring": "npm:^6.0.0"
+    "@atlaskit/icon": "npm:^38.0.0"
+    "@atlaskit/interaction-context": "npm:^4.1.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.2.0"
+    "@atlaskit/primitives": "npm:^22.5.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@atlaskit/spinner": "npm:^20.4.0"
+    "@atlaskit/theme": "npm:^28.2.0"
+    "@atlaskit/tokens": "npm:^20.1.0"
+    "@atlaskit/tooltip": "npm:^24.3.0"
+    "@atlaskit/visually-hidden": "npm:^4.4.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@compiled/react": "npm:^1.0.2"
+    "@emotion/react": "npm:^11.7.1"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  checksum: 10c0/bd19032bd8a3eef3c6aaf7cea2a8b7818fb4df6f74be6fcbc45e623b09cbaba144ab1a24f4578a70a2b9bd67067b52713a2da9251e778765723f4d000cc2643c
+  languageName: node
+  linkType: hard
+
+"@atlaskit/button@npm:^25.4.0":
   version: 25.4.2
   resolution: "@atlaskit/button@npm:25.4.2"
   dependencies:
@@ -923,6 +950,23 @@ __metadata:
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   checksum: 10c0/7a02d2126620cff90645fa794db7ce1a0b5dce2e20f1fe39696f28b40323aea9d27355e6002a4f73d88c80df0654b563890a33a9fce06500300e7b7fb77b9e28
+  languageName: node
+  linkType: hard
+
+"@atlaskit/tokens@npm:^20.1.0":
+  version: 20.1.0
+  resolution: "@atlaskit/tokens@npm:20.1.0"
+  dependencies:
+    "@atlaskit/ds-lib": "npm:^8.0.0"
+    "@atlaskit/platform-feature-flags": "npm:^2.2.0"
+    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
+    "@babel/runtime": "npm:^7.0.0"
+    "@babel/traverse": "npm:^7.23.2"
+    "@babel/types": "npm:^7.20.0"
+    bind-event-listener: "npm:^3.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  checksum: 10c0/bba95962ee2ada3e20642ad4d30df7ed612913f6788696e0ba675368819554f39288f3135a890f7a8bc81aca25a15482a1d97a6383bc2ed4e888fd60f3162c5b
   languageName: node
   linkType: hard
 
@@ -8788,7 +8832,7 @@ __metadata:
   resolution: "watson@workspace:."
   dependencies:
     "@atlaskit/app-provider": "npm:8.0.0"
-    "@atlaskit/button": "npm:25.4.2"
+    "@atlaskit/button": "npm:25.4.3"
     "@atlaskit/css-reset": "npm:8.4.6"
     "@atlaskit/dropdown-menu": "npm:18.3.7"
     "@atlaskit/empty-state": "npm:12.2.4"
