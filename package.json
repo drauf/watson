@@ -77,7 +77,7 @@
     "build": "yarn tsc7 -p tsconfig.prod.json && vite build",
     "serve": "vite preview",
     "lint-types": "yarn tsc7 --noEmit",
-    "lint-prod": "eslint --fix 'src/**/*.{ts,tsx}' && stylelint --fix 'src/**/*.css'",
+    "lint-prod": "eslint --fix 'src/**/*.{ts,tsx,mts}' && stylelint --fix 'src/**/*.css'",
     "lint-test": "eslint --fix 'e2e/**/*.{ts,tsx}' 'playwright/**/*.{ts,tsx}' && stylelint --fix 'e2e/**/*.css' --allow-empty-input",
     "lint": "yarn lint-types && yarn lint-prod && yarn lint-test",
     "test": "vitest",

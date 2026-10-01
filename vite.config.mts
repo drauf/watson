@@ -1,8 +1,35 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { configDefaults } from 'vitest/config';
 import { viteSingleFile } from 'vite-plugin-singlefile';
+import { getBuildProvenance } from './src/build/buildProvenance.mjs';
+
+const buildProvenancePlugin = (): Plugin => ({
+    name: 'watson-build-provenance',
+    apply: 'build',
+    transformIndexHtml: () => {
+        const provenance = getBuildProvenance();
+
+        return [
+            {
+                tag: 'meta',
+                attrs: { name: 'watson-revision', content: provenance.revision },
+                injectTo: 'head',
+            },
+            {
+                tag: 'meta',
+                attrs: { name: 'watson-commit-time', content: provenance.commitTime },
+                injectTo: 'head',
+            },
+            {
+                tag: 'meta',
+                attrs: { name: 'watson-build-time', content: provenance.buildTime },
+                injectTo: 'head',
+            },
+        ];
+    },
+});
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -33,6 +60,7 @@ export default defineConfig({
     },
     plugins: [
         react({ compiler: true }),
+        buildProvenancePlugin(),
         viteSingleFile()
     ],
 });
