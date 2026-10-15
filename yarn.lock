@@ -919,9 +919,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/tokens@npm:20.4.0":
-  version: 20.4.0
-  resolution: "@atlaskit/tokens@npm:20.4.0"
+"@atlaskit/tokens@npm:20.4.1, @atlaskit/tokens@npm:^20.3.0, @atlaskit/tokens@npm:^20.4.0":
+  version: 20.4.1
+  resolution: "@atlaskit/tokens@npm:20.4.1"
   dependencies:
     "@atlaskit/ds-lib": "npm:^8.0.0"
     "@atlaskit/platform-feature-flags": "npm:^2.2.0"
@@ -932,7 +932,7 @@ __metadata:
     bind-event-listener: "npm:^3.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
-  checksum: 10c0/751aeb9df482aada45671bf5657fb11920f4ea215d30fd490c5759dc704f8797441543317693ff83d579b4c003b520197bd120a1a10f770dcdeb2b3fa3456e05
+  checksum: 10c0/bff04978369b28d731204c680b49dee67e5110ef665de7658eba01b3692211baf7dd4dced1a8039a3f38a7d5720d31e77a615f276509949499f976ef8877a3a5
   languageName: node
   linkType: hard
 
@@ -1035,23 +1035,6 @@ __metadata:
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   checksum: 10c0/38ea36a032abf51752f72e7f093530380725b848f19088d0d994260384a7e58aa24f7a804a7baac54253fb22b04875e7bd0ab8f2f1b2c9ba50ef6dccc349c542
-  languageName: node
-  linkType: hard
-
-"@atlaskit/tokens@npm:^20.3.0, @atlaskit/tokens@npm:^20.4.0":
-  version: 20.4.1
-  resolution: "@atlaskit/tokens@npm:20.4.1"
-  dependencies:
-    "@atlaskit/ds-lib": "npm:^8.0.0"
-    "@atlaskit/platform-feature-flags": "npm:^2.2.0"
-    "@atlaskit/react-compiler-gating": "npm:^0.2.0"
-    "@babel/runtime": "npm:^7.0.0"
-    "@babel/traverse": "npm:^7.23.2"
-    "@babel/types": "npm:^7.20.0"
-    bind-event-listener: "npm:^3.0.0"
-  peerDependencies:
-    react: ^18.2.0 || ^19.0.0
-  checksum: 10c0/bff04978369b28d731204c680b49dee67e5110ef665de7658eba01b3692211baf7dd4dced1a8039a3f38a7d5720d31e77a615f276509949499f976ef8877a3a5
   languageName: node
   linkType: hard
 
@@ -8867,7 +8850,7 @@ __metadata:
     "@atlaskit/progress-bar": "npm:5.3.7"
     "@atlaskit/stylelint-design-system": "npm:5.1.4"
     "@atlaskit/textfield": "npm:10.2.6"
-    "@atlaskit/tokens": "npm:20.4.0"
+    "@atlaskit/tokens": "npm:20.4.1"
     "@babel/core": "npm:8.0.7"
     "@compiled/react": "npm:2.0.0"
     "@playwright/test": "npm:1.64.0"
