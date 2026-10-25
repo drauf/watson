@@ -62,7 +62,7 @@
     "oxc-transform-react": "0.154.0",
     "rollup": "4.64.7",
     "stylelint": "17.16.0",
-    "stylelint-config-recess-order": "7.8.0",
+    "stylelint-config-recess-order": "7.8.2",
     "stylelint-config-standard": "40.0.0",
     "stylelint-order": "8.1.2",
     "typescript": "6.0.3",
