@@ -27,7 +27,7 @@
     "@atlaskit/primitives": "22.6.0",
     "@atlaskit/progress-bar": "5.3.7",
     "@atlaskit/textfield": "10.2.6",
-    "@atlaskit/tokens": "20.6.1",
+    "@atlaskit/tokens": "20.7.0",
     "@compiled/react": "2.0.0",
     "@tanstack/react-virtual": "3.14.21",
     "fflate": "0.8.3",
