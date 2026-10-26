@@ -56,16 +56,19 @@
       ]
     },
     {
-      "description": "Automerge patch updates for development dependencies after required checks pass",
-      "matchDepTypes": [
-        "devDependencies"
-      ],
+      "description": "Automerge non-major updates after required checks pass",
       "matchUpdateTypes": [
-        "patch"
+        "minor",
+        "patch",
+        "pin",
+        "digest",
+        "pinDigest"
       ],
-      "automerge": true,
-      "platformAutomerge": true
+      "automerge": true
     }
+  ],
+  "schedule": [
+    "* * * * 2"
   ],
   "prConcurrentLimit": 20,
   "prCreation": "not-pending",
