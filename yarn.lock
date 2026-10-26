@@ -181,9 +181,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@atlaskit/button@npm:25.4.8":
-  version: 25.4.8
-  resolution: "@atlaskit/button@npm:25.4.8"
+"@atlaskit/button@npm:25.6.0":
+  version: 25.6.0
+  resolution: "@atlaskit/button@npm:25.6.0"
   dependencies:
     "@atlaskit/analytics-next": "npm:^12.6.0"
     "@atlaskit/css": "npm:^1.1.0"
@@ -192,7 +192,7 @@ __metadata:
     "@atlaskit/icon": "npm:^38.0.0"
     "@atlaskit/interaction-context": "npm:^4.1.0"
     "@atlaskit/platform-feature-flags": "npm:^2.2.0"
-    "@atlaskit/primitives": "npm:^22.5.0"
+    "@atlaskit/primitives": "npm:^22.6.0"
     "@atlaskit/react-compiler-gating": "npm:^0.2.0"
     "@atlaskit/spinner": "npm:^20.4.0"
     "@atlaskit/theme": "npm:^28.2.0"
@@ -204,7 +204,7 @@ __metadata:
     "@emotion/react": "npm:^11.7.1"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
-  checksum: 10c0/cfbdcb5697e6949bee817049ff0021771263d9935c674ed1a166a84b295515207e6cc459892edcb665814ed56d6e065f333fcc3a45d709732c97fbb26468320d
+  checksum: 10c0/5c7319ce60374d244222267dc8a5e86b906c9c2ae4a155a202905fdc5b9665ca4bb2e05a900d86df8ca71df0e2c301832edc7cfe28eab39d9dea2f47282b78db
   languageName: node
   linkType: hard
 
@@ -8997,7 +8997,7 @@ __metadata:
   resolution: "watson@workspace:."
   dependencies:
     "@atlaskit/app-provider": "npm:8.1.0"
-    "@atlaskit/button": "npm:25.4.8"
+    "@atlaskit/button": "npm:25.6.0"
     "@atlaskit/css-reset": "npm:8.4.6"
     "@atlaskit/dropdown-menu": "npm:21.0.1"
     "@atlaskit/empty-state": "npm:12.2.4"
