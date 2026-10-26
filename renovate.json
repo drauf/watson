@@ -5,6 +5,7 @@
   ],
   "minimumReleaseAge": "3 days",
   "internalChecksFilter": "strict",
+  "rebaseWhen": "conflicted",
   "packageRules": [
     {
       "description": "Container registries do not expose release timestamps, so do not treat image updates as permanently pending",
