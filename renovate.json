@@ -72,6 +72,5 @@
     "* * * * 2"
   ],
   "prConcurrentLimit": 20,
-  "prCreation": "not-pending",
   "prHourlyLimit": 10
 }
