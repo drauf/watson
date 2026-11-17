@@ -15,49 +15,7 @@
       "minimumReleaseAgeBehaviour": "timestamp-optional"
     },
     {
-      "groupName": "Playwright",
-      "matchPackageNames": [
-        "@playwright/test",
-        "mcr.microsoft.com/playwright"
-      ]
-    },
-    {
-      "extends": [
-        "packages:atlaskit"
-      ],
-      "groupName": "Atlaskit dependencies"
-    },
-    {
-      "groupName": "React",
-      "matchPackageNames": [
-        "react",
-        "react-dom",
-        "react-is",
-        "@types/react",
-        "@types/react-dom"
-      ]
-    },
-    {
-      "groupName": "Vite build tooling",
-      "matchPackageNames": [
-        "vite",
-        "@vitejs/plugin-react",
-        "rollup",
-        "vite-plugin-singlefile"
-      ]
-    },
-    {
-      "groupName": "Testing utilities",
-      "matchPackageNames": [
-        "@testing-library/dom",
-        "@testing-library/jest-dom",
-        "@testing-library/react",
-        "fake-indexeddb",
-        "jsdom"
-      ]
-    },
-    {
-      "description": "Automerge non-major updates after required checks pass",
+      "groupName": "CI and tooling",
       "matchUpdateTypes": [
         "minor",
         "patch",
@@ -66,10 +24,28 @@
         "pinDigest"
       ],
       "automerge": true
+    },
+    {
+      "groupName": "npm dependencies",
+      "matchDatasources": [
+        "npm"
+      ]
+    },
+    {
+      "groupName": "Playwright",
+      "matchPackageNames": [
+        "@playwright/test",
+        "mcr.microsoft.com/playwright"
+      ]
+    },
+    {
+      "description": "Keep major updates separate and require manual merging",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": null,
+      "automerge": false
     }
-  ],
-  "schedule": [
-    "* * * * 2"
   ],
   "prConcurrentLimit": 20,
   "prHourlyLimit": 10
