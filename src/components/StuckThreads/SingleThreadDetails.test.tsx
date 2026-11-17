@@ -19,13 +19,12 @@ describe('SingleThreadDetails', () => {
       />,
     );
 
-    expect(screen.getByText('com.atlassian.jira.issue.IssueManager.getIssue')).toHaveStyle({
-      backgroundColor: token('color.background.accent.blue.subtlest'),
-      color: token('color.text.accent.blue'),
-    });
-    expect(screen.getByText('java.lang.Thread.run')).toHaveStyle({
-      backgroundColor: token('color.background.accent.gray.subtlest'),
-      color: token('color.text.accent.gray'),
-    });
+    const jiraFrame = screen.getByText('com.atlassian.jira.issue.IssueManager.getIssue');
+    expect(jiraFrame.style.backgroundColor).toBe(token('color.background.accent.blue.subtlest'));
+    expect(jiraFrame.style.color).toBe(token('color.text.accent.blue'));
+
+    const javaFrame = screen.getByText('java.lang.Thread.run');
+    expect(javaFrame.style.backgroundColor).toBe(token('color.background.accent.gray.subtlest'));
+    expect(javaFrame.style.color).toBe(token('color.text.accent.gray'));
   });
 });

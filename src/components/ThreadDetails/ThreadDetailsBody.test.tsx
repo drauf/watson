@@ -38,10 +38,8 @@ describe('ThreadDetailsBody', () => {
     const stackFrames = screen.getAllByText('com.atlassian.jira.issue.IssueManager.getIssue');
     expect(stackFrames).toHaveLength(2);
     for (const stackFrame of stackFrames) {
-      expect(stackFrame).toHaveStyle({
-        backgroundColor: token('color.background.accent.blue.subtlest'),
-        color: token('color.text.accent.blue'),
-      });
+      expect(stackFrame.style.backgroundColor).toBe(token('color.background.accent.blue.subtlest'));
+      expect(stackFrame.style.color).toBe(token('color.text.accent.blue'));
     }
   });
 });
