@@ -21,7 +21,6 @@ definitions:
         caches:
           - yarn
         script:
-          - corepack enable
           - YARN_ENABLE_HARDENED_MODE=0 yarn install --immutable
           - HOME=/root yarn playwright test
         artifacts:
