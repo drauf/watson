@@ -4,14 +4,13 @@ definitions:
   steps:
     - step: &lint_and_unit_tests
         name: Lint and unit tests
-        image: node:24-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496
+        image: node:26-bookworm@sha256:b7087bc4d973034b30854b378ba107f9fab622b47514cb7e2592e41b8bab8d49
         caches:
           - yarn
         script:
-          - corepack enable
-          - YARN_ENABLE_HARDENED_MODE=0 yarn install --immutable
-          - yarn lint
-          - yarn test
+          - YARN_ENABLE_HARDENED_MODE=0 node .yarn/releases/yarn-4.18.1.cjs install --immutable
+          - node .yarn/releases/yarn-4.18.1.cjs lint
+          - node .yarn/releases/yarn-4.18.1.cjs test
 
     - step: &end_to_end_tests
         name: End-to-end tests
